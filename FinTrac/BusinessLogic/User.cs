@@ -22,7 +22,7 @@ namespace BusinessLogicTests
 
         public static bool ValidatePassword(string posiblePassword)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
 
