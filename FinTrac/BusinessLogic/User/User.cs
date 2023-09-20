@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace BusinessLogic.User
         {
             int minLength = 10;
 
-            if(posiblePassword.Length < minLength)
+            if(posiblePassword.Length < minLength || posiblePassword.Length > 30)
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
