@@ -24,7 +24,14 @@ public class UserTests
     {
         string password = "pass";
         User.ValidatePassword(password);
-       
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenPasswordMoreThanMaxLength_ShouldThrowException()
+    {
+        string password = "12345123451234512345123451234512345";
+        User.ValidatePassword(password);
     }
 
 
