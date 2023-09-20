@@ -34,6 +34,15 @@ public class UserTests
         User.ValidatePassword(password);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]  
+
+    public void GivenPasswordWithoutUpperCaseLetter_ShouldThrowException()
+    {
+
+        string password = "passwordexample";
+        User.ValidatePassword(password);
+    }
 
 
 
