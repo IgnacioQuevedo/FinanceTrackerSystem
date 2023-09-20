@@ -22,10 +22,9 @@ public class UserTests
     [ExpectedException(typeof(ExceptionValidateUser))]
     public void GivenPasswordLessThanMinorLength_ShouldThrowException()
     {
-  
-        User.ValidatePassword("pass");
+        string password = "pass";
+        User.ValidatePassword(password);
        
-
     }
 
 

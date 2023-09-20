@@ -22,8 +22,12 @@ namespace BusinessLogic.User
 
         public static bool ValidatePassword(string posiblePassword)
         {
+            int minLength = 10;
 
-            throw new ExceptionValidateUser("ERROR ON PASSWORD");
+            if(posiblePassword.Length < minLength)
+            {
+                throw new ExceptionValidateUser("ERROR ON PASSWORD");
+            }
             return true;
         }
 
