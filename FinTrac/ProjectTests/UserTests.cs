@@ -1,4 +1,5 @@
-using BusinessLogicTests;
+using BusinessLogic;
+using BusinessLogic.User;
 
 namespace TestProject1;
 [TestClass]
@@ -17,7 +18,15 @@ public class UserTests
         Assert.AreEqual(true, User.ValidatePassword(myUser.Password));
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenPasswordLessThanMinorLength_ShouldThrowException()
+    {
+  
+        User.ValidatePassword("pass");
+       
 
+    }
 
 
 

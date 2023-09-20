@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicTests
+namespace BusinessLogic.User
 {
     public class User
     {
@@ -22,9 +22,8 @@ namespace BusinessLogicTests
 
         public static bool ValidatePassword(string posiblePassword)
         {
-            bool valid = true;
-
-            return valid;
+            
+            return true;
         }
 
 
