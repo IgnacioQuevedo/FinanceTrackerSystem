@@ -8,7 +8,7 @@ public class UserTests
     #region Password
     [TestMethod]
 
-    public void ShouldReturnTrue_GivenPassword()
+    public void GivenCorrectPassword_ShouldReturnTrue()
     {
 
         User myUser = new User();

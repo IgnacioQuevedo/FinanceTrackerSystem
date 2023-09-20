@@ -9,7 +9,7 @@ namespace BusinessLogicTests
     public class User
     {
 
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
 
 
@@ -22,7 +22,9 @@ namespace BusinessLogicTests
 
         public static bool ValidatePassword(string posiblePassword)
         {
-            return true;
+            bool valid = true;
+
+            return valid;
         }
 
 
