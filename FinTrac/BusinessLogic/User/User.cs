@@ -22,7 +22,8 @@ namespace BusinessLogic.User
 
         public static bool ValidatePassword(string posiblePassword)
         {
-            
+
+            throw new ExceptionValidateUser("ERROR ON PASSWORD");
             return true;
         }
 
