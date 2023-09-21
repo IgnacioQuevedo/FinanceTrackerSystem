@@ -35,7 +35,7 @@ public class UserTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateUser))]  
+    [ExpectedException(typeof(ExceptionValidateUser))]
 
     public void GivenPasswordWithoutUpperCaseLetter_ShouldThrowException()
     {
@@ -43,9 +43,6 @@ public class UserTests
         string password = "passwordexample";
         User.ValidatePassword(password);
     }
-
-
-
 
     #endregion
 

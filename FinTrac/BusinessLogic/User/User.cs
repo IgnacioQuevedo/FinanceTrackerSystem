@@ -12,15 +12,9 @@ namespace BusinessLogic.User
 
         public string Password { get; set; } = "";
 
-
-
-
         public User() { }
 
-
-
-
-
+        #region ValidatePassword
         public static bool ValidatePassword(string posiblePassword)
         {
             ValidatePasswordHasCorrectLength(posiblePassword);
@@ -45,9 +39,12 @@ namespace BusinessLogic.User
         private static void ValidatePasswordUppercase(string posiblePassword)
         {
             bool hasUpperCase = false;
+            int minAsciiUperCase = 65;
+            int maxAsciiUperCase = 90;
+
             for (int i = 0; i < posiblePassword.Length && !hasUpperCase; i++)
             {
-                if (posiblePassword[i] >= 65 && posiblePassword[i] <= 90)
+                if (posiblePassword[i] <= maxAsciiUperCase && posiblePassword[i] >= minAsciiUperCase)
                 {
                     hasUpperCase = true;
                 }
@@ -58,5 +55,6 @@ namespace BusinessLogic.User
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
         }
+        #endregion
     }
 }
