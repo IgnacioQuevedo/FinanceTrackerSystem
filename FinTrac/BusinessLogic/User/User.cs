@@ -32,8 +32,7 @@ namespace BusinessLogic.User
 
         public static string CorrectFirstName(string possibleFirstName)
         {
-        
-           throw new NotImplementedException();
+            return possibleFirstName.Trim();
         }
 
         #endregion
