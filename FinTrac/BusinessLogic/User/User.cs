@@ -21,7 +21,7 @@ namespace BusinessLogic.User
 
         public static bool ValidateFirstName(string possibleFirstName)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
 
