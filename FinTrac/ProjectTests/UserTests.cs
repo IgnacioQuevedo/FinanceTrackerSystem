@@ -1,12 +1,13 @@
 using BusinessLogic;
 using BusinessLogic.User;
 using NuGet.Frameworks;
+using System.Runtime.ExceptionServices;
 
 namespace TestProject1;
 [TestClass]
 public class UserTests
 {
-        
+
     #region Firstname
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
@@ -84,7 +85,7 @@ public class UserTests
     public void GivenUnformattedEmail_ShouldReturnException()
     {
         string email = "diego+Hernandez@gmail.com";
-        User.ValidateEmail(email);  
+        User.ValidateEmail(email);
     }
     #endregion
 
@@ -164,7 +165,7 @@ public class UserTests
         string password = "AustinF2003";
         string address = "NW 2nd Ave";
 
-        User myUser = new User(firstName, lastName, email, password,address);
+        User myUser = new User(firstName, lastName, email, password, address);
 
         Assert.AreEqual(firstName, myUser.FirstName);
         Assert.AreEqual(lastName, myUser.LastName);
@@ -172,6 +173,17 @@ public class UserTests
         Assert.AreEqual(password, myUser.Password);
         Assert.AreEqual(address, myUser.Address);
 
+    }
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenWrongValues_ShouldThrowException()
+    {
+        string firstName = "";
+        string lastName = "Ford";
+        string email = "austinFord@gmail.com";
+        string password = "Austin1980";
+        string address = "East 25 Av";
+        User myUser = new User(firstName, lastName, email, password, address);
     }
 
 
