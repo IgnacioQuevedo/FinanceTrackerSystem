@@ -14,8 +14,12 @@ namespace BusinessLogic.User
     {
 
         public string FirstName { get; set; } = "";
+
+        public string LastName { get; set; }
+        
         public string Password { get; set; } = "";
 
+        
         public User() { }
 
 
@@ -45,6 +49,17 @@ namespace BusinessLogic.User
 
         #endregion
 
+
+        #region ValidateLastName
+
+        public static bool ValidateLastName(string possibleLastName)
+        {
+
+            return false;
+        }
+
+
+        #endregion
 
         #region ValidatePassword
         public static bool ValidatePassword(string posiblePassword)

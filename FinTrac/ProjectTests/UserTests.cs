@@ -39,18 +39,27 @@ public class UserTests
     [ExpectedException(typeof(ExceptionValidateUser))]
     public void GivenNameWithSpecialCaracters_ShouldThrowException()
     {
-
         string firstName = "Die!!@go";
         User.ValidateFirstName(firstName);
-
-
     }
 
 
 
     #endregion
 
+    #region LastName
 
+    [TestMethod]
+    public void GivenCorrectLastName_ShouldReturnTrue()
+    {
+
+        User myUser = new User();
+        myUser.LastName = "Hernandez";
+
+        Assert.AreEqual(true, User.ValidateLastName(myUser.LastName));
+
+    }
+    #endregion
 
     #region Password
     [TestMethod]
