@@ -128,9 +128,7 @@ public class UserTests
         User myUser = new User();
         myUser.Address = "97th Ave";
         Assert.AreEqual("97th Ave", myUser.Address);
-
     }
-
     #endregion
 
 

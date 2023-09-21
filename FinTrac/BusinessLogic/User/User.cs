@@ -19,7 +19,7 @@ namespace BusinessLogic.User
 
         public string Password { get; set; } = "";
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         public User() { }
 
@@ -116,7 +116,7 @@ namespace BusinessLogic.User
 
 
         #region Adress
-
+        //If necessary validations or implement methods.
         #endregion
     }
 }
