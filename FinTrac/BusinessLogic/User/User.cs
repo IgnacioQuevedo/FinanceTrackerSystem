@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 
 namespace BusinessLogic.User
 {
@@ -26,6 +28,13 @@ namespace BusinessLogic.User
             if (string.IsNullOrWhiteSpace(possibleFirstName))
             {
 
+                throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
+            }
+
+            string patron = "^[A-Za-z ]+$";
+
+            if (!Regex.IsMatch(possibleFirstName, patron))
+            {
                 throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
             }
 
