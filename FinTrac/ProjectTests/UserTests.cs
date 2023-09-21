@@ -90,6 +90,14 @@ public class UserTests
         Assert.AreEqual(true, User.ValidateEmail(myUser.Email));
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenUnformattedEmail_ShouldReturnException()
+    {
+        string email = "a.gmail.com";
+        User.ValidateEmail(email);  
+
+    }
 
     #endregion
 
