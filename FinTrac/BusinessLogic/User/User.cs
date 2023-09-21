@@ -55,8 +55,8 @@ namespace BusinessLogic.User
 
         public static bool ValidateLastName(string possibleLastName)
         {
-
-            if (string.IsNullOrWhiteSpace(possibleLastName))
+            string pattern = "^[A-Za-z ]+$";
+            if (string.IsNullOrWhiteSpace(possibleLastName) || !Regex.IsMatch(possibleLastName, pattern))
             {
                 throw new ExceptionValidateUser("ERROR ON LASTNAME");
             }
