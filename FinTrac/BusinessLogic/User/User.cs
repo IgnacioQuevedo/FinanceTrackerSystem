@@ -21,6 +21,11 @@ namespace BusinessLogic.User
 
         public static bool ValidateFirstName(string possibleFirstName)
         {
+            
+
+            if (string.IsNullOrEmpty(possibleFirstName)) {
+                throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
+            }
             return true;
         }
 

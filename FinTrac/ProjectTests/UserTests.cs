@@ -16,7 +16,7 @@ public class UserTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
+    [ExpectedException(typeof(ExceptionValidateUser))]
 
     public void GivenEmptyName_ShouldThrowException()
     {
