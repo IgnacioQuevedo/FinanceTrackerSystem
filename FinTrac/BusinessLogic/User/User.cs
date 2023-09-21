@@ -24,16 +24,12 @@ namespace BusinessLogic.User
 
         public static bool ValidateFirstName(string possibleFirstName)
         {
+            string pattern = "^[A-Za-z ]+$";
+            bool hasNullOrSpace = string.IsNullOrWhiteSpace(possibleFirstName);
+            bool hasSpecialChar = !Regex.IsMatch(possibleFirstName, pattern);
 
-            if (string.IsNullOrWhiteSpace(possibleFirstName))
-            {
 
-                throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
-            }
-
-            string patron = "^[A-Za-z ]+$";
-
-            if (!Regex.IsMatch(possibleFirstName, patron))
+            if (hasNullOrSpace || hasSpecialChar)
             {
                 throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
             }
