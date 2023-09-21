@@ -25,7 +25,6 @@ public class UserTests
     }
 
     [TestMethod]
-
     public void GivenNameStartingOrHavingAtTheEndWithSpaces_ShouldReturnNameWhithoutThem()
     {
         string firstName = "    Diego";
@@ -34,6 +33,19 @@ public class UserTests
         firstName = "Diego     ";
         Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenNameWithSpecialCaracters_ShouldThrowException()
+    {
+
+        string firstName = "Die!!@go";
+        User.ValidateFirstName(firstName);
+
+
+    }
+
 
 
     #endregion
