@@ -88,7 +88,6 @@ public class UserTests
         User myUser = new User();
         myUser.Email = "diegohernandez@gmail.com";
         Assert.AreEqual(true, User.ValidateEmail(myUser.Email));
-
     }
 
 
