@@ -10,9 +10,24 @@ namespace BusinessLogic.User
     public class User
     {
 
+        public string FirstName { get; set; }
         public string Password { get; set; } = "";
 
         public User() { }
+
+
+
+        #region ValidateFirstName
+
+        public static bool ValidateFirstName(string possibleFirstName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
+
 
         #region ValidatePassword
         public static bool ValidatePassword(string posiblePassword)

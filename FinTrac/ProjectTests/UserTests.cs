@@ -5,6 +5,22 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
+        
+    #region Firstname
+    [TestMethod]
+    public void GivenCorrectName_ShouldReturnTrue()
+    {
+        User myUser = new User();
+        myUser.FirstName = "Diego";
+        Assert.AreEqual(true, User.ValidateFirstName(myUser.FirstName));
+
+
+    }
+
+
+    #endregion
+
+
 
     #region Password
     [TestMethod]
