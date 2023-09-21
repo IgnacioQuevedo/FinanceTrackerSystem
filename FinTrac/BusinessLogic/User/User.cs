@@ -30,6 +30,11 @@ namespace BusinessLogic.User
             return true;
         }
 
+        public static string CorrectFirstName(string possibleFirstName)
+        {
+        
+           throw new NotImplementedException();
+        }
 
         #endregion
 

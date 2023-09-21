@@ -23,6 +23,16 @@ public class UserTests
         string firstName = "";
         User.ValidateFirstName(firstName);
     }
+
+    [TestMethod]
+  
+    public void GivenNameStartingWithSpaces_ShouldReturnWhithoutThem()
+    {
+        string firstName = "Diego";
+        Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
+    }
+
+
     #endregion
 
 
