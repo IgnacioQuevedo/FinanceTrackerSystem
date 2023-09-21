@@ -59,6 +59,18 @@ public class UserTests
         Assert.AreEqual(true, User.ValidateLastName(myUser.LastName));
 
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+
+    public void GivenEmptyLastName_ShouldThrowException()
+    {
+        string lastName = "";
+        User.ValidateLastName(lastName);
+    }
+
+
+
     #endregion
 
     #region Password

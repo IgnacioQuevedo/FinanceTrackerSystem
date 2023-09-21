@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -16,10 +17,10 @@ namespace BusinessLogic.User
         public string FirstName { get; set; } = "";
 
         public string LastName { get; set; } = "";
-        
+
         public string Password { get; set; } = "";
 
-        
+
         public User() { }
 
 
@@ -54,7 +55,6 @@ namespace BusinessLogic.User
 
         public static bool ValidateLastName(string possibleLastName)
         {
-
             return true;
         }
 
