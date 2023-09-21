@@ -83,7 +83,7 @@ public class UserTests
     [ExpectedException(typeof(ExceptionValidateUser))]
     public void GivenUnformattedEmail_ShouldReturnException()
     {
-        string email = "a.gmail.com";
+        string email = "diego+Hernandez@gmail.com";
         User.ValidateEmail(email);  
     }
     #endregion
