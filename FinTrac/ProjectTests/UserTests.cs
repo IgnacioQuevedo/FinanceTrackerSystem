@@ -28,7 +28,7 @@ public class UserTests
   
     public void GivenNameStartingWithSpaces_ShouldReturnWhithoutThem()
     {
-        string firstName = "Diego";
+        string firstName = "    Diego";
         Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
     }
 
