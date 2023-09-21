@@ -73,10 +73,17 @@ namespace BusinessLogic.User
 
         public static bool ValidateEmail(string possibleEmail)
         {
-
-            string pattern = @"^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+.[a-zA-Z]{2,}$";
+            string pattern = @"^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
             bool hasCorrectPattern = Regex.IsMatch(possibleEmail, pattern);
 
+            for (int i = 0; i < possibleEmail.Length; i++)
+            {
+                if (possibleEmail[i].Equals('.') && possibleEmail[i+1].Equals('.'))
+                {
+                    hasCorrectPattern = false;
+                }
+            }
+            
             if (!hasCorrectPattern)
             {
                 throw new ExceptionValidateUser("ERROR ON EMAIL");
