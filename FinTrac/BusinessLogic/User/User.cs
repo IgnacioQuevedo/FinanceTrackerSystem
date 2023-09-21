@@ -21,6 +21,11 @@ namespace BusinessLogic.User
 
         public User() { }
 
+        public User(string firstName, string lastName, string email, string password, string? address)
+        {
+            
+        }
+
 
 
         #region ValidateFirstName

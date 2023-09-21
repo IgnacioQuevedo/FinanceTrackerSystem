@@ -6,7 +6,7 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
-
+        
     #region Firstname
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
@@ -153,7 +153,29 @@ public class UserTests
 
     #endregion
 
+    #region UserCreation
 
+    [TestMethod]
+    public void CreatingUserWithValues_PropertiesValuesShouldBeEquals()
+    {
+        string firstName = "Austin";
+        string lastName = "Ford";
+        string email = "austinFord@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+
+        User myUser = new User(firstName, lastName, email, password,address);
+
+        Assert.AreEqual(firstName, myUser.FirstName);
+        Assert.AreEqual(lastName, myUser.LastName);
+        Assert.AreEqual(email, myUser.Email);
+        Assert.AreEqual(password, myUser.Password);
+        Assert.AreEqual(address, myUser.Address);
+
+    }
+
+
+    #endregion
 
 
 
