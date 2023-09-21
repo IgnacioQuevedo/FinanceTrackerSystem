@@ -16,7 +16,7 @@ namespace BusinessLogic.User
         public string FirstName { get; set; } = "";
 
         public string LastName { get; set; } = "";
-
+        public string Email { get; set; }
         public string Password { get; set; } = "";
 
         public string? Address { get; set; }
@@ -70,6 +70,17 @@ namespace BusinessLogic.User
 
         #endregion
 
+
+        #region ValidateEmail
+
+        public static bool ValidateEmail(string possibleEmail)
+        {
+
+            return false;
+        }
+
+        #endregion
+
         #region ValidatePassword
         public static bool ValidatePassword(string posiblePassword)
         {
@@ -114,8 +125,8 @@ namespace BusinessLogic.User
         #endregion
 
 
-
-        #region Adress
+        
+        #region ValidateAddress
         //If necessary validations or implement methods.
         #endregion
     }

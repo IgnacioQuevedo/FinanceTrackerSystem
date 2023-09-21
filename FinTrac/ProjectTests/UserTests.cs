@@ -80,6 +80,20 @@ public class UserTests
 
     #endregion
 
+    #region Email
+
+    [TestMethod]
+    public void GivenCorrectEmail_ShouldReturnTrue()
+    {
+        User myUser = new User();
+        myUser.Email = "diegohernandez@gmail.com";
+        Assert.AreEqual("diegohernandez@gmail.com", User.ValidateEmail(myUser.Email));
+
+    }
+
+
+    #endregion
+
     #region Password
     [TestMethod]
 
@@ -131,7 +145,7 @@ public class UserTests
     }
     #endregion
 
-
+    
 
 
 
