@@ -26,17 +26,6 @@ public class UserTests
     }
 
     [TestMethod]
-    public void GivenNameStartingOrHavingAtTheEndWithSpaces_ShouldReturnNameWhithoutThem()
-    {
-        string firstName = "    Diego";
-        Assert.AreEqual("Diego", User.RemoveAllUnsenseSpaces(firstName));
-
-        firstName = "Diego     ";
-        Assert.AreEqual("Diego", User.RemoveAllUnsenseSpaces(firstName));
-    }
-
-
-    [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
     public void GivenNameWithSpecialCaracters_ShouldThrowException()
     {
@@ -97,7 +86,6 @@ public class UserTests
         string email = "a.gmail.com";
         User.ValidateEmail(email);  
     }
-
     #endregion
 
     #region Password
@@ -151,7 +139,19 @@ public class UserTests
     }
     #endregion
 
-    
+    #region GenericMethods
+
+    [TestMethod]
+    public void GivenStringStartingOrHavingAtTheEndSpaces_ShouldReturnStringWhithoutThem()
+    {
+        string stringExample = "    stringExample";
+        Assert.AreEqual("stringExample", User.RemoveAllUnsenseSpaces(stringExample));
+
+        stringExample = "stringExample     ";
+        Assert.AreEqual("stringExample", User.RemoveAllUnsenseSpaces(stringExample));
+    }
+
+    #endregion
 
 
 
