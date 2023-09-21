@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 namespace BusinessLogic.User
 {
     public class User
-    {
+    {   
+        private static bool _userCreated = false;
+
         #region Properties
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
@@ -33,12 +35,18 @@ namespace BusinessLogic.User
             Email = email;
             Password = password;
             Address = address;
-            if (!ValidateFirstName(FirstName) || !ValidateLastName(LastName) ||!ValidateEmail(Email) || !ValidatePassword(Password))
+            if (ValidateUser())
             {
-                throw new ExceptionValidateUser("ERROR ON USER");
-
+                //Maybe in the future is necessary, we keep it low profile in case we need it.
+                _userCreated = true;
             }
 
+        }
+
+        private bool ValidateUser()
+        {
+            bool isValid = ValidateFirstName(FirstName) || ValidateLastName(LastName) || ValidateEmail(Email) || ValidatePassword(Password);
+            return isValid;
         }
 
         #endregion
