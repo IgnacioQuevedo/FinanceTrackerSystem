@@ -28,10 +28,10 @@ public class UserTests
     public void GivenNameStartingOrHavingAtTheEndWithSpaces_ShouldReturnNameWhithoutThem()
     {
         string firstName = "    Diego";
-        Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
+        Assert.AreEqual("Diego", User.RemoveAllUnsenseSpaces(firstName));
 
         firstName = "Diego     ";
-        Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
+        Assert.AreEqual("Diego", User.RemoveAllUnsenseSpaces(firstName));
     }
 
 

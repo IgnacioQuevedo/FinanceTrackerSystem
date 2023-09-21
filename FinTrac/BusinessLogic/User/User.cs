@@ -43,9 +43,9 @@ namespace BusinessLogic.User
 
         }
 
-        public static string CorrectFirstName(string possibleFirstName)
+        public static string RemoveAllUnsenseSpaces(string stringToCorrect)
         {
-            return possibleFirstName.Trim();
+            return stringToCorrect.Trim();
         }
 
         #endregion
