@@ -5,7 +5,7 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
-        
+
     #region Firstname
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
@@ -25,10 +25,13 @@ public class UserTests
     }
 
     [TestMethod]
-  
-    public void GivenNameStartingWithSpaces_ShouldReturnWhithoutThem()
+
+    public void GivenNameStartingOrHavingAtTheEndWithSpaces_ShouldReturnNameWhithoutThem()
     {
         string firstName = "    Diego";
+        Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
+
+        firstName = "Diego     ";
         Assert.AreEqual("Diego", User.CorrectFirstName(firstName));
     }
 

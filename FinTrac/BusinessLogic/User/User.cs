@@ -28,6 +28,7 @@ namespace BusinessLogic.User
                 throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
             }
             return true;
+
         }
 
         public static string CorrectFirstName(string possibleFirstName)
