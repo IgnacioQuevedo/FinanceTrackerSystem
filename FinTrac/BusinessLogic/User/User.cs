@@ -33,6 +33,12 @@ namespace BusinessLogic.User
             Email = email;
             Password = password;
             Address = address;
+            if (!ValidateFirstName(FirstName) || !ValidateLastName(LastName) ||!ValidateEmail(Email) || !ValidatePassword(Password))
+            {
+                throw new ExceptionValidateUser("ERROR ON USER");
+
+            }
+
         }
 
         #endregion
