@@ -56,7 +56,7 @@ namespace BusinessLogic.User
         public static bool ValidateLastName(string possibleLastName)
         {
 
-            if (string.IsNullOrEmpty(possibleLastName))
+            if (string.IsNullOrWhiteSpace(possibleLastName))
             {
                 throw new ExceptionValidateUser("ERROR ON LASTNAME");
             }

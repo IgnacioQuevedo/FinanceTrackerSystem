@@ -63,7 +63,7 @@ public class UserTests
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
 
-    public void GivenEmptyLastName_ShouldThrowException()
+    public void GivenEmptyOrNullLastName_ShouldThrowException()
     {
         string lastName = "";
         User.ValidateLastName(lastName);
