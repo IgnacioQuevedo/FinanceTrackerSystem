@@ -13,11 +13,16 @@ public class UserTests
         User myUser = new User();
         myUser.FirstName = "Diego";
         Assert.AreEqual(true, User.ValidateFirstName(myUser.FirstName));
-
-
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
 
+    public void GivenEmptyName_ShouldThrowException()
+    {
+        string firstName = "";
+        User.ValidateFirstName(firstName);
+    }
     #endregion
 
 
