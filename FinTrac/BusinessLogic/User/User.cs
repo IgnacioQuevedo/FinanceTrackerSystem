@@ -23,7 +23,11 @@ namespace BusinessLogic.User
 
         public User(string firstName, string lastName, string email, string password, string? address)
         {
-            
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Password = password;
+            Address = address;
         }
 
 
