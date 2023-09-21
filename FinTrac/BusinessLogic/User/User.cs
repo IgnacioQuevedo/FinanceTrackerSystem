@@ -76,7 +76,7 @@ namespace BusinessLogic.User
         public static bool ValidateEmail(string possibleEmail)
         {
 
-            return false;
+            return true;
         }
 
         #endregion
