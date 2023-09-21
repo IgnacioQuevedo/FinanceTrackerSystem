@@ -1,5 +1,6 @@
 using BusinessLogic;
 using BusinessLogic.User;
+using NuGet.Frameworks;
 
 namespace TestProject1;
 [TestClass]
@@ -119,7 +120,18 @@ public class UserTests
 
     #endregion
 
+    #region Address
 
+    [TestMethod]
+    public void GivenCorrectAdress_ShouldReturnAdress()
+    {
+        User myUser = new User();
+        myUser.Address = "97th Ave";
+        Assert.AreEqual("97th Ave", myUser.Address);
+
+    }
+
+    #endregion
 
 
 
