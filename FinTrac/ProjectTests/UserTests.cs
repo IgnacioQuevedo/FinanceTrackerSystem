@@ -96,7 +96,6 @@ public class UserTests
     {
         string email = "a.gmail.com";
         User.ValidateEmail(email);  
-
     }
 
     #endregion
