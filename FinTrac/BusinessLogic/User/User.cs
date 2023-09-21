@@ -55,7 +55,7 @@ namespace BusinessLogic.User
         public static bool ValidateLastName(string possibleLastName)
         {
 
-            return false;
+            return true;
         }
 
 
