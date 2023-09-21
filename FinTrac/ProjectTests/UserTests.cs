@@ -57,7 +57,6 @@ public class UserTests
         myUser.LastName = "Hernandez";
 
         Assert.AreEqual(true, User.ValidateLastName(myUser.LastName));
-
     }
 
     [TestMethod]
@@ -70,6 +69,13 @@ public class UserTests
     }
 
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateUser))]
+    public void GivenLastNameWithSpecialCaracters_ShouldThrowException()
+    {
+        string lastName = "Her!!nande@z";
+        User.ValidateLastName(lastName);
+    }
 
     #endregion
 
