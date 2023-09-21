@@ -13,11 +13,16 @@ namespace BusinessLogic.User
 {
     public class User
     {
+        #region Properties
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
         public string? Address { get; set; }
+        #endregion
+
+        #region Constructors
+
 
         public User() { }
 
@@ -29,6 +34,9 @@ namespace BusinessLogic.User
             Password = password;
             Address = address;
         }
+
+        #endregion
+
 
 
 
@@ -76,7 +84,6 @@ namespace BusinessLogic.User
 
 
         #endregion
-
 
         #region ValidateEmail
 
@@ -144,9 +151,7 @@ namespace BusinessLogic.User
             }
         }
         #endregion
-
-
-        
+ 
         #region ValidateAddress
         //If necessary validations or implement methods.
         #endregion
