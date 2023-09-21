@@ -23,35 +23,40 @@ namespace BusinessLogic.User
 
         public static bool ValidatePassword(string posiblePassword)
         {
+            ValidatePasswordHasCorrectLength(posiblePassword);
+            ValidatePasswordUppercase(posiblePassword);
+
+            return true;
+        }
+
+        private static void ValidatePasswordHasCorrectLength(string posiblePassword)
+        {
             int minLength = 10;
             int maxLength = 30;
-            bool hasUpperCase = false;
 
-            if(posiblePassword.Length < minLength || posiblePassword.Length > maxLength)
+
+
+            if (posiblePassword.Length < minLength || posiblePassword.Length > maxLength)
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
+        }
 
-            for (int i = 0; i < posiblePassword.Length; i++)
+        private static void ValidatePasswordUppercase(string posiblePassword)
+        {
+            bool hasUpperCase = false;
+            for (int i = 0; i < posiblePassword.Length && !hasUpperCase; i++)
             {
                 if (posiblePassword[i] >= 65 && posiblePassword[i] <= 90)
                 {
                     hasUpperCase = true;
                 }
-
             }
 
-            if (!hasUpperCase) 
+            if (!hasUpperCase)
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
-
-            return true;
         }
-
-
-
-
-
     }
 }
