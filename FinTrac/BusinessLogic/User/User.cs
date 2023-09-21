@@ -30,11 +30,11 @@ namespace BusinessLogic.User
         public static bool ValidateFirstName(string possibleFirstName)
         {
             string pattern = "^[A-Za-z ]+$";
-            bool hasNullOrSpace = string.IsNullOrWhiteSpace(possibleFirstName);
+            bool hasNullOrSpaceOrEmpty = string.IsNullOrWhiteSpace(possibleFirstName);
             bool hasSpecialChar = !Regex.IsMatch(possibleFirstName, pattern);
 
 
-            if (hasNullOrSpace || hasSpecialChar)
+            if (hasNullOrSpaceOrEmpty || hasSpecialChar)
             {
                 throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
             }
@@ -56,7 +56,11 @@ namespace BusinessLogic.User
         public static bool ValidateLastName(string possibleLastName)
         {
             string pattern = "^[A-Za-z ]+$";
-            if (string.IsNullOrWhiteSpace(possibleLastName) || !Regex.IsMatch(possibleLastName, pattern))
+            bool hasSpecialChar = !Regex.IsMatch(possibleLastName, pattern);
+            bool hasNullOrEmptyOrSpace = string.IsNullOrWhiteSpace(possibleLastName);
+
+
+            if (hasNullOrEmptyOrSpace || hasSpecialChar)
             {
                 throw new ExceptionValidateUser("ERROR ON LASTNAME");
             }
