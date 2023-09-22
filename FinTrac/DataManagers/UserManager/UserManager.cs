@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.User;
-namespace DataManagers
+
+namespace DataManagers.UserManager
 {
     public class UserManager
     {
@@ -7,7 +8,7 @@ namespace DataManagers
 
         public static bool ValidateAddUser(User userToAdd)
         {
-           
+
             return true;
         }
 
