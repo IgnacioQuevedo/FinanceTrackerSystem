@@ -7,5 +7,14 @@ using BusinessLogic.User;
 
 namespace DataManagers
 {
-    //To implement in the future
+    public class Repository
+    {
+        public List<User> Accounts { get; set; }
+
+
+        public Repository() 
+        { 
+            Accounts = new List<User>();
+        }
+    }
 }
