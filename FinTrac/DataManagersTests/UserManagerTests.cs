@@ -4,13 +4,13 @@ using DataManagers;
 namespace DataManagersTests
 {
     [TestClass]
-    public class UnitTest1
+    public class UserManagerTests
     {
 
         #region AddUser
 
         [TestMethod]
-        public void GivenUserToAddToRepositoryAccounts_ShouldReturnTrue()
+        public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
         {
             string firstName = "Austin";
             string lastName = "Ford";
@@ -21,8 +21,6 @@ namespace DataManagersTests
             User myUser = new User(firstName, lastName, email, password, address);
 
             Assert.AreEqual(true, UserManager.ValidateAddUser(myUser));
-
-
         }
         #endregion
     }

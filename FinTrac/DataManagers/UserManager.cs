@@ -7,9 +7,7 @@ namespace DataManagers
 
         public static bool ValidateAddUser(User userToAdd)
         {
-
-            dataBase.Accounts.Add(userToAdd);
-
+           
             return true;
         }
 
