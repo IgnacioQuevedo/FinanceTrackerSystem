@@ -10,7 +10,7 @@ namespace DataManagers.UserManager
         public static void Add(User user)
         {
 
-            throw new NotImplementedException();
+            DataBase.Accounts.Add(user);
 
         }
 
