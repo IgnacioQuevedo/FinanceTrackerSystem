@@ -13,9 +13,9 @@ namespace DataManagersTests
         [TestInitialize]
         public void TestInitialize()
         {
-            string firstName = "Austin";
-            string lastName = "Ford";
-            string email = "austinFord@gmail.com";
+            string firstName = "Michael";
+            string lastName = "Santa";
+            string email = "michSanta@gmail.com";
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
 
@@ -29,21 +29,22 @@ namespace DataManagersTests
 
         public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
         {
-            Assert.AreEqual(true, UserManager.ValidateAddUser(genericUser));
+            string firstName = "Austin";
+            string lastName = "Ford";
+            string email = "austinFord@gmail.com";
+            string password = "AustinF2003";
+            string address = "NW 2nd Ave";
+            User myUser = new User(firstName,lastName, email, password, address);   
+            Assert.AreEqual(true, UserManager.ValidateAddUser(myUser));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserManager))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
         {
-            string firstName = "Michael";
-            string lastName = "Santa";
-            string email = "michSanta@gmail.com";
-            string password = "AustinF2003";
-            string address = "NW 2nd Ave";
-            User myUser = new User(firstName, lastName, email, password, address);
+   
 
-            UserManager.DataBase.Accounts.Add(myUser);
+            UserManager.DataBase.Accounts.Add(genericUser);
 
             string firstName2 = "Kent";
             string lastName2 = "Beck";

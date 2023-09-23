@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.User;
+using System.Runtime.InteropServices;
 
 namespace DataManagers.UserManager
 {
@@ -38,9 +39,24 @@ namespace DataManagers.UserManager
 
         public static bool Login(User userToBeLogged)
         {
-            throw new NotImplementedException();
+            foreach (var account in DataBase.Accounts)
+
+            {
+                if (account.Email.ToLower().Equals(userToBeLogged.Email.ToLower()) && account.Password.Equals(userToBeLogged.Password))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
+
         #endregion
+
+
+
+
+
+
     }
 
 }
