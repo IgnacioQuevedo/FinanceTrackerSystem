@@ -9,9 +9,10 @@ namespace DataManagers.UserManager
 
         public static void Add(User user)
         {
-
-            DataBase.Accounts.Add(user);
-
+            if(ValidateAddUser(user))
+            {
+                DataBase.Accounts.Add(user);
+            }
         }
 
         public static bool ValidateAddUser(User userToAdd)
