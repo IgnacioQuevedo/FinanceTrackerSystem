@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.User;
 using System.Runtime.InteropServices;
+using System.Globalization;
 
 namespace DataManagers.UserManager
 {
@@ -13,6 +14,14 @@ namespace DataManagers.UserManager
         {
             if (ValidateAddUser(user))
             {
+                string emailFormated = user.Email.ToLower();
+                string firstNameFormated = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
+                string lastNameFormated = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
+                //Now firstName and lastName has only in capital letters the first one, furthermore we deny capital letters in email.
+                
+                user.Email = emailFormated;
+                user.FirstName = firstNameFormated;
+                user.LastName = lastNameFormated;
                 DataBase.Accounts.Add(user);
             }
         }
@@ -25,7 +34,7 @@ namespace DataManagers.UserManager
         {
             foreach (var someUser in DataBase.Accounts)
             {
-                if (someUser.Email.ToLower().Equals(UserEmail.ToLower()))
+                if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
                     throw new ExceptionUserManager("Email already registered, impossible to create another account.");
                 }
@@ -39,15 +48,25 @@ namespace DataManagers.UserManager
 
         public static bool Login(User userToBeLogged)
         {
+            bool existsUser = false;
+            string userEmail = userToBeLogged.Email.ToLower();
+            string userPassword = userToBeLogged.Password; 
+
             foreach (var account in DataBase.Accounts)
 
             {
-                if (account.Email.ToLower().Equals(userToBeLogged.Email.ToLower()) && account.Password.Equals(userToBeLogged.Password))
+                if (userEmail.Equals(account.Email) && userPassword.Equals(account.Password))
                 {
-                    return true;
+                    existsUser = true;
                 }
             }
-            return false;
+
+            if (!existsUser)
+            {
+                throw new ExceptionValidateUser("User not exists, maybe you have an error on the email or password?");
+            }
+
+            return existsUser;
         }
 
         #endregion

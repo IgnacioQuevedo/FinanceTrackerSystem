@@ -42,9 +42,9 @@ namespace DataManagersTests
         [ExpectedException(typeof(ExceptionUserManager))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
         {
-   
 
-            UserManager.DataBase.Accounts.Add(genericUser);
+
+            UserManager.Add(genericUser);
 
             string firstName2 = "Kent";
             string lastName2 = "Beck";
