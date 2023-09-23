@@ -50,7 +50,7 @@ namespace DataManagers.UserManager
         {
             bool existsUser = false;
             string userEmail = userToBeLogged.Email.ToLower();
-            string userPassword = userToBeLogged.Password; 
+            string userPassword = userToBeLogged.Password;
 
             foreach (var account in DataBase.Accounts)
 
@@ -72,7 +72,17 @@ namespace DataManagers.UserManager
         #endregion
 
 
+        #region Modify
 
+
+        public static void Modify(User user,User userUpdated)
+        {
+            
+            throw new NotImplementedException();
+
+        }
+
+        #endregion
 
 
 

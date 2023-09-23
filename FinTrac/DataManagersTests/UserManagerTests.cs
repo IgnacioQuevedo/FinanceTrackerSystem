@@ -8,6 +8,8 @@ namespace DataManagersTests
     public class UserManagerTests
     {
 
+
+        #region initializingAspects
         private User genericUser;
 
         [TestInitialize]
@@ -22,6 +24,7 @@ namespace DataManagersTests
             genericUser = new User(firstName, lastName, email, password, address);
         }
 
+        #endregion
 
         #region AddUser
 
@@ -78,7 +81,7 @@ namespace DataManagersTests
         }
         #endregion
 
-        #region loginUser
+        #region LoginUser
 
         [TestMethod]
 
@@ -88,6 +91,37 @@ namespace DataManagersTests
             Assert.AreEqual(true,UserManager.Login(genericUser));
 
         }
+
+        #endregion
+
+        #region Modify
+
+        [TestMethod]
+        public void GivenAspectsOfUserToChange_ShouldBeChanged()
+        {
+
+            string firstName = "Michael";
+            string lastName = "Santa";
+            string emailModified = "michTheBest@gmail.com";
+            string passwordModified = "MichaelSanta1234";
+            string address = "NW 2nd Ave";
+
+            User userUpdated = new User(firstName, lastName, emailModified, passwordModified, address);
+
+            UserManager.Modify(genericUser, userUpdated);
+
+            Assert.AreEqual(firstName, genericUser.FirstName);
+            Assert.AreEqual(lastName, genericUser.LastName);
+            Assert.AreEqual(emailModified, genericUser.Email);
+            Assert.AreEqual(passwordModified, genericUser.Password);
+            Assert.AreEqual(address, genericUser.Address);
+
+
+
+
+
+        }
+
 
         #endregion
 
