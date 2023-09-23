@@ -83,7 +83,13 @@ namespace DataManagers.UserManager
 
         public static void Modify(User user,User userUpdated)
         {
-            throw new NotImplementedException();
+
+            user.FirstName = userUpdated.FirstName;
+            user.LastName = userUpdated.LastName;
+            user.Email = userUpdated.Email;
+            user.Password = userUpdated.Password;
+            user.Address = userUpdated.Address;
+
         }
 
         #endregion
