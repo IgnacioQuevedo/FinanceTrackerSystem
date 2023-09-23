@@ -81,14 +81,14 @@ namespace DataManagers.UserManager
         #region Modify
 
 
-        public static void Modify(User user,User userUpdated)
+        public static void Modify(User userNotUpdated,User userUpdated)
         {
 
-            user.FirstName = userUpdated.FirstName;
-            user.LastName = userUpdated.LastName;
-            user.Email = userUpdated.Email;
-            user.Password = userUpdated.Password;
-            user.Address = userUpdated.Address;
+            userNotUpdated.FirstName = userUpdated.FirstName;
+            userNotUpdated.LastName = userUpdated.LastName;
+            userNotUpdated.Email = userUpdated.Email;
+            userNotUpdated.Password = userUpdated.Password;
+            userNotUpdated.Address = userUpdated.Address;
 
         }
 
