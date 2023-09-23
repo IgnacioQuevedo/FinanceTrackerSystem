@@ -24,7 +24,7 @@ namespace DataManagers.UserManager
         {
             foreach (var someUser in DataBase.Accounts)
             {
-                if (someUser.Email.Equals(UserEmail))
+                if (someUser.Email.ToLower().Equals(UserEmail.ToLower()))
                 {
                     throw new ExceptionUserManager("Email already registered, impossible to create another account.");
                 }

@@ -24,7 +24,6 @@ namespace DataManagersTests
             Assert.AreEqual(true, UserManager.ValidateAddUser(myUser));
         }
 
-
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserManager))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
