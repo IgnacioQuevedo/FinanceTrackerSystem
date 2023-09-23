@@ -8,22 +8,18 @@ namespace DataManagers.UserManager
 
         public static bool ValidateAddUser(User userToAdd)
         {
-            bool isUsed = false;
-
-            foreach (var usuario in DataBase.Accounts)
+            EmailUsed(userToAdd.Email);
+            return true;
+        }
+        private static void EmailUsed(string UserEmail)
+        {
+            foreach (var someUser in DataBase.Accounts)
             {
-                if (usuario.Email.Equals(userToAdd.Email))
+                if (someUser.Email.Equals(UserEmail))
                 {
-                    isUsed = true;
+                    throw new ExceptionUserManager("Email already registered, impossible to create another account.");
                 }
             }
-
-            if (isUsed)
-            {
-                throw new ExceptionUserManager("Email already registered, impossible to create another account.");
-            }
-
-            return true;
         }
     }
 
