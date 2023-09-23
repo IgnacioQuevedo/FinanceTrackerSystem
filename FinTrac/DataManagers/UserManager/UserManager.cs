@@ -6,6 +6,14 @@ namespace DataManagers.UserManager
     {
         public static Repository DataBase { get; set; } = new Repository();
 
+
+        public static void Add(User user)
+        {
+
+            throw new NotImplementedException();
+
+        }
+
         public static bool ValidateAddUser(User userToAdd)
         {
             EmailUsed(userToAdd.Email);

@@ -49,7 +49,23 @@ namespace DataManagersTests
 
         }
 
+        [TestMethod]
 
+        public void GivenUserNotRegistered_ShouldRegisterIt()
+        {
+
+            string firstName = "Austin";
+            string lastName = "Ford";
+            string email = "austinFord@gmail.com";
+            string password = "AustinF2003";
+            string address = "NW 2nd Ave";
+
+            User myUser = new User(firstName, lastName, email, password, address);
+
+            UserManager.Add(myUser);
+
+
+        }
         #endregion
     }
 }
