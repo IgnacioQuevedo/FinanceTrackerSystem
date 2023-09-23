@@ -61,10 +61,10 @@ namespace DataManagers.UserManager
             foreach (var account in DataBase.Accounts)
 
             {
-                if (userPassword.Equals(account.Password))
+                if (userEmail.Equals(account.Email))
 
                 {
-                    if (userEmail.Equals(account.Email))
+                    if (userPassword.Equals(account.Password))
                     {
                         existsUser = true;
                     }

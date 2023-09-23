@@ -91,6 +91,13 @@ namespace DataManagersTests
             Assert.AreEqual(true,UserManager.Login(genericUser));
 
         }
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserManager))]
+        public void GivenUserNotAdded_ShouldThrowException()
+        {
+            User myUser = new User("Ronnie", "Belgman", "ronnieBelgam@gmail.com", "RonnieMan2003", "asd");
+            UserManager.Login(myUser);
+        }
 
         #endregion
 
