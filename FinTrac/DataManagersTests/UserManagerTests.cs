@@ -8,10 +8,10 @@ namespace DataManagersTests
     public class UserManagerTests
     {
 
-        #region AddUser
+        private User genericUser;
 
-        [TestMethod]
-        public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
+        [TestInitialize]
+        public void TestInitialize()
         {
             string firstName = "Austin";
             string lastName = "Ford";
@@ -19,9 +19,17 @@ namespace DataManagersTests
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
 
-            User myUser = new User(firstName, lastName, email, password, address);
+            genericUser = new User(firstName, lastName, email, password, address);
+        }
 
-            Assert.AreEqual(true, UserManager.ValidateAddUser(myUser));
+
+        #region AddUser
+
+        [TestMethod]
+
+        public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
+        {
+            Assert.AreEqual(true, UserManager.ValidateAddUser(genericUser));
         }
 
         [TestMethod]
@@ -52,7 +60,7 @@ namespace DataManagersTests
 
         public void GivenUserNotRegistered_ShouldRegisterIt()
         {
-
+            int numberOfUsersAddedBefore = UserManager.DataBase.Accounts.Count;
             string firstName = "Franklin";
             string lastName = "Oddisey";
             string email = "FranklinOddisey@gmail.com";
@@ -60,11 +68,15 @@ namespace DataManagersTests
             string address = "NW 5nd Ave";
 
             User myUser = new User(firstName, lastName, email, password, address);
+            
 
             UserManager.Add(myUser);
 
+            Assert.AreEqual(numberOfUsersAddedBefore + 1,UserManager.DataBase.Accounts.Count);
 
         }
         #endregion
+
+ 
     }
 }

@@ -7,14 +7,14 @@ namespace DataManagers.UserManager
         public static Repository DataBase { get; set; } = new Repository();
 
 
+        #region addUser
         public static void Add(User user)
         {
-            if(ValidateAddUser(user))
+            if (ValidateAddUser(user))
             {
                 DataBase.Accounts.Add(user);
             }
         }
-
         public static bool ValidateAddUser(User userToAdd)
         {
             EmailUsed(userToAdd.Email);
@@ -30,6 +30,7 @@ namespace DataManagers.UserManager
                 }
             }
         }
+        #endregion
     }
 
 }
