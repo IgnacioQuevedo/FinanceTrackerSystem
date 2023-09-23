@@ -14,17 +14,23 @@ namespace DataManagers.UserManager
         {
             if (ValidateAddUser(user))
             {
-                string emailFormated = user.Email.ToLower();
-                string firstNameFormated = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
-                string lastNameFormated = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
-                //Now firstName and lastName has only in capital letters the first one, furthermore we deny capital letters in email.
-                
-                user.Email = emailFormated;
-                user.FirstName = firstNameFormated;
-                user.LastName = lastNameFormated;
+                FormatProperties(user);
                 DataBase.Accounts.Add(user);
             }
         }
+
+        private static void FormatProperties(User user)
+        {
+            string emailFormated = user.Email.ToLower();
+            string firstNameFormated = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
+            string lastNameFormated = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
+            //Now firstName and lastName has only in capital letters the first one, furthermore we deny capital letters in email.
+
+            user.Email = emailFormated;
+            user.FirstName = firstNameFormated;
+            user.LastName = lastNameFormated;
+        }
+
         public static bool ValidateAddUser(User userToAdd)
         {
             EmailUsed(userToAdd.Email);
@@ -77,9 +83,7 @@ namespace DataManagers.UserManager
 
         public static void Modify(User user,User userUpdated)
         {
-            
             throw new NotImplementedException();
-
         }
 
         #endregion

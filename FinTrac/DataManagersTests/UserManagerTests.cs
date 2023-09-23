@@ -115,11 +115,6 @@ namespace DataManagersTests
             Assert.AreEqual(emailModified, genericUser.Email);
             Assert.AreEqual(passwordModified, genericUser.Password);
             Assert.AreEqual(address, genericUser.Address);
-
-
-
-
-
         }
 
 
