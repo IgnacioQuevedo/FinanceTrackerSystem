@@ -31,6 +31,16 @@ namespace DataManagers.UserManager
             }
         }
         #endregion
+
+
+        #region Login
+
+
+        public static bool Login(User userToBeLogged)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 
 }

@@ -60,7 +60,7 @@ namespace DataManagersTests
 
         public void GivenUserNotRegistered_ShouldRegisterIt()
         {
-            int numberOfUsersAddedBefore = UserManager.DataBase.Accounts.Count;
+
             string firstName = "Franklin";
             string lastName = "Oddisey";
             string email = "FranklinOddisey@gmail.com";
@@ -68,7 +68,7 @@ namespace DataManagersTests
             string address = "NW 5nd Ave";
 
             User myUser = new User(firstName, lastName, email, password, address);
-            
+            int numberOfUsersAddedBefore = UserManager.DataBase.Accounts.Count;
 
             UserManager.Add(myUser);
 
@@ -77,6 +77,19 @@ namespace DataManagersTests
         }
         #endregion
 
- 
+        #region loginUser
+
+        [TestMethod]
+
+        public void GivenUserAlreadyAdded_ShouldBePossibleToLogin()
+        {
+
+            Assert.AreEqual(true,UserManager.Login(genericUser));
+
+        }
+
+        #endregion
+
+
     }
 }
