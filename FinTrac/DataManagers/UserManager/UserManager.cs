@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace DataManagers.UserManager
 {
-    public class UserManager
+    public abstract class UserManager
     {
-        public static Repository DataBase { get; set; } = new Repository();
+        public static Repository DataBase { get;} = new Repository();
 
 
         #region addUser
