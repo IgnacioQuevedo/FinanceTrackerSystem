@@ -61,15 +61,20 @@ namespace DataManagers.UserManager
             foreach (var account in DataBase.Accounts)
 
             {
-                if (userEmail.Equals(account.Email) && userPassword.Equals(account.Password))
+                if (userPassword.Equals(account.Password))
+
                 {
-                    existsUser = true;
+                    if (userEmail.Equals(account.Email))
+                    {
+                        existsUser = true;
+                    }
+                    
                 }
             }
 
             if (!existsUser)
             {
-                throw new ExceptionValidateUser("User not exists, maybe you have an error on the email or password?");
+                throw new ExceptionUserManager("User not exists, maybe you have an error on the email or password?");
             }
 
             return existsUser;
