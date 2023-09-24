@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinTrac", "FinTrac\FinTrac.csproj", "{EF15D95F-F707-4496-A25C-771C6B00623F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinTrac", "FinTrac\FinTrac.csproj", "{EF15D95F-F707-4496-A25C-771C6B00623F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{B38A27EE-693B-4850-B2B3-EFD5FCAA933F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{B38A27EE-693B-4850-B2B3-EFD5FCAA933F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTests", "ProjectTests\ProjectTests.csproj", "{BA1E578A-2005-48D6-951A-732E8584ADF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicTests", "ProjectTests\BusinessLogicTests.csproj", "{BA1E578A-2005-48D6-951A-732E8584ADF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManagers", "DataManagers\DataManagers.csproj", "{9E6A30CE-7DEF-472C-B82E-EF0967C41069}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManagersTests", "DataManagersTests\DataManagersTests.csproj", "{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{BA1E578A-2005-48D6-951A-732E8584ADF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA1E578A-2005-48D6-951A-732E8584ADF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA1E578A-2005-48D6-951A-732E8584ADF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6A30CE-7DEF-472C-B82E-EF0967C41069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6A30CE-7DEF-472C-B82E-EF0967C41069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6A30CE-7DEF-472C-B82E-EF0967C41069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6A30CE-7DEF-472C-B82E-EF0967C41069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
