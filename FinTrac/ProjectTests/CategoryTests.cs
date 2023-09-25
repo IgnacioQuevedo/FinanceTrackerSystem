@@ -15,6 +15,7 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
+        genericCategory.Status = StatusEnum.Activa;
 
     }
 
@@ -40,6 +41,12 @@ public class CategoryTests
         DateTime dateNow = DateTime.Now;
         string dateNowString = dateNow.ToString("dd/MM/yyyy");
         Assert.AreEqual(dateNowString, genericCategory.CreationDate);
+    }
+
+    [TestMethod]
+    public void GivenStatus_ShouldBelongToStatusEnum()
+    {
+        Assert.IsTrue(Enum.IsDefined(typeof(StatusEnum), genericCategory.Status));
     }
 
 
