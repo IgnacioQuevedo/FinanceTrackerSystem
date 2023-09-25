@@ -15,7 +15,7 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
-        genericCategory.Status = StatusEnum.Activa;
+        genericCategory.Status = StatusEnum.Active;
 
     }
 
