@@ -16,4 +16,14 @@ public class CategoryTests
         myCategory.Name = "Clothes";
         Assert.AreEqual(true, myCategory.ValidateCategory());
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateCategory))]
+    public void GivenEmptyName_ShouldThrowExceptione()
+    {
+        Category myCategory = new Category();
+        myCategory.Name = "Clothes";
+        Assert.AreEqual(true, myCategory.ValidateCategory());
+    }
+
 }
