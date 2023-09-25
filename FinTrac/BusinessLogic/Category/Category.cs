@@ -8,7 +8,7 @@ namespace BusinessLogic.Category
 {
     public class Category
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
 
 
@@ -19,7 +19,8 @@ namespace BusinessLogic.Category
 
         public bool ValidateCategory()
         {
-            return true;
+            bool isValid = true;
+            return isValid;
         }
     }
 }
