@@ -11,13 +11,12 @@ namespace BusinessLogic.Category
         public string Name { get; set; } = "";
         public string CreationDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
-        public StatusEnum Status { get; set; } = null;
+        public StatusEnum Status { get; set; }
 
 
         public Category()
         {
         }
-
 
         public bool ValidateCategory()
         {
