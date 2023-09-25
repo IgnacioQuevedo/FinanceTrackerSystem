@@ -1,5 +1,4 @@
 using BusinessLogic;
-using BusinessLogic.User;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 
@@ -9,12 +8,20 @@ namespace TestProject1;
 [TestClass]
 public class CategoryTests
 {
+    private Category genericCategory;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        genericCategory = new Category();
+        genericCategory.Name = "Clothes";
+    }
+
+
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
     {
-        Category myCategory = new Category();
-        myCategory.Name = "Clothes";
-        Assert.AreEqual(true, myCategory.ValidateCategory());
+        Assert.AreEqual(true, genericCategory.ValidateCategory());
     }
 
     [TestMethod]
