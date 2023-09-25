@@ -19,7 +19,7 @@ namespace BusinessLogic.Category
 
         public bool ValidateCategory()
         {
-            return false;
+            return true;
         }
     }
 }
