@@ -12,7 +12,7 @@ namespace BusinessLogic.Category
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
         public StatusEnum Status { get; set; }
-        public TypeEnum Type { get; set; } = null;
+        public TypeEnum Type { get; set; }
 
 
         public Category()
