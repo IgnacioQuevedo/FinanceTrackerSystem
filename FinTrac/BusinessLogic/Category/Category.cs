@@ -8,14 +8,16 @@ namespace BusinessLogic.Category
 {
     public class Category
     {
+        #region Properties
         private bool _categoryCreated = false;
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
+        #endregion
 
-
+        #region Constructors
         public Category()
         {
         }
@@ -31,6 +33,9 @@ namespace BusinessLogic.Category
                 _categoryCreated = true;
             }
         }
+        #endregion
+
+        #region Validating Category
 
         public bool ValidateCategory()
         {
@@ -41,5 +46,7 @@ namespace BusinessLogic.Category
             }
             return isValid;
         }
+        #endregion
+
     }
 }
