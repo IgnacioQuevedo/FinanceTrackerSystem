@@ -17,7 +17,7 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
-        genericCategory.Status = StatusEnum.Enabled;
+        genericCategory.Status = (StatusEnum)1;
         genericCategory.Type = TypeEnum.Income;
 
     }
@@ -57,6 +57,19 @@ public class CategoryTests
     {
         bool belongsToEnum = Enum.IsDefined(typeof(TypeEnum), genericCategory.Type);
         Assert.IsTrue(belongsToEnum);
+    }
+
+    [TestMethod]
+    public void GivenCorrectValuesToCreateCategory_ShouldBeEqualToProperties()
+    {
+        string name = "Food";
+        StatusEnum status = (StatusEnum)1;
+        TypeEnum type = (TypeEnum)1;
+        Category myCategory = new Category(name, status, type);
+
+        Assert.AreEqual(name, myCategory.Name);
+        Assert.AreEqual(status, myCategory.Status);
+        Assert.AreEqual(type, myCategory.Type);
     }
 
 

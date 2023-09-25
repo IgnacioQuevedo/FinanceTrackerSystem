@@ -8,7 +8,7 @@ namespace BusinessLogic.Category
 {
     public enum TypeEnum
     {
-        Income,
-        Outcome
+        Income = 1,
+        Outcome = 2
     }
 }
