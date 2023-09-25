@@ -8,7 +8,7 @@ namespace BusinessLogic.Category
 {
     public enum StatusEnum
     {
-        Activa,
-        Inactiva
+        Active,
+        Inactive
     }
 }

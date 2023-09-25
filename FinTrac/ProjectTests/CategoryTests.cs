@@ -46,7 +46,8 @@ public class CategoryTests
     [TestMethod]
     public void GivenStatus_ShouldBelongToStatusEnum()
     {
-        Assert.IsTrue(Enum.IsDefined(typeof(StatusEnum), genericCategory.Status));
+        bool belongsToEnum = Enum.IsDefined(typeof(StatusEnum), genericCategory.Status);
+        Assert.IsTrue(belongsToEnum);
     }
 
 
