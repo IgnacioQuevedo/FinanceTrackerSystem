@@ -30,7 +30,7 @@ namespace DataManagersTests
 
         [TestMethod]
 
-        public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
+        public void GivenUserToAddToUsers_ValidationShouldReturnTrue()
         {
             string firstName = "Austin";
             string lastName = "Ford";
@@ -72,11 +72,11 @@ namespace DataManagersTests
             string address = "NW 5nd Ave";
 
             User myUser = new User(firstName, lastName, email, password, address);
-            int numberOfUsersAddedBefore = UserManager.DataBase.Accounts.Count;
+            int numberOfUsersAddedBefore = UserManager.DataBase.Users.Count;
 
             UserManager.Add(myUser);
 
-            Assert.AreEqual(numberOfUsersAddedBefore + 1,UserManager.DataBase.Accounts.Count);
+            Assert.AreEqual(numberOfUsersAddedBefore + 1,UserManager.DataBase.Users.Count);
 
         }
         #endregion

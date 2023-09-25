@@ -48,8 +48,8 @@ namespace BusinessLogic.User
             bool emailValidated = ValidateEmail(Email);
             bool passwordValidated = ValidatePassword(Password);
             bool firstNameValidated = ValidateFirstName(FirstName);
-            bool LastNameValidated = ValidateLastName(LastName);
-            return emailValidated && passwordValidated && firstNameValidated && LastNameValidated;
+            bool lastNameValidated = ValidateLastName(LastName);
+            return emailValidated && passwordValidated && firstNameValidated && lastNameValidated;
         }
 
         #endregion
