@@ -55,7 +55,8 @@ public class CategoryTests
     [TestMethod]
     public void GivenType_ShouldBelongToTypeEnum()
     {
-        Assert.IsTrue(Enum.IsDefined(typeof(TypeEnum), genericCategory.Type));
+        bool belongsToEnum = Enum.IsDefined(typeof(TypeEnum), genericCategory.Type);
+        Assert.IsTrue(belongsToEnum);
     }
 
 
