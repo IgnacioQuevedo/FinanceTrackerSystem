@@ -62,14 +62,14 @@ public class CategoryTests
     [TestMethod]
     public void GivenCorrectValuesToCreateCategory_ShouldBeEqualToProperties()
     {
-        string name = "Food";
-        StatusEnum status = (StatusEnum)1;
-        TypeEnum type = (TypeEnum)1;
-        Category myCategory = new Category(name, status, type);
+        string categoryName = "Food";
+        StatusEnum categoryStatus = (StatusEnum)1;
+        TypeEnum categoryType = (TypeEnum)1;
+        Category myCategory = new Category(categoryName, categoryStatus, categoryType);
 
-        Assert.AreEqual(name, myCategory.Name);
-        Assert.AreEqual(status, myCategory.Status);
-        Assert.AreEqual(type, myCategory.Type);
+        Assert.AreEqual(categoryName, myCategory.Name);
+        Assert.AreEqual(categoryStatus, myCategory.Status);
+        Assert.AreEqual(categoryType, myCategory.Type);
     }
 
 

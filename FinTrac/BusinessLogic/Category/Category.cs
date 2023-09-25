@@ -21,9 +21,9 @@ namespace BusinessLogic.Category
 
         public Category(string name, StatusEnum status, TypeEnum type)
         {
+            Name = name;
             Status = status;
             Type = type;
-            Name = name;
         }
 
         public bool ValidateCategory()
