@@ -24,6 +24,7 @@ namespace BusinessLogic.Category
             Name = name;
             Status = status;
             Type = type;
+            ValidateCategory();
         }
 
         public bool ValidateCategory()
