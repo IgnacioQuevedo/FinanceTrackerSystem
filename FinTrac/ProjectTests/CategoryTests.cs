@@ -15,6 +15,8 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
+        genericCategory.CreationDate = DateTime.Now;
+
     }
 
 
@@ -32,5 +34,14 @@ public class CategoryTests
         myCategory.Name = "";
         Assert.AreEqual(true, myCategory.ValidateCategory());
     }
+
+    [TestMethod]
+    public void GivenCategory_ShouldReturnDate()
+    {
+        DateTime date;
+        Assert.AreEqual(date, genericCategory.CreationDate);
+    }
+
+
 
 }
