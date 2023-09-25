@@ -9,7 +9,7 @@ namespace BusinessLogic.Category
     public class Category
     {
         public string Name { get; set; } = "";
-        public DateTime CreationDate { get; set; }
+        public string CreationDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
 
 
@@ -25,6 +25,8 @@ namespace BusinessLogic.Category
             {
                 throw new ExceptionValidateCategory("ERROR ON NAME");
             }
+
+
             return isValid;
         }
     }

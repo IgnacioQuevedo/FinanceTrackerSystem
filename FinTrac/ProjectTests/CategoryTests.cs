@@ -15,7 +15,6 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
-        genericCategory.CreationDate = DateTime.Now;
 
     }
 
@@ -38,8 +37,9 @@ public class CategoryTests
     [TestMethod]
     public void GivenCategory_ShouldReturnDate()
     {
-        DateTime date;
-        Assert.AreEqual(date, genericCategory.CreationDate);
+        DateTime date = DateTime.Now;
+        string dateNow = date.ToString("dd/MM/yyyy");
+        Assert.AreEqual(dateNow, genericCategory.CreationDate);
     }
 
 
