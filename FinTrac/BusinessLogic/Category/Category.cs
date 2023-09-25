@@ -17,9 +17,9 @@ namespace BusinessLogic.Category
         }
 
 
-        public static bool ValidateName()
+        public bool ValidateCategory()
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

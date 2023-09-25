@@ -10,11 +10,10 @@ namespace TestProject1;
 public class CategoryTests
 {
     [TestMethod]
-    public void GivenACorrectName_ShouldReturnTrue()
+    public void GivenCorrectName_ShouldReturnTrue()
     {
         Category myCategory = new Category();
         myCategory.Name = "Clothes";
-        Assert.AreEqual(true, Category.ValidateName());
-
+        Assert.AreEqual(true, myCategory.ValidateCategory());
     }
 }
