@@ -3,6 +3,8 @@ using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 
 using BusinessLogic.Category;
+using System.Net.Security;
+
 namespace TestProject1;
 
 [TestClass]
@@ -47,6 +49,13 @@ public class CategoryTests
     public void GivenStatus_ShouldBelongToStatusEnum()
     {
         bool belongsToEnum = Enum.IsDefined(typeof(StatusEnum), genericCategory.Status);
+        Assert.IsTrue(belongsToEnum);
+    }
+
+    [TestMethod]
+    public void GivenType_ShouldBelongToTypeEnum()
+    {
+        bool belongsToEnum = Enum.IsDefined(typeof(TypeEnum), genericCategory.Type);
         Assert.IsTrue(belongsToEnum);
     }
 

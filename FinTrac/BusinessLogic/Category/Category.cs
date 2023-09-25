@@ -9,9 +9,10 @@ namespace BusinessLogic.Category
     public class Category
     {
         public string Name { get; set; } = "";
-        public string CreationDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
+        public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
         public StatusEnum Status { get; set; }
+        public TypeEnum Type { get; set; } = null;
 
 
         public Category()
