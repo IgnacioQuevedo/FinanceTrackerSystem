@@ -22,7 +22,7 @@ public class CategoryTests
     public void GivenEmptyName_ShouldThrowExceptione()
     {
         Category myCategory = new Category();
-        myCategory.Name = "Clothes";
+        myCategory.Name = "";
         Assert.AreEqual(true, myCategory.ValidateCategory());
     }
 

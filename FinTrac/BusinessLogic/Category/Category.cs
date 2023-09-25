@@ -19,6 +19,9 @@ namespace BusinessLogic.Category
 
         public bool ValidateCategory()
         {
+            if (string.IsNullOrEmpty(Name)) { 
+                throw new ExceptionValidateCategory("ERROR ON NAME");
+            }
             bool isValid = true;
             return isValid;
         }
