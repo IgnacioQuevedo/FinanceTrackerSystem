@@ -15,7 +15,7 @@ namespace DataManagers.UserManager
             if (ValidateAddUser(user))
             {
                 FormatProperties(user);
-                DataBase.Accounts.Add(user);
+                DataBase.Users.Add(user);
             }
         }
 
@@ -38,7 +38,7 @@ namespace DataManagers.UserManager
         }
         private static void EmailUsed(string UserEmail)
         {
-            foreach (var someUser in DataBase.Accounts)
+            foreach (var someUser in DataBase.Users)
             {
                 if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
@@ -58,7 +58,7 @@ namespace DataManagers.UserManager
             string userEmail = userToBeLogged.Email.ToLower();
             string userPassword = userToBeLogged.Password;
 
-            foreach (var account in DataBase.Accounts)
+            foreach (var account in DataBase.Users)
 
             {
                 if (userEmail.Equals(account.Email))
