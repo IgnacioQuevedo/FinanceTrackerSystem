@@ -37,9 +37,9 @@ public class CategoryTests
     [TestMethod]
     public void GivenCategory_ShouldReturnDate()
     {
-        DateTime date = DateTime.Now;
-        string dateNow = date.ToString("dd/MM/yyyy");
-        Assert.AreEqual(dateNow, genericCategory.CreationDate);
+        DateTime dateNow = DateTime.Now;
+        string dateNowString = dateNow.ToString("dd/MM/yyyy");
+        Assert.AreEqual(dateNowString, genericCategory.CreationDate);
     }
 
 

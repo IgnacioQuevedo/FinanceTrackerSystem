@@ -25,8 +25,6 @@ namespace BusinessLogic.Category
             {
                 throw new ExceptionValidateCategory("ERROR ON NAME");
             }
-
-
             return isValid;
         }
     }
