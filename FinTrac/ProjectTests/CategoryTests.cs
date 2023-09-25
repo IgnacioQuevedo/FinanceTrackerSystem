@@ -17,10 +17,10 @@ public class CategoryTests
     {
         genericCategory = new Category();
         genericCategory.Name = "Clothes";
-        genericCategory.Status = StatusEnum.Active;
+        genericCategory.Status = StatusEnum.Enabled;
+        genericCategory.Type = TypeEnum.Income;
 
     }
-
 
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
@@ -30,11 +30,11 @@ public class CategoryTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateCategory))]
-    public void GivenEmptyName_ShouldThrowExceptione()
+    public void GivenEmptyName_ShouldThrowException()
     {
         Category myCategory = new Category();
         myCategory.Name = "";
-        Assert.AreEqual(true, myCategory.ValidateCategory());
+        myCategory.ValidateCategory();
     }
 
     [TestMethod]
