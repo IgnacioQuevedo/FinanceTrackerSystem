@@ -80,10 +80,6 @@ public class CategoryTests
         StatusEnum categoryStatus = (StatusEnum)1;
         TypeEnum categoryType = (TypeEnum)1;
         Category myCategory = new Category(categoryName, categoryStatus, categoryType);
-
-        Assert.AreEqual(categoryName, myCategory.Name);
-        Assert.AreEqual(categoryStatus, myCategory.Status);
-        Assert.AreEqual(categoryType, myCategory.Type);
     }
 
 

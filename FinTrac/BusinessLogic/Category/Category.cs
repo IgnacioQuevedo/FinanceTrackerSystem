@@ -8,6 +8,7 @@ namespace BusinessLogic.Category
 {
     public class Category
     {
+        private bool _categoryCreated = false;
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -24,7 +25,11 @@ namespace BusinessLogic.Category
             Name = name;
             Status = status;
             Type = type;
-            ValidateCategory();
+            if (ValidateCategory())
+            {
+                //We keep it low profile in case we need it (future)
+                _categoryCreated = true;
+            }
         }
 
         public bool ValidateCategory()
