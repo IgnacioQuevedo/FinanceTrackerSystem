@@ -9,9 +9,9 @@ namespace DataManagers.UserManager
         
         private Repository _memoryDataBase;
 
-        public UserManager(Repository database) 
+        public UserManager(Repository memoryDatabase) 
         {
-            _memoryDataBase = database;
+            _memoryDatabase = memoryDatabase; 
         }
 
 
