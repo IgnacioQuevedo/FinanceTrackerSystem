@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Category;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace DataManagers.Category_Manager
             _memoryDatabase = memoryDatabase;
         }
 
-        public void AddCategory()
+        public void AddCategory(Category myCategory)
         {
-
+            _memoryDatabase.Categories.Add(myCategory);
         }
 
 
