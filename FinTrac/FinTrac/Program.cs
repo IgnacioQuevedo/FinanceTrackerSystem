@@ -1,6 +1,8 @@
 using FinTrac.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using DataManagers;
+using DataManagers.UserManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+//Repository is a singleton, because we want it to be initialized only one time in all the proyect.
+builder.Services.AddSingleton<Repository>();
+builder.Services.AddScoped<UserManager>();
+
 
 var app = builder.Build();
 
