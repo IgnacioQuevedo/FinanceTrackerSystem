@@ -16,18 +16,21 @@ namespace DataManagers.Category_Manager
             _memoryDatabase = memoryDatabase;
         }
 
-        public void AddCategory(Category myCat)
+        public void AddCategory(Category categoryToAdd)
+        {
+            ValidateRegisteredCategory(categoryToAdd);
+            _memoryDatabase.Categories.Add(categoryToAdd);
+        }
+
+        private void ValidateRegisteredCategory(Category categoryToAdd)
         {
             foreach (var category in _memoryDatabase.Categories)
             {
-                if (category.Name == myCat.Name)
+                if (category.Name == categoryToAdd.Name)
                 {
                     throw new ExceptionCategoryManager("Category name already registered, impossible to create another Category.");
                 }
             }
-            _memoryDatabase.Categories.Add(myCat);
         }
-
-
     }
 }
