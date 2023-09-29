@@ -45,7 +45,8 @@ namespace DataManagers.Category_Manager
         #region Get Categories
         public List<Category> GetCategories()
         {
-            return _memoryDatabase.Categories;
+            List<Category> listOfCategories = _memoryDatabase.Categories;
+            return listOfCategories;
         }
         #endregion
     }
