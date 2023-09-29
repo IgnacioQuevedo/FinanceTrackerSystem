@@ -9,12 +9,19 @@ namespace DataManagers.Category_Manager
 {
     public class CategoryManager
     {
-        private Repository _memoryDatabase;
 
+        #region Properties
+        private Repository _memoryDatabase;
+        #endregion
+
+        #region Constructor
         public CategoryManager(Repository memoryDatabase)
         {
             _memoryDatabase = memoryDatabase;
         }
+        #endregion
+
+        #region Add Category
 
         public void AddCategory(Category categoryToAdd)
         {
@@ -32,5 +39,14 @@ namespace DataManagers.Category_Manager
                 }
             }
         }
+
+        #endregion
+
+        #region Get Categories
+        public List<Category> GetCategories()
+        {
+            return null;
+        }
+        #endregion
     }
 }

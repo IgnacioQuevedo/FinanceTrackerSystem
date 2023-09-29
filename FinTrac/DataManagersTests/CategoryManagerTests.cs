@@ -44,5 +44,12 @@ namespace DataManagersTests
             categoryManager.AddCategory(genericCategory);
         }
 
+        [TestMethod]
+        public void GivenNothing_ShouldReturnList()
+        {
+            Assert.AreEqual(memoryDatabase.Categories, categoryManager.GetCategories());
+        }
+
+
     }
 }
