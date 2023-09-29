@@ -9,7 +9,15 @@ namespace DataManagers
 {
     public class Repository
     {
-        public List<User> Accounts { get;} = new List<User>();
+        public List<User> Users { get; set; }
+
+
+        public Repository() 
+        { 
+            Users = new List<User>();
+        }
+
+
 
     }
 }
