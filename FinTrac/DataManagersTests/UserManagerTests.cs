@@ -42,7 +42,7 @@ namespace DataManagersTests
             string email = "austinFord@gmail.com";
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
-            User myUser = new User(firstName,lastName, email, password, address);   
+            User myUser = new User(firstName, lastName, email, password, address);
             Assert.AreEqual(true, userManager.ValidateAddUser(myUser));
         }
 
@@ -57,7 +57,7 @@ namespace DataManagersTests
             string password2 = "JohnBeck1961";
             string address2 = "NW 3rd Ave";
             User incorrectUser = new User(firstName2, lastName2, emailUsed, password2, address2);
-           
+
             userManager.ValidateAddUser(incorrectUser);
 
         }
@@ -78,7 +78,7 @@ namespace DataManagersTests
 
             userManager.Add(myUser);
 
-            Assert.AreEqual(numberOfUsersAddedBefore + 1,memoryDatabase.Users.Count);
+            Assert.AreEqual(numberOfUsersAddedBefore + 1, memoryDatabase.Users.Count);
 
         }
         #endregion
@@ -89,7 +89,7 @@ namespace DataManagersTests
 
         public void GivenUserAlreadyAdded_ShouldBePossibleToLogin()
         {
-            Assert.AreEqual(true,userManager.Login(genericUser));
+            Assert.AreEqual(true, userManager.Login(genericUser));
 
         }
         [TestMethod]
@@ -125,6 +125,16 @@ namespace DataManagersTests
             Assert.AreEqual(address, genericUser.Address);
         }
 
+
+        #endregion
+
+        #region IdUser
+
+        [TestMethod]
+        public void GivenUserToAdd_ShouldGenerateAnId()
+        {
+            Assert.AreEqual(genericUser.Id,memoryDatabase.Users.Count);
+        }
 
         #endregion
 

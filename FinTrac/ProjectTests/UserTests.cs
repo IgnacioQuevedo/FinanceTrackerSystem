@@ -7,7 +7,6 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
-
     #region Firstname
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
