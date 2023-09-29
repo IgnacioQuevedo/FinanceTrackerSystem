@@ -11,6 +11,8 @@ namespace DataManagersTests
 
         #region initializingAspects
         private User genericUser;
+        private UserManager userManager;
+        private Repository memoryDatabase;
 
         [TestInitialize]
         public void TestInitialize()
@@ -21,7 +23,10 @@ namespace DataManagersTests
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
 
+            memoryDatabase = new Repository();
+            userManager = new UserManager(memoryDatabase);
             genericUser = new User(firstName, lastName, email, password, address);
+            userManager.Add(genericUser);
         }
 
         #endregion
@@ -30,7 +35,7 @@ namespace DataManagersTests
 
         [TestMethod]
 
-        public void GivenUserToAddToRepositoryAccounts_ValidationShouldReturnTrue()
+        public void GivenUserToAddToUsers_ValidationShouldReturnTrue()
         {
             string firstName = "Austin";
             string lastName = "Ford";
@@ -38,16 +43,13 @@ namespace DataManagersTests
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
             User myUser = new User(firstName,lastName, email, password, address);   
-            Assert.AreEqual(true, UserManager.ValidateAddUser(myUser));
+            Assert.AreEqual(true, userManager.ValidateAddUser(myUser));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserManager))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
         {
-
-
-            UserManager.Add(genericUser);
 
             string firstName2 = "Kent";
             string lastName2 = "Beck";
@@ -56,7 +58,7 @@ namespace DataManagersTests
             string address2 = "NW 3rd Ave";
             User incorrectUser = new User(firstName2, lastName2, emailUsed, password2, address2);
            
-            UserManager.ValidateAddUser(incorrectUser);
+            userManager.ValidateAddUser(incorrectUser);
 
         }
 
@@ -72,11 +74,11 @@ namespace DataManagersTests
             string address = "NW 5nd Ave";
 
             User myUser = new User(firstName, lastName, email, password, address);
-            int numberOfUsersAddedBefore = UserManager.DataBase.Accounts.Count;
+            int numberOfUsersAddedBefore = memoryDatabase.Users.Count;
 
-            UserManager.Add(myUser);
+            userManager.Add(myUser);
 
-            Assert.AreEqual(numberOfUsersAddedBefore + 1,UserManager.DataBase.Accounts.Count);
+            Assert.AreEqual(numberOfUsersAddedBefore + 1,memoryDatabase.Users.Count);
 
         }
         #endregion
@@ -87,8 +89,7 @@ namespace DataManagersTests
 
         public void GivenUserAlreadyAdded_ShouldBePossibleToLogin()
         {
-
-            Assert.AreEqual(true,UserManager.Login(genericUser));
+            Assert.AreEqual(true,userManager.Login(genericUser));
 
         }
         [TestMethod]
@@ -96,7 +97,7 @@ namespace DataManagersTests
         public void GivenUserNotAdded_ShouldThrowException()
         {
             User myUser = new User("Ronnie", "Belgman", "ronnieBelgam@gmail.com", "RonnieMan2003", "asd");
-            UserManager.Login(myUser);
+            userManager.Login(myUser);
         }
 
         #endregion

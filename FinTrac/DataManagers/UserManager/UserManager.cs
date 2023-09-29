@@ -4,22 +4,28 @@ using System.Globalization;
 
 namespace DataManagers.UserManager
 {
-    public abstract class UserManager
+    public class UserManager
     {
-        public static Repository DataBase { get;} = new Repository();
+
+        private Repository _memoryDatabase;
+
+        public UserManager(Repository memoryDatabase) 
+        {
+            _memoryDatabase = memoryDatabase; 
+        }
 
 
         #region addUser
-        public static void Add(User user)
+        public void Add(User user)
         {
             if (ValidateAddUser(user))
             {
                 FormatProperties(user);
-                DataBase.Accounts.Add(user);
+                _memoryDatabase.Users.Add(user);
             }
         }
 
-        private static void FormatProperties(User user)
+        private void FormatProperties(User user)
         {
             string emailFormated = user.Email.ToLower();
             string firstNameFormated = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
@@ -31,14 +37,14 @@ namespace DataManagers.UserManager
             user.LastName = lastNameFormated;
         }
 
-        public static bool ValidateAddUser(User userToAdd)
+        public bool ValidateAddUser(User userToAdd)
         {
             EmailUsed(userToAdd.Email);
             return true;
         }
-        private static void EmailUsed(string UserEmail)
+        private void EmailUsed(string UserEmail)
         {
-            foreach (var someUser in DataBase.Accounts)
+            foreach (var someUser in _memoryDatabase.Users)
             {
                 if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
@@ -52,13 +58,13 @@ namespace DataManagers.UserManager
         #region Login
 
 
-        public static bool Login(User userToBeLogged)
+        public bool Login(User userToBeLogged)
         {
             bool existsUser = false;
             string userEmail = userToBeLogged.Email.ToLower();
             string userPassword = userToBeLogged.Password;
 
-            foreach (var account in DataBase.Accounts)
+            foreach (var account in _memoryDatabase.Users)
 
             {
                 if (userEmail.Equals(account.Email))
