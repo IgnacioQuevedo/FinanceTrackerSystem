@@ -30,9 +30,9 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenCorrectCategoryToAdd_ShouldAddCategory()
         {
-            int number = memoryDatabase.Categories.Count;
+            int numberOfCategoriesAddedBefore = memoryDatabase.Categories.Count;
             categoryManager.AddCategory(genericCategory);
-            Assert.AreEqual(number + 1, memoryDatabase.Categories.Count);
+            Assert.AreEqual(numberOfCategoriesAddedBefore + 1, memoryDatabase.Categories.Count);
         }
 
     }
