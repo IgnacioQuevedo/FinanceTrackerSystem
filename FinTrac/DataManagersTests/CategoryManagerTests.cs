@@ -1,6 +1,7 @@
 using BusinessLogic.Category;
 using DataManagers;
 using DataManagers.Category_Manager;
+using DataManagers.UserManager;
 
 namespace DataManagersTests
 {
@@ -33,6 +34,14 @@ namespace DataManagersTests
             int numberOfCategoriesAddedBefore = memoryDatabase.Categories.Count;
             categoryManager.AddCategory(genericCategory);
             Assert.AreEqual(numberOfCategoriesAddedBefore + 1, memoryDatabase.Categories.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryManager))]
+        public void GivenAlreadyRegisteredCategoryToAdd_ShouldThrowException()
+        {
+            categoryManager.AddCategory(genericCategory);
+            categoryManager.AddCategory(genericCategory);
         }
 
     }
