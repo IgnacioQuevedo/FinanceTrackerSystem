@@ -16,6 +16,7 @@ public class CreditCardAccountTests
 
         string name = "Itau volar";
         Account myCreditCard = new CreditCardAccount();
+        myCreditCard.Name = name;
         Assert.AreEqual(name, myCreditCard.Name);
     }
 
