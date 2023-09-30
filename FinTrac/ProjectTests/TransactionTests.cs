@@ -2,6 +2,7 @@ using BusinessLogic;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Transaction;
+using BusinessLogic.Category;
 
 namespace TestProject1;
 [TestClass]
@@ -21,6 +22,13 @@ public class TransactionTests
     {
         bool callToValidationTitleMethod = genericTransaction.ValidateTitle();
         Assert.AreEqual(true, callToValidationTitleMethod);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenIncorrectTitle_ShouldReturnFalse()
+    {
+        genericTransaction.Title = "";
     }
 
 
