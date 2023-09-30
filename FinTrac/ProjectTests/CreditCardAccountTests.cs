@@ -170,6 +170,7 @@ public class CreditCardAccountTests
     public void CreatedAnAccount_ClosingDateMustBeSetted()
     {
 
+        //We make it string so it can have an estandar format and is the same format that CreationDate.
         string closingDate = new DateOnly(2023,11,1).ToString("dd/MM/yyyy");
         myCreditCardAccount.ClosingDate = closingDate;
 
