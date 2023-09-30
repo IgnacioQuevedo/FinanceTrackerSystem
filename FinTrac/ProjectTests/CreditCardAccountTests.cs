@@ -66,7 +66,8 @@ public class CreditCardAccountTests
     public void GivenIssuingBank_ShouldBeAssignedToCreditCard()
     {
         string issuingBank = "Brou";
-        myCreditCard.IssuingBank = issuingBank;
-        Assert.AreEqual(myCreditCard.IssuingBank, issuingBank);
+        CreditCardAccount myCreditCardAcc = new CreditCardAccount();
+        myCreditCardAcc.IssuingBank = issuingBank;
+        Assert.AreEqual(myCreditCardAcc.IssuingBank, issuingBank);
     }
 }
