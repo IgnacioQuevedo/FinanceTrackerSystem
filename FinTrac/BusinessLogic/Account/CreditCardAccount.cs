@@ -23,7 +23,7 @@ namespace BusinessLogic.Account
 
             if(AvailableCredit < 0)
             {
-                throw new ExceptionValidateAccount("ERROR");
+                throw new ExceptionValidateAccount("You do not have avaible credit...");
             }
         }
 
