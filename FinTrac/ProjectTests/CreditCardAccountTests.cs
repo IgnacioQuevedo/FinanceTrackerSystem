@@ -6,16 +6,23 @@ using BusinessLogic.Account;
 using System.Security.Principal;
 
 namespace TestProject1;
+
 [TestClass]
 public class CreditCardAccountTests
 {
-   
+    private Account myCreditCard;
+
+    [TestInitialize]
+    public void TestInitialized()
+    {
+        myCreditCard = new CreditCardAccount();
+    }
+
     [TestMethod]
     public void GivenCorrectName_ShouldBeSetted()
     {
 
         string name = "Itau volar";
-        Account myCreditCard = new CreditCardAccount();
         myCreditCard.Name = name;
         Assert.AreEqual(name, myCreditCard.Name);
     }
