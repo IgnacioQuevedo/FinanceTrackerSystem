@@ -176,9 +176,19 @@ public class CreditCardAccountTests
         myCreditCardAccount.ClosingDate = closingDate;
 
         Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
-    }
+    } 
 
-    
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+    public void SelectedClosingDateThatIsBeforeCreationDate_ShouldThrowException()
+    {
+
+        myCreditCardAccount.ClosingDate = new DateOnly(2023, 7, 1).ToString("dd/MM/yyyy");
+
+        myCreditCardAccount.ValidateCreditCardAccount();
+
+
+    }
 
     #endregion
 
