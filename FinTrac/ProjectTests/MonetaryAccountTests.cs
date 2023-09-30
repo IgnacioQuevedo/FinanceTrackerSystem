@@ -72,7 +72,7 @@ public class MonetaryAccountTests
     {
         MonetaryAccount myMonetariaAccount = new MonetaryAccount();
 
-        Assert.AreEqual(myMonetariaAccount.CreationDate, DateTime.Now);
+        Assert.AreEqual(myMonetariaAccount.CreationDate, DateTime.Now.ToString("dd/MM/yyyy"));
     }
 
 }
