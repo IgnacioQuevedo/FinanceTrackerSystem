@@ -33,13 +33,24 @@ public class MonetaryAccountTests
     [ExpectedException(typeof(ExceptionValidateAccount))]
     public void GivenEmptyName_ShouldReturnException()
     {
-
         string name = "";
         Account myMonetaryAccount = new MonetaryAccount();
         myMonetaryAccount.Name = name;
         myMonetaryAccount.ValidateName();
     }
 
+
+    [TestMethod]
+
+    public void givenInitialAmmount_ShouldBeSetted()
+    {
+        int initAmmo = 100;
+        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
+        myMonetaryAccount.Ammount = initAmmo;
+
+        Assert.AreEqual(myMonetaryAccount.Ammount, initAmmo);
+
+    }
     #endregion
 
 

@@ -7,6 +7,8 @@ namespace BusinessLogic.Account
 {
     public class MonetaryAccount : Account
     {
+        //public decimal Ammount { get; set; }
+
 
         public MonetaryAccount() { }
 
