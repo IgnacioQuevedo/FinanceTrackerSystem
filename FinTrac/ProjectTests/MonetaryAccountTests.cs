@@ -105,11 +105,11 @@ public class MonetaryAccountTests
         string creationDate = DateTime.Now.ToString("dd/MM/yyyy");
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
-        
+
         Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
         Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Ammount);
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
-}
+    }
 
 }

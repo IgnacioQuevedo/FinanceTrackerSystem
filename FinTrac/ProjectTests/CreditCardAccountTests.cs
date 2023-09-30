@@ -43,7 +43,7 @@ public class CreditCardAccountTests
     #endregion
 
     #region CreationDate
-    [TestMethod]    
+    [TestMethod]
 
     public void DateofCreditCard_ShouldBeActualDate()
     {
@@ -57,7 +57,7 @@ public class CreditCardAccountTests
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
         myCreditCard.Currency = CurrencyEnum.UY;
-        bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum),myCreditCard.Currency);
+        bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myCreditCard.Currency);
 
         Assert.IsTrue(belongToEnum);
 
@@ -69,18 +69,18 @@ public class CreditCardAccountTests
     public void GivenIssuingBank_ShouldBeAssignedToCreditCard()
     {
         string issuingBank = "Brou";
-        
+
         myCreditCardAccount.IssuingBank = issuingBank;
         Assert.AreEqual(myCreditCardAccount.IssuingBank, issuingBank);
     }
 
     [TestMethod]
-    [ExpectedException (typeof(ExceptionValidateAccount))]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
 
     public void GivenEmptyIssuingBank_ShouldThrowException()
     {
         string issuingBank = string.Empty;
-        myCreditCardAccount.IssuingBank= issuingBank;
+        myCreditCardAccount.IssuingBank = issuingBank;
 
         myCreditCardAccount.ValidateCreditCardAccount();
     }
