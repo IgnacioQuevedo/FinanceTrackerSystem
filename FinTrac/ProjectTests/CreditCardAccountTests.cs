@@ -84,7 +84,16 @@ public class CreditCardAccountTests
 
         myCreditCardAccount.ValidateCreditCardAccount();
     }
-
-
     #endregion
+
+    [TestMethod]
+
+    public void GivenLast4Digits_ShouldBeAssigned()
+    {
+        int last4Digits = 2354;
+        myCreditCardAccount.Last4Digits = last4Digits;
+
+        Assert.AreEqual(myCreditCardAccount.Last4Digits, last4Digits);
+
+    }
 }
