@@ -99,12 +99,11 @@ namespace DataManagers.UserManager
             foreach (var user in _memoryDatabase.Users)
             {
 
-                if (user.Id.Equals(userNotUpdated.Id) && !ValidateAddUser(userUpdated)) 
+                if (user.Id.Equals(userNotUpdated.Id)) 
                 {
 
                     userNotUpdated.FirstName = userUpdated.FirstName;
                     userNotUpdated.LastName = userUpdated.LastName;
-                    userNotUpdated.Email = userUpdated.Email;
                     userNotUpdated.Password = userUpdated.Password;
                     userNotUpdated.Address = userUpdated.Address;
 
