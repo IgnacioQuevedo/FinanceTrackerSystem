@@ -14,9 +14,7 @@ namespace BusinessLogic.Account
 
         public MonetaryAccount(string accountName, decimal ammount, CurrencyEnum currencyType) : base(accountName, currencyType)
         {
-
             Ammount = ammount;
-
         }
 
         public void ValidateMonetaryAccount()

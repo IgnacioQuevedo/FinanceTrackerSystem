@@ -99,16 +99,16 @@ public class MonetaryAccountTests
     public void CreationOfMonetaryAccount_ShouldBeValidated()
     {
 
-        string name = "Itau Saving Bank";
-        int ammount = 100;
-        CurrencyEnum currency = CurrencyEnum.UY;
+        string nameToBeSetted = "Itau Saving Bank";
+        int ammountToBeSetted = 100;
+        CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
         string creationDate = DateTime.Now.ToString("dd/MM/yyyy");
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(name,ammount,currency);
 
+        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
         
-        Assert.AreEqual(name, monetaryAccountExample.Name);
-        Assert.AreEqual(ammount, monetaryAccountExample.Ammount);
-        Assert.AreEqual(currency, monetaryAccountExample.Currency);
+        Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
+        Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Ammount);
+        Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
 }
 
