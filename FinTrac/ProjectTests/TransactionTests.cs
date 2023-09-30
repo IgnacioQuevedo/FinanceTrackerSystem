@@ -19,7 +19,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectTitle_ShouldReturnTrue()
     {
-        Assert.AreEqual(true, genericTransaction.ValidateTitle());
+        bool callToValidationTitleMethod = genericTransaction.ValidateTitle();
+        Assert.AreEqual(true, callToValidationTitleMethod);
     }
 
 
