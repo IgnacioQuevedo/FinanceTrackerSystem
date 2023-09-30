@@ -10,7 +10,7 @@ namespace BusinessLogic.Account
     {
 
         public string IssuingBank { get; set; }
-        public int Last4Digits { get; set; }
+        public string Last4Digits { get; set; }
 
         public CreditCardAccount() { }
 
