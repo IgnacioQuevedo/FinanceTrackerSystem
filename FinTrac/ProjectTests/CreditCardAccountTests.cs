@@ -40,5 +40,11 @@ public class CreditCardAccountTests
     #endregion
 
 
+    [TestMethod]    
+
+    public void DateofCreditCard_ShouldBeActualDate()
+    {
+        Assert.AreEqual(DateTime.Now, myCreditCard.CreationDate);
+    }
 
 }
