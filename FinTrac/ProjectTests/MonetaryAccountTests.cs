@@ -53,4 +53,15 @@ public class MonetaryAccountTests
     #endregion
 
 
+    [TestMethod]
+    [ExpectedException (typeof(ExceptionValidateAccount))]
+
+    public void GivenInitialNegativeAmmount_ShouldThrowException()
+    {
+        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
+        myMonetaryAccount.Ammount = -1;
+        myMonetaryAccount.ValidateMonetaryAccount();
+
+    }
+
 }
