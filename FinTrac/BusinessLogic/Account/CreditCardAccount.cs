@@ -21,6 +21,11 @@ namespace BusinessLogic.Account
             {
                 throw new ExceptionValidateAccount("ERROR ON ISSUING BANK NAME");
             }
+
+            if (string.IsNullOrEmpty(Last4Digits))
+            {
+                throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
+            }
         }
 
     }
