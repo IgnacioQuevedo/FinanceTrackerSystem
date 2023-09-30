@@ -20,7 +20,6 @@ public class MonetaryAccountTests
 
     public void GivenCorrectName_ShouldItBeSet()
     {
-
         Account monetaryAccount = new MonetaryAccount();
         string name = "Santander Saving Bank";
         monetaryAccount.Name = name;
@@ -36,19 +35,19 @@ public class MonetaryAccountTests
         string name = "";
         Account myMonetaryAccount = new MonetaryAccount();
         myMonetaryAccount.Name = name;
-        myMonetaryAccount.ValidateName();
+        myMonetaryAccount.ValidateAccount();
     }
 
 
     [TestMethod]
 
-    public void givenInitialAmmount_ShouldBeSetted()
+    public void GivenInitialAmmount_ShouldBeSetted()
     {
-        int initAmmo = 100;
+        int initialAmmount = 100;
         MonetaryAccount myMonetaryAccount = new MonetaryAccount();
-        myMonetaryAccount.Ammount = initAmmo;
+        myMonetaryAccount.Ammount = initialAmmount;
 
-        Assert.AreEqual(myMonetaryAccount.Ammount, initAmmo);
+        Assert.AreEqual(myMonetaryAccount.Ammount, initialAmmount);
 
     }
     #endregion

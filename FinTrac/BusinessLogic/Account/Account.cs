@@ -14,7 +14,7 @@ namespace BusinessLogic.Account
         public DateTime CreationDate { get; set; }
 
 
-        public bool ValidateName()
+        public bool ValidateAccount()
         {
             if (string.IsNullOrEmpty(Name))
             {

@@ -13,6 +13,10 @@ namespace BusinessLogic.Account
         public MonetaryAccount() { }
 
 
+        public void ValidateMonetaryAccount()
+        {
+            ValidateAccount();
+        }
        
 
     }
