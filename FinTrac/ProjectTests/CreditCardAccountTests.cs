@@ -53,7 +53,9 @@ public class CreditCardAccountTests
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
-        bool enuma = Enum.IsDefined(typeof(CurrencyEnum),myCreditCard.Currency );
+        myCreditCard.Currency = CurrencyEnum.UY;
+        bool enuma = Enum.IsDefined(typeof(CurrencyEnum),myCreditCard.Currency);
+
         Assert.IsTrue(enuma);
 
     }
