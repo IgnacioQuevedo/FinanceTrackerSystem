@@ -80,7 +80,7 @@ public class MonetaryAccountTests
     {
 
         Account myMonetaryAccount = new MonetaryAccount();
-        
+        myMonetaryAccount.Currency = CurrencyEnum.UY;
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myMonetaryAccount.Currency);
         Assert.IsTrue(belongToEnum);
         
