@@ -17,9 +17,16 @@ public class CreditCardAccountTests
     [TestInitialize]
     public void TestInitialized()
     {
+        //myCreditCard is a polimorfed object, we make this so we can validate that polimorfic object are also passing the necessary tests.
         myCreditCard = new CreditCardAccount();
+
+        //myCreditCardAccount is 100% a sublclass object.
         myCreditCardAccount = new CreditCardAccount();
 
+        //Initiale of myCreditCardAccount
+        myCreditCardAccount.Name = "GenericName";
+        myCreditCardAccount.IssuingBank = "GenericBank";
+        myCreditCardAccount.Currency = CurrencyEnum.UY;
     }
     #endregion
 
@@ -99,6 +106,6 @@ public class CreditCardAccountTests
         Assert.AreEqual(myCreditCardAccount.Last4Digits, last4Digits);
 
     }
-
     #endregion
+
 }
