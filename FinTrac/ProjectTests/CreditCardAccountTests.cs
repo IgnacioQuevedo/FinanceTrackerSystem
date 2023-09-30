@@ -12,12 +12,14 @@ public class CreditCardAccountTests
 {
     private Account myCreditCard;
 
+    #region Init
     [TestInitialize]
     public void TestInitialized()
     {
         myCreditCard = new CreditCardAccount();
     }
-
+    #endregion
+    #region Name
     [TestMethod]
     public void GivenCorrectName_ShouldBeSetted()
     {
@@ -34,7 +36,9 @@ public class CreditCardAccountTests
         myCreditCard.Name = name;
 
         myCreditCard.ValidateAccount();
-
     }
-  
+    #endregion
+
+
+
 }
