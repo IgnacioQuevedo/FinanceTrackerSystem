@@ -79,14 +79,10 @@ public class CreditCardAccountTests
 
     public void GivenEmptyIssuingBank_ShouldThrowException()
     {
-        string issuingBank = "";
-
+        string issuingBank = string.Empty;
         myCreditCardAccount.IssuingBank= issuingBank;
 
         myCreditCardAccount.ValidateCreditCardAccount();
-
-
-
     }
 
 
