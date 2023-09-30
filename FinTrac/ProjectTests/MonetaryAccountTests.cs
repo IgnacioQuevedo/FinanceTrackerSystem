@@ -66,7 +66,6 @@ public class MonetaryAccountTests
     }
 
 
-
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
@@ -74,6 +73,17 @@ public class MonetaryAccountTests
         string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
 
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
+    }
+
+    [TestMethod]
+    public void GivenCurrency_ShouldBelongToCurrencyEnum()
+    {
+
+        Account myMonetaryAccount = new MonetaryAccount();
+        
+        bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myMonetaryAccount.Currency);
+        Assert.IsTrue(belongToEnum);
+        
     }
 
 }
