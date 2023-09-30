@@ -27,6 +27,7 @@ public class CreditCardAccountTests
         myCreditCardAccount.Name = "GenericName";
         myCreditCardAccount.IssuingBank = "GenericBank";
         myCreditCardAccount.Currency = CurrencyEnum.UY;
+        myCreditCardAccount.Last4Digits = "5380";
     }
     #endregion
 

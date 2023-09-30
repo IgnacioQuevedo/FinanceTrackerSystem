@@ -20,6 +20,11 @@ namespace BusinessLogic.Account
         {
             ValidateName();
             ValidateLast4Digits();
+
+            if(AvailableCredit < 0)
+            {
+                throw new ExceptionValidateAccount("ERROR");
+            }
         }
 
         private void ValidateName()
