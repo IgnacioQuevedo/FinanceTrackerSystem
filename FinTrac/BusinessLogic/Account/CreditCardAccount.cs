@@ -17,7 +17,10 @@ namespace BusinessLogic.Account
 
         public void ValidateCreditCardAccount()
         {
-            throw new NotImplementedException();
+            if(IssuingBank == "")
+            {
+                throw new ExceptionValidateAccount("ERROR ON ISSUING BANK NAME");
+            }
         }
 
     }
