@@ -37,6 +37,7 @@ public class MonetaryAccountTests
         string name = "";
         Account myMonetaryAccount = new MonetaryAccount();
         myMonetaryAccount.Name = name;
+        myMonetaryAccount.ValidateName();
     }
 
     #endregion

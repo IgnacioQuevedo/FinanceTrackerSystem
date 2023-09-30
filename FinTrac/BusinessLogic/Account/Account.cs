@@ -14,5 +14,14 @@ namespace BusinessLogic.Account
         public DateTime CreationDate { get; set; }
 
 
+        public bool ValidateName()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                throw new ExceptionValidateAccount("ERROR");
+            }
+            return true;
+        }
+
     }
 }
