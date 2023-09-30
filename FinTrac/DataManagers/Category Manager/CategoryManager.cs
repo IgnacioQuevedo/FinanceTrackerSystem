@@ -25,16 +25,21 @@ namespace DataManagers.Category_Manager
 
         public void AddCategory(Category categoryToAdd)
         {
-            categoryToAdd.Id = _memoryDatabase.Categories.Count + 1;
+            setCategoryId(categoryToAdd);
             ValidateRegisteredCategory(categoryToAdd);
             _memoryDatabase.Categories.Add(categoryToAdd);
+        }
+
+        private void setCategoryId(Category categoryToAdd)
+        {
+            categoryToAdd.Id = _memoryDatabase.Categories.Count + 1;
         }
 
         private void ValidateRegisteredCategory(Category categoryToAdd)
         {
             foreach (var category in _memoryDatabase.Categories)
             {
-                if (category.Id == categoryToAdd.Id)
+                if (category.Name == categoryToAdd.Name)
                 {
                     throw new ExceptionCategoryManager("Category name already registered, impossible to create another Category.");
                 }
@@ -50,5 +55,7 @@ namespace DataManagers.Category_Manager
             return listOfCategories;
         }
         #endregion
+
+
     }
 }
