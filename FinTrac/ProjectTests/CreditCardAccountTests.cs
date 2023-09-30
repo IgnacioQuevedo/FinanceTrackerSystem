@@ -150,7 +150,21 @@ public class CreditCardAccountTests
         Assert.AreEqual(availableCredit, myCreditCardAccount.AvailableCredit);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+    public void GivenAvailableCreditLessThan0_ShouldReturnException()
+    {
+
+        myCreditCardAccount.AvailableCredit = -1;
+
+        myCreditCardAccount.ValidateCreditCardAccount();
+    }
+
+
+
     #endregion
+
+
 
 
 
