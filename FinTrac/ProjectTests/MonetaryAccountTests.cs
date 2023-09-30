@@ -21,12 +21,24 @@ public class MonetaryAccountTests
     public void GivenCorrectName_ShouldItBeSet()
     {
 
-        MonetaryAccount monetaryAccount = new MonetaryAccount();
+        Account monetaryAccount = new MonetaryAccount();
         string name = "Santander Saving Bank";
         monetaryAccount.Name = name;
 
         Assert.AreEqual(name, monetaryAccount.Name);
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+    public void GivenEmptyName_ShouldReturnException()
+    {
+
+        string name = "";
+        Account myMonetaryAccount = new MonetaryAccount();
+        myMonetaryAccount.Name = name;
+    }
+
     #endregion
 
 
