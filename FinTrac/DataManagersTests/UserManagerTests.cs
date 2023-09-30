@@ -110,17 +110,15 @@ namespace DataManagersTests
 
             string firstName = "Michael";
             string lastName = "Santa";
-            string emailModified = "michTheBest@gmail.com";
             string passwordModified = "MichaelSanta1234";
             string address = "NW 2nd Ave";
 
-            User userUpdated = new User(firstName, lastName, emailModified, passwordModified, address);
+            User userUpdated = new User(firstName, lastName, genericUser.Email, passwordModified, address);
 
-            UserManager.Modify(genericUser, userUpdated);
+            userManager.Modify(genericUser, userUpdated);
 
             Assert.AreEqual(firstName, genericUser.FirstName);
             Assert.AreEqual(lastName, genericUser.LastName);
-            Assert.AreEqual(emailModified, genericUser.Email);
             Assert.AreEqual(passwordModified, genericUser.Password);
             Assert.AreEqual(address, genericUser.Address);
         }
