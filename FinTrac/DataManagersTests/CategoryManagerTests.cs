@@ -57,6 +57,19 @@ namespace DataManagersTests
             Assert.AreEqual(memoryDatabase.Categories, categoryManager.GetCategories());
         }
 
+        [TestMethod]
+        public void GivenCategoryToUpdate_ShouldBeModifiedCorrectly()
+        {
+            categoryManager.AddCategory(genericCategory);
+            string name2 = "Food";
+            StatusEnum status2 = (StatusEnum)1;
+            TypeEnum type2 = (TypeEnum)1;
+            Category category2 = new Category(name2, status2, type2);
+            category2.Id = genericCategory.Id;
+            categoryManager.ModifyCategory(category2);
+
+            Assert.AreEqual(category2, genericCategory);
+        }
 
     }
 }

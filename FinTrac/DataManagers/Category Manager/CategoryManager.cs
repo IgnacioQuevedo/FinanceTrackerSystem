@@ -56,6 +56,17 @@ namespace DataManagers.Category_Manager
         }
         #endregion
 
+        #region Modify Category
+
+        public void ModifyCategory(Category myCat)
+        {
+
+
+
+        }
+
+        #endregion
+
 
     }
 }
