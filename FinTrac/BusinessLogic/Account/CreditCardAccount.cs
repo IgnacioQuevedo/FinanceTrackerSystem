@@ -33,19 +33,23 @@ namespace BusinessLogic.Account
         {
             int lengthOfLastDigits = Last4Digits.Length;
 
+            if (string.IsNullOrEmpty(Last4Digits) || lengthOfLastDigits < 4 || !IsNumericChain())
+            {
+                throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
+            }
+        }
 
+        private bool IsNumericChain()
+        {
+            bool isIncorrect = false;
             foreach (char caracter in Last4Digits)
             {
                 if (!char.IsDigit(caracter))
                 {
-                    throw new ExceptionValidateAccount("ERROR");
+                    isIncorrect = true;
                 }
             }
-
-            if (string.IsNullOrEmpty(Last4Digits) || lengthOfLastDigits < 4)
-            {
-                throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
-            }
+            return isIncorrect;
         }
     }
 }
