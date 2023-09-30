@@ -78,9 +78,9 @@ namespace DataManagers.Category_Manager
 
         #region Delete Category
 
-        public void DeleteCategory(Category myCat)
+        public void DeleteCategory(Category categoryToDelete)
         {
-            _memoryDatabase.Categories.Remove(myCat);
+            _memoryDatabase.Categories.Remove(categoryToDelete);
         }
 
         #endregion
