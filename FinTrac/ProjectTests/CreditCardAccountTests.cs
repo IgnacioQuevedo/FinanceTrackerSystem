@@ -170,7 +170,7 @@ public class CreditCardAccountTests
     public void CreatedAnAccount_ClosingDateMustBeSetted()
     {
 
-        string closingDate = new DateOnly(2023,11,1);
+        string closingDate = new DateOnly(2023,11,1).ToString("dd/MM/yyyy");
         myCreditCardAccount.ClosingDate = closingDate;
 
         Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
