@@ -26,9 +26,10 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenIncorrectTitle_ShouldReturnFalse()
+    public void GivenEmptyTitle_ShouldReturnFalse()
     {
         genericTransaction.Title = "";
+        genericTransaction.ValidateTitle();
     }
 
 
