@@ -11,6 +11,7 @@ namespace BusinessLogic.Account
 
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
+        public int AvailableCredit { get; set; }
 
         public CreditCardAccount() { }
 
@@ -41,15 +42,16 @@ namespace BusinessLogic.Account
 
         private bool IsNumericChain()
         {
-            bool isIncorrect = false;
+            bool isCorrect = true;
+
             foreach (char caracter in Last4Digits)
             {
                 if (!char.IsDigit(caracter))
                 {
-                    isIncorrect = true;
+                    isCorrect = false;
                 }
             }
-            return isIncorrect;
+            return isCorrect;
         }
     }
 }
