@@ -106,6 +106,19 @@ public class CreditCardAccountTests
         Assert.AreEqual(myCreditCardAccount.Last4Digits, last4Digits);
 
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+
+    public void GivenEmpty4LastDigits_ShouldThrowException()
+    {
+        myCreditCardAccount.Last4Digits = "";
+        
+        myCreditCardAccount.ValidateCreditCardAccount();
+
+
+    }
     #endregion
 
 }
