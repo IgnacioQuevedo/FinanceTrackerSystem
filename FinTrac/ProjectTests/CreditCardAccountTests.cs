@@ -11,12 +11,14 @@ namespace TestProject1;
 public class CreditCardAccountTests
 {
     private Account myCreditCard;
+    private CreditCardAccount myCreditCardAccount;
 
     #region Init
     [TestInitialize]
     public void TestInitialized()
     {
         myCreditCard = new CreditCardAccount();
+        myCreditCardAccount = new CreditCardAccount();
     }
     #endregion
 
@@ -62,12 +64,15 @@ public class CreditCardAccountTests
     }
     #endregion
 
+    #region IssuingBank
     [TestMethod]
     public void GivenIssuingBank_ShouldBeAssignedToCreditCard()
     {
         string issuingBank = "Brou";
-        CreditCardAccount myCreditCardAcc = new CreditCardAccount();
-        myCreditCardAcc.IssuingBank = issuingBank;
-        Assert.AreEqual(myCreditCardAcc.IssuingBank, issuingBank);
+        
+        myCreditCardAccount.IssuingBank = issuingBank;
+        Assert.AreEqual(myCreditCardAccount.IssuingBank, issuingBank);
     }
+
+    #endregion
 }
