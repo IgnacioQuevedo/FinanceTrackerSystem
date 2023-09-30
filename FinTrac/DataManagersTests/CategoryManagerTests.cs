@@ -72,5 +72,14 @@ namespace DataManagersTests
             Assert.AreEqual(category2, memoryDatabase.Categories[indexOfCategoryToUpdate]);
         }
 
+        [TestMethod]
+        public void GivenCategoryToDelete_ShouldDelete()
+        {
+            categoryManager.AddCategory(genericCategory);
+            int previousLength = memoryDatabase.Categories.Count;
+            categoryManager.DeleteCategory(genericCategory);
+            Assert.AreEqual(memoryDatabase.Categories.Count, previousLength - 1);
+        }
+
     }
 }

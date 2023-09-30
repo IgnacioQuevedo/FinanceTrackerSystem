@@ -76,6 +76,15 @@ namespace DataManagers.Category_Manager
 
         #endregion
 
+        #region Delete Category
+
+        public void DeleteCategory(Category myCat)
+        {
+
+        }
+
+        #endregion
+
 
     }
 }
