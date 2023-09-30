@@ -26,7 +26,10 @@ namespace BusinessLogic.Account
             {
                 throw new ExceptionValidateAccount("You do not have avaible credit...");
             }
-            
+            if(DateTime.Compare(CreationDate, ClosingDate) >= 0)
+            {
+                throw new ExceptionValidateAccount("ERROR ON DATE");
+            }
         }
 
         private void ValidateName()
