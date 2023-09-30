@@ -21,12 +21,21 @@ namespace BusinessLogic.Account
         {
             ValidateName();
             ValidateLast4Digits();
+            ValidateAvailableCredit();
+            ValidateClosingDate();
+        }
 
-            if(AvailableCredit < 0)
+        private void ValidateAvailableCredit()
+        {
+            if (AvailableCredit < 0)
             {
                 throw new ExceptionValidateAccount("You do not have avaible credit...");
             }
-            if(DateTime.Compare(CreationDate, ClosingDate) >= 0)
+        }
+
+        private void ValidateClosingDate()
+        {
+            if (DateTime.Compare(CreationDate, ClosingDate) >= 0)
             {
                 throw new ExceptionValidateAccount("ERROR ON DATE");
             }
