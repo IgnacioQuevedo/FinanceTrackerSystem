@@ -25,7 +25,7 @@ namespace DataManagers.Category_Manager
 
         public void AddCategory(Category categoryToAdd)
         {
-
+            categoryToAdd.Id = _memoryDatabase.Categories.Count + 1;
             ValidateRegisteredCategory(categoryToAdd);
             _memoryDatabase.Categories.Add(categoryToAdd);
         }
