@@ -15,6 +15,7 @@ public class MonetaryAccountTests
 
     }
 
+    #region Name
     [TestMethod]
 
     public void GivenCorrectName_ShouldItBeSet()
@@ -26,7 +27,7 @@ public class MonetaryAccountTests
 
         Assert.AreEqual(name, monetaryAccount.Name);
     }
-
+    #endregion
 
 
 }

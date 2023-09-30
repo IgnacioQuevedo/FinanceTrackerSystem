@@ -8,7 +8,7 @@ namespace BusinessLogic.Account
     public class MonetaryAccount : Account
     {
 
-
+        public MonetaryAccount() { }
 
     }
 }
