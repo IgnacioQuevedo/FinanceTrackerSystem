@@ -7,13 +7,23 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
+    private User genericUser; 
+
+    [TestInitialize]
+
+    public void TestInitialize()
+    {
+        genericUser = new User();
+    }
+
+
     #region Firstname
     [TestMethod]
     public void GivenCorrectName_ShouldReturnTrue()
     {
         User myUser = new User();
         myUser.FirstName = "Diego";
-        Assert.AreEqual(true, User.ValidateFirstName(myUser.FirstName));
+        Assert.AreEqual(true, myUser.ValidateFirstName(myUser.FirstName));
     }
 
     [TestMethod]
@@ -22,7 +32,7 @@ public class UserTests
     public void GivenEmptyName_ShouldThrowException()
     {
         string firstName = "";
-        User.ValidateFirstName(firstName);
+        genericUser.ValidateFirstName(firstName);
     }
 
     [TestMethod]
@@ -30,7 +40,7 @@ public class UserTests
     public void GivenNameWithSpecialCaracters_ShouldThrowException()
     {
         string firstName = "Die!!@go";
-        User.ValidateFirstName(firstName);
+        genericUser.ValidateFirstName(firstName);
     }
 
 
@@ -46,7 +56,7 @@ public class UserTests
         User myUser = new User();
         myUser.LastName = "Hernandez";
 
-        Assert.AreEqual(true, User.ValidateLastName(myUser.LastName));
+        Assert.AreEqual(true, myUser.ValidateLastName(myUser.LastName));
     }
 
     [TestMethod]
@@ -55,7 +65,7 @@ public class UserTests
     public void GivenEmptyOrNullLastName_ShouldThrowException()
     {
         string lastName = "";
-        User.ValidateLastName(lastName);
+        genericUser.ValidateLastName(lastName);
     }
 
 
@@ -64,7 +74,8 @@ public class UserTests
     public void GivenLastNameWithSpecialCaracters_ShouldThrowException()
     {
         string lastName = "Her!!nande@z";
-        User.ValidateLastName(lastName);
+        genericUser.LastName = lastName;
+        genericUser.ValidateLastName(genericUser.LastName);
     }
 
     #endregion
@@ -74,9 +85,9 @@ public class UserTests
     [TestMethod]
     public void GivenCorrectEmail_ShouldReturnTrue()
     {
-        User myUser = new User();
-        myUser.Email = "diegohernandez@gmail.com";
-        Assert.AreEqual(true, User.ValidateEmail(myUser.Email));
+        string email = "diegohernandez@gmail.com";
+        genericUser.Email = email;
+        Assert.AreEqual(true, genericUser.ValidateEmail(genericUser.Email));
     }
 
     [TestMethod]
@@ -84,7 +95,8 @@ public class UserTests
     public void GivenUnformattedEmail_ShouldReturnException()
     {
         string email = "diego..Hernandez@gmail.com";
-        User.ValidateEmail(email);
+        genericUser.Email = email;
+        genericUser.ValidateEmail(genericUser.Email);
     }
     #endregion
 
@@ -94,10 +106,9 @@ public class UserTests
     public void GivenCorrectPassword_ShouldReturnTrue()
     {
 
-        User myUser = new User();
-        myUser.Password = "PasswordIsCorrect";
+        genericUser.Password = "PasswordIsCorrect";
 
-        Assert.AreEqual(true, User.ValidatePassword(myUser.Password));
+        Assert.AreEqual(true, genericUser.ValidatePassword(genericUser.Password));
     }
 
     [TestMethod]
@@ -105,7 +116,8 @@ public class UserTests
     public void GivenPasswordLessThanMinorLength_ShouldThrowException()
     {
         string password = "pass";
-        User.ValidatePassword(password);
+        genericUser.Password = password;
+        genericUser.ValidatePassword(genericUser.Password);
     }
 
     [TestMethod]
@@ -113,7 +125,8 @@ public class UserTests
     public void GivenPasswordMoreThanMaxLength_ShouldThrowException()
     {
         string password = "12345123451234512345123451234512345";
-        User.ValidatePassword(password);
+        genericUser.Password = password;
+        genericUser.ValidatePassword(genericUser.Password);
     }
 
     [TestMethod]
@@ -123,7 +136,8 @@ public class UserTests
     {
 
         string password = "passwordexample";
-        User.ValidatePassword(password);
+        genericUser.Password = password;
+        genericUser.ValidatePassword(genericUser.Password);
     }
 
     #endregion
@@ -145,10 +159,10 @@ public class UserTests
     public void GivenStringStartingOrHavingAtTheEndSpaces_ShouldReturnStringWhithoutThem()
     {
         string stringExample = "    stringExample";
-        Assert.AreEqual("stringExample", User.RemoveAllUnsenseSpaces(stringExample));
+        Assert.AreEqual("stringExample", genericUser.RemoveAllUnsenseSpaces(stringExample));
 
         stringExample = "stringExample     ";
-        Assert.AreEqual("stringExample", User.RemoveAllUnsenseSpaces(stringExample));
+        Assert.AreEqual("stringExample", genericUser.RemoveAllUnsenseSpaces(stringExample));
     }
 
     #endregion
