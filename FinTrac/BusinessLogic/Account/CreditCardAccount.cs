@@ -9,6 +9,9 @@ namespace BusinessLogic.Account
     public class CreditCardAccount : Account
     {
 
+        public string IssuingBank { get; set; }
+
+
         public CreditCardAccount() { }
 
     }

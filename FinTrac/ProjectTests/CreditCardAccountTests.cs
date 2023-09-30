@@ -61,4 +61,12 @@ public class CreditCardAccountTests
 
     }
     #endregion
+
+    [TestMethod]
+    public void GivenIssuingBank_ShouldBeAssignedToCreditCard()
+    {
+        string issuingBank = "Brou";
+        myCreditCard.IssuingBank = issuingBank;
+        Assert.AreEqual(myCreditCard.IssuingBank, issuingBank);
+    }
 }
