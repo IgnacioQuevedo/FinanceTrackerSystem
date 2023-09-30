@@ -16,13 +16,16 @@ namespace BusinessLogic.Account
         public void ValidateMonetaryAccount()
         {
             ValidateAccount();
+            ValidateAmmount();
+        }
 
-            if(Ammount < 0)
+        private void ValidateAmmount()
+        {
+            if (Ammount < 0)
             {
                 throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
             }
         }
-       
 
     }
 }
