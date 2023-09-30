@@ -17,11 +17,12 @@ namespace BusinessLogic.Transaction
         public bool ValidateTitle()
         {
             bool isValid = true;
-            if (Title == "")
+            if (string.IsNullOrEmpty(Title))
             {
-                throw new ExceptionValidateTransaction("");
+                throw new ExceptionValidateTransaction("ERROR ON TITLE");
             }
             return isValid;
+
         }
     }
 }
