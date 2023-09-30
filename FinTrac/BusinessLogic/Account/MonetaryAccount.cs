@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace BusinessLogic.Account
 {
-    public class MonetaryAccount
+    public class MonetaryAccount : Account
     {
 
 
