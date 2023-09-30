@@ -111,5 +111,4 @@ public class MonetaryAccountTests
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
     }
-
 }

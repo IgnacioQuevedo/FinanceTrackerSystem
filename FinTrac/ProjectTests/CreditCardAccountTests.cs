@@ -138,8 +138,22 @@ public class CreditCardAccountTests
 
     }
 
+
+
+    [TestMethod]
+    public void GivenCorrectAvailableCredit_ShouldBeSetted()
+    {
+
+        int credit = 12000;
+
+        myCreditCardAccount.AvailableCredit = credit;
+
+        Assert.AreEqual(credit, myCreditCardAccount.AvailableCredit);
+
+    }
+
     #endregion
 
-   
+
 
 }
