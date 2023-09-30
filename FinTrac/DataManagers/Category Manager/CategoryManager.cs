@@ -80,7 +80,7 @@ namespace DataManagers.Category_Manager
 
         public void DeleteCategory(Category myCat)
         {
-
+            _memoryDatabase.Categories.Remove(myCat);
         }
 
         #endregion
