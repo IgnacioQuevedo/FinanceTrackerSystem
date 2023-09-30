@@ -11,7 +11,7 @@ namespace BusinessLogic.Account
 
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
-        public string CreationDate { get;} = DateTime.Now.ToString("dd/MM/yyyy");
+        public DateTime CreationDate { get; } = DateTime.Now.Date;
 
 
         public Account() { }

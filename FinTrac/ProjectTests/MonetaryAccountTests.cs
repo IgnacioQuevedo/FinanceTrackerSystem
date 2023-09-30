@@ -80,7 +80,7 @@ public class MonetaryAccountTests
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
-        string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime actualDate = DateTime.Now.Date;
 
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
@@ -102,7 +102,7 @@ public class MonetaryAccountTests
         string nameToBeSetted = "Itau Saving Bank";
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
-        string creationDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime creationDate = DateTime.Now.Date;
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
 

@@ -12,7 +12,7 @@ namespace BusinessLogic.Account
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
         public int AvailableCredit { get; set; }
-        public string ClosingDate { get; set; }
+        public DateTime ClosingDate { get; set; }
 
         public CreditCardAccount() { }
 
@@ -26,8 +26,7 @@ namespace BusinessLogic.Account
             {
                 throw new ExceptionValidateAccount("You do not have avaible credit...");
             }
-
-
+            
         }
 
         private void ValidateName()

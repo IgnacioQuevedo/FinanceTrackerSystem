@@ -56,8 +56,9 @@ public class CreditCardAccountTests
 
     public void DateofCreditCard_ShouldBeActualDate()
     {
-        string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime actualDate = DateTime.Now.Date;
         Assert.AreEqual(actualDate, myCreditCard.CreationDate);
+ 
     }
     #endregion
 
@@ -172,7 +173,7 @@ public class CreditCardAccountTests
     {
 
         //We make it string so it can have an estandar format and is the same format that CreationDate.
-        string closingDate = new DateOnly(2023,11,1).ToString("dd/MM/yyyy");
+        DateTime closingDate = new DateTime(2023, 11, 1);
         myCreditCardAccount.ClosingDate = closingDate;
 
         Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
@@ -183,7 +184,7 @@ public class CreditCardAccountTests
     public void SelectedClosingDateThatIsBeforeCreationDate_ShouldThrowException()
     {
 
-        myCreditCardAccount.ClosingDate = new DateOnly(2023, 7, 1).ToString("dd/MM/yyyy");
+        myCreditCardAccount.ClosingDate = new DateTime(2023, 7, 1);
 
         myCreditCardAccount.ValidateCreditCardAccount();
 
