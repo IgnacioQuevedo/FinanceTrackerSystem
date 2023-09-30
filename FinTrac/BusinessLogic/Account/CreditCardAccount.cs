@@ -31,13 +31,10 @@ namespace BusinessLogic.Account
 
         private void ValidateLast4Digits()
         {
+            int lengthOfLastDigits = Last4Digits.Length;
 
-            if(Last4Digits.Length < 4)
-            {
-                throw new ExceptionValidateAccount("ERROR");
-            }
 
-            if (string.IsNullOrEmpty(Last4Digits))
+            if (string.IsNullOrEmpty(Last4Digits) || lengthOfLastDigits < 4 )
             {
                 throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
             }
