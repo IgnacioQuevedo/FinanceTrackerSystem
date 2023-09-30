@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,7 +61,14 @@ namespace DataManagers.Category_Manager
 
         public void ModifyCategory(Category myCat)
         {
-
+            for (int i = 0; i < _memoryDatabase.Categories.Count; i++)
+            {
+                if (_memoryDatabase.Categories[i].Id == myCat.Id)
+                {
+                    _memoryDatabase.Categories[i] = myCat;
+                    break;
+                }
+            }
 
 
         }
