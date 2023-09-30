@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace BusinessLogic.User
 {
     public class User
-    {   
+    {
         private static bool _userCreated = false;
 
         #region Properties
@@ -59,7 +59,7 @@ namespace BusinessLogic.User
 
         #region ValidateFirstName
 
-        public static bool ValidateFirstName(string possibleFirstName)
+        public bool ValidateFirstName(string possibleFirstName)
         {
             string pattern = "^[A-Za-z ]+$";
             bool hasNullOrSpaceOrEmpty = string.IsNullOrWhiteSpace(possibleFirstName);
@@ -75,7 +75,7 @@ namespace BusinessLogic.User
 
         }
 
-        public static string RemoveAllUnsenseSpaces(string stringToCorrect)
+        public string RemoveAllUnsenseSpaces(string stringToCorrect)
         {
             return stringToCorrect.Trim();
         }
@@ -84,7 +84,7 @@ namespace BusinessLogic.User
 
         #region ValidateLastName
 
-        public static bool ValidateLastName(string possibleLastName)
+        public bool ValidateLastName(string possibleLastName)
         {
             string pattern = "^[A-Za-z ]+$";
             bool hasSpecialChar = !Regex.IsMatch(possibleLastName, pattern);
@@ -104,19 +104,19 @@ namespace BusinessLogic.User
 
         #region ValidateEmail
 
-        public static bool ValidateEmail(string possibleEmail)
+        public bool ValidateEmail(string possibleEmail)
         {
             string pattern = @"^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
             bool hasCorrectPattern = Regex.IsMatch(possibleEmail, pattern);
 
             for (int i = 0; i < possibleEmail.Length; i++)
             {
-                if (possibleEmail[i].Equals('.') && possibleEmail[i+1].Equals('.'))
+                if (possibleEmail[i].Equals('.') && possibleEmail[i + 1].Equals('.'))
                 {
                     hasCorrectPattern = false;
                 }
             }
-            
+
             if (!hasCorrectPattern)
             {
                 throw new ExceptionValidateUser("ERROR ON EMAIL");
@@ -127,7 +127,7 @@ namespace BusinessLogic.User
         #endregion
 
         #region ValidatePassword
-        public static bool ValidatePassword(string posiblePassword)
+        public bool ValidatePassword(string posiblePassword)
         {
             ValidatePasswordHasCorrectLength(posiblePassword);
             ValidatePasswordUppercase(posiblePassword);
@@ -135,7 +135,7 @@ namespace BusinessLogic.User
             return true;
         }
 
-        private static void ValidatePasswordHasCorrectLength(string posiblePassword)
+        private void ValidatePasswordHasCorrectLength(string posiblePassword)
         {
             int minLength = 10;
             int maxLength = 30;
@@ -148,7 +148,7 @@ namespace BusinessLogic.User
             }
         }
 
-        private static void ValidatePasswordUppercase(string posiblePassword)
+        private void ValidatePasswordUppercase(string posiblePassword)
         {
             bool hasUpperCase = false;
             int minAsciiUperCase = 65;
@@ -168,7 +168,7 @@ namespace BusinessLogic.User
             }
         }
         #endregion
- 
+
         #region ValidateAddress
         //If necessary validations or implement methods.
         #endregion
