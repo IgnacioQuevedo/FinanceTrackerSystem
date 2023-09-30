@@ -75,7 +75,6 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenCategoryToDelete_ShouldDelete()
         {
-
             categoryManager.AddCategory(genericCategory);
             int previousLength = memoryDatabase.Categories.Count;
             categoryManager.DeleteCategory(genericCategory);
