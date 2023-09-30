@@ -3,16 +3,31 @@ using BusinessLogic.User;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account;
+using System.Security.Principal;
 
 namespace TestProject1;
 [TestClass]
 public class MonetaryAccountTests
 {
 
+    private Account myAccount;
+    private MonetaryAccount myMonetaryAccount;
+
+
     [TestInitialize]
     public void TestInitialize()
     {
+        myAccount = new MonetaryAccount();
+        myMonetaryAccount = new MonetaryAccount();
 
+        //myAccout is a polimorfed object
+        myAccount.Name = "Scotia Saving Bank";
+        myAccount.Currency = CurrencyEnum.UY;
+
+        //monetaryAccount is a 100% object that references only to monetaryAccount
+        myMonetaryAccount.Name = myAccount.Name;
+        myMonetaryAccount.Currency = CurrencyEnum.UY;
+        myMonetaryAccount.Ammount = 10;
     }
 
     #region Name
@@ -20,11 +35,10 @@ public class MonetaryAccountTests
 
     public void GivenCorrectName_ShouldItBeSet()
     {
-        Account monetaryAccount = new MonetaryAccount();
         string name = "Santander Saving Bank";
-        monetaryAccount.Name = name;
+        myAccount.Name = name;
 
-        Assert.AreEqual(name, monetaryAccount.Name);
+        Assert.AreEqual(name, myAccount.Name);
     }
 
 
@@ -33,8 +47,8 @@ public class MonetaryAccountTests
     public void GivenEmptyName_ShouldReturnException()
     {
         string name = "";
-        Account myMonetaryAccount = new MonetaryAccount();
         myMonetaryAccount.Name = name;
+
         myMonetaryAccount.ValidateAccount();
     }
 
@@ -44,7 +58,6 @@ public class MonetaryAccountTests
     public void GivenInitialAmmount_ShouldBeSetted()
     {
         int initialAmmount = 100;
-        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
         myMonetaryAccount.Ammount = initialAmmount;
 
         Assert.AreEqual(myMonetaryAccount.Ammount, initialAmmount);
@@ -54,12 +67,10 @@ public class MonetaryAccountTests
 
 
     [TestMethod]
-    [ExpectedException (typeof(ExceptionValidateAccount))]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
 
     public void GivenInitialNegativeAmmount_ShouldThrowException()
     {
-        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
-        myMonetaryAccount.Name = "Brou Saving Bank";
         myMonetaryAccount.Ammount = -1;
         myMonetaryAccount.ValidateMonetaryAccount();
 
@@ -69,7 +80,6 @@ public class MonetaryAccountTests
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
-        Account myMonetaryAccount = new MonetaryAccount();
         string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
 
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
@@ -78,12 +88,9 @@ public class MonetaryAccountTests
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
-
-        Account myMonetaryAccount = new MonetaryAccount();
-        myMonetaryAccount.Currency = CurrencyEnum.UY;
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myMonetaryAccount.Currency);
         Assert.IsTrue(belongToEnum);
-        
+
     }
 
 }
