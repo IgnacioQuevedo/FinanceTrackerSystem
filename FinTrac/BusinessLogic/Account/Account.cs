@@ -14,6 +14,15 @@ namespace BusinessLogic.Account
         public string CreationDate { get;} = DateTime.Now.ToString("dd/MM/yyyy");
 
 
+        public Account() { }
+
+
+        public Account(string name, CurrencyEnum currency)
+        {
+            Name = name;
+            Currency = currency;
+        }
+
         public bool ValidateAccount()
         {
             if (string.IsNullOrEmpty(Name))
