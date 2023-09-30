@@ -165,7 +165,19 @@ public class CreditCardAccountTests
 
     #endregion
 
+    #region ClosingDate
 
+    public void CreatedAnAccount_ClosingDateMustBeSetted()
+    {
+
+        string closingDate = new DateOnly(2023,11,1);
+        myCreditCardAccount.ClosingDate = closingDate;
+
+        Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
+    }
+
+
+    #endregion
 
 
 

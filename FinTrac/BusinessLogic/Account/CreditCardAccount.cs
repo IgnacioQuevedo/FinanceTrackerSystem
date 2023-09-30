@@ -13,6 +13,8 @@ namespace BusinessLogic.Account
         public string Last4Digits { get; set; }
         public int AvailableCredit { get; set; }
 
+        public string ClosingDate { get; set; }
+
         public CreditCardAccount() { }
 
 
