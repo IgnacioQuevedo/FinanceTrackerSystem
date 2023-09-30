@@ -17,16 +17,24 @@ namespace BusinessLogic.Account
 
         public void ValidateCreditCardAccount()
         {
+            ValidateName();
+            ValidateLast4Digits();
+        }
+
+        private void ValidateName()
+        {
             if (string.IsNullOrEmpty(IssuingBank))
             {
                 throw new ExceptionValidateAccount("ERROR ON ISSUING BANK NAME");
             }
+        }
 
+        private void ValidateLast4Digits()
+        {
             if (string.IsNullOrEmpty(Last4Digits))
             {
                 throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
             }
         }
-
     }
 }
