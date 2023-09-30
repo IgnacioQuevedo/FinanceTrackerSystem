@@ -67,8 +67,9 @@ namespace DataManagersTests
             Category category2 = new Category(name2, status2, type2);
             category2.Id = genericCategory.Id;
             categoryManager.ModifyCategory(category2);
+            int indexOfCategoryToUpdate = (int)genericCategory.Id - 1;
 
-            Assert.AreEqual(category2, memoryDatabase.Categories[(int)genericCategory.Id - 1]);
+            Assert.AreEqual(category2, memoryDatabase.Categories[indexOfCategoryToUpdate]);
         }
 
     }

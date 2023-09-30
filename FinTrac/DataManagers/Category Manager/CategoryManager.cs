@@ -59,17 +59,18 @@ namespace DataManagers.Category_Manager
 
         #region Modify Category
 
-        public void ModifyCategory(Category myCat)
+        public void ModifyCategory(Category categoryToUpdate)
         {
-            for (int i = 0; i < _memoryDatabase.Categories.Count; i++)
+            int lengthOfCategoryList = _memoryDatabase.Categories.Count;
+
+            for (int i = 0; i < lengthOfCategoryList; i++)
             {
-                if (_memoryDatabase.Categories[i].Id == myCat.Id)
+                if (_memoryDatabase.Categories[i].Id == categoryToUpdate.Id)
                 {
-                    _memoryDatabase.Categories[i] = myCat;
+                    _memoryDatabase.Categories[i] = categoryToUpdate;
                     break;
                 }
             }
-
 
         }
 
