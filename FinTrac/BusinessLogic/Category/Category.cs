@@ -10,6 +10,7 @@ namespace BusinessLogic.Category
     {
         #region Properties
         private bool _categoryCreated = false;
+        public long Id { get; set; }
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 

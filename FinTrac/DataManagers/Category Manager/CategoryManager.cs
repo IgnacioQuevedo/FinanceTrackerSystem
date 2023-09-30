@@ -25,6 +25,7 @@ namespace DataManagers.Category_Manager
 
         public void AddCategory(Category categoryToAdd)
         {
+
             ValidateRegisteredCategory(categoryToAdd);
             _memoryDatabase.Categories.Add(categoryToAdd);
         }
@@ -33,7 +34,7 @@ namespace DataManagers.Category_Manager
         {
             foreach (var category in _memoryDatabase.Categories)
             {
-                if (category.Name == categoryToAdd.Name)
+                if (category.Id == categoryToAdd.Id)
                 {
                     throw new ExceptionCategoryManager("Category name already registered, impossible to create another Category.");
                 }

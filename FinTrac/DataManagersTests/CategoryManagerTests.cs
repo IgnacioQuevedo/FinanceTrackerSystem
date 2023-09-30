@@ -45,6 +45,13 @@ namespace DataManagersTests
         }
 
         [TestMethod]
+        public void GivenCategoryToAdd_ShouldAssignId()
+        {
+            categoryManager.AddCategory(genericCategory);
+            Assert.AreEqual(memoryDatabase.Categories.Count, genericCategory.Id);
+        }
+
+        [TestMethod]
         public void GivenNothing_ShouldReturnList()
         {
             Assert.AreEqual(memoryDatabase.Categories, categoryManager.GetCategories());
