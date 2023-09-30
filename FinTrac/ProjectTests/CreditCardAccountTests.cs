@@ -19,6 +19,7 @@ public class CreditCardAccountTests
         myCreditCard = new CreditCardAccount();
     }
     #endregion
+
     #region Name
     [TestMethod]
     public void GivenCorrectName_ShouldBeSetted()
@@ -39,7 +40,6 @@ public class CreditCardAccountTests
     }
     #endregion
 
-
     #region CreationDate
     [TestMethod]    
 
@@ -49,4 +49,13 @@ public class CreditCardAccountTests
         Assert.AreEqual(actualDate, myCreditCard.CreationDate);
     }
     #endregion
+
+    [TestMethod]
+    public void GivenCurrency_ShouldBelongToCurrencyEnum()
+    {
+        bool enuma = Enum.IsDefined(typeof(CurrencyEnum),myCreditCard.Currency );
+        Assert.IsTrue(enuma);
+
+    }
+
 }
