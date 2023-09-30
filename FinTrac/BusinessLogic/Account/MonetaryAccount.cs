@@ -17,7 +17,10 @@ namespace BusinessLogic.Account
         {
             ValidateAccount();
 
-            
+            if(Ammount < 0)
+            {
+                throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
+            }
         }
        
 

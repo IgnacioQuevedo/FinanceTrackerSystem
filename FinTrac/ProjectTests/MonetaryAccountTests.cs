@@ -59,6 +59,7 @@ public class MonetaryAccountTests
     public void GivenInitialNegativeAmmount_ShouldThrowException()
     {
         MonetaryAccount myMonetaryAccount = new MonetaryAccount();
+        myMonetaryAccount.Name = "Brou Saving Bank";
         myMonetaryAccount.Ammount = -1;
         myMonetaryAccount.ValidateMonetaryAccount();
 
