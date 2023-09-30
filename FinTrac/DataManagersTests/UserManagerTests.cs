@@ -133,7 +133,9 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserToAdd_ShouldGenerateAnId()
         {
-            Assert.AreEqual(genericUser.Id,memoryDatabase.Users.Count);
+            //The id is the ammount of users because we already added the user on the initialized section.
+            int ammountOfUsers = memoryDatabase.Users.Count;
+            Assert.AreEqual(genericUser.Id, ammountOfUsers);
         }
 
         #endregion
