@@ -74,5 +74,21 @@ public class CreditCardAccountTests
         Assert.AreEqual(myCreditCardAccount.IssuingBank, issuingBank);
     }
 
+    [TestMethod]
+    [ExpectedException (typeof(ExceptionValidateAccount))]
+
+    public void GivenEmptyIssuingBank_ShouldThrowException()
+    {
+        string issuingBank = "";
+
+        myCreditCardAccount.IssuingBank= issuingBank;
+
+        myCreditCardAccount.ValidateCreditCardAccount();
+
+
+
+    }
+
+
     #endregion
 }
