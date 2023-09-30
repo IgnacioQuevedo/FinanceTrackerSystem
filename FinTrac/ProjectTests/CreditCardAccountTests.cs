@@ -116,8 +116,18 @@ public class CreditCardAccountTests
         myCreditCardAccount.Last4Digits = "";
         
         myCreditCardAccount.ValidateCreditCardAccount();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+
+    public void GivenLessThan4Digits_ShouldThrowException()
+    {
+        myCreditCardAccount.Last4Digits = "123";
+        myCreditCardAccount.ValidateCreditCardAccount();
 
     }
+
     #endregion
 
 }
