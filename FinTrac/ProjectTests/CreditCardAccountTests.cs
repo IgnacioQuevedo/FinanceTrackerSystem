@@ -128,6 +128,17 @@ public class CreditCardAccountTests
 
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+
+    public void GivenIncorrectFormatOfLast4Digits_ShouldThrowException()
+    {
+
+        myCreditCardAccount.Last4Digits= "123A";
+        myCreditCardAccount.ValidateCreditCardAccount();
+
+    }
+
     #endregion
 
 }
