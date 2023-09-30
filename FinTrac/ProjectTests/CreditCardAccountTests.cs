@@ -167,6 +167,7 @@ public class CreditCardAccountTests
 
     #region ClosingDate
 
+    [TestMethod]
     public void CreatedAnAccount_ClosingDateMustBeSetted()
     {
 
@@ -177,6 +178,7 @@ public class CreditCardAccountTests
         Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
     }
 
+    
 
     #endregion
 
