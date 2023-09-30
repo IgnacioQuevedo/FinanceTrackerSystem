@@ -16,7 +16,7 @@ namespace BusinessLogic.Transaction
 
         public bool ValidateTitle()
         {
-            return false;
+            return true;
         }
     }
 }
