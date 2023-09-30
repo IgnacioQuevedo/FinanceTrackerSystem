@@ -33,7 +33,7 @@ public class CreditCardAccountTests
         string name = "";
         myCreditCard.Name = name;
 
-        myCreditCard.ValidateCreditCardAccount();
+        myCreditCard.ValidateAccount();
 
     }
   

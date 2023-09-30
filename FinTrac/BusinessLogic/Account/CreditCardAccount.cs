@@ -11,12 +11,5 @@ namespace BusinessLogic.Account
 
         public CreditCardAccount() { }
 
-
-
-        public void ValidateCreditCardAccount()
-        {
-
-            throw new NotImplementedException();
-        }
     }
 }
