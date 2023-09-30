@@ -44,7 +44,8 @@ public class CreditCardAccountTests
 
     public void DateofCreditCard_ShouldBeActualDate()
     {
-        Assert.AreEqual(DateTime.Now, myCreditCard.CreationDate);
+        string date = DateTime.Now.ToString("dd/MM/yyyy");
+        Assert.AreEqual(date, myCreditCard.CreationDate);
     }
 
 }
