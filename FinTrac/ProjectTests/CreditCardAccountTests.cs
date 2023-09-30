@@ -137,6 +137,7 @@ public class CreditCardAccountTests
         myCreditCardAccount.ValidateCreditCardAccount();
 
     }
+    #endregion 
 
     #region AvailableCredit
 
