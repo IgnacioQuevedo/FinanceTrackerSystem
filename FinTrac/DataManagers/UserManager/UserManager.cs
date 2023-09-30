@@ -9,9 +9,9 @@ namespace DataManagers.UserManager
 
         private Repository _memoryDatabase;
 
-        public UserManager(Repository memoryDatabase) 
+        public UserManager(Repository memoryDatabase)
         {
-            _memoryDatabase = memoryDatabase; 
+            _memoryDatabase = memoryDatabase;
         }
 
 
@@ -21,7 +21,7 @@ namespace DataManagers.UserManager
             if (ValidateAddUser(user))
             {
                 FormatProperties(user);
-                user.Id = _memoryDatabase.Users.Count + 1;                                                                                                              
+                user.Id = _memoryDatabase.Users.Count + 1;
                 _memoryDatabase.Users.Add(user);
             }
         }
@@ -75,7 +75,7 @@ namespace DataManagers.UserManager
                     {
                         existsUser = true;
                     }
-                    
+
                 }
             }
 
@@ -93,14 +93,24 @@ namespace DataManagers.UserManager
         #region Modify
 
 
-        public static void Modify(User userNotUpdated,User userUpdated)
+        public void Modify(User userNotUpdated, User userUpdated)
         {
 
-            userNotUpdated.FirstName = userUpdated.FirstName;
-            userNotUpdated.LastName = userUpdated.LastName;
-            userNotUpdated.Email = userUpdated.Email;
-            userNotUpdated.Password = userUpdated.Password;
-            userNotUpdated.Address = userUpdated.Address;
+            foreach (var user in _memoryDatabase.Users)
+            {
+
+                if (user.Id.Equals(userNotUpdated.Id) && !ValidateAddUser(userUpdated)) 
+                {
+
+                    userNotUpdated.FirstName = userUpdated.FirstName;
+                    userNotUpdated.LastName = userUpdated.LastName;
+                    userNotUpdated.Email = userUpdated.Email;
+                    userNotUpdated.Password = userUpdated.Password;
+                    userNotUpdated.Address = userUpdated.Address;
+
+                }
+
+            }
 
         }
 
