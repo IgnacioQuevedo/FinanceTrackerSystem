@@ -70,9 +70,10 @@ public class MonetaryAccountTests
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
-        MonetaryAccount myMonetariaAccount = new MonetaryAccount();
+        Account myMonetaryAccount = new MonetaryAccount();
+        string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
 
-        Assert.AreEqual(myMonetariaAccount.CreationDate, DateTime.Now.ToString("dd/MM/yyyy"));
+        Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
 
 }
