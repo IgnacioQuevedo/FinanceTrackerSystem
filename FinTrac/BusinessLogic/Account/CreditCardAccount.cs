@@ -16,6 +16,13 @@ namespace BusinessLogic.Account
 
         public CreditCardAccount() { }
 
+        public CreditCardAccount(string name,CurrencyEnum currency,string issuingBank, string last4Digits, int availableCredit, DateTime closingDate) : base(name,currency)
+        {
+            IssuingBank = issuingBank;
+            Last4Digits = last4Digits;
+            AvailableCredit = availableCredit;
+            ClosingDate = closingDate;
+        }
 
         public void ValidateCreditCardAccount()
         {

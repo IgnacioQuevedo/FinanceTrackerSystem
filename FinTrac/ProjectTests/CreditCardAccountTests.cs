@@ -205,7 +205,7 @@ public class CreditCardAccountTests
         int availableCreditToBeSetted = 20000;
         DateTime closingDateToBeSetted = new DateTime(9/30/2024);
 
-        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted);
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
 
         Assert.AreEqual(nameToBeSetted, CreditCardAccountExample.Name);
         Assert.AreEqual(currencyToBeSetted, CreditCardAccountExample.Currency);
