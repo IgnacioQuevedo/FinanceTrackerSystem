@@ -37,7 +37,8 @@ public class TransactionTests
 
     public void GivenDateToSet_ShuldBeSetted()
     {
-        Assert.AreEqual(genericTransaction.CreationDate, DateTime.Now.Date);
+        DateTime dateToBeSetted = DateTime.Now.Date;
+        Assert.AreEqual(genericTransaction.CreationDate, dateToBeSetted);
     }
 
 
