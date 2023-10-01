@@ -204,7 +204,7 @@ public class CreditCardAccountTests
         string issuingBankToBeSetted = "Santander";
         string last4DigitsToBeSetted = "1234";
         int availableCreditToBeSetted = 20000;
-        DateTime closingDateToBeSetted = new DateTime(9/30/2024);
+        DateTime closingDateToBeSetted = new DateTime(2024,9,30);
 
         CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted,closingDateToBeSetted);
 
@@ -227,7 +227,7 @@ public class CreditCardAccountTests
         string issuingBankToBeSetted = "Santander";
         string last4DigitsToBeSetted = "1234";
         int availableCreditToBeSetted = 20000;
-        DateTime closingDateToBeSetted = new DateTime(9 / 30 / 2022);
+        DateTime closingDateToBeSetted = new DateTime(2022,9,30);
 
         CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
     }
