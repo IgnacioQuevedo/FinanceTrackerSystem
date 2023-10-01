@@ -194,6 +194,7 @@ public class CreditCardAccountTests
 
     #endregion
 
+    #region Constructor
     [TestMethod]
     public void CreationOfCreditCardAccount_ShouldBeValidated()
     {
@@ -205,7 +206,7 @@ public class CreditCardAccountTests
         int availableCreditToBeSetted = 20000;
         DateTime closingDateToBeSetted = new DateTime(9/30/2024);
 
-        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted,closingDateToBeSetted);
 
         Assert.AreEqual(nameToBeSetted, CreditCardAccountExample.Name);
         Assert.AreEqual(currencyToBeSetted, CreditCardAccountExample.Currency);
@@ -214,8 +215,7 @@ public class CreditCardAccountTests
         Assert.AreEqual(availableCreditToBeSetted, CreditCardAccountExample.AvailableCredit);
         Assert.AreEqual(closingDateToBeSetted,CreditCardAccountExample.ClosingDate);
 
-
-
     }
 
+    #endregion
 }
