@@ -61,7 +61,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
-        Assert.IsTrue(Enum.IsDefined(typeof(CurrencyEnum), genericTransaction.Currency));
+        bool belongsToCurrencyEnum = Enum.IsDefined(typeof(CurrencyEnum), genericTransaction.Currency);
+        Assert.IsTrue(belongsToCurrencyEnum);
     }
 
 
