@@ -52,6 +52,7 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenWrongAmountToSet_ShouldThrowException()
     {
+        genericTransaction.Amount = 0;
         genericTransaction.ValidateAmount();
     }
 
