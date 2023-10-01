@@ -31,7 +31,9 @@ namespace BusinessLogic.Transaction
         public bool ValidateAmount()
         {
             bool isValid = true;
-            if (Amount <= 0)
+            bool amountIsNoNegativeOrZero = Amount <= 0;
+
+            if (amountIsNoNegativeOrZero)
             {
                 throw new ExceptionValidateTransaction("ERROR ON AMOUNT");
             }
