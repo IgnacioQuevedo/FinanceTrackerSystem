@@ -12,7 +12,7 @@ namespace BusinessLogic.Transaction
 
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
 
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public Transaction()
         {
