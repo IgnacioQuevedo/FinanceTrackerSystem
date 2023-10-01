@@ -4,6 +4,7 @@ using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account;
 using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TestProject1;
 
@@ -193,6 +194,28 @@ public class CreditCardAccountTests
 
     #endregion
 
+    [TestMethod]
+    public void CreationOfCreditCardAccount_ShouldBeValidated()
+    {
 
+        string nameToBeSetted = "Prex";
+        CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+        string issuingBankToBeSetted = "Santander";
+        string last4DigitsToBeSetted = "1234";
+        int availableCreditToBeSetted = 20000;
+        DateTime closingDateToBeSetted = new DateTime(9/30/2024);
+
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted);
+
+        Assert.AreEqual(nameToBeSetted, CreditCardAccountExample.Name);
+        Assert.AreEqual(currencyToBeSetted, CreditCardAccountExample.Currency);
+        Assert.AreEqual(issuingBankToBeSetted, CreditCardAccountExample.IssuingBank);
+        Assert.AreEqual(last4DigitsToBeSetted, CreditCardAccountExample.Last4Digits);
+        Assert.AreEqual(availableCreditToBeSetted, CreditCardAccountExample.AvailableCredit);
+        Assert.AreEqual(closingDateToBeSetted,CreditCardAccountExample.ClosingDate);
+
+
+
+    }
 
 }
