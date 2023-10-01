@@ -41,6 +41,12 @@ public class TransactionTests
         Assert.AreEqual(genericTransaction.CreationDate, dateToBeSetted);
     }
 
+    [TestMethod]
+    public void GivenCorrectAmount_ShouldReturnTrue()
+    {
+        Assert.AreEqual(true, genericTransaction.ValidateAmount());
+    }
+
 
 
 
