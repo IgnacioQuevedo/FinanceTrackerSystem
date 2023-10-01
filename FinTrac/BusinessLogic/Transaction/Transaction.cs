@@ -10,6 +10,8 @@ namespace BusinessLogic.Transaction
     {
         public string Title { get; set; }
 
+        public DateTime CreationDate { get; set; } = DateTime.Now.Date;
+
         public Transaction()
         {
         }

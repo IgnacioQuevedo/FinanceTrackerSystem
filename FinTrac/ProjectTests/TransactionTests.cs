@@ -15,6 +15,7 @@ public class TransactionTests
     {
         genericTransaction = new Transaction();
         genericTransaction.Title = "Title";
+        genericTransaction.CreationDate = DateTime.Now;
     }
 
     [TestMethod]
@@ -30,6 +31,13 @@ public class TransactionTests
     {
         genericTransaction.Title = "";
         genericTransaction.ValidateTitle();
+    }
+
+    [TestMethod]
+
+    public void GivenDateToSet_ShuldBeSetted()
+    {
+        Assert.AreEqual(genericTransaction.CreationDate, DateTime.Now.Date);
     }
 
 
