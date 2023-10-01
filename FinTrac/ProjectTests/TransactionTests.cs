@@ -18,6 +18,7 @@ public class TransactionTests
         genericTransaction.Title = "Title";
         genericTransaction.CreationDate = DateTime.Now.Date;
         genericTransaction.Amount = 100;
+        genericTransaction.Currency = (CurrencyEnum)1;
     }
 
     [TestMethod]
