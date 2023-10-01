@@ -48,6 +48,12 @@ public class TransactionTests
         Assert.AreEqual(true, genericTransaction.ValidateAmount());
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenWrongAmountToSet_ShouldThrowException()
+    {
+        genericTransaction.ValidateAmount();
+    }
 
 
 
