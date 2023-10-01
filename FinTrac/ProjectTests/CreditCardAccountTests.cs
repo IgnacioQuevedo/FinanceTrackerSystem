@@ -11,10 +11,11 @@ namespace TestProject1;
 [TestClass]
 public class CreditCardAccountTests
 {
+    #region Init
+
     private Account myCreditCard;
     private CreditCardAccount myCreditCardAccount;
 
-    #region Init
     [TestInitialize]
     public void TestInitialized()
     {
@@ -59,7 +60,7 @@ public class CreditCardAccountTests
     {
         DateTime actualDate = DateTime.Now.Date;
         Assert.AreEqual(actualDate, myCreditCard.CreationDate);
- 
+
     }
     #endregion
 
@@ -116,7 +117,7 @@ public class CreditCardAccountTests
     public void GivenEmpty4LastDigits_ShouldThrowException()
     {
         myCreditCardAccount.Last4Digits = "";
-        
+
         myCreditCardAccount.ValidateCreditCardAccount();
     }
 
@@ -136,7 +137,7 @@ public class CreditCardAccountTests
     public void GivenIncorrectFormatOfLast4Digits_ShouldThrowException()
     {
 
-        myCreditCardAccount.Last4Digits= "123A";
+        myCreditCardAccount.Last4Digits = "123A";
         myCreditCardAccount.ValidateCreditCardAccount();
 
     }
@@ -178,7 +179,7 @@ public class CreditCardAccountTests
         myCreditCardAccount.ClosingDate = closingDate;
 
         Assert.AreEqual(closingDate, myCreditCardAccount.ClosingDate);
-    } 
+    }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
@@ -204,16 +205,16 @@ public class CreditCardAccountTests
         string issuingBankToBeSetted = "Santander";
         string last4DigitsToBeSetted = "1234";
         int availableCreditToBeSetted = 20000;
-        DateTime closingDateToBeSetted = new DateTime(2024,9,30);
+        DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
 
-        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted,closingDateToBeSetted);
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
 
         Assert.AreEqual(nameToBeSetted, CreditCardAccountExample.Name);
         Assert.AreEqual(currencyToBeSetted, CreditCardAccountExample.Currency);
         Assert.AreEqual(issuingBankToBeSetted, CreditCardAccountExample.IssuingBank);
         Assert.AreEqual(last4DigitsToBeSetted, CreditCardAccountExample.Last4Digits);
         Assert.AreEqual(availableCreditToBeSetted, CreditCardAccountExample.AvailableCredit);
-        Assert.AreEqual(closingDateToBeSetted,CreditCardAccountExample.ClosingDate);
+        Assert.AreEqual(closingDateToBeSetted, CreditCardAccountExample.ClosingDate);
 
     }
 
@@ -227,13 +228,12 @@ public class CreditCardAccountTests
         string issuingBankToBeSetted = "Santander";
         string last4DigitsToBeSetted = "1234";
         int availableCreditToBeSetted = 20000;
-        DateTime closingDateToBeSetted = new DateTime(2022,9,30);
+        DateTime closingDateToBeSetted = new DateTime(2022, 9, 30);
 
         CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
     }
 
 
     #endregion
-
 
 }

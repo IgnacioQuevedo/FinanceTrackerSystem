@@ -8,12 +8,13 @@ namespace BusinessLogic.Account
 {
     public abstract class Account
     {
-
+        #region Properties
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; } = DateTime.Now.Date;
+        #endregion
 
-
+        #region Constructor
         public Account() { }
 
 
@@ -23,6 +24,9 @@ namespace BusinessLogic.Account
             Currency = currency;
         }
 
+        #endregion
+
+        #region Validate Account
         public bool ValidateAccount()
         {
             if (string.IsNullOrEmpty(Name))
@@ -31,6 +35,7 @@ namespace BusinessLogic.Account
             }
             return true;
         }
+        #endregion
 
     }
 }

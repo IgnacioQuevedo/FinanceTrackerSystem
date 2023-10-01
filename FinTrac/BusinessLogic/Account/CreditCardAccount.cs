@@ -9,11 +9,15 @@ namespace BusinessLogic.Account
     public class CreditCardAccount : Account
     {
 
+        #region Properties
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
         public int AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
 
+        #endregion
+
+        #region Constructor
         public CreditCardAccount() { }
 
         public CreditCardAccount(string name,CurrencyEnum currency,string issuingBank, string last4Digits, int availableCredit, DateTime closingDate) : base(name,currency)
@@ -25,6 +29,9 @@ namespace BusinessLogic.Account
             ValidateCreditCardAccount();
         }
 
+        #endregion
+
+        #region Validation of Credit Card
         public void ValidateCreditCardAccount()
         {
             ValidateName();
@@ -80,5 +87,7 @@ namespace BusinessLogic.Account
             }
             return isCorrect;
         }
+
+        #endregion
     }
 }
