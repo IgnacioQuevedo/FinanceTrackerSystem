@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,16 @@ namespace BusinessLogic.Transaction
 {
     public class Transaction
     {
+        #region Properties
         public string Title { get; set; }
 
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
 
         public decimal Amount { get; set; }
+
+        public CurrencyEnum Currency { get; set; }
+
+        #endregion
 
         public Transaction()
         {

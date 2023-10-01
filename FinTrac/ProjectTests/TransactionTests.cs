@@ -3,6 +3,7 @@ using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Transaction;
 using BusinessLogic.Category;
+using BusinessLogic.Account;
 
 namespace TestProject1;
 [TestClass]
@@ -54,6 +55,12 @@ public class TransactionTests
     {
         genericTransaction.Amount = 0;
         genericTransaction.ValidateAmount();
+    }
+
+    [TestMethod]
+    public void GivenCurrency_ShouldBelongToCurrencyEnum()
+    {
+        Assert.IsTrue(Enum.IsDefined(typeof(CurrencyEnum), genericTransaction.Currency));
     }
 
 
