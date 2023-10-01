@@ -217,5 +217,21 @@ public class CreditCardAccountTests
 
     }
 
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+    public void GivenIncorrectValueWhenCreatingACreditCard_ShouldThrowException()
+    {
+        string nameToBeSetted = "";
+        CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+        string issuingBankToBeSetted = "Santander";
+        string last4DigitsToBeSetted = "1234";
+        int availableCreditToBeSetted = 20000;
+        DateTime closingDateToBeSetted = new DateTime(9 / 30 / 2022);
+
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+    }
+
+
     #endregion
 }
