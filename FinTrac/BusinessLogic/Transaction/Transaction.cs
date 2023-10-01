@@ -30,7 +30,7 @@ namespace BusinessLogic.Transaction
 
         public bool ValidateAmount()
         {
-            return false;
+            return Amount > 0;
         }
     }
 }
