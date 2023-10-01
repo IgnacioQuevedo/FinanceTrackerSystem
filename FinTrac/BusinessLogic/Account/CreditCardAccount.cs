@@ -22,6 +22,11 @@ namespace BusinessLogic.Account
             Last4Digits = last4Digits;
             AvailableCredit = availableCredit;
             ClosingDate = closingDate;
+
+            ValidateName();
+            ValidateLast4Digits();
+            ValidateAvailableCredit();
+            ValidateClosingDate();
         }
 
         public void ValidateCreditCardAccount()
