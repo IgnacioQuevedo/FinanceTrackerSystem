@@ -13,19 +13,33 @@ namespace BusinessLogicTests
     {
 
         #region initializingAspects
-        private Account genericAccount;
+        private Account genericMonetaryAccount;
         private User genericUser;
+        private Account genericCreditCardAccount;
+        private int numberOfAccountsAddedBefore;
 
-        [TestInitialize]
+       [TestInitialize]
         public void TestInitialize()
         {
-            genericAccount = new MonetaryAccount("Itau Saving Bank", 5000, CurrencyEnum.UY);
+            genericMonetaryAccount = new MonetaryAccount("Itau Saving Bank", 5000, CurrencyEnum.UY);
+
             string firstName = "Austin";
             string lastName = "Ford";
             string email = "austinFord@gmail.com";
             string password = "AustinF2003";
             string address = "NW 2nd Ave";
             genericUser = new User(firstName, lastName, email, password, address);
+
+            
+            string nameToBeSetted = "Prex";
+            CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+            string issuingBankToBeSetted = "Santander";
+            string last4DigitsToBeSetted = "1234";
+            int availableCreditToBeSetted = 20000;
+            DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
+            genericCreditCardAccount = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+
+            numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
         }
 
         #endregion
@@ -36,8 +50,7 @@ namespace BusinessLogicTests
         [TestMethod]
         public void GivenCorrectMonetaryAccountToAdd_ShouldAddIt()
         {
-            int numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
-            genericUser.AddAccount(genericAccount);
+            genericUser.AddAccount(genericMonetaryAccount);
             
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
@@ -47,7 +60,7 @@ namespace BusinessLogicTests
 
         public void GivenNameOfMonetaryAccountAlreadyAdded_ShouldThrowException()
         {
-            genericUser.AddAccount(genericAccount);
+            genericUser.AddAccount(genericMonetaryAccount);
 
             Account repitedNameAccount = new MonetaryAccount("Itau Saving Bank", 100, CurrencyEnum.UY);
             genericUser.AddAccount(repitedNameAccount);
@@ -64,16 +77,6 @@ namespace BusinessLogicTests
         [TestMethod]
         public void GivenCorrectCreditCardAccount_ShouldBeAdded()
         {
-            int numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
-            string nameToBeSetted = "Prex";
-            CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
-            string issuingBankToBeSetted = "Santander";
-            string last4DigitsToBeSetted = "1234";
-            int availableCreditToBeSetted = 20000;
-            DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
-
-            Account genericCreditCardAccount = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
-
             genericUser.AddAccount(genericCreditCardAccount);
 
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
