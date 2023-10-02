@@ -21,8 +21,6 @@ public class CategoryTests
         string name = "Outcomes";
         StatusEnum status = (StatusEnum)1;
         TypeEnum type = (TypeEnum)1;
-
-
         genericCategory = new Category(name, status, type);
 
         string firstName = "Austin";
@@ -30,7 +28,6 @@ public class CategoryTests
         string email = "austinFord@gmail.com";
         string password = "AustinF2003";
         string address = "NW 2nd Ave";
-
         genericUser = new User(firstName, lastName, email, password, address);
     }
     #endregion
@@ -121,7 +118,7 @@ public class CategoryTests
     public void GivenCategoryToAdd_ShouldAssignId()
     {
         genericUser.AddCategory(genericCategory);
-        Assert.AreEqual(genericUser.MyCategories.Count, genericCategory.Id);
+        Assert.AreEqual(genericUser.MyCategories.Count, genericCategory.CategoryId);
     }
 
     [TestMethod]
@@ -134,27 +131,29 @@ public class CategoryTests
     public void GivenCategoryToUpdate_ShouldBeModifiedCorrectly()
     {
         genericUser.AddCategory(genericCategory);
-        string name2 = "Fooding";
-        StatusEnum status2 = (StatusEnum)1;
-        TypeEnum type2 = (TypeEnum)1;
-        Category category2 = new Category(name2, status2, type2);
-        category2.Id = genericCategory.Id;
-        genericUser.ModifyCategory(category2);
-        int indexOfCategoryToUpdate = (int)genericCategory.Id - 1;
 
-        Assert.AreEqual(category2, genericUser.MyCategories[indexOfCategoryToUpdate]);
+        string nameOfSecondCategory = "Fooding";
+        StatusEnum statusOfSecondCategory = StatusEnum.Enabled;
+        TypeEnum typeOfSecondCategory = TypeEnum.Income;
+        Category anotherCategory = new Category(nameOfSecondCategory, statusOfSecondCategory, typeOfSecondCategory);
+
+        anotherCategory.CategoryId = genericCategory.CategoryId;
+        genericUser.ModifyCategory(anotherCategory);
+        int indexOfCategoryToUpdate = genericCategory.CategoryId - 1;
+
+        Assert.AreEqual(anotherCategory, genericUser.MyCategories[indexOfCategoryToUpdate]);
     }
 
     [TestMethod]
     public void GivenCategoryToDelete_ShouldDelete()
     {
         genericUser.AddCategory(genericCategory);
-        int previousLength = genericUser.MyCategories.Count;
+        int lengthBeforeDelete = genericUser.MyCategories.Count;
+
         genericUser.DeleteCategory(genericCategory);
+        int lengthAfterDelete = lengthBeforeDelete - 1;
 
-        int lengthAfterDelete = previousLength - 1;
         int actualLength = genericUser.MyCategories.Count;
-
         Assert.AreEqual(actualLength, lengthAfterDelete);
     }
 

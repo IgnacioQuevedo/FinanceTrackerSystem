@@ -15,7 +15,7 @@ namespace BusinessLogic.User_Components
     public class User
     {
         #region Properties
-        public long Id { get; set; }
+        public long UserId { get; set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
@@ -91,6 +91,7 @@ namespace BusinessLogic.User_Components
         public bool ValidateLastName(string possibleLastName)
         {
             string pattern = "^[A-Za-z ]+$";
+            //Regex checks if a specified regular expression pattern matches the entire input string.
             bool hasSpecialChar = !Regex.IsMatch(possibleLastName, pattern);
             bool hasNullOrEmptyOrSpace = string.IsNullOrWhiteSpace(possibleLastName);
 
@@ -141,8 +142,8 @@ namespace BusinessLogic.User_Components
 
         private void ValidatePasswordHasCorrectLength(string posiblePassword)
         {
-            int minLength = 10;
-            int maxLength = 30;
+            const int minLength = 10;
+            const int maxLength = 30;
 
 
 
@@ -155,8 +156,8 @@ namespace BusinessLogic.User_Components
         private void ValidatePasswordUppercase(string posiblePassword)
         {
             bool hasUpperCase = false;
-            int minAsciiUperCase = 65;
-            int maxAsciiUperCase = 90;
+            const int minAsciiUperCase = 65;
+            const int maxAsciiUperCase = 90;
 
             for (int i = 0; i < posiblePassword.Length && !hasUpperCase; i++)
             {
@@ -173,10 +174,6 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
-        #region ValidateAddress
-        //If necessary validations or implement methods.
-        #endregion
-
         #region Category Management
 
         #region Add Category
@@ -190,7 +187,7 @@ namespace BusinessLogic.User_Components
 
         private void setCategoryId(Category categoryToAdd)
         {
-            categoryToAdd.Id = MyCategories.Count + 1;
+            categoryToAdd.CategoryId = MyCategories.Count + 1;
         }
 
         private void ValidateRegisteredCategory(Category categoryToAdd)
@@ -220,9 +217,10 @@ namespace BusinessLogic.User_Components
         {
             int lengthOfCategoryList = MyCategories.Count;
             bool flag = false;
+
             for (int i = 0; i < lengthOfCategoryList && !flag; i++)
             {
-                if (MyCategories[i].Id == categoryToUpdate.Id)
+                if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
                     MyCategories[i] = categoryToUpdate;
                     flag = true;

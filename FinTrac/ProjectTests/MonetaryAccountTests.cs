@@ -37,7 +37,7 @@ public class MonetaryAccountTests
     #region Name
     [TestMethod]
 
-    public void GivenCorrectName_ShouldItBeSet()
+    public void GivenCorrectMonetaryAccountName_ShouldItBeSet()
     {
         string name = "Santander Saving Bank";
         myAccount.Name = name;
@@ -48,7 +48,7 @@ public class MonetaryAccountTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-    public void GivenEmptyName_ShouldReturnException()
+    public void GivenEmptyMonetaryAccountName_ShouldReturnException()
     {
         string name = "";
         myMonetaryAccount.Name = name;
