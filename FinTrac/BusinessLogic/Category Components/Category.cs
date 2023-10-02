@@ -9,10 +9,9 @@ namespace BusinessLogic.Category_Components
     public class Category
     {
         #region Properties
-        public long Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
-
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
         #endregion
@@ -36,14 +35,12 @@ namespace BusinessLogic.Category_Components
 
         public bool ValidateCategory()
         {
-            bool isValid = true;
             if (string.IsNullOrEmpty(Name))
             {
                 throw new ExceptionValidateCategory("ERROR ON NAME");
             }
-            return isValid;
+            return true;
         }
         #endregion
-
     }
 }

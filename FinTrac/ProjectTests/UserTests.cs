@@ -19,7 +19,7 @@ public class UserTests
 
     #region Firstname
     [TestMethod]
-    public void GivenCorrectName_ShouldReturnTrue()
+    public void GivenCorrectUserName_ShouldReturnTrue()
     {
         User myUser = new User();
         myUser.FirstName = "Diego";
@@ -29,7 +29,7 @@ public class UserTests
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
 
-    public void GivenEmptyName_ShouldThrowException()
+    public void GivenEmptyUserName_ShouldThrowException()
     {
         string firstName = "";
         genericUser.ValidateFirstName(firstName);
@@ -37,7 +37,7 @@ public class UserTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
-    public void GivenNameWithSpecialCaracters_ShouldThrowException()
+    public void GivenUserNameWithSpecialCaracters_ShouldThrowException()
     {
         string firstName = "Die!!@go";
         genericUser.ValidateFirstName(firstName);
@@ -50,7 +50,7 @@ public class UserTests
     #region LastName
 
     [TestMethod]
-    public void GivenCorrectLastName_ShouldReturnTrue()
+    public void GivenCorrectUserLastName_ShouldReturnTrue()
     {
 
         User myUser = new User();
@@ -62,7 +62,7 @@ public class UserTests
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
 
-    public void GivenEmptyOrNullLastName_ShouldThrowException()
+    public void GivenEmptyOrNullUserLastName_ShouldThrowException()
     {
         string lastName = "";
         genericUser.ValidateLastName(lastName);
@@ -71,7 +71,7 @@ public class UserTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateUser))]
-    public void GivenLastNameWithSpecialCaracters_ShouldThrowException()
+    public void GivenUserLastNameWithSpecialCaracters_ShouldThrowException()
     {
         string lastName = "Her!!nande@z";
         genericUser.LastName = lastName;

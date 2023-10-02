@@ -26,7 +26,7 @@ namespace DataManagersTests
             memoryDatabase = new Repository();
             userManager = new UserManagement(memoryDatabase);
             genericUser = new User(firstName, lastName, email, password, address);
-            userManager.Add(genericUser);
+            userManager.AddUser(genericUser);
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace DataManagersTests
             User myUser = new User(firstName, lastName, email, password, address);
             int numberOfUsersAddedBefore = memoryDatabase.Users.Count;
 
-            userManager.Add(myUser);
+            userManager.AddUser(myUser);
 
             Assert.AreEqual(numberOfUsersAddedBefore + 1, memoryDatabase.Users.Count);
 
@@ -102,7 +102,7 @@ namespace DataManagersTests
 
         #endregion
 
-        #region Modify
+        #region UserModify
 
         [TestMethod]
         public void GivenAspectsOfUserToChange_ShouldBeChanged()
@@ -115,7 +115,7 @@ namespace DataManagersTests
 
             User userUpdated = new User(firstName, lastName, genericUser.Email, passwordModified, address);
 
-            userManager.Modify(genericUser, userUpdated);
+            userManager.ModifyUser(genericUser, userUpdated);
 
             Assert.AreEqual(firstName, genericUser.FirstName);
             Assert.AreEqual(lastName, genericUser.LastName);
@@ -133,7 +133,7 @@ namespace DataManagersTests
         {
             //The id is the ammount of users because we already added the user on the initialized section.
             int ammountOfUsers = memoryDatabase.Users.Count;
-            Assert.AreEqual(genericUser.Id, ammountOfUsers);
+            Assert.AreEqual(genericUser.UserId, ammountOfUsers);
         }
 
         #endregion
