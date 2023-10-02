@@ -35,10 +35,10 @@ namespace BusinessLogicTests
         #region Add Account
 
         [TestMethod]
-        public void GivenCorrectAccountToAdd_ShouldAddIt()
+        public void GivenCorrectMonetaryAccountToAdd_ShouldAddIt()
         {
             int numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
-            genericUser.addAccount(genericAccount);
+            genericUser.AddAccount(genericAccount);
             
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
@@ -46,12 +46,12 @@ namespace BusinessLogicTests
         [TestMethod]
         [ExpectedException(typeof(ExceptionAccountManagement))]
 
-        public void GivenNameOfAccountAlreadyAdded_ShouldThrowException()
+        public void GivenNameOfMonetaryAccountAlreadyAdded_ShouldThrowException()
         {
-            genericUser.addAccount(genericAccount);
+            genericUser.AddAccount(genericAccount);
 
             Account repitedNameAccount = new MonetaryAccount("Itau Saving Bank", 100, CurrencyEnum.UY);
-            genericUser.addAccount(repitedNameAccount);
+            genericUser.AddAccount(repitedNameAccount);
         }
 
 

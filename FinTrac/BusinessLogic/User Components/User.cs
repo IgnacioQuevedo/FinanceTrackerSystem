@@ -245,7 +245,7 @@ namespace BusinessLogic.User_Components
 
         #region Account Management
 
-        public void addAccount(Account accountToAdd)
+        public void AddAccount(Account accountToAdd)
         {
             
             foreach(var account in MyAccounts)
