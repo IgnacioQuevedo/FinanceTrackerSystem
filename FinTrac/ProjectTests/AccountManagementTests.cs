@@ -20,7 +20,6 @@ namespace BusinessLogicTests
         public void TestInitialize()
         {
             genericAccount = new MonetaryAccount("Itau Saving Bank", 5000, CurrencyEnum.UY);
-
             string firstName = "Austin";
             string lastName = "Ford";
             string email = "austinFord@gmail.com";
@@ -62,6 +61,23 @@ namespace BusinessLogicTests
 
         #region Add Creadit card Account
 
+        [TestMethod]
+        public void GivenCorrectCreditCardAccount_ShouldBeAdded()
+        {
+            int numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
+            string nameToBeSetted = "Prex";
+            CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+            string issuingBankToBeSetted = "Santander";
+            string last4DigitsToBeSetted = "1234";
+            int availableCreditToBeSetted = 20000;
+            DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
+
+            Account genericCreditCardAccount = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+
+            genericUser.AddAccount(genericCreditCardAccount);
+
+            Assert.AreEqual(numberOfAccountsAddedBefore, genericUser.MyAccounts.Count);
+        }
 
         #endregion
     }
