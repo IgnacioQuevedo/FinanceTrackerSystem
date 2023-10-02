@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-
 namespace BusinessLogic.User_Components
 {
     public class User
@@ -248,7 +247,9 @@ namespace BusinessLogic.User_Components
 
         public void addAccount(Account accountToAdd)
         {
-            throw new NotImplementedException();
+            
+            MyAccounts.Add(accountToAdd);
+
         }
 
 

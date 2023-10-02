@@ -38,7 +38,7 @@ namespace BusinessLogicTests
             int number = genericUser.MyAccounts.Count;
             genericUser.addAccount(genericAccount);
             
-            Assert.AreEqual(number ++, genericUser.MyAccounts.Count);
+            Assert.AreEqual(number + 1, genericUser.MyAccounts.Count);
         }
 
 
