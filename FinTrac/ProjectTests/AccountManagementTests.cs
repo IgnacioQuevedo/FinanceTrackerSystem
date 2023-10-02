@@ -43,6 +43,18 @@ namespace BusinessLogicTests
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionAccountManagement))]
+
+        public void GivenNameOfAccountAlreadyAdded_ShouldThrowException()
+        {
+            genericUser.addAccount(genericAccount);
+
+            Account repitedNameAccount = new MonetaryAccount("Itau Saving Bank", 100, CurrencyEnum.UY);
+            genericUser.addAccount(repitedNameAccount);
+        }
+
+
         #endregion
 
     }
