@@ -19,13 +19,10 @@ public class CreditCardAccountTests
     [TestInitialize]
     public void TestInitialized()
     {
-        //myCreditCard is a polimorfed object, we make this so we can validate that polimorfic object are also passing the necessary tests.
         myCreditCard = new CreditCardAccount();
-
-        //myCreditCardAccount is 100% a sublclass object.
         myCreditCardAccount = new CreditCardAccount();
 
-        //Initiale of myCreditCardAccount
+
         myCreditCardAccount.Name = "GenericName";
         myCreditCardAccount.IssuingBank = "GenericBank";
         myCreditCardAccount.Currency = CurrencyEnum.UY;
@@ -35,7 +32,7 @@ public class CreditCardAccountTests
 
     #region Name
     [TestMethod]
-    public void GivenCorrectName_ShouldBeSetted()
+    public void GivenCorrectAccountName_ShouldBeSetted()
     {
         string name = "Itau volar";
         myCreditCard.Name = name;
@@ -44,7 +41,7 @@ public class CreditCardAccountTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-    public void GivenEmptyName_ShouldThrowException()
+    public void GivenEmptyAccountName_ShouldThrowException()
     {
         string name = "";
         myCreditCard.Name = name;
@@ -56,7 +53,7 @@ public class CreditCardAccountTests
     #region CreationDate
     [TestMethod]
 
-    public void DateofCreditCard_ShouldBeActualDate()
+    public void DateOfCreditCard_ShouldBeActualDate()
     {
         DateTime actualDate = DateTime.Now.Date;
         Assert.AreEqual(actualDate, myCreditCard.CreationDate);

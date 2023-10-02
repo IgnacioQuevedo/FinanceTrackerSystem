@@ -34,7 +34,7 @@ namespace BusinessLogic.Account_Components
         #region Validation of Credit Card
         public void ValidateCreditCardAccount()
         {
-            ValidateName();
+            ValidateNameAccount();
             ValidateLast4Digits();
             ValidateAvailableCredit();
             ValidateClosingDate();
@@ -56,7 +56,7 @@ namespace BusinessLogic.Account_Components
             }
         }
 
-        private void ValidateName()
+        private void ValidateNameAccount()
         {
             if (string.IsNullOrEmpty(IssuingBank))
             {
@@ -76,16 +76,14 @@ namespace BusinessLogic.Account_Components
 
         private bool IsNumericChain()
         {
-            bool isCorrect = true;
-
             foreach (char caracter in Last4Digits)
             {
                 if (!char.IsDigit(caracter))
                 {
-                    isCorrect = false;
+                    return false;
                 }
             }
-            return isCorrect;
+            return true;
         }
 
         #endregion

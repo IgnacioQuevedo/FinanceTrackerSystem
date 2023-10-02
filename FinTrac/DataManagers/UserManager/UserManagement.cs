@@ -16,17 +16,17 @@ namespace DataManagers.UserManager
 
 
         #region addUser
-        public void Add(User user)
+        public void AddUser(User user)
         {
             if (ValidateAddUser(user))
             {
-                FormatProperties(user);
-                user.Id = _memoryDatabase.Users.Count + 1;
+                FormatUserProperties(user);
+                user.UserId = _memoryDatabase.Users.Count + 1;
                 _memoryDatabase.Users.Add(user);
             }
         }
 
-        private void FormatProperties(User user)
+        private void FormatUserProperties(User user)
         {
             string emailFormated = user.Email.ToLower();
             string firstNameFormated = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
@@ -93,13 +93,13 @@ namespace DataManagers.UserManager
         #region Modify
 
 
-        public void Modify(User userNotUpdated, User userUpdated)
+        public void ModifyUser(User userNotUpdated, User userUpdated)
         {
 
             foreach (var user in _memoryDatabase.Users)
             {
 
-                if (user.Id.Equals(userNotUpdated.Id))
+                if (user.UserId.Equals(userNotUpdated.UserId))
                 {
 
                     userNotUpdated.FirstName = userUpdated.FirstName;
