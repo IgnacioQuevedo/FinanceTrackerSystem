@@ -32,15 +32,18 @@ namespace BusinessLogicTests
         #endregion
 
 
+        #region Add Account
+
         [TestMethod]
         public void GivenCorrectAccountToAdd_ShouldAddIt()
         {
-            int number = genericUser.MyAccounts.Count;
+            int numberOfAccountsAddedBefore = genericUser.MyAccounts.Count;
             genericUser.addAccount(genericAccount);
             
-            Assert.AreEqual(number + 1, genericUser.MyAccounts.Count);
+            Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
 
+        #endregion
 
     }
 }
