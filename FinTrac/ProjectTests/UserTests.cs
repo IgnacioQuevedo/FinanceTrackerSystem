@@ -1,5 +1,5 @@
 using BusinessLogic;
-using BusinessLogic.User;
+using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 
@@ -7,7 +7,7 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
-    private User genericUser; 
+    private User genericUser;
 
     [TestInitialize]
 

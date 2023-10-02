@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.User
+namespace BusinessLogic.User_Components
 {
 
     public class ExceptionValidateUser : Exception

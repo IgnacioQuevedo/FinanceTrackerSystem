@@ -1,8 +1,8 @@
 using BusinessLogic;
-using BusinessLogic.User;
+using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
-using BusinessLogic.Account;
+using BusinessLogic.Account_Components;
 using System.Security.Principal;
 
 namespace TestProject1;

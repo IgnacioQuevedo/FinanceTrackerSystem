@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Account
+namespace BusinessLogic.Account_Components
 {
     public class CreditCardAccount : Account
     {
@@ -20,7 +20,7 @@ namespace BusinessLogic.Account
         #region Constructor
         public CreditCardAccount() { }
 
-        public CreditCardAccount(string name,CurrencyEnum currency,string issuingBank, string last4Digits, int availableCredit, DateTime closingDate) : base(name,currency)
+        public CreditCardAccount(string name, CurrencyEnum currency, string issuingBank, string last4Digits, int availableCredit, DateTime closingDate) : base(name, currency)
         {
             IssuingBank = issuingBank;
             Last4Digits = last4Digits;

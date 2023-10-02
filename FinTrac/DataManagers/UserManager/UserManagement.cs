@@ -1,15 +1,15 @@
-﻿using BusinessLogic.User;
+﻿using BusinessLogic.User_Components;
 using System.Runtime.InteropServices;
 using System.Globalization;
 
 namespace DataManagers.UserManager
 {
-    public class UserManager
+    public class UserManagement
     {
 
         private Repository _memoryDatabase;
 
-        public UserManager(Repository memoryDatabase)
+        public UserManagement(Repository memoryDatabase)
         {
             _memoryDatabase = memoryDatabase;
         }
@@ -49,7 +49,7 @@ namespace DataManagers.UserManager
             {
                 if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
-                    throw new ExceptionUserManager("Email already registered, impossible to create another account.");
+                    throw new ExceptionUserManagement("Email already registered, impossible to create another account.");
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace DataManagers.UserManager
 
             if (!existsUser)
             {
-                throw new ExceptionUserManager("User not exists, maybe you have an error on the email or password?");
+                throw new ExceptionUserManagement("User not exists, maybe you have an error on the email or password?");
             }
 
             return existsUser;
@@ -99,7 +99,7 @@ namespace DataManagers.UserManager
             foreach (var user in _memoryDatabase.Users)
             {
 
-                if (user.Id.Equals(userNotUpdated.Id)) 
+                if (user.Id.Equals(userNotUpdated.Id))
                 {
 
                     userNotUpdated.FirstName = userUpdated.FirstName;
