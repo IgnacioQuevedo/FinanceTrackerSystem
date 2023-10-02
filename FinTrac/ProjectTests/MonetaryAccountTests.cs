@@ -7,9 +7,11 @@ using System.Security.Principal;
 
 namespace TestProject1;
 [TestClass]
+
+
 public class MonetaryAccountTests
 {
-
+    #region Init
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
 
@@ -29,6 +31,8 @@ public class MonetaryAccountTests
         myMonetaryAccount.Currency = CurrencyEnum.UY;
         myMonetaryAccount.Ammount = 10;
     }
+
+    #endregion
 
     #region Name
     [TestMethod]
@@ -52,9 +56,11 @@ public class MonetaryAccountTests
         myMonetaryAccount.ValidateAccount();
     }
 
+    #endregion
+
+    #region Ammount
 
     [TestMethod]
-
     public void GivenInitialAmmount_ShouldBeSetted()
     {
         int initialAmmount = 100;
@@ -63,8 +69,6 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.Ammount, initialAmmount);
 
     }
-    #endregion
-
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
@@ -76,14 +80,19 @@ public class MonetaryAccountTests
 
     }
 
+    #endregion
 
+    #region Creation Date
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
-        string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime actualDate = DateTime.Now.Date;
 
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
+    #endregion
+
+    #region Currency
 
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
@@ -92,24 +101,24 @@ public class MonetaryAccountTests
         Assert.IsTrue(belongToEnum);
 
     }
+    #endregion
 
+    #region Constructor
     [TestMethod]
-
-
     public void CreationOfMonetaryAccount_ShouldBeValidated()
     {
 
         string nameToBeSetted = "Itau Saving Bank";
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
-        string creationDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime creationDate = DateTime.Now.Date;
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
-        
+
         Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
         Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Ammount);
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
-}
-
+    }
+    #endregion
 }
