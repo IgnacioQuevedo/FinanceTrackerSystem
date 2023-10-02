@@ -13,7 +13,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 
 //Repository is a singleton, because we want it to be initialized only one time in all the proyect.
 builder.Services.AddSingleton<Repository>();
-builder.Services.AddScoped<UserManager>();
+builder.Services.AddScoped<UserManagement>();
 
 
 var app = builder.Build();

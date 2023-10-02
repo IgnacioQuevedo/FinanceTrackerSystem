@@ -1,17 +1,17 @@
-using BusinessLogic.User;
+using BusinessLogic.User_Components;
 using DataManagers;
 using DataManagers.UserManager;
 
 namespace DataManagersTests
 {
     [TestClass]
-    public class UserManagerTests
+    public class UserManagementTests
     {
 
 
         #region initializingAspects
         private User genericUser;
-        private UserManager userManager;
+        private UserManagement userManager;
         private Repository memoryDatabase;
 
         [TestInitialize]
@@ -24,7 +24,7 @@ namespace DataManagersTests
             string address = "NW 2nd Ave";
 
             memoryDatabase = new Repository();
-            userManager = new UserManager(memoryDatabase);
+            userManager = new UserManagement(memoryDatabase);
             genericUser = new User(firstName, lastName, email, password, address);
             userManager.Add(genericUser);
         }
@@ -47,7 +47,7 @@ namespace DataManagersTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserManager))]
+        [ExpectedException(typeof(ExceptionUserManagement))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
         {
 
@@ -93,7 +93,7 @@ namespace DataManagersTests
 
         }
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserManager))]
+        [ExpectedException(typeof(ExceptionUserManagement))]
         public void GivenUserNotAdded_ShouldThrowException()
         {
             User myUser = new User("Ronnie", "Belgman", "ronnieBelgam@gmail.com", "RonnieMan2003", "asd");
