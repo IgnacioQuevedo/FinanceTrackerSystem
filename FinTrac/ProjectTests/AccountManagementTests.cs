@@ -76,7 +76,7 @@ namespace BusinessLogicTests
 
             genericUser.AddAccount(genericCreditCardAccount);
 
-            Assert.AreEqual(numberOfAccountsAddedBefore, genericUser.MyAccounts.Count);
+            Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
 
         #endregion
