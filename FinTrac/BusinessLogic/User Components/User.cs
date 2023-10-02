@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Category_Components;
+using BusinessLogic.Account_Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,6 +23,7 @@ namespace BusinessLogic.User_Components
         public string Password { get; set; } = "";
         public string? Address { get; set; }
         public List<Category> MyCategories { get; set; }
+        public List<Account> MyAccounts { get; set; }
 
         #endregion
 
@@ -42,6 +44,7 @@ namespace BusinessLogic.User_Components
             if (ValidateUser())
             {
                 MyCategories = new List<Category>();
+                MyAccounts = new List<Account>();
             }
 
 
@@ -241,6 +244,14 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        #region Account Management
 
+        public void addAccount(Account accountToAdd)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
     }
 }
