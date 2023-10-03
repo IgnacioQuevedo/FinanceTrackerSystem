@@ -43,4 +43,18 @@ public class GoalTests
     }
 
     #endregion
+
+    [TestMethod]
+
+    public void GivenAMaxAmmountToSpend_ShouldBeSetted()
+    {
+
+        int maxAmmount = 1000;
+
+        myGoal.maxAmmountToSpend = maxAmmount;
+
+        Assert.AreEqual(maxAmmount, myGoal.maxAmmountToSpend);
+
+
+    }
 }
