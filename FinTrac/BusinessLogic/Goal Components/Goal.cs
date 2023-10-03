@@ -10,7 +10,7 @@ namespace BusinessLogic.Goal_Components
     {
         public string Title { get; set; } = "";
 
-
+        public int maxAmmountToSpend { get; set; }
 
         public void ValidateGoal()
         {
