@@ -2,8 +2,9 @@ using BusinessLogic;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Transaction;
-using BusinessLogic.Category;
-using BusinessLogic.Account;
+using BusinessLogic.Category_Components;
+using BusinessLogic.Account_Components;
+using System.Security.Principal;
 
 namespace TestProject1;
 [TestClass]
@@ -71,6 +72,18 @@ public class TransactionTests
     {
         bool belongsToTypeEnum = Enum.IsDefined(typeof(TypeEnum), genericTransaction.Type);
         Assert.IsTrue(belongsToTypeEnum);
+    }
+    [TestMethod]
+    public void GivenMonetaryAccount_ShouldBeSetted()
+    {
+        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
+
+        //monetaryAccount is a 100% object that references only to monetaryAccount
+        myMonetaryAccount.Name = "Scotia Saving Bank";
+        myMonetaryAccount.Currency = CurrencyEnum.UY;
+        myMonetaryAccount.Ammount = 10;
+        Assert.AreEqual(genericTransaction.Account, myMonetaryAccount);
+
     }
 
 

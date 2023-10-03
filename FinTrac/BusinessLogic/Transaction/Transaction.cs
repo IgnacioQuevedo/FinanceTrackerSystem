@@ -1,5 +1,5 @@
-﻿using BusinessLogic.Account;
-using BusinessLogic.Category;
+﻿using BusinessLogic.Account_Components;
+using BusinessLogic.Category_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,8 @@ namespace BusinessLogic.Transaction
         public CurrencyEnum Currency { get; set; }
 
         public TypeEnum Type { get; set; }
+
+        public Account Account { get; set; }
 
 
 
