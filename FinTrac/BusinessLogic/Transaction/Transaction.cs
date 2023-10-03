@@ -59,7 +59,7 @@ namespace BusinessLogic.Transaction
 
         public void ValidateListOfCategories()
         {
-            throw new NotImplementedException();
+
         }
 
         #endregion
