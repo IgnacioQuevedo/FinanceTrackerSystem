@@ -12,7 +12,7 @@ namespace BusinessLogic.Account_Components
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; } = DateTime.Now.Date;
-        public int AccountId { get; set; }
+        public int AccountId { get; set; } = -1;
         #endregion
 
         #region Constructor

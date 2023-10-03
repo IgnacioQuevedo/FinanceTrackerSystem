@@ -248,19 +248,13 @@ namespace BusinessLogic.User_Components
         #region AddAccount
         public void AddAccount(Account accountToAdd)
         {
-            if(accountToAdd is MonetaryAccount)
+            for (int i = 0; i < MyAccounts.Count; i++)
             {
-                foreach (var account in MyAccounts)
-                {
-                    if (account.Name == accountToAdd.Name)
-                    {
-                        throw new ExceptionAccountManagement("Account name already added.");
-                    }
-                }
-                SetAccountId(accountToAdd);
-                MyAccounts.Add(accountToAdd);
+                ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
+                ValidateIssuingBankAnd4LastDigits(accountToAdd, MyAccounts[i]);
             }
-            
+            SetAccountId(accountToAdd);
+            MyAccounts.Add(accountToAdd);
         }
         #endregion
 
@@ -332,7 +326,7 @@ namespace BusinessLogic.User_Components
                 CreditCardAccount creditCardAccountToUpdate = accountToUpdate as CreditCardAccount;
                 CreditCardAccount creditCardAccountToCompare = oneCreditCardAccount as CreditCardAccount;
 
-                if (UsedIssuingNameAndLastDigits(creditCardAccountToUpdate, creditCardAccountToCompare) 
+                if (UsedIssuingNameAndLastDigits(creditCardAccountToUpdate, creditCardAccountToCompare)
                     && !haveSameId(creditCardAccountToUpdate, creditCardAccountToCompare))
 
                 {

@@ -67,7 +67,7 @@ namespace BusinessLogicTests
 
         #endregion
 
-        #region Add Creadit card Account
+        #region Add Credit Card Account
 
         [TestMethod]
         public void GivenCorrectCreditCardAccount_ShouldBeAdded()
@@ -101,7 +101,7 @@ namespace BusinessLogicTests
         #region Asignation of Id
 
         [TestMethod]
-        public void GivenCategoryToAdd_ShouldAssignId()
+        public void GivenAccountToAdd_ShouldAssignId()
         {
             genericUser.AddAccount(genericMonetaryAccount);
             Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericMonetaryAccount.AccountId);
@@ -200,9 +200,6 @@ namespace BusinessLogicTests
             accountUpdated.AccountId = accountforUpdate.AccountId;
 
             genericUser.ModifyAccount(accountUpdated);
-
-
-
 
         }
 
