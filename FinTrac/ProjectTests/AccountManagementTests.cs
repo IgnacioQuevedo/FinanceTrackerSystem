@@ -120,9 +120,19 @@ namespace BusinessLogicTests
         {
             Assert.AreEqual(genericUser.MyAccounts, genericUser.GetAccounts());
         }
+        #endregion
+
+        #region Modify Aspects of Account
+
+        [TestMethod]
+        public void GivenCategoryToUpdate_ShouldBeModifiedCorrectly()
+        {
+            Account accountToUpdate = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA);
+
+            genericUser.ModifyAccount(accountToUpdate);
+        }
 
 
         #endregion
-
     }
 }

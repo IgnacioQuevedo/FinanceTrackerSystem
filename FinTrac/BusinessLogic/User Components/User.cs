@@ -268,17 +268,30 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
-
         #region GetAccounts
 
         public List<Account> GetAccounts()
         {
-
             return MyAccounts;
         }
 
 
         #endregion
+
+        #region ModifyAccount
+       
+
+        public void ModifyAccount(Account accountToUpdate)
+        {
+
+            throw new NotImplementedException();
+
+        }
+
+
+        #endregion
+
+
 
 
         #endregion
