@@ -284,14 +284,14 @@ namespace BusinessLogic.User_Components
         public void ModifyAccount(Account accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
-            bool flag = false;
+            bool findAccount = false;
 
-            for (int i = 0; i < lengthOfAccounts && !flag; i++)
+            for (int i = 0; i < lengthOfAccounts && !findAccount; i++)
             {
                 if (MyAccounts[i].AccountId == accountToUpdate.AccountId)
                 {
                     MyAccounts[i] = accountToUpdate;
-                    flag = true;
+                    findAccount = true;
                 }
             }
 
