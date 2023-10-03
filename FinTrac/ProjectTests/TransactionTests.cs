@@ -15,6 +15,7 @@ public class TransactionTests
 
     private Transaction genericTransaction;
     private CreditCardAccount myCreditCardAccount;
+    private Category genericCategory;
 
     [TestInitialize]
     public void TestInitialize()
@@ -236,18 +237,25 @@ public class TransactionTests
     #region Creation of transaction Tests
 
     [TestMethod]
-    public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldBeCreated()
+    public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldNotThrowException()
     {
+        string nameCategory = "Business One";
+        StatusEnum statusCategory = StatusEnum.Enabled;
+        TypeEnum typeCategory = TypeEnum.Income;
+        Category categoryToBeAdded = new Category(nameCategory, statusCategory, typeCategory);
+
+        List<Category> list = new List<Category>();
+        list.Add(categoryToBeAdded);
+
         string title = "Payment of education";
         DateTime date = DateTime.Now.Date;
         decimal amount = 100;
         CurrencyEnum currency = CurrencyEnum.UY;
         TypeEnum type = TypeEnum.Outcome;
-        List<Category> list = new List<Category>();
 
         CreditCardAccount CreditAccount = new CreditCardAccount();
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list);
+        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list)
 
     }
 
