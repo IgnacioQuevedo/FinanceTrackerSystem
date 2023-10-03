@@ -130,7 +130,7 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenListWithOneTypeIncorrect_ShouldThrowException()
+    public void GivenListWithTypeOutcomeInTransactionIncome_ShouldThrowException()
     {
         string name = "Business One";
         StatusEnum status = StatusEnum.Enabled;
@@ -141,6 +141,29 @@ public class TransactionTests
         StatusEnum status2 = StatusEnum.Enabled;
         TypeEnum type2 = TypeEnum.Outcome;
         Category categoryToBeAdded2 = new Category(name2, status2, type2);
+
+        List<Category> listToSet = new List<Category>();
+        listToSet.Add(categoryToBeAdded);
+        listToSet.Add(categoryToBeAdded2);
+
+        genericTransaction.MyCategories = listToSet;
+        genericTransaction.ValidateListOfCategories();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenListWithTypeIncomeInTransactionOutcome_ShouldThrowException()
+    {
+        genericTransaction.Type = TypeEnum.Outcome;
+        string name = "Business One";
+        StatusEnum status = StatusEnum.Enabled;
+        TypeEnum type = TypeEnum.Income;
+        Category categoryToBeAdded = new Category(name, status, type);
+
+        string name2 = "Food";
+        StatusEnum status2 = StatusEnum.Enabled;
+        TypeEnum type2 = TypeEnum.Outcome;
+        Category categoryToBeAdded2 = new Category(name2, status2, type2;
 
         List<Category> listToSet = new List<Category>();
         listToSet.Add(categoryToBeAdded);
