@@ -66,11 +66,7 @@ namespace BusinessLogicTests
             genericUser.AddAccount(repitedNameAccount);
         }
 
-
-
-
         #endregion
-
 
         #region Add Creadit card Account
 
@@ -101,7 +97,16 @@ namespace BusinessLogicTests
 
             genericUser.AddAccount(accountWithEqualName);
         }
+        #endregion
 
+        #region Asignation of Id
+
+        [TestMethod]
+        public void GivenCategoryToAdd_ShouldAssignId()
+        {
+            genericUser.AddAccount(genericMonetaryAccount);
+            Assert.AreEqual(genericUser.MyAccounts.Count, genericMonetaryAccount.AccountId);
+        }
 
         #endregion
     }
