@@ -60,7 +60,9 @@ namespace BusinessLogic.Transaction
 
         public void ValidateAccount()
         {
-            if (Account is CreditCardAccount && Type == TypeEnum.Income)
+            bool typeIsIncome = Type == TypeEnum.Income;
+
+            if (Account is CreditCardAccount && typeIsIncome)
             {
                 throw new ExceptionValidateTransaction("Transaction of type income cant be associated to a credit account");
             }
