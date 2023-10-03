@@ -16,12 +16,11 @@ namespace BusinessLogic.Account_Components
         public MonetaryAccount(string accountName, decimal ammount, CurrencyEnum currencyType) : base(accountName, currencyType)
         {
             Ammount = ammount;
-            ValidateAccount();
+            ValidateMonetaryAccount();
         }
 
         public void ValidateMonetaryAccount()
         {
-            ValidateAccount();
             ValidateAmmount();
         }
 
