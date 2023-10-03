@@ -14,18 +14,25 @@ namespace BusinessLogic.Goal_Components
 
         public void ValidateGoal()
         {
-
-            if(string.IsNullOrEmpty(Title)) 
-            {
-                throw new ExceptionValidateGoal("Error on goal tittle, it cannot be empty");
-            }
-
-            if(maxAmmountToSpend < 0)
-            {
-                throw new ExceptionValidateGoal("Error on max ammount to spent, cannot be negative");
-            }
+            ValidateTitle();
+            ValidateMaxAmmount();
 
         }
 
+        private void ValidateMaxAmmount()
+        {
+            if (maxAmmountToSpend < 0)
+            {
+                throw new ExceptionValidateGoal("Error on max ammount to spent, cannot be negative");
+            }
+        }
+
+        private void ValidateTitle()
+        {
+            if (string.IsNullOrEmpty(Title))
+            {
+                throw new ExceptionValidateGoal("Error on goal tittle, it cannot be empty");
+            }
+        }
     }
 }
