@@ -21,6 +21,7 @@ public class GoalTests
         goalTitle = string.Empty;
     }
 
+    #region Goal Title
     [TestMethod]
 
     public void GivenCorrectTitle_ShouldBeSetted() 
@@ -40,4 +41,6 @@ public class GoalTests
         myGoal.Title = goalTitle;
         myGoal.ValidateGoal();
     }
+
+    #endregion
 }

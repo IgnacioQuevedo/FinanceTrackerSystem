@@ -15,10 +15,9 @@ namespace BusinessLogic.Goal_Components
         public void ValidateGoal()
         {
 
-            if(Title == null || Title.Length == 0) 
+            if(string.IsNullOrEmpty(Title)) 
             {
                 throw new ExceptionValidateGoal("Error on goal tittle, it cannot be empty");
-            
             }
 
         }
