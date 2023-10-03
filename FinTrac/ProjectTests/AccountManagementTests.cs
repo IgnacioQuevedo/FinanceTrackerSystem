@@ -106,6 +106,9 @@ namespace BusinessLogicTests
         {
             genericUser.AddAccount(genericMonetaryAccount);
             Assert.AreEqual(genericUser.MyAccounts.Count, genericMonetaryAccount.AccountId);
+
+            genericUser.AddAccount(genericCreditCardAccount);
+            Assert.AreEqual(genericUser.MyAccounts.Count, genericCreditCardAccount.AccountId);
         }
 
         #endregion

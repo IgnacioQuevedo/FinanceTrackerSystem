@@ -247,16 +247,21 @@ namespace BusinessLogic.User_Components
 
         public void AddAccount(Account accountToAdd)
         {
-            
-            foreach(var account in MyAccounts)
+
+            foreach (var account in MyAccounts)
             {
-                if(account.Name == accountToAdd.Name)
+                if (account.Name == accountToAdd.Name)
                 {
                     throw new ExceptionAccountManagement("Account name already added.");
                 }
             }
-            accountToAdd.AccountId = MyAccounts.Count + 1;
+            SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
+        }
+
+        private void SetAccountId(Account accountToAdd)
+        {
+            accountToAdd.AccountId = MyAccounts.Count + 1;
         }
 
 
