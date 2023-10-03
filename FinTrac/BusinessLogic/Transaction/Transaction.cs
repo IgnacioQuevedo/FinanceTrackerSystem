@@ -29,6 +29,7 @@ namespace BusinessLogic.Transaction
 
         #endregion
 
+        #region Constructors
         public Transaction()
         {
         }
@@ -42,6 +43,8 @@ namespace BusinessLogic.Transaction
             Account = account;
             MyCategories = myCategories;
         }
+
+        #endregion
 
         #region Validate Title
         public void ValidateTitle()
