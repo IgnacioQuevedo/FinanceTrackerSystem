@@ -11,7 +11,7 @@ namespace BusinessLogic.Account_Components
         #region Properties
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; } = DateTime.Now.Date;
         #endregion
 
         #region Constructor
@@ -22,7 +22,7 @@ namespace BusinessLogic.Account_Components
         {
             Name = name;
             Currency = currency;
-            CreationDate = DateTime.Now.Date;
+
 
             ValidateAccount();
         }
