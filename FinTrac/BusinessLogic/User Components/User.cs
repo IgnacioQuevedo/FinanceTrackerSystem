@@ -285,21 +285,52 @@ namespace BusinessLogic.User_Components
         {
             int lengthOfAccounts = MyAccounts.Count;
 
-            for (int i = 0; i < lengthOfAccounts; i++)
+            if (accountToUpdate is MonetaryAccount)
             {
-                if (MyAccounts[i].Name == accountToUpdate.Name && MyAccounts[i].AccountId != accountToUpdate.AccountId)
+                for (int i = 0; i < lengthOfAccounts; i++)
                 {
-                    throw new ExceptionAccountManagement("Not possible to modify.");
-                }
-                if(EqualsId(accountToUpdate, i))
-                {
-                    UpdateValues(accountToUpdate, i);
+                    if (MyAccounts[i].Name == accountToUpdate.Name && MyAccounts[i].AccountId != accountToUpdate.AccountId)
+                    {
+                        throw new ExceptionAccountManagement("Not possible to modify.");
+                    }
+                    if (EqualsId(accountToUpdate, i))
+                    {
+                        UpdateValues(accountToUpdate, i);
+                    }
                 }
             }
-           
+            else
+            {
+                CreditCardAccount accountToUpd = accountToUpdate as CreditCardAccount;
+
+                for (int j = 0; j < lengthOfAccounts; j++)
+                {
+                    if (MyAccounts[j] is CreditCardAccount)
+                    {
+                        CreditCardAccount oneCreditCardAccount = MyAccounts[j] as CreditCardAccount;
+
+
+                        if (oneCreditCardAccount.IssuingBank == accountToUpd.IssuingBank &&
+                        oneCreditCardAccount.Last4Digits == accountToUpd.Last4Digits && oneCreditCardAccount.AccountId != accountToUpd.AccountId)
+
+                        {
+                            throw new ExceptionValidateAccount("IssueBank and Last4Digits already used, try others.");
+                        }
+
+                        if(oneCreditCardAccount.AccountId == accountToUpd.AccountId)
+                        {
+                            MyAccounts[j] = accountToUpd;
+                        }
+                        
+
+                    }
+
+                }
+            }
+
         }
 
-        private void UpdateValues(Account accountToUpdate,int indexOfAccountToUpdate)
+        private void UpdateValues(Account accountToUpdate, int indexOfAccountToUpdate)
         {
             MyAccounts[indexOfAccountToUpdate] = accountToUpdate;
         }

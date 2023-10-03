@@ -180,7 +180,7 @@ namespace BusinessLogicTests
         public void ModifyingValueIssuingBankAndLast4DigitsToValuesThatAreAlreadyRegistered_ShouldThrowException()
         {
 
-            genericUser.AddAccount(genericMonetaryAccount);
+            genericUser.AddAccount(genericCreditCardAccount);
 
             string nameToBeSetted = "Alpha Brou";
             CurrencyEnum currencyToBeSetted = CurrencyEnum.USA;
@@ -193,10 +193,11 @@ namespace BusinessLogicTests
                 last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
             genericUser.AddAccount(accountforUpdate);
 
-            nameToBeSetted = "Itau Volar";
+            issuingBankToBeSetted = "Santander";
             last4DigitsToBeSetted = "1234";
             Account accountUpdated = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted,
                last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+            accountUpdated.AccountId = accountforUpdate.AccountId;
 
             genericUser.ModifyAccount(accountUpdated);
 
