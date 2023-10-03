@@ -274,7 +274,7 @@ namespace BusinessLogic.User_Components
         public List<Account> GetAccounts()
         {
 
-            throw new NotImplementedException();
+            return MyAccounts;
         }
 
 

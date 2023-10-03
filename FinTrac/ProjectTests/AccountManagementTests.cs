@@ -118,7 +118,7 @@ namespace BusinessLogicTests
         [TestMethod]
         public void ShouldBePossibleToReturnList()
         {
-            Assert.AreEqual(genericUser.MyAccounts, genericUser.GetAccounts);
+            Assert.AreEqual(genericUser.MyAccounts, genericUser.GetAccounts());
         }
 
 
