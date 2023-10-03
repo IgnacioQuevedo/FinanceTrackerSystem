@@ -11,6 +11,7 @@ namespace TestProject1;
 [TestClass]
 public class CreditCardAccountTests
 {
+
     #region Init
 
     private Account myCreditCard;
@@ -30,7 +31,7 @@ public class CreditCardAccountTests
     }
     #endregion
 
-    #region Name
+    #region Card Name
     [TestMethod]
     public void GivenCorrectAccountName_ShouldBeSetted()
     {
