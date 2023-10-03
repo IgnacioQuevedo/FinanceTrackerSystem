@@ -74,6 +74,7 @@ namespace BusinessLogic.Transaction
             {
                 throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
             }
+
         }
 
         #endregion
