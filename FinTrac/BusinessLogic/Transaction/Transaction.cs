@@ -56,6 +56,15 @@ namespace BusinessLogic.Transaction
         }
         #endregion
 
+        #region Validate Account
+
+        public void ValidateAccount()
+        {
+
+        }
+
+        #endregion
+
         #region Validate Amount
         public void ValidateAmount()
         {

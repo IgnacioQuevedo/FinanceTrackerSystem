@@ -14,6 +14,7 @@ public class TransactionTests
     #region Initializing aspects
 
     private Transaction genericTransaction;
+    private CreditCardAccount myCreditCardAccount;
 
     [TestInitialize]
     public void TestInitialize()
@@ -24,6 +25,14 @@ public class TransactionTests
         genericTransaction.Amount = 100;
         genericTransaction.Currency = CurrencyEnum.UY;
         genericTransaction.Type = TypeEnum.Income;
+
+        myCreditCardAccount = new CreditCardAccount();
+        myCreditCardAccount.Name = "Scotia Credit Card";
+        myCreditCardAccount.Currency = CurrencyEnum.UY;
+        myCreditCardAccount.IssuingBank = "Santander";
+        myCreditCardAccount.Last4Digits = "1233";
+        myCreditCardAccount.AvailableCredit = 15000;
+        myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
     }
     #endregion
 
@@ -116,17 +125,17 @@ public class TransactionTests
     [TestMethod]
     public void GivenCreditAccount_ShouldBeSetted()
     {
-        CreditCardAccount myCreditCardAccount = new CreditCardAccount();
-        myCreditCardAccount.Name = "Scotia Credit Card";
-        myCreditCardAccount.Currency = CurrencyEnum.UY;
-        myCreditCardAccount.IssuingBank = "Santander";
-        myCreditCardAccount.Last4Digits = "1233";
-        myCreditCardAccount.AvailableCredit = 15000;
-        myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
-
         genericTransaction.Account = myCreditCardAccount;
 
         Assert.AreEqual(genericTransaction.Account, myCreditCardAccount);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenCreditAccountWithTransactionTypeAsIncome_ShouldThrowException()
+    {
+        genericTransaction.Account = myCreditCardAccount;
+        genericTransaction.ValidateAccount();
     }
 
     #endregion
@@ -215,4 +224,6 @@ public class TransactionTests
         genericTransaction.ValidateListOfCategories();
     }
     #endregion
+
+
 }
