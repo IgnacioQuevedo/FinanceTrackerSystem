@@ -15,6 +15,8 @@ public class GoalTests
     private string goalTitle;
     private int maxAmmountToSpend;
     private Goal myGoal;
+    private User genericUser;
+    private Category Food;
 
     [TestInitialize]
 
@@ -24,15 +26,19 @@ public class GoalTests
 
         goalTitle = "Less night";
         maxAmmountToSpend = 0;
-
         myGoal.Title = goalTitle;
+
+        genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
+        Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+        genericUser.AddCategory(Food);
+
     }
 
     #region Goal Title
     [TestMethod]
 
-    public void GivenCorrectTitle_ShouldBeSetted() 
-    { 
+    public void GivenCorrectTitle_ShouldBeSetted()
+    {
         Assert.AreEqual(goalTitle, myGoal.Title);
     }
 
@@ -73,15 +79,11 @@ public class GoalTests
 
     #endregion
 
+    #region Categories Assigned to a Goal
     [TestMethod]
 
     public void GivenCategories_ShouldBePossibleToAsignThemAGoal()
     {
-
-        User genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
-        Category Food = new Category("Food", (StatusEnum)1, (TypeEnum)2);
-        genericUser.AddCategory(Food);
-
         List<Category> possibleCategoriesToUse = genericUser.GetCategories();
 
         myGoal.CategoriesOfGoal.Add(possibleCategoriesToUse[0]);
@@ -89,5 +91,5 @@ public class GoalTests
         Assert.AreEqual(Food, possibleCategoriesToUse[0]);
     }
 
-
+    #endregion
 }
