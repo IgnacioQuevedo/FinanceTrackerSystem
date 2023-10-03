@@ -82,6 +82,27 @@ namespace BusinessLogicTests
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
 
+        [TestMethod]
+        [ExpectedException (typeof(ExceptionAccountManagement))]
+
+        public void GivenNameOfCreditCardAccountAlreadyAdded_ShouldThrowException()
+        {
+            genericUser.AddAccount(genericCreditCardAccount);
+
+            string equalName = "Prex";
+            CurrencyEnum currencyNewCard = CurrencyEnum.UY;
+            string issuingBankNewCard = "Pimball";
+            string last4DigitsNewCard = "1234";
+            int availableCreditNewCard = 1000;
+            DateTime closingDateNewCard = new DateTime(2028, 2, 10);
+
+            Account accountWithEqualName = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard, 
+                last4DigitsNewCard, availableCreditNewCard,closingDateNewCard);
+
+            genericUser.AddAccount(accountWithEqualName);
+        }
+
+
         #endregion
     }
 }
