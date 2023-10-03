@@ -12,7 +12,7 @@ namespace BusinessLogicTests
     public class AccountManagementTests
     {
 
-        #region initializingAspects
+        #region Initializing Aspects
         private Account genericMonetaryAccount;
         private User genericUser;
         private Account genericCreditCardAccount;
@@ -43,7 +43,6 @@ namespace BusinessLogicTests
         }
 
         #endregion
-
 
         #region Add Monetary Account
 
@@ -127,12 +126,16 @@ namespace BusinessLogicTests
         [TestMethod]
         public void GivenCategoryToUpdate_ShouldBeModifiedCorrectly()
         {
-            Account accountToUpdate = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA);
+            genericUser.AddAccount(genericMonetaryAccount);
+
+            Account accountToUpdate = new MonetaryAccount("Brou Saving Bank", 10000, CurrencyEnum.USA);
 
             genericUser.ModifyAccount(accountToUpdate);
+
+            Assert.AreEqual(accountToUpdate, genericUser.MyAccounts[genericMonetaryAccount.AccountId]);
         }
 
-
         #endregion
+
     }
 }
