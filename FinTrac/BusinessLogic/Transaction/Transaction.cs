@@ -33,6 +33,16 @@ namespace BusinessLogic.Transaction
         {
         }
 
+        public Transaction(string title, decimal amount, CurrencyEnum currency, TypeEnum type, Account account, List<Category> myCategories)
+        {
+            Title = title;
+            Amount = amount;
+            Currency = currency;
+            Type = type;
+            Account = account;
+            MyCategories = myCategories;
+        }
+
         #region Validate Title
         public void ValidateTitle()
         {

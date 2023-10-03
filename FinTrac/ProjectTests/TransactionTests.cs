@@ -107,6 +107,27 @@ public class TransactionTests
         genericTransaction.ValidateListOfCategories();
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenListWithDisabledCategory_ShouldThrowException()
+    {
+        string name = "Business One";
+        StatusEnum status = StatusEnum.Enabled;
+        TypeEnum type = TypeEnum.Income;
+        Category categoryToBeAdded = new Category(name, status, type);
+
+        string name2 = "Business Two";
+        StatusEnum status2 = StatusEnum.Disabled;
+        Category categoryToBeAdded2 = new Category(name2, status2, type);
+
+        List<Category> listToSet = new List<Category>();
+        listToSet.Add(categoryToBeAdded);
+        listToSet.Add(categoryToBeAdded2);
+
+        genericTransaction.MyCategories = listToSet;
+        genericTransaction.ValidateListOfCategories();
+    }
+
 
 
 
