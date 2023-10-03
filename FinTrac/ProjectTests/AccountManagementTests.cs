@@ -135,6 +135,16 @@ namespace BusinessLogicTests
             Assert.AreEqual(accountToUpdate, genericUser.MyAccounts[genericMonetaryAccount.AccountId]);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionAccountManagement))]
+        public void GivenAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
+        {
+            genericUser.AddAccount(genericMonetaryAccount);
+            Account accountWithAlreadyThatName = new MonetaryAccount("Itau Saving Bank", 3000, CurrencyEnum.UY);
+            
+            Account accountToUpdate = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA);
+            genericUser.ModifyAccount(accountToUpdate);
+        }
         #endregion
 
         #region Delete Aspects of Account
