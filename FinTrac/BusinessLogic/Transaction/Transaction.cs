@@ -69,13 +69,10 @@ namespace BusinessLogic.Transaction
 
         public void ValidateListOfCategories()
         {
-            foreach (var category in MyCategories)
+            bool allCategoriesAreEnabled = MyCategories.All(c => c.Status == StatusEnum.Enabled);
+            if (!allCategoriesAreEnabled)
             {
-                if (category.Status == StatusEnum.Disabled)
-                {
-                    throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
-                }
-
+                throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
             }
         }
 
