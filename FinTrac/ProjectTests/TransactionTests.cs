@@ -10,6 +10,9 @@ namespace TestProject1;
 [TestClass]
 public class TransactionTests
 {
+
+    #region Initializing aspects
+
     private Transaction genericTransaction;
 
     [TestInitialize]
@@ -22,7 +25,9 @@ public class TransactionTests
         genericTransaction.Currency = CurrencyEnum.UY;
         genericTransaction.Type = TypeEnum.Income;
     }
+    #endregion
 
+    #region Validate Title Tests
     [TestMethod]
     public void GivenCorrectTitle_ShouldReturnTrue()
     {
@@ -38,6 +43,10 @@ public class TransactionTests
         genericTransaction.ValidateTitle();
     }
 
+    #endregion
+
+    #region Date Tests
+
     [TestMethod]
 
     public void GivenDateToSet_ShuldBeSetted()
@@ -45,6 +54,10 @@ public class TransactionTests
         DateTime dateToBeSetted = DateTime.Now.Date;
         Assert.AreEqual(genericTransaction.CreationDate, dateToBeSetted);
     }
+
+    #endregion
+
+    #region Amount Tests
 
     [TestMethod]
     public void GivenCorrectAmount_ShouldReturnTrue()
@@ -61,6 +74,10 @@ public class TransactionTests
         genericTransaction.ValidateAmount();
     }
 
+    #endregion
+
+    #region Currency Tests
+
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
@@ -68,12 +85,21 @@ public class TransactionTests
         Assert.IsTrue(belongsToCurrencyEnum);
     }
 
+    #endregion
+
+    #region Type Tests
+
     [TestMethod]
     public void GivenType_ShouldBelongToTypeEnum()
     {
         bool belongsToTypeEnum = Enum.IsDefined(typeof(TypeEnum), genericTransaction.Type);
         Assert.IsTrue(belongsToTypeEnum);
     }
+
+    #endregion
+
+    #region Account Tests
+
     [TestMethod]
     public void GivenMonetaryAccount_ShouldBeSetted()
     {
@@ -102,6 +128,10 @@ public class TransactionTests
 
         Assert.AreEqual(genericTransaction.Account, myCreditCardAccount);
     }
+
+    #endregion
+
+    #region List of Categories Tests
 
     [TestMethod]
     public void GivenCorrectListToValidate_ShouldNotThrowException()
@@ -184,12 +214,5 @@ public class TransactionTests
         genericTransaction.MyCategories = listToSet;
         genericTransaction.ValidateListOfCategories();
     }
-
-
-
-
-
-
-
-
+    #endregion
 }
