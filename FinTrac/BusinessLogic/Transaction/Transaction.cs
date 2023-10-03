@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Account;
+using BusinessLogic.Category;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace BusinessLogic.Transaction
         public decimal Amount { get; set; }
 
         public CurrencyEnum Currency { get; set; }
+
+        public TypeEnum Type { get; set; }
+
+
 
         #endregion
 
