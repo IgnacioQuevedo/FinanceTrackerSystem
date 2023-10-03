@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Category_Components;
 
 namespace BusinessLogic.Goal_Components
 {
@@ -11,6 +12,10 @@ namespace BusinessLogic.Goal_Components
         public string Title { get; set; } = "";
 
         public int maxAmmountToSpend { get; set; }
+
+        public List<Category> CategoriesOfGoal { get; set; }
+
+
 
         public void ValidateGoal()
         {

@@ -1,8 +1,10 @@
 using BusinessLogic;
 using BusinessLogic.User_Components;
+using BusinessLogic.Category_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Goal_Components;
+
 
 namespace TestProject1;
 
@@ -46,7 +48,6 @@ public class GoalTests
 
     #endregion
 
-
     #region Max Ammount To Spent
 
     [TestMethod]
@@ -67,5 +68,26 @@ public class GoalTests
         myGoal.ValidateGoal();
     }
 
+
+
+
     #endregion
+
+    [TestMethod]
+
+    public void GivenCategories_ShouldBePossibleToAsignThemAGoal()
+    {
+
+        User genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
+        Category Food = new Category("Food", (StatusEnum)1, (TypeEnum)2);
+        genericUser.AddCategory(Food);
+
+        List<Category> possibleCategoriesToUse = genericUser.GetCategories();
+
+        myGoal.CategoriesOfGoal.Add(possibleCategoriesToUse[0]);
+
+        Assert.AreEqual(Food, possibleCategoriesToUse[0]);
+    }
+
+
 }
