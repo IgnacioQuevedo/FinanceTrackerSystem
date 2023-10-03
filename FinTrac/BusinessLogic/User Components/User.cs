@@ -300,7 +300,14 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        #region DeleteAccount
 
+        public void DeleteAccount(Account accountToDelete)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
 
         #endregion

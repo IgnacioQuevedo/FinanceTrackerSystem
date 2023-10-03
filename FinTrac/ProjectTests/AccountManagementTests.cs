@@ -137,5 +137,25 @@ namespace BusinessLogicTests
 
         #endregion
 
+
+        #region Delete Aspects of Account
+
+        [TestMethod]
+        public void GivenAccountToDelete_ShouldBeDeleted()
+        {
+            int numberOfAccountsAdded = 0;
+
+            genericUser.AddAccount(genericMonetaryAccount);
+            numberOfAccountsAdded = genericUser.GetAccounts().Count();
+
+            genericUser.DeleteAccount(genericMonetaryAccount);
+            numberOfAccountsAdded = genericUser.GetAccounts().Count();
+
+            Assert.AreEqual(numberOfAccountsAdded,genericUser.GetAccounts().Count());
+        }
+
+
+        #endregion
+
     }
 }
