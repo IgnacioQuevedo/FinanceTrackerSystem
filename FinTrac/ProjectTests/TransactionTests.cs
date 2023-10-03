@@ -20,6 +20,11 @@ public class TransactionTests
     [TestInitialize]
     public void TestInitialize()
     {
+        string nameCategory = "Business One";
+        StatusEnum statusCategory = StatusEnum.Enabled;
+        TypeEnum typeCategory = TypeEnum.Income;
+        genericCategory = new Category(nameCategory, statusCategory, typeCategory);
+
         genericTransaction = new Transaction();
         genericTransaction.Title = "Title";
         genericTransaction.CreationDate = DateTime.Now.Date;
@@ -215,18 +220,13 @@ public class TransactionTests
     {
         genericTransaction.Type = TypeEnum.Outcome;
 
-        string name = "Business One";
-        StatusEnum status = StatusEnum.Enabled;
-        TypeEnum type = TypeEnum.Income;
-        Category categoryToBeAdded = new Category(name, status, type);
-
         string name2 = "Food";
         StatusEnum status2 = StatusEnum.Enabled;
         TypeEnum type2 = TypeEnum.Outcome;
         Category categoryToBeAdded2 = new Category(name2, status2, type2);
 
         List<Category> listToSet = new List<Category>();
-        listToSet.Add(categoryToBeAdded);
+        listToSet.Add(genericCategory);
         listToSet.Add(categoryToBeAdded2);
 
         genericTransaction.MyCategories = listToSet;
@@ -239,13 +239,9 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldNotThrowException()
     {
-        string nameCategory = "Business One";
-        StatusEnum statusCategory = StatusEnum.Enabled;
-        TypeEnum typeCategory = TypeEnum.Income;
-        Category categoryToBeAdded = new Category(nameCategory, statusCategory, typeCategory);
 
         List<Category> list = new List<Category>();
-        list.Add(categoryToBeAdded);
+        list.Add(genericCategory);
 
         string title = "Payment of education";
         DateTime date = DateTime.Now.Date;
