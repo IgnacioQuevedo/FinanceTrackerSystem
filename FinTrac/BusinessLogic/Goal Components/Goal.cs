@@ -15,7 +15,10 @@ namespace BusinessLogic.Goal_Components
 
         public List<Category> CategoriesOfGoal { get; set; }
 
-
+        public Goal()
+        {
+            CategoriesOfGoal = new List<Category>();
+        }
 
         public void ValidateGoal()
         {
