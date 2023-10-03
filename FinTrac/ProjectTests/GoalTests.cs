@@ -23,7 +23,7 @@ public class GoalTests
 
     [TestMethod]
 
-    public void GivenCorrectName_ShouldBeSetted() 
+    public void GivenCorrectTitle_ShouldBeSetted() 
     { 
         goalTitle = "Less night";
         myGoal.Title = goalTitle;
@@ -31,6 +31,12 @@ public class GoalTests
         Assert.AreEqual(goalTitle, myGoal.Title);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateGoal))]
 
-
+    public void GivenEmptyTitle_ShouldThrownException()
+    {
+        goalTitle = "";
+        myGoal.Title = goalTitle;
+    }
 }
