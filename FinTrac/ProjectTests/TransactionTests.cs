@@ -202,6 +202,14 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenEmptyList_ShouldThrowException()
+    {
+        genericTransaction.MyCategories = new List<Category>();
+        genericTransaction.ValidateListOfCategories();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenListWithTypeIncomeInTransactionOutcome_ShouldThrowException()
     {
         genericTransaction.Type = TypeEnum.Outcome;
@@ -228,14 +236,15 @@ public class TransactionTests
     #region Creation of transaction Tests
 
     [TestMethod]
-    public void GivenCorrectTransactionThatBelongsToCreditASccount_ShouldBeCreated()
+    public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldBeCreated()
     {
-        string title = "Title";
+        string title = "Payment of education";
         DateTime date = DateTime.Now.Date;
         decimal amount = 100;
         CurrencyEnum currency = CurrencyEnum.UY;
-        TypeEnum type = TypeEnum.Income;
+        TypeEnum type = TypeEnum.Outcome;
         List<Category> list = new List<Category>();
+
         CreditCardAccount CreditAccount = new CreditCardAccount();
 
         Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list);
