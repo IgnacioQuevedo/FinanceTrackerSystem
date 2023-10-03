@@ -112,5 +112,17 @@ namespace BusinessLogicTests
         }
 
         #endregion
+
+        #region return account Lists
+
+        [TestMethod]
+        public void ShouldBePossibleToReturnList()
+        {
+            Assert.AreEqual(genericUser.MyAccounts, genericUser.GetAccounts);
+        }
+
+
+        #endregion
+
     }
 }

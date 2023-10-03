@@ -245,6 +245,7 @@ namespace BusinessLogic.User_Components
 
         #region Account Management
 
+        #region AddAccount
         public void AddAccount(Account accountToAdd)
         {
 
@@ -258,11 +259,26 @@ namespace BusinessLogic.User_Components
             SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
+        #endregion
 
+        #region SetAccountOfId
         private void SetAccountId(Account accountToAdd)
         {
             accountToAdd.AccountId = MyAccounts.Count + 1;
         }
+        #endregion
+
+
+        #region GetAccounts
+
+        public List<Account> GetAccounts()
+        {
+
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
 
 
         #endregion
