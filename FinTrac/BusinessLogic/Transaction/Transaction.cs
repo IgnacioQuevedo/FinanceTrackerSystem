@@ -42,6 +42,7 @@ namespace BusinessLogic.Transaction
             Type = type;
             Account = account;
             MyCategories = myCategories;
+
             ValidateTitle();
             ValidateAccount();
             ValidateAmount();
