@@ -2,7 +2,7 @@ using BusinessLogic;
 using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
-
+using BusinessLogic.Goal_Components;
 
 namespace TestProject1;
 
