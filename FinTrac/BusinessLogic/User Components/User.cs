@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Category_Components;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,25 +10,27 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
-namespace BusinessLogic.User
+namespace BusinessLogic.User_Components
 {
     public class User
     {
-        private static bool _userCreated = false;
-
         #region Properties
-        public long Id { get; set; }
+        public long UserId { get; set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
         public string? Address { get; set; }
+        public List<Category> MyCategories { get; set; }
+
         #endregion
 
         #region Constructors
 
 
-        public User() { }
+        public User()
+        {
+        }
 
         public User(string firstName, string lastName, string email, string password, string? address)
         {
@@ -38,11 +41,14 @@ namespace BusinessLogic.User
             Address = address;
             if (ValidateUser())
             {
-                //Maybe in the future is necessary, we keep it low profile in case we need it.
-                _userCreated = true;
+                MyCategories = new List<Category>();
             }
 
+
         }
+        #endregion
+
+        #region Validate User
 
         private bool ValidateUser()
         {
@@ -54,9 +60,6 @@ namespace BusinessLogic.User
         }
 
         #endregion
-
-
-
 
         #region ValidateFirstName
 
@@ -88,6 +91,7 @@ namespace BusinessLogic.User
         public bool ValidateLastName(string possibleLastName)
         {
             string pattern = "^[A-Za-z ]+$";
+            //Regex checks if a specified regular expression pattern matches the entire input string.
             bool hasSpecialChar = !Regex.IsMatch(possibleLastName, pattern);
             bool hasNullOrEmptyOrSpace = string.IsNullOrWhiteSpace(possibleLastName);
 
@@ -138,8 +142,8 @@ namespace BusinessLogic.User
 
         private void ValidatePasswordHasCorrectLength(string posiblePassword)
         {
-            int minLength = 10;
-            int maxLength = 30;
+            const int minLength = 10;
+            const int maxLength = 30;
 
 
 
@@ -152,8 +156,8 @@ namespace BusinessLogic.User
         private void ValidatePasswordUppercase(string posiblePassword)
         {
             bool hasUpperCase = false;
-            int minAsciiUperCase = 65;
-            int maxAsciiUperCase = 90;
+            const int minAsciiUperCase = 65;
+            const int maxAsciiUperCase = 90;
 
             for (int i = 0; i < posiblePassword.Length && !hasUpperCase; i++)
             {
@@ -170,8 +174,73 @@ namespace BusinessLogic.User
         }
         #endregion
 
-        #region ValidateAddress
-        //If necessary validations or implement methods.
+        #region Category Management
+
+        #region Add Category
+
+        public void AddCategory(Category categoryToAdd)
+        {
+            setCategoryId(categoryToAdd);
+            ValidateRegisteredCategory(categoryToAdd);
+            MyCategories.Add(categoryToAdd);
+        }
+
+        private void setCategoryId(Category categoryToAdd)
+        {
+            categoryToAdd.CategoryId = MyCategories.Count + 1;
+        }
+
+        private void ValidateRegisteredCategory(Category categoryToAdd)
+        {
+            foreach (var category in MyCategories)
+            {
+                if (category.Name == categoryToAdd.Name)
+                {
+                    throw new ExceptionCategoryManagement("Category name already registered, impossible to create another Category.");
+                }
+            }
+        }
+
         #endregion
+
+        #region Get Categories
+        public List<Category> GetCategories()
+        {
+            List<Category> listOfCategories = MyCategories;
+            return listOfCategories;
+        }
+        #endregion
+
+        #region Modify Category
+
+        public void ModifyCategory(Category categoryToUpdate)
+        {
+            int lengthOfCategoryList = MyCategories.Count;
+            bool flag = false;
+
+            for (int i = 0; i < lengthOfCategoryList && !flag; i++)
+            {
+                if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
+                {
+                    MyCategories[i] = categoryToUpdate;
+                    flag = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Delete Category
+
+        public void DeleteCategory(Category categoryToDelete)
+        {
+            MyCategories.Remove(categoryToDelete);
+        }
+
+        #endregion
+
+        #endregion
+
+
     }
 }

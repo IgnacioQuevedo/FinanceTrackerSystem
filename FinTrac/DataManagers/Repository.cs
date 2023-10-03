@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLogic.Category;
-using BusinessLogic.User;
+using BusinessLogic.User_Components;
 
 namespace DataManagers
 {
@@ -12,16 +11,9 @@ namespace DataManagers
     {
         public List<User> Users { get; set; }
 
-        public List<Category> Categories { get; set; }
-
-
         public Repository()
         {
             Users = new List<User>();
-            Categories = new List<Category>();
         }
-
-
-
     }
 }

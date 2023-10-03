@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Category
+namespace BusinessLogic.Category_Components
 {
     public class Category
     {
         #region Properties
-        private bool _categoryCreated = false;
-        public long Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
-
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
         #endregion
@@ -28,11 +26,8 @@ namespace BusinessLogic.Category
             Name = name;
             Status = status;
             Type = type;
-            if (ValidateCategory())
-            {
-                //We keep it low profile in case we need it (future)
-                _categoryCreated = true;
-            }
+            ValidateCategory();
+
         }
         #endregion
 
@@ -40,14 +35,12 @@ namespace BusinessLogic.Category
 
         public bool ValidateCategory()
         {
-            bool isValid = true;
             if (string.IsNullOrEmpty(Name))
             {
                 throw new ExceptionValidateCategory("ERROR ON NAME");
             }
-            return isValid;
+            return true;
         }
         #endregion
-
     }
 }

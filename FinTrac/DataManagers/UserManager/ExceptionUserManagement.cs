@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataManagers.UserManager
 {
-    public class ExceptionUserManager : Exception
+    public class ExceptionUserManagement : Exception
     {
-        public ExceptionUserManager(string message) : base(message) { }
+        public ExceptionUserManagement(string message) : base(message) { }
     }
 }

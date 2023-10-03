@@ -1,15 +1,17 @@
 using BusinessLogic;
-using BusinessLogic.User;
+using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
-using BusinessLogic.Account;
+using BusinessLogic.Account_Components;
 using System.Security.Principal;
 
 namespace TestProject1;
 [TestClass]
+
+
 public class MonetaryAccountTests
 {
-
+    #region Init
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
 
@@ -30,10 +32,12 @@ public class MonetaryAccountTests
         myMonetaryAccount.Ammount = 10;
     }
 
+    #endregion
+
     #region Name
     [TestMethod]
 
-    public void GivenCorrectName_ShouldItBeSet()
+    public void GivenCorrectMonetaryAccountName_ShouldItBeSet()
     {
         string name = "Santander Saving Bank";
         myAccount.Name = name;
@@ -44,7 +48,7 @@ public class MonetaryAccountTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-    public void GivenEmptyName_ShouldReturnException()
+    public void GivenEmptyMonetaryAccountName_ShouldReturnException()
     {
         string name = "";
         myMonetaryAccount.Name = name;
@@ -52,9 +56,11 @@ public class MonetaryAccountTests
         myMonetaryAccount.ValidateAccount();
     }
 
+    #endregion
+
+    #region Ammount
 
     [TestMethod]
-
     public void GivenInitialAmmount_ShouldBeSetted()
     {
         int initialAmmount = 100;
@@ -63,8 +69,6 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.Ammount, initialAmmount);
 
     }
-    #endregion
-
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
@@ -76,14 +80,19 @@ public class MonetaryAccountTests
 
     }
 
+    #endregion
 
+    #region Creation Date
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
-        string actualDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime actualDate = DateTime.Now.Date;
 
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
+    #endregion
+
+    #region Currency
 
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
@@ -92,24 +101,24 @@ public class MonetaryAccountTests
         Assert.IsTrue(belongToEnum);
 
     }
+    #endregion
 
+    #region Constructor
     [TestMethod]
-
-
     public void CreationOfMonetaryAccount_ShouldBeValidated()
     {
 
         string nameToBeSetted = "Itau Saving Bank";
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
-        string creationDate = DateTime.Now.ToString("dd/MM/yyyy");
+        DateTime creationDate = DateTime.Now.Date;
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
-        
+
         Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
         Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Ammount);
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
-}
-
+    }
+    #endregion
 }
