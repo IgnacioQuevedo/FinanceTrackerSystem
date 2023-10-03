@@ -11,6 +11,7 @@ public class GoalTests
 {
 
     private string goalTitle;
+    private int maxAmmountToSpend;
     private Goal myGoal;
 
     [TestInitialize]
@@ -18,7 +19,8 @@ public class GoalTests
     public void Init()
     {
         myGoal = new Goal();
-        goalTitle = string.Empty;
+        goalTitle = "Less night";
+        maxAmmountToSpend = 0;
     }
 
     #region Goal Title
@@ -44,17 +46,17 @@ public class GoalTests
 
     #endregion
 
-    [TestMethod]
 
+    #region Max Ammount To Spent
+
+    [TestMethod]
     public void GivenAMaxAmmountToSpend_ShouldBeSetted()
     {
-
         int maxAmmount = 1000;
-
         myGoal.maxAmmountToSpend = maxAmmount;
 
         Assert.AreEqual(maxAmmount, myGoal.maxAmmountToSpend);
-
-
     }
+
+    #endregion
 }
