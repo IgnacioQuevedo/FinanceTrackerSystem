@@ -304,7 +304,7 @@ namespace BusinessLogic.User_Components
 
         public void DeleteAccount(Account accountToDelete)
         {
-            throw new NotImplementedException();
+            MyAccounts.Remove(accountToDelete);
         }
 
         #endregion
