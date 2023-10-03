@@ -38,5 +38,6 @@ public class GoalTests
     {
         goalTitle = "";
         myGoal.Title = goalTitle;
+        myGoal.ValidateGoal();
     }
 }
