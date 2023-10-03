@@ -75,6 +75,24 @@ namespace BusinessLogic.Transaction
                 throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
             }
 
+            if (Type == TypeEnum.Income)
+            {
+                bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
+                if (!allCategoriesAreIncome)
+                {
+                    throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
+                }
+
+            }
+            else if (Type == TypeEnum.Outcome)
+            {
+                bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
+                if (!allCategoriesAreOutcome)
+                {
+                    throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
+                }
+            }
+
         }
 
         #endregion
