@@ -284,35 +284,33 @@ namespace BusinessLogic.User_Components
         public void ModifyAccount(Account accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
-            bool findAccount = false;
-            bool nameAlreadyRegistered = false;
-            int indexOfAccountToUpdate = 0;
-
 
             for (int i = 0; i < lengthOfAccounts; i++)
             {
                 if (MyAccounts[i].Name == accountToUpdate.Name && MyAccounts[i].AccountId != accountToUpdate.AccountId)
                 {
-                    nameAlreadyRegistered = true; 
-                    break;
+                    throw new ExceptionAccountManagement("Not possible to modify.");
                 }
-
-                if (MyAccounts[i].AccountId == accountToUpdate.AccountId)
+                if(EqualsId(accountToUpdate, i))
                 {
-                    findAccount = true;
-                    indexOfAccountToUpdate = i;
+                    UpdateValues(accountToUpdate, i);
                 }
             }
+           
+        }
 
-            if (findAccount && !nameAlreadyRegistered)
-            {
-                MyAccounts[indexOfAccountToUpdate] = accountToUpdate;
-            }
-            else
-            {
-                throw new ExceptionAccountManagement("Not possible to modify.");
-            }
+        private void UpdateValues(Account accountToUpdate,int indexOfAccountToUpdate)
+        {
+            MyAccounts[indexOfAccountToUpdate] = accountToUpdate;
+        }
 
+        private bool EqualsId(Account accountToUpdate, int index)
+        {
+            if (MyAccounts[index].AccountId == accountToUpdate.AccountId)
+            {
+                return true;
+            }
+            return false;
         }
 
 

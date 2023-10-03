@@ -124,7 +124,7 @@ namespace BusinessLogicTests
         #region Modify Aspects of Account
 
         [TestMethod]
-        public void GivenAccountToUpdate_ShouldBeModifiedCorrectly()
+        public void GivenMonetaryAccountToUpdate_ShouldBeModifiedCorrectly()
         {
             genericUser.AddAccount(genericMonetaryAccount);
 
@@ -137,7 +137,7 @@ namespace BusinessLogicTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionAccountManagement))]
-        public void GivenAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
+        public void GivenMonetaryAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
         {
             genericUser.AddAccount(genericMonetaryAccount);
 
