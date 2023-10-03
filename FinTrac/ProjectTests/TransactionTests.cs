@@ -130,7 +130,7 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenListWithTwoTypesOfCategory_ShouldThrowException()
+    public void GivenListWithOneTypeIncorrect_ShouldThrowException()
     {
         string name = "Business One";
         StatusEnum status = StatusEnum.Enabled;
