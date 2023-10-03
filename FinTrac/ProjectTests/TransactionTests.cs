@@ -4,6 +4,7 @@ using System.Runtime.ExceptionServices;
 using BusinessLogic.Transaction;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
+using BusinessLogic.User_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
 
@@ -17,6 +18,7 @@ public class TransactionTests
     private CreditCardAccount myCreditCardAccount;
     private Category genericCategory;
     private MonetaryAccount genericMonetaryAccount;
+    private User genericUser;
 
     [TestInitialize]
     public void TestInitialize()
@@ -45,6 +47,15 @@ public class TransactionTests
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
         genericMonetaryAccount.Ammount = 10;
+
+        string firstName = "Austin";
+        string lastName = "Ford";
+        string email = "austinFord@gmail.com";
+        string password = "Austin1980";
+        string address = "East 25 Av";
+        genericUser = new User(firstName, lastName, email, password, address);
+
+        genericUser.MyCategories.Add(genericCategory);
     }
     #endregion
 
@@ -162,10 +173,9 @@ public class TransactionTests
         TypeEnum type = TypeEnum.Income;
         Category categoryToBeAdded = new Category(name, status, type);
 
-        List<Category> listToSet = new List<Category>();
-        listToSet.Add(categoryToBeAdded);
+        genericUser.MyCategories.Add(categoryToBeAdded);
 
-        genericTransaction.MyCategories = listToSet;
+        genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
 
@@ -182,11 +192,10 @@ public class TransactionTests
         StatusEnum status2 = StatusEnum.Disabled;
         Category categoryToBeAdded2 = new Category(name2, status2, type);
 
-        List<Category> listToSet = new List<Category>();
-        listToSet.Add(categoryToBeAdded);
-        listToSet.Add(categoryToBeAdded2);
+        genericUser.MyCategories.Add(categoryToBeAdded);
+        genericUser.MyCategories.Add(categoryToBeAdded2);
 
-        genericTransaction.MyCategories = listToSet;
+        genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
 
@@ -204,11 +213,10 @@ public class TransactionTests
         TypeEnum type2 = TypeEnum.Outcome;
         Category categoryToBeAdded2 = new Category(name2, status2, type2);
 
-        List<Category> listToSet = new List<Category>();
-        listToSet.Add(categoryToBeAdded);
-        listToSet.Add(categoryToBeAdded2);
+        genericUser.MyCategories.Add(categoryToBeAdded);
+        genericUser.MyCategories.Add(categoryToBeAdded2);
 
-        genericTransaction.MyCategories = listToSet;
+        genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
 
@@ -232,10 +240,10 @@ public class TransactionTests
         Category categoryToBeAdded2 = new Category(name2, status2, type2);
 
         List<Category> listToSet = new List<Category>();
-        listToSet.Add(genericCategory);
-        listToSet.Add(categoryToBeAdded2);
+        genericUser.MyCategories.Add(genericCategory);
+        genericUser.MyCategories.Add(categoryToBeAdded2);
 
-        genericTransaction.MyCategories = listToSet;
+        genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
     #endregion
@@ -245,7 +253,7 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldNotThrowException()
     {
-
+        genericCategory.Type = TypeEnum.Outcome;
         List<Category> list = new List<Category>();
         list.Add(genericCategory);
 
@@ -262,7 +270,7 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectTransactionThatBelongsToMonetaryAccount_ShouldNotThrowException()
     {
-
+        genericCategory.Type = TypeEnum.Outcome;
         List<Category> list = new List<Category>();
         list.Add(genericCategory);
 
@@ -281,8 +289,7 @@ public class TransactionTests
     public void GivenIncorrectTransactionThatBelongsToCreditAccount_ShouldThrowException()
     {
         genericCategory.Type = TypeEnum.Outcome;
-        List<Category> list = new List<Category>();
-        list.Add(genericCategory);
+        genericUser.MyCategories.Add(genericCategory);
 
         string title = "Payment of education";
         DateTime date = DateTime.Now.Date;
@@ -290,8 +297,23 @@ public class TransactionTests
         CurrencyEnum currency = CurrencyEnum.UY;
         TypeEnum type = TypeEnum.Income;
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, list);
+        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, genericUser.MyCategories);
+    }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenIncorrectTransactionThatBelongsToMonetaryAccount_ShouldThrowException()
+    {
+        genericCategory.Type = TypeEnum.Outcome;
+        genericUser.MyCategories.Add(genericCategory);
+
+        string title = "Payment of education";
+        DateTime date = DateTime.Now.Date;
+        decimal amount = 100;
+        CurrencyEnum currency = CurrencyEnum.UY;
+        TypeEnum type = TypeEnum.Income;
+
+        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, genericUser.MyCategories);
     }
 
     #endregion

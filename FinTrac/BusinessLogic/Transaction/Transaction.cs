@@ -110,10 +110,26 @@ namespace BusinessLogic.Transaction
 
         private bool ValidateAllCategoriesBelongToTypeOfTransaction()
         {
-            bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
-            bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
+            bool allCategoriesAreIncome = false;
+            bool allCategoriesAreOutcome = false;
 
-            return allCategoriesAreIncome || allCategoriesAreOutcome;
+            if (Type is TypeEnum.Income)
+            {
+                allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
+                if (allCategoriesAreIncome)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
+                if (allCategoriesAreOutcome)
+                {
+                    return true;
+                }
+            }
+            return false;
 
         }
         private bool ValidateAllCategoriesAreEnabled()
