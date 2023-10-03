@@ -77,11 +77,10 @@ public class TransactionTests
     public void GivenMonetaryAccount_ShouldBeSetted()
     {
         MonetaryAccount myMonetaryAccount = new MonetaryAccount();
-
-        //monetaryAccount is a 100% object that references only to monetaryAccount
         myMonetaryAccount.Name = "Scotia Saving Bank";
         myMonetaryAccount.Currency = CurrencyEnum.UY;
         myMonetaryAccount.Ammount = 10;
+
         genericTransaction.Account = myMonetaryAccount;
         Assert.AreEqual(genericTransaction.Account, myMonetaryAccount);
 
