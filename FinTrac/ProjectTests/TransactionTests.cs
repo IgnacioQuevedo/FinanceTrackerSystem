@@ -276,5 +276,23 @@ public class TransactionTests
 
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenIncorrectTransactionThatBelongsToCreditAccount_ShouldThrowException()
+    {
+        genericCategory.Type = TypeEnum.Outcome;
+        List<Category> list = new List<Category>();
+        list.Add(genericCategory);
+
+        string title = "Payment of education";
+        DateTime date = DateTime.Now.Date;
+        decimal amount = 100;
+        CurrencyEnum currency = CurrencyEnum.UY;
+        TypeEnum type = TypeEnum.Income;
+
+        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, list);
+
+    }
+
     #endregion
 }
