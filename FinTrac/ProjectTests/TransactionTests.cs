@@ -82,6 +82,7 @@ public class TransactionTests
         myMonetaryAccount.Name = "Scotia Saving Bank";
         myMonetaryAccount.Currency = CurrencyEnum.UY;
         myMonetaryAccount.Ammount = 10;
+        genericTransaction.Account = myMonetaryAccount;
         Assert.AreEqual(genericTransaction.Account, myMonetaryAccount);
 
     }
