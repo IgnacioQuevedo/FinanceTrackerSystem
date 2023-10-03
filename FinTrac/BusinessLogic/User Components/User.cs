@@ -280,71 +280,69 @@ namespace BusinessLogic.User_Components
 
         #region ModifyAccount
 
-
         public void ModifyAccount(Account accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
+            int indexOfUpdate = 0;
 
+            for (int i = 0; i < lengthOfAccounts; i++)
+            {
+                ValidateNameIsNotRegistered(accountToUpdate, MyAccounts[i]);
+                ValidateIssuingBankAnd4LastDigits(accountToUpdate, MyAccounts[i]);
+
+                if (haveSameId(accountToUpdate, MyAccounts[i]))
+                {
+                    indexOfUpdate = i;
+                }
+            }
+            UpdateValues(accountToUpdate, indexOfUpdate);
+        }
+
+        #region Auxiliary Methods for Modify
+        private void ValidateNameIsNotRegistered(Account accountToUpdate, Account accountToCompare)
+        {
             if (accountToUpdate is MonetaryAccount)
             {
-                for (int i = 0; i < lengthOfAccounts; i++)
+                if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
                 {
-                    if (MyAccounts[i].Name == accountToUpdate.Name && MyAccounts[i].AccountId != accountToUpdate.AccountId)
-                    {
-                        throw new ExceptionAccountManagement("Not possible to modify.");
-                    }
-                    if (EqualsId(accountToUpdate, i))
-                    {
-                        UpdateValues(accountToUpdate, i);
-                    }
+                    throw new ExceptionAccountManagement("Not possible to modify, name already registered.");
                 }
             }
-            else
-            {
-                CreditCardAccount accountToUpd = accountToUpdate as CreditCardAccount;
-
-                for (int j = 0; j < lengthOfAccounts; j++)
-                {
-                    if (MyAccounts[j] is CreditCardAccount)
-                    {
-                        CreditCardAccount oneCreditCardAccount = MyAccounts[j] as CreditCardAccount;
-
-
-                        if (oneCreditCardAccount.IssuingBank == accountToUpd.IssuingBank &&
-                        oneCreditCardAccount.Last4Digits == accountToUpd.Last4Digits && oneCreditCardAccount.AccountId != accountToUpd.AccountId)
-
-                        {
-                            throw new ExceptionValidateAccount("IssueBank and Last4Digits already used, try others.");
-                        }
-
-                        if(oneCreditCardAccount.AccountId == accountToUpd.AccountId)
-                        {
-                            MyAccounts[j] = accountToUpd;
-                        }
-                        
-
-                    }
-
-                }
-            }
-
         }
-
-        private void UpdateValues(Account accountToUpdate, int indexOfAccountToUpdate)
+        private bool haveSameId(Account account1, Account account2)
         {
-            MyAccounts[indexOfAccountToUpdate] = accountToUpdate;
-        }
-
-        private bool EqualsId(Account accountToUpdate, int index)
-        {
-            if (MyAccounts[index].AccountId == accountToUpdate.AccountId)
+            if (account1.AccountId == account2.AccountId)
             {
                 return true;
             }
             return false;
         }
 
+        private void UpdateValues(Account accountToUpdate, int index)
+        {
+            MyAccounts[index] = accountToUpdate;
+        }
+        private void ValidateIssuingBankAnd4LastDigits(Account accountToUpdate, Account oneCreditCardAccount)
+        {
+            if (accountToUpdate is CreditCardAccount && oneCreditCardAccount is CreditCardAccount)
+            {
+                CreditCardAccount creditCardAccountToUpdate = accountToUpdate as CreditCardAccount;
+                CreditCardAccount creditCardAccountToCompare = oneCreditCardAccount as CreditCardAccount;
 
+                if (UsedIssuingNameAndLastDigits(creditCardAccountToUpdate, creditCardAccountToCompare) 
+                    && !haveSameId(creditCardAccountToUpdate, creditCardAccountToCompare))
+
+                {
+                    throw new ExceptionAccountManagement("Issuing name and last 4 digits already used, try others.");
+                }
+            }
+        }
+
+        private bool UsedIssuingNameAndLastDigits(CreditCardAccount creditCardAccountToUpdate, CreditCardAccount oneCreditCardAccount)
+        {
+            return oneCreditCardAccount.IssuingBank.Equals(creditCardAccountToUpdate.IssuingBank)
+                   && oneCreditCardAccount.Last4Digits.Equals(creditCardAccountToUpdate.Last4Digits);
+        }
         #endregion
 
         #region DeleteAccount
@@ -353,6 +351,9 @@ namespace BusinessLogic.User_Components
         {
             MyAccounts.Remove(accountToDelete);
         }
+
+        #endregion
+
 
         #endregion
 

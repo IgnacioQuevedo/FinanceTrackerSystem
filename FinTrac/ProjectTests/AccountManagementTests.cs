@@ -175,7 +175,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionValidateAccount))]
+        [ExpectedException(typeof(ExceptionAccountManagement))]
 
         public void ModifyingValueIssuingBankAndLast4DigitsToValuesThatAreAlreadyRegistered_ShouldThrowException()
         {
