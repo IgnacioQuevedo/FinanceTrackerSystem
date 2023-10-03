@@ -8,9 +8,12 @@ namespace BusinessLogic.Account_Components
 {
     public class MonetaryAccount : Account
     {
+        #region Properties
         public decimal Ammount { get; set; }
 
+        #endregion
 
+        #region Constructor
         public MonetaryAccount() { }
 
         public MonetaryAccount(string accountName, decimal ammount, CurrencyEnum currencyType) : base(accountName, currencyType)
@@ -19,6 +22,9 @@ namespace BusinessLogic.Account_Components
             ValidateMonetaryAccount();
         }
 
+        #endregion
+
+        #region Validation of Monetary Account
         public void ValidateMonetaryAccount()
         {
             ValidateAmmount();
@@ -32,5 +38,6 @@ namespace BusinessLogic.Account_Components
             }
         }
 
+        #endregion
     }
 }
