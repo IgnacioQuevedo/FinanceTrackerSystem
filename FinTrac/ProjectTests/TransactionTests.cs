@@ -155,6 +155,7 @@ public class TransactionTests
     public void GivenListWithTypeIncomeInTransactionOutcome_ShouldThrowException()
     {
         genericTransaction.Type = TypeEnum.Outcome;
+
         string name = "Business One";
         StatusEnum status = StatusEnum.Enabled;
         TypeEnum type = TypeEnum.Income;
