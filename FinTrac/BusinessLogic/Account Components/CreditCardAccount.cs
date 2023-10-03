@@ -31,15 +31,16 @@ namespace BusinessLogic.Account_Components
 
         #endregion
 
-        #region Validation of Credit Card
+        #region Validations of Credit Card
         public void ValidateCreditCardAccount()
         {
-            ValidateNameAccount();
+            ValidateIssuingNameAccount();
             ValidateLast4Digits();
             ValidateAvailableCredit();
             ValidateClosingDate();
         }
 
+        #region Validation Of Credit
         private void ValidateAvailableCredit()
         {
             if (AvailableCredit < 0)
@@ -48,6 +49,9 @@ namespace BusinessLogic.Account_Components
             }
         }
 
+        #endregion
+
+        #region Validation Of ClosingDate
         private void ValidateClosingDate()
         {
             if (DateTime.Compare(CreationDate, ClosingDate) >= 0)
@@ -56,14 +60,19 @@ namespace BusinessLogic.Account_Components
             }
         }
 
-        private void ValidateNameAccount()
+        #endregion
+
+        #region Validation Of IssuingName
+        private void ValidateIssuingNameAccount()
         {
             if (string.IsNullOrEmpty(IssuingBank))
             {
                 throw new ExceptionValidateAccount("ERROR ON ISSUING BANK NAME");
             }
         }
+        #endregion
 
+        #region Validation of Last 4 Digits
         private void ValidateLast4Digits()
         {
             int lengthOfLastDigits = Last4Digits.Length;
@@ -85,6 +94,7 @@ namespace BusinessLogic.Account_Components
             }
             return true;
         }
+        #endregion
 
         #endregion
     }

@@ -12,6 +12,7 @@ namespace BusinessLogic.Account_Components
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; } = DateTime.Now.Date;
+        public int AccountId { get; set; } = -1;
         #endregion
 
         #region Constructor
@@ -22,6 +23,9 @@ namespace BusinessLogic.Account_Components
         {
             Name = name;
             Currency = currency;
+
+
+            ValidateAccount();
         }
 
         #endregion
@@ -31,7 +35,7 @@ namespace BusinessLogic.Account_Components
         {
             if (string.IsNullOrEmpty(Name))
             {
-                throw new ExceptionValidateAccount("ERROR");
+                throw new ExceptionValidateAccount("ERROR ON ACCOUNT NAME");
             }
             return true;
         }

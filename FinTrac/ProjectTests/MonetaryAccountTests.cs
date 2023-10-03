@@ -120,5 +120,18 @@ public class MonetaryAccountTests
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
         Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateAccount))]
+
+    public void GivenIncorrectValuesInMonetaryCreation_ShouldThrowException()
+    {
+        string nameToBeSetted = "";
+        int ammountToBeSetted = 100;
+        CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+
+        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
+
+    }
     #endregion
 }
