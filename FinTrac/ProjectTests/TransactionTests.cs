@@ -26,8 +26,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectTitle_ShouldReturnTrue()
     {
-        bool callToValidationTitleMethod = genericTransaction.ValidateTitle();
-        Assert.AreEqual(true, callToValidationTitleMethod);
+        string titleToBeSet = "Title";
+        Assert.AreEqual(titleToBeSet, genericTransaction.Title);
     }
 
     [TestMethod]
@@ -49,7 +49,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectAmount_ShouldReturnTrue()
     {
-        Assert.AreEqual(true, genericTransaction.ValidateAmount());
+        decimal amountToBeSet = 100;
+        Assert.AreEqual(amountToBeSet, genericTransaction.Amount);
     }
 
     [TestMethod]
@@ -85,6 +86,28 @@ public class TransactionTests
         Assert.AreEqual(genericTransaction.Account, myMonetaryAccount);
 
     }
+
+    public void GivenCreditAccount_ShouldBeSetted()
+    {
+        //Waiting for logic response from customer to be implemented remember adding [TestMethod] labelS
+    }
+
+    [TestMethod]
+    public void GivenCorrectListToValidate_ShouldNotThrowException()
+    {
+        string name = "Business";
+        StatusEnum status = StatusEnum.Enabled;
+        TypeEnum type = TypeEnum.Income;
+        Category categoryToBeAdded = new Category(name, status, type);
+        List<Category> listToSet = new List<Category>();
+        listToSet.Add(categoryToBeAdded);
+        genericTransaction.MyCategories = listToSet;
+
+        genericTransaction.ValidateListOfCategories();
+    }
+
+
+
 
 
 

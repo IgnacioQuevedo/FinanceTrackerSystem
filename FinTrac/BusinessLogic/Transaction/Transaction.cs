@@ -23,6 +23,8 @@ namespace BusinessLogic.Transaction
 
         public Account Account { get; set; }
 
+        public List<Category> MyCategories { get; set; }
+
 
 
         #endregion
@@ -31,26 +33,35 @@ namespace BusinessLogic.Transaction
         {
         }
 
-        public bool ValidateTitle()
+        #region Validate Title
+        public void ValidateTitle()
         {
-            bool isValid = true;
             if (string.IsNullOrEmpty(Title))
             {
                 throw new ExceptionValidateTransaction("ERROR ON TITLE");
             }
-            return isValid;
         }
+        #endregion
 
-        public bool ValidateAmount()
+        #region Validate Amount
+        public void ValidateAmount()
         {
-            bool isValid = true;
             bool amountIsNoNegativeOrZero = Amount <= 0;
 
             if (amountIsNoNegativeOrZero)
             {
                 throw new ExceptionValidateTransaction("ERROR ON AMOUNT");
             }
-            return isValid;
         }
+        #endregion
+
+        #region Validate List of Categories
+
+        public void ValidateListOfCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
