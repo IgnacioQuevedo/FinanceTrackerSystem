@@ -90,7 +90,6 @@ public class TransactionTests
     [TestMethod]
     public void GivenCreditAccount_ShouldBeSetted()
     {
-
         CreditCardAccount myCreditCardAccount = new CreditCardAccount();
         myCreditCardAccount.Name = "Scotia Credit Card";
         myCreditCardAccount.Currency = CurrencyEnum.UY;
@@ -100,6 +99,7 @@ public class TransactionTests
         myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
 
         genericTransaction.Account = myCreditCardAccount;
+
         Assert.AreEqual(genericTransaction.Account, myCreditCardAccount);
     }
 
