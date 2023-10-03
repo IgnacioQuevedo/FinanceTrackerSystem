@@ -89,18 +89,17 @@ namespace BusinessLogicTests
         {
             genericUser.AddAccount(genericCreditCardAccount);
 
+            int availableCreditNewCard = 1000;
             string equalName = "Prex";
-            CurrencyEnum currencyNewCard = CurrencyEnum.UY;
             string issuingBankNewCard = "Pimball";
             string last4DigitsNewCard = "1234";
-            int availableCreditNewCard = 1000;
+            CurrencyEnum currencyNewCard = CurrencyEnum.UY;
             DateTime closingDateNewCard = new DateTime(2028, 2, 10);
 
             Account accountWithEqualName = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard, 
                 last4DigitsNewCard, availableCreditNewCard,closingDateNewCard);
 
             genericUser.AddAccount(accountWithEqualName);
-
         }
 
 
