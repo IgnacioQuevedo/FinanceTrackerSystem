@@ -69,7 +69,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenType_ShouldBelongToTypeEnum()
     {
-        Assert.IsTrue(Enum.IsDefined(typeof(TypeEnum), genericTransaction.Type));
+        bool belongsToTypeEnum = Enum.IsDefined(typeof(TypeEnum), genericTransaction.Type);
+        Assert.IsTrue(belongsToTypeEnum);
     }
 
 
