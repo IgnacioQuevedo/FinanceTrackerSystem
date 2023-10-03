@@ -272,7 +272,7 @@ public class TransactionTests
         CurrencyEnum currency = CurrencyEnum.UY;
         TypeEnum type = TypeEnum.Outcome;
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, list)
+        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, list);
 
     }
 
