@@ -124,7 +124,7 @@ namespace BusinessLogicTests
         #region Modify Aspects of Account
 
         [TestMethod]
-        public void GivenCategoryToUpdate_ShouldBeModifiedCorrectly()
+        public void GivenAccountToUpdate_ShouldBeModifiedCorrectly()
         {
             genericUser.AddAccount(genericMonetaryAccount);
 
@@ -136,7 +136,6 @@ namespace BusinessLogicTests
         }
 
         #endregion
-
 
         #region Delete Aspects of Account
 
@@ -150,8 +149,6 @@ namespace BusinessLogicTests
 
             Assert.AreEqual(numberOfAccountsAdded -1,genericUser.GetAccounts().Count());
         }
-
-
         #endregion
 
     }
