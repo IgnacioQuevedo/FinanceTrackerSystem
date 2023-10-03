@@ -166,7 +166,7 @@ namespace BusinessLogicTests
             Account accountToUpdate = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted,
                 last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
 
-            accountToUpdate.AccountId = genericUser.MyAccounts.Count;
+            accountToUpdate.AccountId = genericCreditCardAccount.AccountId;
             genericUser.ModifyAccount(accountToUpdate);
 
             Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId], accountToUpdate);
