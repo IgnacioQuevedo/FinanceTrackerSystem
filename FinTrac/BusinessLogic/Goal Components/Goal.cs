@@ -8,7 +8,7 @@ namespace BusinessLogic.Goal_Components
 {
     public class Goal
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
 
 
 

@@ -10,21 +10,23 @@ namespace TestProject1;
 public class GoalTests
 {
 
+    private string goalTitle;
+    private Goal myGoal;
+
     [TestInitialize]
 
     public void Init()
     {
-
+        myGoal = new Goal();
+        goalTitle = string.Empty;
     }
 
     [TestMethod]
 
-    public void GivenCorrectName_ShouldBeSetted()
-    {
+    public void GivenCorrectName_ShouldBeSetted() 
+    { 
 
-        string goalTitle = "Less night";
-
-        Goal myGoal = new Goal();
+        goalTitle = "Less night";
         myGoal.Title = goalTitle;
 
         Assert.AreEqual(goalTitle, myGoal.Title);
