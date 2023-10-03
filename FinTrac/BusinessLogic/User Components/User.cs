@@ -264,7 +264,7 @@ namespace BusinessLogic.User_Components
         #region SetAccountOfId
         private void SetAccountId(Account accountToAdd)
         {
-            accountToAdd.AccountId = MyAccounts.Count + 1;
+            accountToAdd.AccountId = MyAccounts.Count;
         }
         #endregion
 

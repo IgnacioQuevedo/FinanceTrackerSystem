@@ -105,10 +105,10 @@ namespace BusinessLogicTests
         public void GivenCategoryToAdd_ShouldAssignId()
         {
             genericUser.AddAccount(genericMonetaryAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count, genericMonetaryAccount.AccountId);
+            Assert.AreEqual(genericUser.MyAccounts.Count -1, genericMonetaryAccount.AccountId);
 
             genericUser.AddAccount(genericCreditCardAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count, genericCreditCardAccount.AccountId);
+            Assert.AreEqual(genericUser.MyAccounts.Count -1, genericCreditCardAccount.AccountId);
         }
 
         #endregion
