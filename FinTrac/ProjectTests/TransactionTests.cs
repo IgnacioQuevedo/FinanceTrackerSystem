@@ -255,7 +255,7 @@ public class TransactionTests
 
         CreditCardAccount CreditAccount = new CreditCardAccount();
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list)
+        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list);
 
     }
 
