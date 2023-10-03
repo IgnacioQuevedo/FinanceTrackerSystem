@@ -69,30 +69,43 @@ namespace BusinessLogic.Transaction
 
         public void ValidateListOfCategories()
         {
+            ValidateAllCategoriesAreEnabled();
+            ValidateAllCategoriesBelongToTypeOfTransaction();
+
+        }
+
+        private void ValidateAllCategoriesBelongToTypeOfTransaction()
+        {
+            switch (Type)
+            {
+                case TypeEnum.Income:
+                    {
+                        bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
+                        if (!allCategoriesAreIncome)
+                        {
+                            throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
+                        }
+                        break;
+                    }
+                case TypeEnum.Outcome:
+                    {
+                        bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
+                        if (!allCategoriesAreOutcome)
+                        {
+                            throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void ValidateAllCategoriesAreEnabled()
+        {
             bool allCategoriesAreEnabled = MyCategories.All(c => c.Status == StatusEnum.Enabled);
             if (!allCategoriesAreEnabled)
             {
                 throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
             }
-
-            if (Type == TypeEnum.Income)
-            {
-                bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
-                if (!allCategoriesAreIncome)
-                {
-                    throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
-                }
-
-            }
-            else if (Type == TypeEnum.Outcome)
-            {
-                bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
-                if (!allCategoriesAreOutcome)
-                {
-                    throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
-                }
-            }
-
         }
 
         #endregion
