@@ -99,10 +99,11 @@ public class TransactionTests
         StatusEnum status = StatusEnum.Enabled;
         TypeEnum type = TypeEnum.Income;
         Category categoryToBeAdded = new Category(name, status, type);
+
         List<Category> listToSet = new List<Category>();
         listToSet.Add(categoryToBeAdded);
-        genericTransaction.MyCategories = listToSet;
 
+        genericTransaction.MyCategories = listToSet;
         genericTransaction.ValidateListOfCategories();
     }
 
