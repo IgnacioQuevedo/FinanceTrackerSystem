@@ -23,6 +23,9 @@ namespace BusinessLogic.Account_Components
         {
             Name = name;
             Currency = currency;
+
+
+            ValidateAccount();
         }
 
         #endregion
@@ -32,7 +35,7 @@ namespace BusinessLogic.Account_Components
         {
             if (string.IsNullOrEmpty(Name))
             {
-                throw new ExceptionValidateAccount("ERROR");
+                throw new ExceptionValidateAccount("ERROR ON ACCOUNT NAME");
             }
             return true;
         }
