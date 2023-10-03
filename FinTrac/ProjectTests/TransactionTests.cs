@@ -5,12 +5,12 @@ using BusinessLogic.Transaction;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
 using System.Security.Principal;
+using System.Collections.Generic;
 
 namespace TestProject1;
 [TestClass]
 public class TransactionTests
 {
-
     #region Initializing aspects
 
     private Transaction genericTransaction;
@@ -225,5 +225,22 @@ public class TransactionTests
     }
     #endregion
 
+    #region Creation of transaction Tests
 
+    [TestMethod]
+    public void GivenCorrectTransactionThatBelongsToCreditASccount_ShouldBeCreated()
+    {
+        string title = "Title";
+        DateTime date = DateTime.Now.Date;
+        decimal amount = 100;
+        CurrencyEnum currency = CurrencyEnum.UY;
+        TypeEnum type = TypeEnum.Income;
+        List<Category> list = new List<Category>();
+        CreditCardAccount CreditAccount = new CreditCardAccount();
+
+        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list);
+
+    }
+
+    #endregion
 }

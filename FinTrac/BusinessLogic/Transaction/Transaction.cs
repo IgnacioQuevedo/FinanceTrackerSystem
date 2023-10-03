@@ -93,29 +93,15 @@ namespace BusinessLogic.Transaction
 
         private void ValidateAllCategoriesBelongToTypeOfTransaction()
         {
-            switch (Type)
-            {
-                case TypeEnum.Income:
-                    {
-                        bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
-                        if (!allCategoriesAreIncome)
-                        {
-                            throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
-                        }
-                        break;
-                    }
-                case TypeEnum.Outcome:
-                    {
-                        bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
-                        if (!allCategoriesAreOutcome)
-                        {
-                            throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
-                        }
-                        break;
-                    }
-            }
-        }
+            bool allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
+            bool allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
 
+            if (!allCategoriesAreIncome && !allCategoriesAreOutcome)
+            {
+                throw new ExceptionValidateTransaction("ERROR ON LIST OF CATEGORIES");
+            }
+
+        }
         private void ValidateAllCategoriesAreEnabled()
         {
             bool allCategoriesAreEnabled = MyCategories.All(c => c.Status == StatusEnum.Enabled);
