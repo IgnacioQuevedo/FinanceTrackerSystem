@@ -255,6 +255,7 @@ namespace BusinessLogic.User_Components
                     throw new ExceptionAccountManagement("Account name already added.");
                 }
             }
+            accountToAdd.AccountId = MyAccounts.Count + 1;
             MyAccounts.Add(accountToAdd);
         }
 
