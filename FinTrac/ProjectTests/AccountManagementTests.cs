@@ -149,6 +149,30 @@ namespace BusinessLogicTests
 
             genericUser.ModifyAccount(accountWithChanges);
         }
+
+        [TestMethod]
+        public void GivenCorrectsValueToModifyOnCreditCardAccount_ShouldModifyIt()
+        {
+            genericUser.AddAccount(genericCreditCardAccount);
+
+            string nameToBeSetted = "Alpha Brou";
+            CurrencyEnum currencyToBeSetted = CurrencyEnum.USA;
+            string issuingBankToBeSetted = "Brou";
+            string last4DigitsToBeSetted = "1234";
+            int availableCreditToBeSetted = 10000;
+            DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
+
+
+            Account accountToUpdate = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted,
+                last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+
+            accountToUpdate.AccountId = genericUser.MyAccounts.Count;
+            genericUser.ModifyAccount(accountToUpdate);
+
+            Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId], accountToUpdate);
+        }
+
+
         #endregion
 
         #region Delete Aspects of Account
