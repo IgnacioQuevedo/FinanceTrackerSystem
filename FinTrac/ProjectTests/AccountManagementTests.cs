@@ -18,7 +18,7 @@ namespace BusinessLogicTests
         private Account genericCreditCardAccount;
         private int numberOfAccountsAddedBefore;
 
-       [TestInitialize]
+        [TestInitialize]
         public void TestInitialize()
         {
             genericMonetaryAccount = new MonetaryAccount("Itau Saving Bank", 5000, CurrencyEnum.UY);
@@ -30,7 +30,7 @@ namespace BusinessLogicTests
             string address = "NW 2nd Ave";
             genericUser = new User(firstName, lastName, email, password, address);
 
-            
+
             string nameToBeSetted = "Prex";
             CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
             string issuingBankToBeSetted = "Santander";
@@ -50,7 +50,7 @@ namespace BusinessLogicTests
         public void GivenCorrectMonetaryAccountToAdd_ShouldAddIt()
         {
             genericUser.AddAccount(genericMonetaryAccount);
-            
+
             Assert.AreEqual(numberOfAccountsAddedBefore + 1, genericUser.MyAccounts.Count);
         }
 
@@ -78,7 +78,7 @@ namespace BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException (typeof(ExceptionAccountManagement))]
+        [ExpectedException(typeof(ExceptionAccountManagement))]
 
         public void GivenNameOfCreditCardAccountAlreadyAdded_ShouldThrowException()
         {
@@ -91,8 +91,8 @@ namespace BusinessLogicTests
             CurrencyEnum currencyNewCard = CurrencyEnum.UY;
             DateTime closingDateNewCard = new DateTime(2028, 2, 10);
 
-            Account accountWithEqualName = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard, 
-                last4DigitsNewCard, availableCreditNewCard,closingDateNewCard);
+            Account accountWithEqualName = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard,
+                last4DigitsNewCard, availableCreditNewCard, closingDateNewCard);
 
             genericUser.AddAccount(accountWithEqualName);
         }
@@ -104,10 +104,10 @@ namespace BusinessLogicTests
         public void GivenCategoryToAdd_ShouldAssignId()
         {
             genericUser.AddAccount(genericMonetaryAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count -1, genericMonetaryAccount.AccountId);
+            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericMonetaryAccount.AccountId);
 
             genericUser.AddAccount(genericCreditCardAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count -1, genericCreditCardAccount.AccountId);
+            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericCreditCardAccount.AccountId);
         }
 
         #endregion
@@ -121,7 +121,7 @@ namespace BusinessLogicTests
         }
         #endregion
 
-        #region Modify Aspects of Account
+        #region Modify Aspects of Monetary Account
 
         [TestMethod]
         public void GivenMonetaryAccountToUpdate_ShouldBeModifiedCorrectly()
@@ -149,7 +149,9 @@ namespace BusinessLogicTests
 
             genericUser.ModifyAccount(accountWithChanges);
         }
+        #endregion
 
+        #region Modify Aspects of Credit Card Account
         [TestMethod]
         public void GivenCorrectsValueToModifyOnCreditCardAccount_ShouldModifyIt()
         {
@@ -172,6 +174,36 @@ namespace BusinessLogicTests
             Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId], accountToUpdate);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionValidateAccount))]
+
+        public void ModifyingValueIssuingBankAndLast4DigitsToValuesThatAreAlreadyRegistered_ShouldThrowException()
+        {
+
+            genericUser.AddAccount(genericMonetaryAccount);
+
+            string nameToBeSetted = "Alpha Brou";
+            CurrencyEnum currencyToBeSetted = CurrencyEnum.USA;
+            string issuingBankToBeSetted = "Brou";
+            string last4DigitsToBeSetted = "5432";
+            int availableCreditToBeSetted = 10000;
+            DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
+
+            Account accountforUpdate = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted,
+                last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+            genericUser.AddAccount(accountforUpdate);
+
+            nameToBeSetted = "Itau Volar";
+            last4DigitsToBeSetted = "1234";
+            Account accountUpdated = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, issuingBankToBeSetted,
+               last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+
+            genericUser.ModifyAccount(accountUpdated);
+
+
+
+
+        }
 
         #endregion
 
@@ -185,7 +217,7 @@ namespace BusinessLogicTests
 
             genericUser.DeleteAccount(genericMonetaryAccount);
 
-            Assert.AreEqual(numberOfAccountsAdded -1,genericUser.GetAccounts().Count());
+            Assert.AreEqual(numberOfAccountsAdded - 1, genericUser.GetAccounts().Count());
         }
         #endregion
 
