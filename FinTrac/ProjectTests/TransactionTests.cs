@@ -87,9 +87,19 @@ public class TransactionTests
 
     }
 
+    [TestMethod]
     public void GivenCreditAccount_ShouldBeSetted()
     {
-        //Waiting for logic response from customer to be implemented remember adding [TestMethod] labelS
+        CreditCardAccount myCreditCardAccount = new CreditCardAccount();
+        myCreditCardAccount.Name = "Scotia Credit Card";
+        myCreditCardAccount.Currency = CurrencyEnum.UY;
+        myCreditCardAccount.IssuingBank = "Santander";
+        myCreditCardAccount.Last4Digits = "1233";
+        myCreditCardAccount.AvailableCredit = 15000;
+        myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
+
+        genericTransaction.Account = myCreditCardAccount;
+        Assert.AreEqual(genericTransaction.Account, myCreditCardAccount);
     }
 
     [TestMethod]
