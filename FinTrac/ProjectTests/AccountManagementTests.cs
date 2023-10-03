@@ -80,21 +80,21 @@ namespace BusinessLogicTests
         [TestMethod]
         [ExpectedException(typeof(ExceptionAccountManagement))]
 
-        public void GivenNameOfCreditCardAccountAlreadyAdded_ShouldThrowException()
+        public void IssuingBankAndLast4DigitsOfCreditCardAccountAlreadyAdded_ShouldThrowException()
         {
             genericUser.AddAccount(genericCreditCardAccount);
 
-            int availableCreditNewCard = 1000;
+            int availableCreditNewCard = 66000;
             string equalName = "Prex";
-            string issuingBankNewCard = "Pimball";
+            string issuingBankNewCard = "Santander";
             string last4DigitsNewCard = "1234";
             CurrencyEnum currencyNewCard = CurrencyEnum.UY;
-            DateTime closingDateNewCard = new DateTime(2028, 2, 10);
+            DateTime closingDateNewCard = new DateTime(2030, 6, 10);
 
-            Account accountWithEqualName = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard,
+            Account accountWithEqualValues = new CreditCardAccount(equalName, currencyNewCard, issuingBankNewCard,
                 last4DigitsNewCard, availableCreditNewCard, closingDateNewCard);
 
-            genericUser.AddAccount(accountWithEqualName);
+            genericUser.AddAccount(accountWithEqualValues);
         }
         #endregion
 

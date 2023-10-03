@@ -248,16 +248,19 @@ namespace BusinessLogic.User_Components
         #region AddAccount
         public void AddAccount(Account accountToAdd)
         {
-
-            foreach (var account in MyAccounts)
+            if(accountToAdd is MonetaryAccount)
             {
-                if (account.Name == accountToAdd.Name)
+                foreach (var account in MyAccounts)
                 {
-                    throw new ExceptionAccountManagement("Account name already added.");
+                    if (account.Name == accountToAdd.Name)
+                    {
+                        throw new ExceptionAccountManagement("Account name already added.");
+                    }
                 }
+                SetAccountId(accountToAdd);
+                MyAccounts.Add(accountToAdd);
             }
-            SetAccountId(accountToAdd);
-            MyAccounts.Add(accountToAdd);
+            
         }
         #endregion
 
