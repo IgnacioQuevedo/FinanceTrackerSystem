@@ -86,16 +86,21 @@ namespace BusinessLogic.Transaction
 
         public void ValidateListOfCategories()
         {
+            bool isNotValidList = !ValidateAllCategoriesAreEnabled() || !ValidateAllCategoriesBelongToTypeOfTransaction() || !ValidateEmptyList();
 
+            if (isNotValidList)
+            {
+                throw new ExceptionValidateTransaction("Error");
+            }
+
+        }
+        private bool ValidateEmptyList()
+        {
             if (MyCategories.Count == 0)
             {
-                throw new ExceptionValidateTransaction("Error");
+                return false;
             }
-            if (!ValidateAllCategoriesAreEnabled() || !ValidateAllCategoriesBelongToTypeOfTransaction())
-            {
-                throw new ExceptionValidateTransaction("Error");
-            }
-
+            return true;
         }
 
         private bool ValidateAllCategoriesBelongToTypeOfTransaction()
