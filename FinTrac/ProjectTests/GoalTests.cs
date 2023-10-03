@@ -19,8 +19,11 @@ public class GoalTests
     public void Init()
     {
         myGoal = new Goal();
+
         goalTitle = "Less night";
         maxAmmountToSpend = 0;
+
+        myGoal.Title = goalTitle;
     }
 
     #region Goal Title
@@ -28,9 +31,6 @@ public class GoalTests
 
     public void GivenCorrectTitle_ShouldBeSetted() 
     { 
-        goalTitle = "Less night";
-        myGoal.Title = goalTitle;
-
         Assert.AreEqual(goalTitle, myGoal.Title);
     }
 
@@ -56,6 +56,15 @@ public class GoalTests
         myGoal.maxAmmountToSpend = maxAmmount;
 
         Assert.AreEqual(maxAmmount, myGoal.maxAmmountToSpend);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateGoal))]
+    public void SettingAMaxAmmountToSpendNegative_ShouldThrowException()
+    {
+        maxAmmountToSpend = -999;
+        myGoal.maxAmmountToSpend = maxAmmountToSpend;
+        myGoal.ValidateGoal();
     }
 
     #endregion
