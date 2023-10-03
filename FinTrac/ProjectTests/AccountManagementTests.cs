@@ -100,6 +100,7 @@ namespace BusinessLogicTests
                 last4DigitsNewCard, availableCreditNewCard,closingDateNewCard);
 
             genericUser.AddAccount(accountWithEqualName);
+
         }
 
 
