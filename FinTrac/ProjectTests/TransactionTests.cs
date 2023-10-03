@@ -163,7 +163,7 @@ public class TransactionTests
         string name2 = "Food";
         StatusEnum status2 = StatusEnum.Enabled;
         TypeEnum type2 = TypeEnum.Outcome;
-        Category categoryToBeAdded2 = new Category(name2, status2, type2;
+        Category categoryToBeAdded2 = new Category(name2, status2, type2);
 
         List<Category> listToSet = new List<Category>();
         listToSet.Add(categoryToBeAdded);
