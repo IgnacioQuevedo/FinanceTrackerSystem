@@ -279,20 +279,38 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region ModifyAccount
-       
+
 
         public void ModifyAccount(Account accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
             bool findAccount = false;
+            bool nameAlreadyRegistered = false;
+            int indexOfAccountToUpdate = 0;
 
-            for (int i = 0; i < lengthOfAccounts && !findAccount; i++)
+
+            for (int i = 0; i < lengthOfAccounts; i++)
             {
+                if (MyAccounts[i].Name == accountToUpdate.Name && MyAccounts[i].AccountId != accountToUpdate.AccountId)
+                {
+                    nameAlreadyRegistered = true; 
+                    break;
+                }
+
                 if (MyAccounts[i].AccountId == accountToUpdate.AccountId)
                 {
-                    MyAccounts[i] = accountToUpdate;
                     findAccount = true;
+                    indexOfAccountToUpdate = i;
                 }
+            }
+
+            if (findAccount && !nameAlreadyRegistered)
+            {
+                MyAccounts[indexOfAccountToUpdate] = accountToUpdate;
+            }
+            else
+            {
+                throw new ExceptionAccountManagement("Not possible to modify.");
             }
 
         }

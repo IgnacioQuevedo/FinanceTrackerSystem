@@ -140,10 +140,14 @@ namespace BusinessLogicTests
         public void GivenAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
         {
             genericUser.AddAccount(genericMonetaryAccount);
-            Account accountWithAlreadyThatName = new MonetaryAccount("Itau Saving Bank", 3000, CurrencyEnum.UY);
-            
-            Account accountToUpdate = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA);
-            genericUser.ModifyAccount(accountToUpdate);
+
+            Account accountToUpdate = new MonetaryAccount("Brou Saving Bank", 10000, CurrencyEnum.USA);
+            genericUser.AddAccount(accountToUpdate);
+
+            Account accountWithChanges = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA);
+            accountWithChanges.AccountId = accountToUpdate.AccountId;
+
+            genericUser.ModifyAccount(accountWithChanges);
         }
         #endregion
 
