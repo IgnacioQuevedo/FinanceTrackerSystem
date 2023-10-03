@@ -16,6 +16,7 @@ public class TransactionTests
     private Transaction genericTransaction;
     private CreditCardAccount myCreditCardAccount;
     private Category genericCategory;
+    private MonetaryAccount genericMonetaryAccount;
 
     [TestInitialize]
     public void TestInitialize()
@@ -39,6 +40,11 @@ public class TransactionTests
         myCreditCardAccount.Last4Digits = "1233";
         myCreditCardAccount.AvailableCredit = 15000;
         myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
+
+        genericMonetaryAccount = new MonetaryAccount();
+        genericMonetaryAccount.Name = "Scotia Saving Bank";
+        genericMonetaryAccount.Currency = CurrencyEnum.UY;
+        genericMonetaryAccount.Ammount = 10;
     }
     #endregion
 
@@ -249,11 +255,24 @@ public class TransactionTests
         CurrencyEnum currency = CurrencyEnum.UY;
         TypeEnum type = TypeEnum.Outcome;
 
-        CreditCardAccount CreditAccount = new CreditCardAccount();
+        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, list);
 
-        CreditAccount = myCreditCardAccount;
+    }
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, CreditAccount, list);
+    [TestMethod]
+    public void GivenCorrectTransactionThatBelongsToMonetaryAccount_ShouldNotThrowException()
+    {
+
+        List<Category> list = new List<Category>();
+        list.Add(genericCategory);
+
+        string title = "Payment of education";
+        DateTime date = DateTime.Now.Date;
+        decimal amount = 100;
+        CurrencyEnum currency = CurrencyEnum.UY;
+        TypeEnum type = TypeEnum.Outcome;
+
+        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, list)
 
     }
 
