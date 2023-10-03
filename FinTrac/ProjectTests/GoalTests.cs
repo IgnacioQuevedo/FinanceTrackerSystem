@@ -25,7 +25,6 @@ public class GoalTests
 
     public void GivenCorrectName_ShouldBeSetted() 
     { 
-
         goalTitle = "Less night";
         myGoal.Title = goalTitle;
 
