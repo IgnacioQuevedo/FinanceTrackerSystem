@@ -64,6 +64,26 @@ namespace BusinessLogic.Account_Components
         {
             transactionToBeAdded.TransactionId = MyTransactions.Count;
         }
+
+        #endregion
+
+        #region Modify Transaction
+
+        public void ModifyTransaction(Transaction transactionToUpdate)
+        {
+            int lengthOfTransactionList = MyTransactions.Count;
+            bool flag = false;
+
+            for (int i = 0; i < lengthOfTransactionList && !flag; i++)
+            {
+                if (MyTransactions[i].TransactionId == transactionToUpdate.TransactionId)
+                {
+                    MyTransactions[i] = transactionToUpdate;
+                    flag = true;
+                }
+            }
+        }
+
         #endregion
 
         #endregion

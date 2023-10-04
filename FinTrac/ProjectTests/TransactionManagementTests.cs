@@ -95,5 +95,29 @@ public class TransactionManagementTests
 
     #endregion
 
+    #region Modify Transaction Tests
+
+    [TestMethod]
+    public void GivenTransactionToBeModified_ShouldBeModified()
+    {
+        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
+
+        List<Category> modifiedListOfCategories = new List<Category>();
+        modifiedListOfCategories.Add(genericCategoryOutcome1);
+
+        Transaction modifiedTransaction = new Transaction("Payment of food", 100, CurrencyEnum.USA, TypeEnum.Outcome, genericCreditAccount, genericUser.MyCategories);
+
+
+        genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
+
+        Assert.AreEqual(modifiedTransaction, genericUser.MyAccounts[1].MyTransactions[0]);
+
+
+
+    }
+
+    #endregion
+
 
 }
