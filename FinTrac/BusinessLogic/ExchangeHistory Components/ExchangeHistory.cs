@@ -9,20 +9,27 @@ namespace BusinessLogic.ExchangeHistory_Components
 {
     public class ExchangeHistory
     {
+        #region Properties
         public CurrencyEnum Currency { get; set; }
 
 
 
+        #endregion
 
-
+        #region Validate Exchange
         public void ValidateExchange()
         {
-            if(Currency != CurrencyEnum.USA)
+            ValidateCurrencyIsDollar();
+        }
+
+        private void ValidateCurrencyIsDollar()
+        {
+            if (Currency != CurrencyEnum.USA)
             {
                 throw new ExceptionExchangeHistory("Only dollar currency is allowed");
             }
         }
 
-
+        #endregion
     }
 }
