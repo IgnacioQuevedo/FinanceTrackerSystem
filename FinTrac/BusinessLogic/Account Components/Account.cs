@@ -56,13 +56,23 @@ namespace BusinessLogic.Account_Components
                 ManageAmount(transactionToBeAdded);
             }
 
-            if (transactionToBeAdded.Account is CreditCardAccount)
+            if (IsCreditAccount(transactionToBeAdded))
             {
-                CreditCardAccount accountToBeUpdated = (CreditCardAccount)transactionToBeAdded.Account;
-
-                accountToBeUpdated.AvailableCredit = accountToBeUpdated.AvailableCredit - transactionToBeAdded.Amount;
+                ManageCredit(transactionToBeAdded);
             }
             MyTransactions.Add(transactionToBeAdded);
+        }
+
+        private static void ManageCredit(Transaction transactionToBeAdded)
+        {
+            CreditCardAccount accountToBeUpdated = (CreditCardAccount)transactionToBeAdded.Account;
+
+            accountToBeUpdated.AvailableCredit = accountToBeUpdated.AvailableCredit - transactionToBeAdded.Amount;
+        }
+
+        private static bool IsCreditAccount(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Account is CreditCardAccount;
         }
 
         private static void ManageAmount(Transaction transactionToBeAdded)
