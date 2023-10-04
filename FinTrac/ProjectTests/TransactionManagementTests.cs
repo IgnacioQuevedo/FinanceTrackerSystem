@@ -18,7 +18,7 @@ public class TransactionManagementTests
     private Category genericCategoryOutcome2;
     private MonetaryAccount genericMonetaryAccount;
     private Transaction genericTransactionOutcome;
-    private Transaction genericTransactionIncome;
+    private Transaction genericTransactionOutcome2;
 
     [TestInitialize]
     public void TestInitialize()
@@ -38,7 +38,7 @@ public class TransactionManagementTests
 
         genericTransactionOutcome = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
 
-        genericTransactionIncome = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
+        genericTransactionOutcome2 = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
 
     }
 
@@ -53,6 +53,17 @@ public class TransactionManagementTests
         Transaction transactionAdded = genericUser.MyAccounts[0].MyTransactions[0];
 
         Assert.AreEqual(transactionAdded, genericTransactionOutcome);
+    }
+
+    [TestMethod]
+    public void GivenTransactionToAddToMonetaryAccount_ShouldModifyAccountAmountCorrectly()
+    {
+        decimal previousAccountAmount = genericMonetaryAccount.Ammount;
+        decimal costOfTransaction = genericTransactionOutcome.Amount;
+        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome);
+        MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
+
+        Assert.AreEqual(previousAccountAmount - costOfTransaction, myMonetary.Ammount);
     }
 
     #endregion
