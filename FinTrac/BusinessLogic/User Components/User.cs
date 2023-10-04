@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BusinessLogic.ExchangeHistory_Components;
 
 namespace BusinessLogic.User_Components
 {
@@ -382,6 +383,11 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        
+        public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
