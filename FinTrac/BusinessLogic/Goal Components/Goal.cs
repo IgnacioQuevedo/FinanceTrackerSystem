@@ -9,27 +9,37 @@ namespace BusinessLogic.Goal_Components
 {
     public class Goal
     {
+        #region Properties
         public string Title { get; set; } = "";
-
         public int maxAmountToSpend { get; set; }
 
         public List<Category> CategoriesOfGoal { get; set; }
 
+        #endregion
+
+        #region Constructor
         public Goal()
         {
             CategoriesOfGoal = new List<Category>();
         }
 
+        #endregion
+
+        #region Validations
         public void ValidateGoal()
         {
             ValidateTitle();
             ValidateMaxAmmount();
+            ValidateAmountOfCategories();
 
-            if(CategoriesOfGoal.Count == 0)
+        }
+
+        private void ValidateAmountOfCategories()
+        {
+            if (CategoriesOfGoal.Count == 0)
             {
                 throw new ExceptionValidateGoal("ERROR");
             }
-
         }
 
         private void ValidateMaxAmmount()
@@ -47,5 +57,7 @@ namespace BusinessLogic.Goal_Components
                 throw new ExceptionValidateGoal("Error on goal tittle, it cannot be empty");
             }
         }
+
+        #endregion
     }
 }

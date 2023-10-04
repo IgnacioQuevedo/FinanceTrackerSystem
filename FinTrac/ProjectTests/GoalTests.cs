@@ -103,9 +103,6 @@ public class GoalTests
         myGoal.CategoriesOfGoal = possibleCategoriesToUse;
 
         myGoal.ValidateGoal();
-        
-
-
     }
 
     #endregion
