@@ -30,7 +30,6 @@ public class GoalManagementTests
 
     #endregion
 
-
     #region Add Goal
     [TestMethod]
     public void GivenCorrectGoal_ShouldBePossibleToAddIt()

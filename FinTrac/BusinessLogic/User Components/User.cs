@@ -362,8 +362,13 @@ namespace BusinessLogic.User_Components
         #region AddGoal
         public void AddGoal(Goal goalToAdd)
         {
-            goalToAdd.GoalId = MyGoals.Count + 1;
+            SettingGoalId(goalToAdd);
             MyGoals.Add(goalToAdd);
+        }
+
+        private void SettingGoalId(Goal goalToAdd)
+        {
+            goalToAdd.GoalId = MyGoals.Count + 1;
         }
 
         #endregion
