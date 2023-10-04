@@ -14,7 +14,7 @@ namespace BusinessLogic.Goal_Components
         public string Title { get; set; } = "";
         public int maxAmountToSpend { get; set; }
 
-        public CurrencyEnum Currency { get; set; } = CurrencyEnum.UY;
+        public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
 
         public List<Category> CategoriesOfGoal { get; set; }
 
