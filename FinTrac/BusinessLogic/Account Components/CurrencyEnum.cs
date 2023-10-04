@@ -14,8 +14,5 @@ namespace BusinessLogic.Account_Components
 
         [Description("US$")]
         USA = 2
-
-
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Goal_Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +24,7 @@ namespace BusinessLogic.User_Components
         public string? Address { get; set; }
         public List<Category> MyCategories { get; set; }
         public List<Account> MyAccounts { get; set; }
+        public List<Goal> MyGoals { get; set; }
 
         #endregion
 
@@ -44,6 +46,7 @@ namespace BusinessLogic.User_Components
             {
                 MyCategories = new List<Category>();
                 MyAccounts = new List<Account>();
+                MyGoals = new List<Goal>();
             }
 
 
@@ -271,11 +274,9 @@ namespace BusinessLogic.User_Components
         {
             return MyAccounts;
         }
-
-
         #endregion
 
-        #region ModifyAccount
+        #region Modify Account
 
         public void ModifyAccount(Account accountToUpdate)
         {
@@ -354,7 +355,33 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        #endregion
+
+        #region Goal Management
+
+        #region AddGoal
+        public void AddGoal(Goal goalToAdd)
+        {
+            SettingGoalId(goalToAdd);
+            MyGoals.Add(goalToAdd);
+        }
+
+        private void SettingGoalId(Goal goalToAdd)
+        {
+            goalToAdd.GoalId = MyGoals.Count + 1;
+        }
 
         #endregion
+
+        #region Return of Goals
+        public List<Goal> GetGoals()
+        {
+            return MyGoals;
+        }
+        #endregion
+
+        #endregion
+
+
     }
 }
