@@ -44,6 +44,18 @@ namespace TestProject1
             Assert.AreEqual(exchangeHistoryExample, genericUser.MyExchangesHistory[0]);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
+        public void GivenAExchangeWhereItsDateHasBeenAlreadyUsed_ShouldThrowException()
+        {
+            DateTime date = new DateTime(2023 / 10 / 4);
+            ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
+            ExchangeHistory exchangeWithDateUsed = new ExchangeHistory(CurrencyEnum.USA, 45.9M, date);
+            genericUser.AddExchangeHistory(exchangeWithDateUsed);
+        }
+
         #endregion
     }
 }
