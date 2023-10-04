@@ -45,4 +45,17 @@ public class GoalManagementTests
     }
 
     #endregion
+
+    [TestMethod]
+    public void WhenAddingAGoal_ShouldSetAnId()
+    {
+        Category Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+        List<Category> categoriesOfGoal = new List<Category> { Food };
+        Goal myGoal = new Goal("Less Night", 5000, categoriesOfGoal);
+
+        genericUser.AddGoal(myGoal);
+
+        Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count);
+
+    }
 }
