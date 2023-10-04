@@ -21,10 +21,8 @@ namespace BusinessLogic.Goal_Components
         #endregion
 
         #region Constructor
-        public Goal()
-        {
-        }
-
+        public Goal() { }
+   
         public Goal(string title, int maxAmount,List<Category> categoriesAsignedToGoal)
         {
             Title = title;

@@ -145,7 +145,7 @@ public class GoalTests
 
         string title = "asa";
         int maxAmmount = -5;
-       
+        categoriesAsignedToGoal.Add(Food);
 
         Goal goalExample = new Goal(title,maxAmmount,categoriesAsignedToGoal);
 
