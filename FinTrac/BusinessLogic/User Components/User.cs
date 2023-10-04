@@ -372,7 +372,7 @@ namespace BusinessLogic.User_Components
 
         public List<Goal> GetGoals()
         {
-            throw new NotImplementedException();
+            return MyGoals;
         }
         #endregion
     }
