@@ -10,29 +10,33 @@ namespace TestProject1;
 public class ExchangeHistoryTests
 {
 
+    #region Initialize
+
+    private ExchangeHistory genericExchangeValue;
+    private CurrencyEnum currency;
+
     [TestInitialize]
 
     public void Initialize()
     {
 
-
+        genericExchangeValue = new ExchangeHistory();
+        currency = CurrencyEnum.USA;
     }
 
+    #endregion
 
+    #region Currency
     [TestMethod]
 
     public void GivenCurrency_ShouldBeSetted()
     {
-
-        CurrencyEnum currency = CurrencyEnum.USA; 
-
-        ExchangeHistory exchangeValue = new ExchangeHistory();
-
-        exchangeValue.Currency = currency;
-        
-        Assert.AreEqual(currency, exchangeValue.Currency);
+        genericExchangeValue.Currency = currency;
+        Assert.AreEqual(currency, genericExchangeValue.Currency);
     }
 
 
-    
+
+    #endregion
+
 }
