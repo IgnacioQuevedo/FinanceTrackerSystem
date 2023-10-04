@@ -12,7 +12,7 @@ namespace BusinessLogic.Goal_Components
     {
         #region Properties
         public string Title { get; set; } = "";
-        public int maxAmountToSpend { get; set; }
+        public int MaxAmountToSpend { get; set; }
 
         public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
 
@@ -29,7 +29,7 @@ namespace BusinessLogic.Goal_Components
         public Goal(string title, int maxAmount)
         {
             Title = title;
-            maxAmountToSpend = maxAmount;
+            MaxAmountToSpend = maxAmount;
             CategoriesOfGoal = new List<Category> { };
         }
 
@@ -55,7 +55,7 @@ namespace BusinessLogic.Goal_Components
 
         private void ValidateMaxAmmount()
         {
-            if (maxAmountToSpend < 0)
+            if (MaxAmountToSpend < 0)
             {
                 throw new ExceptionValidateGoal("Error on max ammount to spent, cannot be negative");
             }

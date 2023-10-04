@@ -108,12 +108,17 @@ public class GoalTests
 
     #endregion
 
+    #region Currency Of Ammount
     [TestMethod]
     public void GivenUyEnum_ShouldBeSetted()
     {
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myGoal.CurrencyOfAmount);
         Assert.IsTrue(belongToEnum);
     }
+
+    #endregion
+
+    #region Creation of Goal
 
     [TestMethod]
     public void GivenValuesToCreateGoal_ShouldBeCreated()
@@ -124,6 +129,8 @@ public class GoalTests
         Goal goalExample = new Goal(title,maxAmmount);
 
         Assert.AreEqual(goalExample.Title, title);
-        Assert.AreEqual(goalExample.maxAmountToSpend, maxAmmount);
+        Assert.AreEqual(goalExample.MaxAmountToSpend, maxAmmount);
     }
+
+    #endregion
 }
