@@ -75,10 +75,8 @@ public class ExchangeHistoryTests
     [TestMethod]
     public void GivenAValueDate_ShouldBeSetted()
     {
-
-        DateTime date = new DateTime(2023/8/4);
-        genericExchange.ValueDate = date;
-        Assert.AreEqual(date, genericExchange.ValueDate);
-
+        DateTime dateOfDollarValue = new DateTime(2023/8/4);
+        genericExchange.ValueDate = dateOfDollarValue;
+        Assert.AreEqual(dateOfDollarValue, genericExchange.ValueDate);
     }
 }
