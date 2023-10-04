@@ -13,10 +13,12 @@ namespace TestProject1;
 public class TransactionManagementTests
 {
     #region initializingAspects
+
     private User genericUser;
     private Category genericCategoryOutcome1;
     private Category genericCategoryOutcome2;
     private MonetaryAccount genericMonetaryAccount;
+    private CreditCardAccount genericCreditAccount;
     private Transaction genericTransactionOutcome;
     private Transaction genericTransactionOutcome2;
 
@@ -34,7 +36,10 @@ public class TransactionManagementTests
 
         genericMonetaryAccount = new MonetaryAccount("Saving Account", 1000, CurrencyEnum.UY);
 
+        genericCreditAccount = new CreditCardAccount("Credit Account", CurrencyEnum.UY, "Brou", "1233", 1000, DateTime.Now);
+
         genericUser.AddAccount(genericMonetaryAccount);
+        genericUser.AddAccount(genericCreditAccount);
 
         genericTransactionOutcome = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
 
@@ -47,7 +52,7 @@ public class TransactionManagementTests
     #region Add Transaction Tests
 
     [TestMethod]
-    public void GivenTransactionToAddToMonetaryAccount_ShouldBeAdded()
+    public void GivenTransactionToAddAccount_ShouldBeAdded()
     {
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome);
         Transaction transactionAdded = genericUser.MyAccounts[0].MyTransactions[0];
@@ -64,6 +69,17 @@ public class TransactionManagementTests
         MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
 
         Assert.AreEqual(previousAccountAmount - costOfTransaction, myMonetary.Ammount);
+    }
+
+    [TestMethod]
+    public void GivenTransactionToAddToCreditAccount_ShouldModifyAccountAmountCorrectly()
+    {
+        decimal previousAccountCredit = genericCreditAccount.AvailableCredit;
+        decimal costOfTransaction = genericTransactionOutcome.Amount;
+        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome);
+        CreditCardAccount myCreditCard = (CreditCardAccount)genericUser.MyAccounts[1];
+
+        Assert.AreEqual(previousAccountCredit - costOfTransaction, myCreditCard.AvailableCredit);
     }
 
     #endregion
