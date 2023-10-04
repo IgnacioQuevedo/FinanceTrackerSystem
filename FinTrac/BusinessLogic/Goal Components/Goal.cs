@@ -24,6 +24,12 @@ namespace BusinessLogic.Goal_Components
         {
             ValidateTitle();
             ValidateMaxAmmount();
+
+            if(CategoriesOfGoal.Count == 0)
+            {
+                throw new ExceptionValidateGoal("ERROR");
+            }
+
         }
 
         private void ValidateMaxAmmount()
