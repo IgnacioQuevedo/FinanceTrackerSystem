@@ -13,7 +13,7 @@ public class GoalTests
 {
 
     private string goalTitle;
-    private int maxAmmountToSpend;
+    private int maxAmountToSpend;
     private Goal myGoal;
     private User genericUser;
     private Category Food;
@@ -25,7 +25,7 @@ public class GoalTests
         myGoal = new Goal();
 
         goalTitle = "Less night";
-        maxAmmountToSpend = 0;
+        maxAmountToSpend = 0;
         myGoal.Title = goalTitle;
 
         genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
@@ -60,17 +60,17 @@ public class GoalTests
     public void GivenAMaxAmmountToSpend_ShouldBeSetted()
     {
         int maxAmmount = 1000;
-        myGoal.maxAmmountToSpend = maxAmmount;
+        myGoal.maxAmountToSpend = maxAmmount;
 
-        Assert.AreEqual(maxAmmount, myGoal.maxAmmountToSpend);
+        Assert.AreEqual(maxAmmount, myGoal.maxAmountToSpend);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateGoal))]
     public void SettingAMaxAmmountToSpendNegative_ShouldThrowException()
     {
-        maxAmmountToSpend = -999;
-        myGoal.maxAmmountToSpend = maxAmmountToSpend;
+        maxAmountToSpend = -999;
+        myGoal.maxAmountToSpend = maxAmountToSpend;
         myGoal.ValidateGoal();
     }
 
@@ -89,6 +89,23 @@ public class GoalTests
         myGoal.CategoriesOfGoal.Add(possibleCategoriesToUse[0]);
 
         Assert.AreEqual(Food, possibleCategoriesToUse[0]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateGoal))]
+
+    public void GivenNullCategories_ShouldThrowExceptionWhenTryingToApplyToOneOfThem()
+    {
+        
+        List<Category> possibleCategoriesToUse = genericUser.GetCategories();
+        genericUser.DeleteCategory(possibleCategoriesToUse[0]);
+
+        myGoal.CategoriesOfGoal = possibleCategoriesToUse;
+
+        myGoal.ValidateGoal();
+        
+
+
     }
 
     #endregion

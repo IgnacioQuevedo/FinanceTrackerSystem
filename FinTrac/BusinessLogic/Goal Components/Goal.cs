@@ -11,7 +11,7 @@ namespace BusinessLogic.Goal_Components
     {
         public string Title { get; set; } = "";
 
-        public int maxAmmountToSpend { get; set; }
+        public int maxAmountToSpend { get; set; }
 
         public List<Category> CategoriesOfGoal { get; set; }
 
@@ -24,12 +24,11 @@ namespace BusinessLogic.Goal_Components
         {
             ValidateTitle();
             ValidateMaxAmmount();
-
         }
 
         private void ValidateMaxAmmount()
         {
-            if (maxAmmountToSpend < 0)
+            if (maxAmountToSpend < 0)
             {
                 throw new ExceptionValidateGoal("Error on max ammount to spent, cannot be negative");
             }
