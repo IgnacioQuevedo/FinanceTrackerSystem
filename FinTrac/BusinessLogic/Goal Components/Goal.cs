@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
 
 namespace BusinessLogic.Goal_Components
@@ -12,6 +13,8 @@ namespace BusinessLogic.Goal_Components
         #region Properties
         public string Title { get; set; } = "";
         public int maxAmountToSpend { get; set; }
+
+        public CurrencyEnum Currency { get; set; } = CurrencyEnum.UY;
 
         public List<Category> CategoriesOfGoal { get; set; }
 
