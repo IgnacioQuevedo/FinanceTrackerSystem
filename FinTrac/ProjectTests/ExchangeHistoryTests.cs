@@ -82,6 +82,9 @@ public class ExchangeHistoryTests
     }
     #endregion
 
+
+    #region Constructor
+
     [TestMethod]
     public void GivenCorrectValues_ShouldBePossibleToCreateAnExchangeHistory()
     {
@@ -95,7 +98,19 @@ public class ExchangeHistoryTests
         Assert.AreEqual(valueDate, historyToday.ValueDate);
     }
 
+    [TestMethod]
+    [ExpectedException (typeof(ExceptionExchangeHistory))]
+
+    public void GivenIncorrectValues_ShouldThrowExcepton()
+    {
+        CurrencyEnum currency = CurrencyEnum.UY;
+        decimal exchangeValue = 38.5M;
+        DateTime valueDate = new DateTime(2023 / 10 / 4);
+
+        ExchangeHistory historyToday = new ExchangeHistory(currency, exchangeValue, valueDate);
+    }
 
 
 
+    #endregion
 }
