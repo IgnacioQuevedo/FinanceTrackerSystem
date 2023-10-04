@@ -119,12 +119,12 @@ public class TransactionManagementTests
 
     #region Get All lists test
     [TestMethod]
-    public void GivenNothing_ShouldReturnList()
+    public void GivenCallGet_ShouldReturnList()
     {
-        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
-        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
+        genericUser.MyAccounts[0].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome2);
 
-        Assert.AreEqual(genericUser.MyAccounts[1].MyTransactions, genericMonetaryAccount.GetAllTransactions());
+        Assert.AreEqual(genericUser.MyAccounts[0].MyTransactions, genericMonetaryAccount.GetAllTransactions());
     }
     #endregion
 
