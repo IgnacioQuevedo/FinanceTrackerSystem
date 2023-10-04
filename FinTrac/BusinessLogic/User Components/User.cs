@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Goal_Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -356,5 +357,11 @@ namespace BusinessLogic.User_Components
 
 
         #endregion
+
+        public void AddGoal(Goal goalToAdd)
+        {
+            throw new NotImplementedException();
+
+        }
     }
 }
