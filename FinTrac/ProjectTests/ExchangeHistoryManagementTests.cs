@@ -41,7 +41,7 @@ namespace TestProject1
             ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
-            Assert.AreEqual(exchangeHistoryExample, genericUser.MyExchangeHistory[0]);
+            Assert.AreEqual(exchangeHistoryExample, genericUser.MyExchangesHistory[0]);
         }
 
         #endregion

@@ -26,7 +26,7 @@ namespace BusinessLogic.User_Components
         public List<Category> MyCategories { get; set; }
         public List<Account> MyAccounts { get; set; }
         public List<Goal> MyGoals { get; set; }
-        public List<ExchangeHistory> MyExchangeHistory { get; set; }
+        public List<ExchangeHistory> MyExchangesHistory { get; set; }
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace BusinessLogic.User_Components
                 MyCategories = new List<Category>();
                 MyAccounts = new List<Account>();
                 MyGoals = new List<Goal>();
-                MyExchangeHistory = new List<ExchangeHistory>();
+                MyExchangesHistory = new List<ExchangeHistory>();
             }
 
 
@@ -388,7 +388,7 @@ namespace BusinessLogic.User_Components
         
         public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
         {
-            MyExchangeHistory.Add(exchangeHistoryToAdd);
+            MyExchangesHistory.Add(exchangeHistoryToAdd);
         }
 
     }
