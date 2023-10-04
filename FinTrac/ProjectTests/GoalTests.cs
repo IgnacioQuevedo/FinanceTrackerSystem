@@ -4,6 +4,7 @@ using BusinessLogic.Category_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Account_Components;
 
 
 namespace TestProject1;
@@ -106,4 +107,14 @@ public class GoalTests
     }
 
     #endregion
+
+    [TestMethod]
+    public void GivenUyEnum_ShouldBeSetted()
+    {
+
+        bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myGoal.CurrencyOfAmount);
+        Assert.IsTrue(belongToEnum);
+
+    }
+
 }

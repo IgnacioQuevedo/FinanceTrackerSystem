@@ -31,7 +31,6 @@ namespace BusinessLogic.Goal_Components
             ValidateTitle();
             ValidateMaxAmmount();
             ValidateAmountOfCategories();
-
         }
 
         private void ValidateAmountOfCategories()
