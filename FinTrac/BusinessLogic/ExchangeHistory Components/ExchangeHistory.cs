@@ -14,7 +14,7 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public decimal Value { get; set; }
 
-
+        public DateTime ValueDate { get;}
 
         #endregion
 

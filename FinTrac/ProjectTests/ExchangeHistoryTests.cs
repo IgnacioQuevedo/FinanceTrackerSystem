@@ -71,4 +71,14 @@ public class ExchangeHistoryTests
     }
 
     #endregion
+
+    [TestMethod]
+    public void GivenAValueDate_ShouldBeSetted()
+    {
+
+        DateTime date = new DateTime(2023/8/4);
+        genericExchange.ValueDate = date;
+        Assert.AreEqual(date, genericExchange.ValueDate);
+
+    }
 }
