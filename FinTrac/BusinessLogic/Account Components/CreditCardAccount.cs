@@ -12,7 +12,7 @@ namespace BusinessLogic.Account_Components
         #region Properties
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
-        public int AvailableCredit { get; set; }
+        public decimal AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
 
         #endregion

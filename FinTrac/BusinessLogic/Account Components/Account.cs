@@ -55,6 +55,13 @@ namespace BusinessLogic.Account_Components
             {
                 ManageAmount(transactionToBeAdded);
             }
+
+            if (transactionToBeAdded.Account is CreditCardAccount)
+            {
+                CreditCardAccount accountToBeUpdated = (CreditCardAccount)transactionToBeAdded.Account;
+
+                accountToBeUpdated.AvailableCredit = accountToBeUpdated.AvailableCredit - transactionToBeAdded.Amount;
+            }
             MyTransactions.Add(transactionToBeAdded);
         }
 

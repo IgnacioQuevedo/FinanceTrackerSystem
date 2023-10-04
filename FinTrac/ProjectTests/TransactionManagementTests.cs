@@ -19,7 +19,7 @@ public class TransactionManagementTests
     private Category genericCategoryOutcome2;
     private MonetaryAccount genericMonetaryAccount;
     private CreditCardAccount genericCreditAccount;
-    private Transaction genericTransactionOutcome;
+    private Transaction genericTransactionOutcome1;
     private Transaction genericTransactionOutcome2;
 
     [TestInitialize]
@@ -41,9 +41,9 @@ public class TransactionManagementTests
         genericUser.AddAccount(genericMonetaryAccount);
         genericUser.AddAccount(genericCreditAccount);
 
-        genericTransactionOutcome = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
+        genericTransactionOutcome1 = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
 
-        genericTransactionOutcome2 = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
+        genericTransactionOutcome2 = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericCreditAccount, genericUser.MyCategories);
 
     }
 
@@ -54,18 +54,18 @@ public class TransactionManagementTests
     [TestMethod]
     public void GivenTransactionToAddAccount_ShouldBeAdded()
     {
-        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome);
+        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
         Transaction transactionAdded = genericUser.MyAccounts[0].MyTransactions[0];
 
-        Assert.AreEqual(transactionAdded, genericTransactionOutcome);
+        Assert.AreEqual(transactionAdded, genericTransactionOutcome1);
     }
 
     [TestMethod]
     public void GivenTransactionToAddToMonetaryAccount_ShouldModifyAccountAmountCorrectly()
     {
         decimal previousAccountAmount = genericMonetaryAccount.Ammount;
-        decimal costOfTransaction = genericTransactionOutcome.Amount;
-        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome);
+        decimal costOfTransaction = genericTransactionOutcome1.Amount;
+        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
         MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
 
         Assert.AreEqual(previousAccountAmount - costOfTransaction, myMonetary.Ammount);
@@ -75,8 +75,8 @@ public class TransactionManagementTests
     public void GivenTransactionToAddToCreditAccount_ShouldModifyAccountAmountCorrectly()
     {
         decimal previousAccountCredit = genericCreditAccount.AvailableCredit;
-        decimal costOfTransaction = genericTransactionOutcome.Amount;
-        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome);
+        decimal costOfTransaction = genericTransactionOutcome2.Amount;
+        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
         CreditCardAccount myCreditCard = (CreditCardAccount)genericUser.MyAccounts[1];
 
         Assert.AreEqual(previousAccountCredit - costOfTransaction, myCreditCard.AvailableCredit);
