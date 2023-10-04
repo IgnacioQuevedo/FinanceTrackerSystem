@@ -71,17 +71,21 @@ namespace BusinessLogic.Account_Components
 
         public void ModifyTransaction(Transaction transactionToUpdate)
         {
-            int lengthOfTransactionList = MyTransactions.Count;
             bool flag = false;
 
-            for (int i = 0; i < lengthOfTransactionList && !flag; i++)
+            for (int i = 0; i < MyTransactions.Count && !flag; i++)
             {
-                if (MyTransactions[i].TransactionId == transactionToUpdate.TransactionId)
+                if (HaveSameId(transactionToUpdate, i))
                 {
                     MyTransactions[i] = transactionToUpdate;
                     flag = true;
                 }
             }
+        }
+
+        private bool HaveSameId(Transaction transactionToUpdate, int i)
+        {
+            return MyTransactions[i].TransactionId == transactionToUpdate.TransactionId;
         }
 
         #endregion
