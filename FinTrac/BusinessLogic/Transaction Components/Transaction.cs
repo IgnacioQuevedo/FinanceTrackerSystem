@@ -25,7 +25,7 @@ namespace BusinessLogic.Transaction_Components
 
         public List<Category> MyCategories { get; set; }
 
-
+        public int TransactionId { get; set; } = -1;
 
         #endregion
 

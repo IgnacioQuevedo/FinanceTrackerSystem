@@ -82,6 +82,15 @@ public class TransactionManagementTests
         Assert.AreEqual(previousAccountCredit - costOfTransaction, myCreditCard.AvailableCredit);
     }
 
+    [TestMethod]
+    public void GiventTransactionToAddToAccount_ShouldSetTransactionId()
+    {
+        int idShouldBe = 0;
+        genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
+        int idSetted = genericUser.MyAccounts[0].MyTransactions[0].TransactionId;
+        Assert.AreEqual(idShouldBe, idSetted);
+    }
+
     #endregion
 
 

@@ -15,6 +15,8 @@ namespace BusinessLogic.Account_Components
         public DateTime CreationDate { get; } = DateTime.Now.Date;
         public int AccountId { get; set; } = -1;
         public List<Transaction> MyTransactions { get; set; }
+
+
         #endregion
 
         #region Constructor
@@ -55,11 +57,11 @@ namespace BusinessLogic.Account_Components
             {
                 ManageAmount(transactionToBeAdded);
             }
-
             if (IsCreditAccount(transactionToBeAdded))
             {
                 ManageCredit(transactionToBeAdded);
             }
+
             MyTransactions.Add(transactionToBeAdded);
         }
 
