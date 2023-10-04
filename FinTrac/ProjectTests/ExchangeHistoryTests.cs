@@ -47,4 +47,17 @@ public class ExchangeHistoryTests
 
     #endregion
 
+    [TestMethod]
+
+    public void GivenExchangeValue_ShouldBeSetted()
+    {
+
+        decimal exchangeV = 40.5M;
+
+        genericExchange.Value = exchangeV;
+
+        Assert.AreEqual(exchangeV, genericExchange.Value);
+
+    }
+
 }
