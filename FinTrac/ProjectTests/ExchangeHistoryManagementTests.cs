@@ -24,12 +24,7 @@ namespace TestProject1
             User genericUser = new User(firstName, lastName, email, password, address);
 
             genericUser.AddExchangeHistory(exchangeHistoryExample);
+            Assert.AreEqual(exchangeHistoryExample, genericUser.MyExchangeHistory[0]);
         }
-
-
-
-
-
-
     }
 }
