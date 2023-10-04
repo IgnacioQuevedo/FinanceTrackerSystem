@@ -11,5 +11,15 @@ namespace BusinessLogic.ExchangeHistory_Components
     {
         public CurrencyEnum Currency { get; set; }
 
+
+
+
+
+        public void ValidateExchange()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
