@@ -90,6 +90,15 @@ namespace BusinessLogic.Account_Components
 
         #endregion
 
+        #region Get All Transactions
+
+        public List<Transaction> GetAllTransactions()
+        {
+            return MyTransactions;
+        }
+
+        #endregion
+
         #endregion
 
     }

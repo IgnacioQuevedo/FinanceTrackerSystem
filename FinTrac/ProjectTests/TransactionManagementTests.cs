@@ -113,11 +113,19 @@ public class TransactionManagementTests
         genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
 
         Assert.AreEqual(modifiedTransaction, genericUser.MyAccounts[1].MyTransactions[0]);
-
-
-
     }
 
+    #endregion
+
+    #region Get All lists test
+    [TestMethod]
+    public void GivenNothing_ShouldReturnList()
+    {
+        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
+
+        Assert.AreEqual(genericUser.MyAccounts[1].MyTransactions, genericMonetaryAccount.GetAllTransactions());
+    }
     #endregion
 
 
