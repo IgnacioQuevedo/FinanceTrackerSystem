@@ -51,19 +51,49 @@ namespace BusinessLogic.Account_Components
 
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            if (transactionToBeAdded.Account is MonetaryAccount)
+            if (IsMonetaryAccount(transactionToBeAdded))
             {
-                MonetaryAccount accountToBeUpdated = (MonetaryAccount)transactionToBeAdded.Account;
-                if (transactionToBeAdded.Type is Category_Components.TypeEnum.Outcome)
-                {
-                    accountToBeUpdated.Ammount = accountToBeUpdated.Ammount - transactionToBeAdded.Amount;
-                }
-                if (transactionToBeAdded.Type is Category_Components.TypeEnum.Income)
-                {
-                    accountToBeUpdated.Ammount = accountToBeUpdated.Ammount + transactionToBeAdded.Amount;
-                }
+                ManageAmount(transactionToBeAdded);
             }
             MyTransactions.Add(transactionToBeAdded);
+        }
+
+        private static void ManageAmount(Transaction transactionToBeAdded)
+        {
+            MonetaryAccount accountToBeUpdated = (MonetaryAccount)transactionToBeAdded.Account;
+            if (IsOutcome(transactionToBeAdded))
+            {
+                DecreaseAmount(transactionToBeAdded, accountToBeUpdated);
+            }
+            else if (IsIncome(transactionToBeAdded))
+            {
+                IncreaseAmount(transactionToBeAdded, accountToBeUpdated);
+            }
+        }
+
+        private static bool IsMonetaryAccount(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Account is MonetaryAccount;
+        }
+
+        private static bool IsIncome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type is Category_Components.TypeEnum.Income;
+        }
+
+        private static bool IsOutcome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type is Category_Components.TypeEnum.Outcome;
+        }
+
+        private static void DecreaseAmount(Transaction transactionToBeAdded, MonetaryAccount accountToBeUpdated)
+        {
+            accountToBeUpdated.Ammount = accountToBeUpdated.Ammount - transactionToBeAdded.Amount;
+        }
+
+        private static void IncreaseAmount(Transaction transactionToBeAdded, MonetaryAccount accountToBeUpdated)
+        {
+            accountToBeUpdated.Ammount = accountToBeUpdated.Ammount + transactionToBeAdded.Amount;
         }
 
         #endregion
