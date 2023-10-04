@@ -24,6 +24,7 @@ namespace BusinessLogic.User_Components
         public string? Address { get; set; }
         public List<Category> MyCategories { get; set; }
         public List<Account> MyAccounts { get; set; }
+        public List<Goal> MyGoals { get; set; }
 
         #endregion
 
@@ -45,6 +46,7 @@ namespace BusinessLogic.User_Components
             {
                 MyCategories = new List<Category>();
                 MyAccounts = new List<Account>();
+                MyGoals = new List<Goal>();
             }
 
 
@@ -360,8 +362,7 @@ namespace BusinessLogic.User_Components
 
         public void AddGoal(Goal goalToAdd)
         {
-            throw new NotImplementedException();
-
+            MyGoals.Add(goalToAdd);
         }
     }
 }

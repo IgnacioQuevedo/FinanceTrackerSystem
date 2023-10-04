@@ -36,10 +36,12 @@ public class GoalManagementTests
         Category Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
         List<Category> categoriesOfGoal = new List<Category>();
         categoriesOfGoal.Add(Food); 
+        int numberOfGoalsBeforeAdding = genericUser.MyGoals.Count;
 
         Goal myGoal = new Goal("Less Night",5000, categoriesOfGoal);
         genericUser.AddGoal(myGoal);
 
+        Assert.AreEqual(numberOfGoalsBeforeAdding + 1, genericUser.MyGoals.Count);
 
     }
 }
