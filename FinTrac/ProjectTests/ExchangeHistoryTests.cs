@@ -51,12 +51,11 @@ public class ExchangeHistoryTests
 
     public void GivenExchangeValue_ShouldBeSetted()
     {
+        decimal exchangeValue = 40.5M;
 
-        decimal exchangeV = 40.5M;
+        genericExchange.Value = exchangeValue;
 
-        genericExchange.Value = exchangeV;
-
-        Assert.AreEqual(exchangeV, genericExchange.Value);
+        Assert.AreEqual(exchangeValue, genericExchange.Value);
 
     }
 
