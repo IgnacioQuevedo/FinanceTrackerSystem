@@ -82,6 +82,7 @@ public class ExchangeHistoryTests
     }
     #endregion
 
+    [TestMethod]
     public void GivenCorrectValues_ShouldBePossibleToCreateAnExchangeHistory()
     {
         CurrencyEnum currency = CurrencyEnum.USA;
@@ -90,7 +91,7 @@ public class ExchangeHistoryTests
 
         ExchangeHistory historyToday = new ExchangeHistory(currency,exchangeValue,valueDate);
         Assert.AreEqual(currency, historyToday.Currency);
-        Assert.AreEqual(exchangeValue, historyToday.ValueDate);
+        Assert.AreEqual(exchangeValue, historyToday.Value);
         Assert.AreEqual(valueDate, historyToday.ValueDate);
     }
 
