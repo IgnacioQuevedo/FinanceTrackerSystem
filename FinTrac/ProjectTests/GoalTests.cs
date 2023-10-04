@@ -111,10 +111,16 @@ public class GoalTests
     [TestMethod]
     public void GivenUyEnum_ShouldBeSetted()
     {
-
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myGoal.CurrencyOfAmount);
         Assert.IsTrue(belongToEnum);
-
     }
 
+    [TestMethod]
+    public void GivenValuesToCreateGoal_ShouldBeCreated()
+    {
+        string title = "Outcomes";
+        int maxAmmount = 1000;
+
+        Goal goalExample = new Goal(title,maxAmmount);
+    }
 }
