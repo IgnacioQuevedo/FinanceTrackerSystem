@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Account_Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace BusinessLogic.ExchangeHistory_Components
 {
     public class ExchangeHistory
     {
-
+        public CurrencyEnum Currency { get; set; }
 
     }
 }

@@ -20,15 +20,17 @@ public class ExchangeHistoryTests
 
 
     [TestMethod]
-    public void GivenBadge_ShouldBeSetted()
+
+    public void GivenCurrency_ShouldBeSetted()
     {
 
-        CurrencyEnum currency = CurrencyEnum.USA;
+        CurrencyEnum currency = CurrencyEnum.USA; 
 
         ExchangeHistory exchangeValue = new ExchangeHistory();
 
         exchangeValue.Currency = currency;
-
+        
+        Assert.AreEqual(currency, exchangeValue.Currency);
     }
 
 
