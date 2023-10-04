@@ -12,7 +12,7 @@ public class ExchangeHistoryTests
 
     #region Initialize
 
-    private ExchangeHistory genericExchangeValue;
+    private ExchangeHistory genericExchange;
     private CurrencyEnum currency;
 
     [TestInitialize]
@@ -20,7 +20,7 @@ public class ExchangeHistoryTests
     public void Initialize()
     {
 
-        genericExchangeValue = new ExchangeHistory();
+        genericExchange = new ExchangeHistory();
         currency = CurrencyEnum.USA;
     }
 
@@ -31,8 +31,8 @@ public class ExchangeHistoryTests
 
     public void GivenCurrency_ShouldBeSetted()
     {
-        genericExchangeValue.Currency = currency;
-        Assert.AreEqual(currency, genericExchangeValue.Currency);
+        genericExchange.Currency = currency;
+        Assert.AreEqual(currency, genericExchange.Currency);
     }
 
     [TestMethod]
@@ -40,8 +40,8 @@ public class ExchangeHistoryTests
     
     public void GivenCurrencyThatItIsNotDollar_ShouldThrowException()
     {
-        genericExchangeValue.Currency = CurrencyEnum.UY;
-        genericExchangeValue.ValidateExchange();
+        genericExchange.Currency = CurrencyEnum.UY;
+        genericExchange.ValidateExchange();
     }
 
 
