@@ -28,9 +28,7 @@ namespace BusinessLogic.Goal_Components
             Title = title;
             MaxAmountToSpend = maxAmount;
             CategoriesOfGoal = categoriesAsignedToGoal;
-            ValidateTitle();
-            ValidateMaxAmmount();
-            ValidateAmountOfCategories();
+            ValidateGoal();
         }
 
         #endregion

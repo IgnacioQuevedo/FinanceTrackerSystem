@@ -147,7 +147,7 @@ public class GoalTests
     public void GivenIncorrectValuesToCreate_ShouldThrowException()
     {
 
-        string title = "asa";
+        string title = "Less hang outs";
         int maxAmmount = -5;
         categoriesAsignedToGoal.Add(Food);
 
