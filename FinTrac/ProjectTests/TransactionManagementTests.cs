@@ -127,6 +127,4 @@ public class TransactionManagementTests
         Assert.AreEqual(genericUser.MyAccounts[0].MyTransactions, genericMonetaryAccount.GetAllTransactions());
     }
     #endregion
-
-
 }
