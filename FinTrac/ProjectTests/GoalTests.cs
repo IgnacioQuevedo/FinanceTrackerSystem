@@ -132,5 +132,18 @@ public class GoalTests
         Assert.AreEqual(goalExample.MaxAmountToSpend, maxAmmount);
     }
 
-   #endregion
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateGoal))]
+
+    public void GivenIncorrectValuesToCreate_ShouldThrowException()
+    {
+
+        string title = "";
+        int maxAmmount = -5;
+
+        Goal goalExample = new Goal(title,maxAmmount);
+
+    }
+
+    #endregion
 }
