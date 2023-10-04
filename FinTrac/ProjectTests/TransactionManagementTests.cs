@@ -50,7 +50,9 @@ public class TransactionManagementTests
     public void GivenTransactionToAddToMonetaryAccount_ShouldBeAdded()
     {
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome);
-        Assert.AreEqual(genericUser.MyAccounts[0].MyTransactions[0], genericTransactionOutcome);
+        Transaction transactionAdded = genericUser.MyAccounts[0].MyTransactions[0];
+
+        Assert.AreEqual(transactionAdded, genericTransactionOutcome);
     }
 
     #endregion
