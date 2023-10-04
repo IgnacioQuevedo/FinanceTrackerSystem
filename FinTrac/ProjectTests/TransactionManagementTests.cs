@@ -107,7 +107,7 @@ public class TransactionManagementTests
         modifiedListOfCategories.Add(genericCategoryOutcome1);
 
         Transaction modifiedTransaction = new Transaction("Payment of food", 100, CurrencyEnum.USA, TypeEnum.Outcome, genericCreditAccount, genericUser.MyCategories);
-
+        modifiedTransaction.TransactionId = 0;
 
         genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
 
