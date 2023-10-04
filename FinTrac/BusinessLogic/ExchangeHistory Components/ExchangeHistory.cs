@@ -17,7 +17,10 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public void ValidateExchange()
         {
-            throw new NotImplementedException();
+            if(Currency != CurrencyEnum.USA)
+            {
+                throw new ExceptionExchangeHistory("Only dollar currency is allowed");
+            }
         }
 
 
