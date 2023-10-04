@@ -61,7 +61,7 @@ namespace BusinessLogic.Account_Components
             {
                 ManageCredit(transactionToBeAdded);
             }
-
+            transactionToBeAdded.TransactionId = MyTransactions.Count;
             MyTransactions.Add(transactionToBeAdded);
         }
 
