@@ -6,6 +6,8 @@ using System.Runtime.ExceptionServices;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Account_Components;
 using Microsoft.VisualBasic;
+using System.Timers;
+using System.Xml;
 
 namespace TestProject1;
 
@@ -28,9 +30,9 @@ public class GoalManagementTests
 
     #endregion
 
-    [TestMethod]
 
     #region Add Goal
+    [TestMethod]
     public void GivenCorrectGoal_ShouldBePossibleToAddIt()
     {
         Category Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
@@ -60,6 +62,16 @@ public class GoalManagementTests
         Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count);
 
     }
-        
+
     #endregion
+
+    #region Return Goals
+
+    [TestMethod]
+    public void ShouldBePossibleToReturnList()
+    {
+        Assert.AreEqual(genericUser.MyGoals, genericUser.GetGoals());
+    }
+    #endregion
+
 }
