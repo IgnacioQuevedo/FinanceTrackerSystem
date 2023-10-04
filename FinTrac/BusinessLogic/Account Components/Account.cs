@@ -49,10 +49,9 @@ namespace BusinessLogic.Account_Components
 
         #region Transactions Management
 
-        public void AddTransaction(Transaction transactionToAdd)
+        public void AddTransaction(Transaction t)
         {
-
-
+            MyTransactions.Add(t);
         }
 
         #endregion
