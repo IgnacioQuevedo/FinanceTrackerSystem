@@ -16,24 +16,24 @@ namespace BusinessLogic.Goal_Components
 
         public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
 
-        public List<Category> CategoriesOfGoal { get; set; }
+        public List<Category> CategoriesOfGoal { get; set; } 
 
         #endregion
 
         #region Constructor
         public Goal()
         {
-            CategoriesOfGoal = new List<Category>();
         }
 
-        public Goal(string title, int maxAmount)
+        public Goal(string title, int maxAmount,List<Category> categoriesAsignedToGoal)
         {
             Title = title;
             MaxAmountToSpend = maxAmount;
-            CategoriesOfGoal = new List<Category> { };
+            CategoriesOfGoal = categoriesAsignedToGoal;
+            ValidateTitle();
+            ValidateMaxAmmount();
+            ValidateAmountOfCategories();
         }
-
-
 
         #endregion
 

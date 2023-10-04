@@ -18,6 +18,7 @@ public class GoalTests
     private Goal myGoal;
     private User genericUser;
     private Category Food;
+    private List<Category> categoriesAsignedToGoal;
 
     [TestInitialize]
 
@@ -32,6 +33,9 @@ public class GoalTests
         genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
         Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
         genericUser.AddCategory(Food);
+
+        categoriesAsignedToGoal = new List<Category>();
+        
 
     }
 
@@ -85,11 +89,10 @@ public class GoalTests
 
     public void GivenCategories_ShouldBePossibleToAsignThemAGoal()
     {
-        List<Category> possibleCategoriesToUse = genericUser.GetCategories();
+        myGoal.CategoriesOfGoal = categoriesAsignedToGoal;
+        categoriesAsignedToGoal.Add(Food);
 
-        myGoal.CategoriesOfGoal.Add(possibleCategoriesToUse[0]);
-
-        Assert.AreEqual(Food, possibleCategoriesToUse[0]);
+        Assert.AreEqual(Food, categoriesAsignedToGoal[0]);
     }
 
     [TestMethod]
@@ -125,8 +128,10 @@ public class GoalTests
     {
         string title = "Outcomes";
         int maxAmmount = 1000;
+        categoriesAsignedToGoal.Add(Food);
 
-        Goal goalExample = new Goal(title,maxAmmount);
+        Goal goalExample = new Goal(title,maxAmmount,categoriesAsignedToGoal);
+        
 
         Assert.AreEqual(goalExample.Title, title);
         Assert.AreEqual(goalExample.MaxAmountToSpend, maxAmmount);
@@ -138,10 +143,11 @@ public class GoalTests
     public void GivenIncorrectValuesToCreate_ShouldThrowException()
     {
 
-        string title = "";
+        string title = "asa";
         int maxAmmount = -5;
+       
 
-        Goal goalExample = new Goal(title,maxAmmount);
+        Goal goalExample = new Goal(title,maxAmmount,categoriesAsignedToGoal);
 
     }
 
