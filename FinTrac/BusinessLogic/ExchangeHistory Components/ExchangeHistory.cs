@@ -25,6 +25,9 @@ namespace BusinessLogic.ExchangeHistory_Components
             Currency = currency;
             Value = value;
             ValueDate = valueDate;
+
+            ValidateCurrencyIsDollar();
+            ValidateValueNumber();
         }
 
 
