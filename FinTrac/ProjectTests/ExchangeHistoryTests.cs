@@ -47,6 +47,8 @@ public class ExchangeHistoryTests
 
     #endregion
 
+    #region Value
+
     [TestMethod]
 
     public void GivenExchangeValue_ShouldBeSetted()
@@ -68,4 +70,5 @@ public class ExchangeHistoryTests
         genericExchange.ValidateExchange();
     }
 
+    #endregion
 }

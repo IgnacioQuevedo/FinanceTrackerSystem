@@ -22,7 +22,12 @@ namespace BusinessLogic.ExchangeHistory_Components
         public void ValidateExchange()
         {
             ValidateCurrencyIsDollar();
-            if(Value < 0)
+            ValidateValueNumber();
+        }
+        #region Validate Exchange Auxiliaries
+        private void ValidateValueNumber()
+        {
+            if (Value < 0)
             {
                 throw new ExceptionExchangeHistory("Dollar value must be a positive number");
             }
@@ -35,6 +40,8 @@ namespace BusinessLogic.ExchangeHistory_Components
                 throw new ExceptionExchangeHistory("Only dollar currency is allowed");
             }
         }
+        #endregion
+
 
         #endregion
     }
