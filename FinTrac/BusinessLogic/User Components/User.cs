@@ -274,11 +274,9 @@ namespace BusinessLogic.User_Components
         {
             return MyAccounts;
         }
-
-
         #endregion
 
-        #region ModifyAccount
+        #region Modify Account
 
         public void ModifyAccount(Account accountToUpdate)
         {
@@ -357,23 +355,26 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-
         #endregion
 
         #region Goal Management
 
-
+        #region AddGoal
         public void AddGoal(Goal goalToAdd)
         {
             goalToAdd.GoalId = MyGoals.Count + 1;
             MyGoals.Add(goalToAdd);
         }
 
+        #endregion
 
+        #region Return of Goals
         public List<Goal> GetGoals()
         {
             return MyGoals;
         }
+        #endregion
+
         #endregion
     }
 }
