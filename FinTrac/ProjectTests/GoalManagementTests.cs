@@ -60,6 +60,6 @@ public class GoalManagementTests
         Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count);
 
     }
-
+        
     #endregion
 }
