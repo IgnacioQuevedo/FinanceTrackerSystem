@@ -38,6 +38,8 @@ namespace BusinessLogic.Account_Components
 
         #endregion
 
+        public abstract void UpdateAccountMoney(Transaction transactionToBeAdded);
+
         #region Validate Account
         public bool ValidateAccount()
         {
@@ -49,18 +51,11 @@ namespace BusinessLogic.Account_Components
         }
         #endregion
 
-        #region Transactions Management
+        #region Transaction Management
 
+        #region Add Transaction
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            if (IsMonetaryAccount(transactionToBeAdded))
-            {
-                ManageAmount(transactionToBeAdded);
-            }
-            if (IsCreditAccount(transactionToBeAdded))
-            {
-                ManageCredit(transactionToBeAdded);
-            }
             SetTransactionId(transactionToBeAdded);
             MyTransactions.Add(transactionToBeAdded);
         }
@@ -69,56 +64,7 @@ namespace BusinessLogic.Account_Components
         {
             transactionToBeAdded.TransactionId = MyTransactions.Count;
         }
-
-        private static void ManageCredit(Transaction transactionToBeAdded)
-        {
-            CreditCardAccount accountToBeUpdated = (CreditCardAccount)transactionToBeAdded.Account;
-
-            accountToBeUpdated.AvailableCredit = accountToBeUpdated.AvailableCredit - transactionToBeAdded.Amount;
-        }
-
-        private static bool IsCreditAccount(Transaction transactionToBeAdded)
-        {
-            return transactionToBeAdded.Account is CreditCardAccount;
-        }
-
-        private static void ManageAmount(Transaction transactionToBeAdded)
-        {
-            MonetaryAccount accountToBeUpdated = (MonetaryAccount)transactionToBeAdded.Account;
-            if (IsOutcome(transactionToBeAdded))
-            {
-                DecreaseAmount(transactionToBeAdded, accountToBeUpdated);
-            }
-            else if (IsIncome(transactionToBeAdded))
-            {
-                IncreaseAmount(transactionToBeAdded, accountToBeUpdated);
-            }
-        }
-
-        private static bool IsMonetaryAccount(Transaction transactionToBeAdded)
-        {
-            return transactionToBeAdded.Account is MonetaryAccount;
-        }
-
-        private static bool IsIncome(Transaction transactionToBeAdded)
-        {
-            return transactionToBeAdded.Type is Category_Components.TypeEnum.Income;
-        }
-
-        private static bool IsOutcome(Transaction transactionToBeAdded)
-        {
-            return transactionToBeAdded.Type is Category_Components.TypeEnum.Outcome;
-        }
-
-        private static void DecreaseAmount(Transaction transactionToBeAdded, MonetaryAccount accountToBeUpdated)
-        {
-            accountToBeUpdated.Ammount = accountToBeUpdated.Ammount - transactionToBeAdded.Amount;
-        }
-
-        private static void IncreaseAmount(Transaction transactionToBeAdded, MonetaryAccount accountToBeUpdated)
-        {
-            accountToBeUpdated.Ammount = accountToBeUpdated.Ammount + transactionToBeAdded.Amount;
-        }
+        #endregion
 
         #endregion
 

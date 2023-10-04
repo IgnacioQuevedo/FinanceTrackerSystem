@@ -65,6 +65,7 @@ public class TransactionManagementTests
     {
         decimal previousAccountAmount = genericMonetaryAccount.Ammount;
         decimal costOfTransaction = genericTransactionOutcome1.Amount;
+        genericUser.MyAccounts[0].UpdateAccountMoney(genericTransactionOutcome1);
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
         MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
 
@@ -76,6 +77,7 @@ public class TransactionManagementTests
     {
         decimal previousAccountCredit = genericCreditAccount.AvailableCredit;
         decimal costOfTransaction = genericTransactionOutcome2.Amount;
+        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
         genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
         CreditCardAccount myCreditCard = (CreditCardAccount)genericUser.MyAccounts[1];
 

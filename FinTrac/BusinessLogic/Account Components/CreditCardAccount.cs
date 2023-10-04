@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Transaction_Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,6 +94,11 @@ namespace BusinessLogic.Account_Components
                 }
             }
             return true;
+        }
+
+        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        {
+            AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
         }
         #endregion
 
