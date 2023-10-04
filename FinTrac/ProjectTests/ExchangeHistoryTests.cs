@@ -37,7 +37,7 @@ public class ExchangeHistoryTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionExchangeHistory))]
-    
+
     public void GivenCurrencyThatItIsNotDollar_ShouldThrowException()
     {
         genericExchange.Currency = CurrencyEnum.UY;
@@ -57,6 +57,15 @@ public class ExchangeHistoryTests
 
         Assert.AreEqual(exchangeValue, genericExchange.Value);
 
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionExchangeHistory))]
+    public void GivenExchangeNegativeValue_ShouldThrowException()
+    {
+        genericExchange.Currency = CurrencyEnum.USA;
+        genericExchange.Value = -38.9M;
+        genericExchange.ValidateExchange();
     }
 
 }
