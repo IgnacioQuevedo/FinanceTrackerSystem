@@ -61,9 +61,9 @@ public class GoalTests
     public void GivenAMaxAmmountToSpend_ShouldBeSetted()
     {
         int maxAmmount = 1000;
-        myGoal.maxAmountToSpend = maxAmmount;
+        myGoal.MaxAmountToSpend = maxAmmount;
 
-        Assert.AreEqual(maxAmmount, myGoal.maxAmountToSpend);
+        Assert.AreEqual(maxAmmount, myGoal.MaxAmountToSpend);
     }
 
     [TestMethod]
@@ -71,7 +71,7 @@ public class GoalTests
     public void SettingAMaxAmmountToSpendNegative_ShouldThrowException()
     {
         maxAmountToSpend = -999;
-        myGoal.maxAmountToSpend = maxAmountToSpend;
+        myGoal.MaxAmountToSpend = maxAmountToSpend;
         myGoal.ValidateGoal();
     }
 
@@ -132,5 +132,5 @@ public class GoalTests
         Assert.AreEqual(goalExample.MaxAmountToSpend, maxAmmount);
     }
 
-    #endregion
+   #endregion
 }
