@@ -22,6 +22,10 @@ namespace BusinessLogic.ExchangeHistory_Components
         public void ValidateExchange()
         {
             ValidateCurrencyIsDollar();
+            if(Value < 0)
+            {
+                throw new ExceptionExchangeHistory("Dollar value must be a positive number");
+            }
         }
 
         private void ValidateCurrencyIsDollar()
