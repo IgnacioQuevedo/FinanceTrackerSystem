@@ -72,6 +72,7 @@ public class ExchangeHistoryTests
 
     #endregion
 
+    #region Date of Value
     [TestMethod]
     public void GivenAValueDate_ShouldBeSetted()
     {
@@ -79,4 +80,21 @@ public class ExchangeHistoryTests
         genericExchange.ValueDate = dateOfDollarValue;
         Assert.AreEqual(dateOfDollarValue, genericExchange.ValueDate);
     }
+    #endregion
+
+    public void GivenCorrectValues_ShouldBePossibleToCreateAnExchangeHistory()
+    {
+        CurrencyEnum currency = CurrencyEnum.USA;
+        decimal exchangeValue = 38.5M;
+        DateTime valueDate = new DateTime(2023/10/4);
+
+        ExchangeHistory historyToday = new ExchangeHistory(currency,exchangeValue,valueDate);
+        Assert.AreEqual(currency, historyToday.Currency);
+        Assert.AreEqual(exchangeValue, historyToday.ValueDate);
+        Assert.AreEqual(valueDate, historyToday.ValueDate);
+    }
+
+
+
+
 }
