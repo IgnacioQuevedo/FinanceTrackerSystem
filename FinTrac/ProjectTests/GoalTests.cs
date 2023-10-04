@@ -13,6 +13,8 @@ namespace TestProject1;
 public class GoalTests
 {
 
+    #region Init Section
+
     private string goalTitle;
     private int maxAmountToSpend;
     private Goal myGoal;
@@ -38,6 +40,8 @@ public class GoalTests
         
 
     }
+
+    #endregion
 
     #region Goal Title
     [TestMethod]
