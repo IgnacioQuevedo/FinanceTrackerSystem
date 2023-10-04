@@ -360,9 +360,13 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        #region Goal Management
+
         public void AddGoal(Goal goalToAdd)
         {
             MyGoals.Add(goalToAdd);
         }
+
+        #endregion
     }
 }

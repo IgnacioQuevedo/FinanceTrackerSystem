@@ -16,32 +16,33 @@ public class GoalManagementTests
     #region Init Section
 
     private User genericUser;
-
+    private int numberOfGoalsBeforeAdding;
 
     [TestInitialize]
 
     public void Init()
     {
         genericUser = new User("Austin", "Ford", "austinFord@gmail.com", "AustinF2003", "NW 2nd Ave");
-
+        numberOfGoalsBeforeAdding = 0;
     }
 
     #endregion
 
     [TestMethod]
 
+    #region Add Goal
     public void GivenCorrectGoal_ShouldBePossibleToAddIt()
     {
-
         Category Food = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-        List<Category> categoriesOfGoal = new List<Category>();
-        categoriesOfGoal.Add(Food); 
-        int numberOfGoalsBeforeAdding = genericUser.MyGoals.Count;
+        List<Category> categoriesOfGoal = new List<Category> {Food};
+
+        numberOfGoalsBeforeAdding = genericUser.MyGoals.Count;
 
         Goal myGoal = new Goal("Less Night",5000, categoriesOfGoal);
         genericUser.AddGoal(myGoal);
 
         Assert.AreEqual(numberOfGoalsBeforeAdding + 1, genericUser.MyGoals.Count);
-
     }
+
+    #endregion
 }
