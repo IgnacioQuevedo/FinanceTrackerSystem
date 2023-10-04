@@ -46,6 +46,8 @@ public class GoalManagementTests
 
     #endregion
 
+    #region Setting An Id
+
     [TestMethod]
     public void WhenAddingAGoal_ShouldSetAnId()
     {
@@ -58,4 +60,6 @@ public class GoalManagementTests
         Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count);
 
     }
+
+    #endregion
 }
