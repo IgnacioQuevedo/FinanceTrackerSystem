@@ -26,6 +26,15 @@ namespace BusinessLogic.Goal_Components
             CategoriesOfGoal = new List<Category>();
         }
 
+        public Goal(string title, int maxAmount)
+        {
+            Title = title;
+            maxAmountToSpend = maxAmount;
+            CategoriesOfGoal = new List<Category> { };
+        }
+
+
+
         #endregion
 
         #region Validations

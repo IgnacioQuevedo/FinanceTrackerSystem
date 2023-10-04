@@ -122,5 +122,8 @@ public class GoalTests
         int maxAmmount = 1000;
 
         Goal goalExample = new Goal(title,maxAmmount);
+
+        Assert.AreEqual(goalExample.Title, title);
+        Assert.AreEqual(goalExample.maxAmountToSpend, maxAmmount);
     }
 }
