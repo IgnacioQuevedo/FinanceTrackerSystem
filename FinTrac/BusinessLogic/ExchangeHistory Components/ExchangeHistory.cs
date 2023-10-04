@@ -12,6 +12,8 @@ namespace BusinessLogic.ExchangeHistory_Components
         #region Properties
         public CurrencyEnum Currency { get; set; }
 
+        public decimal Value { get; set; }
+
 
 
         #endregion
