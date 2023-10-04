@@ -17,6 +17,7 @@ public class TransactionTests
     private Transaction genericTransaction;
     private CreditCardAccount myCreditCardAccount;
     private Category genericCategory;
+    private Category genericCategory2;
     private MonetaryAccount genericMonetaryAccount;
     private User genericUser;
 
@@ -27,6 +28,11 @@ public class TransactionTests
         StatusEnum statusCategory = StatusEnum.Enabled;
         TypeEnum typeCategory = TypeEnum.Income;
         genericCategory = new Category(nameCategory, statusCategory, typeCategory);
+
+        string name2 = "Food";
+        StatusEnum status2 = StatusEnum.Enabled;
+        TypeEnum type2 = TypeEnum.Outcome;
+        genericCategory2 = new Category(name2, status2, type2);
 
         genericTransaction = new Transaction();
         genericTransaction.Title = "Title";
@@ -54,7 +60,6 @@ public class TransactionTests
         string password = "Austin1980";
         string address = "East 25 Av";
         genericUser = new User(firstName, lastName, email, password, address);
-
         genericUser.MyCategories.Add(genericCategory);
     }
     #endregion
@@ -135,13 +140,8 @@ public class TransactionTests
     [TestMethod]
     public void GivenMonetaryAccount_ShouldBeSetted()
     {
-        MonetaryAccount myMonetaryAccount = new MonetaryAccount();
-        myMonetaryAccount.Name = "Scotia Saving Bank";
-        myMonetaryAccount.Currency = CurrencyEnum.UY;
-        myMonetaryAccount.Ammount = 10;
-
-        genericTransaction.Account = myMonetaryAccount;
-        Assert.AreEqual(genericTransaction.Account, myMonetaryAccount);
+        genericTransaction.Account = genericMonetaryAccount;
+        Assert.AreEqual(genericTransaction.Account, genericMonetaryAccount);
 
     }
 
@@ -168,13 +168,7 @@ public class TransactionTests
     [TestMethod]
     public void GivenCorrectListToValidate_ShouldNotThrowException()
     {
-        string name = "Business";
-        StatusEnum status = StatusEnum.Enabled;
-        TypeEnum type = TypeEnum.Income;
-        Category categoryToBeAdded = new Category(name, status, type);
-
-        genericUser.MyCategories.Add(categoryToBeAdded);
-
+        genericUser.MyCategories.Add(genericCategory);
         genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
@@ -183,16 +177,12 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenListWithDisabledCategory_ShouldThrowException()
     {
-        string name = "Business One";
-        StatusEnum status = StatusEnum.Enabled;
-        TypeEnum type = TypeEnum.Income;
-        Category categoryToBeAdded = new Category(name, status, type);
-
         string name2 = "Business Two";
         StatusEnum status2 = StatusEnum.Disabled;
-        Category categoryToBeAdded2 = new Category(name2, status2, type);
+        TypeEnum type2 = TypeEnum.Income;
+        Category categoryToBeAdded2 = new Category(name2, status2, type2);
 
-        genericUser.MyCategories.Add(categoryToBeAdded);
+        genericUser.MyCategories.Add(genericCategory);
         genericUser.MyCategories.Add(categoryToBeAdded2);
 
         genericTransaction.MyCategories = genericUser.MyCategories;
@@ -203,19 +193,8 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenListWithTypeOutcomeInTransactionIncome_ShouldThrowException()
     {
-        string name = "Business One";
-        StatusEnum status = StatusEnum.Enabled;
-        TypeEnum type = TypeEnum.Income;
-        Category categoryToBeAdded = new Category(name, status, type);
-
-        string name2 = "Food";
-        StatusEnum status2 = StatusEnum.Enabled;
-        TypeEnum type2 = TypeEnum.Outcome;
-        Category categoryToBeAdded2 = new Category(name2, status2, type2);
-
-        genericUser.MyCategories.Add(categoryToBeAdded);
-        genericUser.MyCategories.Add(categoryToBeAdded2);
-
+        genericUser.MyCategories.Add(genericCategory);
+        genericUser.MyCategories.Add(genericCategory2);
         genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
     }
@@ -232,16 +211,9 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenListWithTypeIncomeInTransactionOutcome_ShouldThrowException()
     {
-        genericTransaction.Type = TypeEnum.Outcome;
-
-        string name2 = "Food";
-        StatusEnum status2 = StatusEnum.Enabled;
-        TypeEnum type2 = TypeEnum.Outcome;
-        Category categoryToBeAdded2 = new Category(name2, status2, type2);
-
         List<Category> listToSet = new List<Category>();
         genericUser.MyCategories.Add(genericCategory);
-        genericUser.MyCategories.Add(categoryToBeAdded2);
+        genericUser.MyCategories.Add(genericCategory2);
 
         genericTransaction.MyCategories = genericUser.MyCategories;
         genericTransaction.ValidateListOfCategories();
