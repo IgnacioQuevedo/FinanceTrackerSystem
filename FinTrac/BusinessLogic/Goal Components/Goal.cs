@@ -47,7 +47,7 @@ namespace BusinessLogic.Goal_Components
         {
             if (CategoriesOfGoal.Count == 0)
             {
-                throw new ExceptionValidateGoal("ERROR");
+                throw new ExceptionValidateGoal("It is necessary to set at least one category");
             }
         }
 
