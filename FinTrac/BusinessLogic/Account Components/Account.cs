@@ -51,6 +51,18 @@ namespace BusinessLogic.Account_Components
 
         public void AddTransaction(Transaction transactionToBeAdded)
         {
+            if (transactionToBeAdded.Account is MonetaryAccount)
+            {
+                MonetaryAccount accountToBeUpdated = (MonetaryAccount)transactionToBeAdded.Account;
+                if (transactionToBeAdded.Type is Category_Components.TypeEnum.Outcome)
+                {
+                    accountToBeUpdated.Ammount = accountToBeUpdated.Ammount - transactionToBeAdded.Amount;
+                }
+                if (transactionToBeAdded.Type is Category_Components.TypeEnum.Income)
+                {
+                    accountToBeUpdated.Ammount = accountToBeUpdated.Ammount + transactionToBeAdded.Amount;
+                }
+            }
             MyTransactions.Add(transactionToBeAdded);
         }
 
