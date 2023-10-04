@@ -82,7 +82,6 @@ public class ExchangeHistoryTests
     }
     #endregion
 
-
     #region Constructor
 
     [TestMethod]
@@ -109,8 +108,6 @@ public class ExchangeHistoryTests
 
         ExchangeHistory historyToday = new ExchangeHistory(currency, exchangeValue, valueDate);
     }
-
-
 
     #endregion
 }

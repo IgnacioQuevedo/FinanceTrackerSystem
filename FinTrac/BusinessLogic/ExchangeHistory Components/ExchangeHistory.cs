@@ -26,8 +26,7 @@ namespace BusinessLogic.ExchangeHistory_Components
             Value = value;
             ValueDate = valueDate;
 
-            ValidateCurrencyIsDollar();
-            ValidateValueNumber();
+            ValidateExchange();
         }
 
 
