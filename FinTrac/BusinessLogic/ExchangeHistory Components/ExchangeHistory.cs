@@ -31,7 +31,6 @@ namespace BusinessLogic.ExchangeHistory_Components
             ValidateExchange();
         }
 
-
         #region Validate Exchange
         public void ValidateExchange()
         {

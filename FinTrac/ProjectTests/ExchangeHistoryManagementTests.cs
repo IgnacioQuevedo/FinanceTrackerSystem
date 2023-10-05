@@ -71,10 +71,16 @@ namespace TestProject1
 
         #endregion
 
+        #region Return Of Exchanges
+
         [TestMethod]
         public void ShouldBePossibleToReturnListOfExchanges()
         {
             Assert.AreEqual(genericUser.MyExchangesHistory, genericUser.GetExchangesHistory());
         }
+
+        #endregion
+
+
     }
 }
