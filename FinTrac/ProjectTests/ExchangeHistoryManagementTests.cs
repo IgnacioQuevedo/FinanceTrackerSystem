@@ -83,7 +83,7 @@ namespace TestProject1
 
         #region Delete Of Exchange
 
-        [TestMethod]    
+        [TestMethod]
         public void GivenExchangeToDelete_ShouldBePossibleToDelete()
         {
 
@@ -96,7 +96,7 @@ namespace TestProject1
             genericUser.DeleteExchangeHistory(exchangeHistoryExample);
             numberOfExchangesAfterDeleting = genericUser.GetExchangesHistory().Count;
 
-            Assert.AreEqual(numberOfExchangesBeforeDeleting -1, numberOfExchangesAfterDeleting);
+            Assert.AreEqual(numberOfExchangesBeforeDeleting - 1, numberOfExchangesAfterDeleting);
         }
 
         #endregion
@@ -106,16 +106,17 @@ namespace TestProject1
         [TestMethod]
         public void GivenNewValues_ShouldBePossibleToUpdateThem()
         {
-            decimal newValueOfDollar = 45.7M;
-            int idOfUpdated = exchangeHistoryExample.ExchangeHistoryId;
-            ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
-                newValueOfDollar, exchangeHistoryExample.ValueDate);
+            decimal newValue = 45.7M;
+            CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
+            DateTime valueDateOfExchange = exchangeHistoryExample.ValueDate;
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
 
             genericUser.AddExchangeHistory(exchangeHistoryExample);
+            int idUpdate = exchangeHistoryExample.ExchangeHistoryId;
             exchangeUpdated.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
             genericUser.ModifyExchangeHistory(exchangeUpdated);
-            
-            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[idOfUpdated].Value);
+
+            Assert.AreEqual(newValue, genericUser.MyExchangesHistory[idUpdate].Value);
         }
 
         [TestMethod]
@@ -123,11 +124,12 @@ namespace TestProject1
 
         public void GivenNewValuesButWrongIdToUpdate_ShouldThrowException()
         {
-            decimal newValueOfDollar = 45.7M;
+            decimal newValue = 45.7M;
+            CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
+            DateTime valueDateOfExchange = exchangeHistoryExample.ValueDate;
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
+
             genericUser.AddExchangeHistory(exchangeHistoryExample);
-            ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
-                newValueOfDollar, exchangeHistoryExample.ValueDate);
-            
             genericUser.ModifyExchangeHistory(exchangeUpdated);
 
 
