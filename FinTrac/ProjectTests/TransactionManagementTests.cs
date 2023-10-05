@@ -41,9 +41,9 @@ public class TransactionManagementTests
         genericUser.AddAccount(genericMonetaryAccount);
         genericUser.AddAccount(genericCreditAccount);
 
-        genericTransactionOutcome1 = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericMonetaryAccount, genericUser.MyCategories);
+        genericTransactionOutcome1 = new Transaction("Payment of Clothes", 200, CurrencyEnum.UY, TypeEnum.Outcome, genericCategoryOutcome1);
 
-        genericTransactionOutcome2 = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericCreditAccount, genericUser.MyCategories);
+        genericTransactionOutcome2 = new Transaction("Payment of food", 400, CurrencyEnum.UY, TypeEnum.Outcome, genericCategoryOutcome2);
 
     }
 
@@ -107,7 +107,7 @@ public class TransactionManagementTests
 
         modifiedListOfCategories.Add(genericCategoryOutcome1);
 
-        Transaction modifiedTransaction = new Transaction("Payment of food", 100, CurrencyEnum.USA, TypeEnum.Outcome, genericCreditAccount, genericUser.MyCategories);
+        Transaction modifiedTransaction = new Transaction("Payment of food", 100, CurrencyEnum.USA, TypeEnum.Outcome, genericCategoryOutcome1);
         modifiedTransaction.TransactionId = 0;
 
         genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
