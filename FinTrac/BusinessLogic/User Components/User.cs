@@ -425,7 +425,7 @@ namespace BusinessLogic.User_Components
 
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
-           throw new NotImplementedException();
+            MyExchangesHistory.Remove(exchangeHistoryToDelete);
         }
 
         #endregion
