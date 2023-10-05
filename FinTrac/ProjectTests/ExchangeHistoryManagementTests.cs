@@ -116,9 +116,24 @@ namespace TestProject1
             genericUser.ModifyExchangeHistory(exchangeUpdated);
             
             Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[idOfUpdated].Value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
+
+        public void GivenNewValuesButWrongIdToUpdate_ShouldThrowException()
+        {
+            decimal newValueOfDollar = 45.7M;
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
+                newValueOfDollar, exchangeHistoryExample.ValueDate);
+            
+            genericUser.ModifyExchangeHistory(exchangeUpdated);
 
 
         }
+
+
 
         #endregion
     }
