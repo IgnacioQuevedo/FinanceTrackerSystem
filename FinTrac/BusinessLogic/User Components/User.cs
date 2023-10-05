@@ -388,17 +388,20 @@ namespace BusinessLogic.User_Components
         
         public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
         {
-            foreach(var oneExchange in MyExchangesHistory)
-            {
+            ChecksIfDateIsUsed(exchangeHistoryToAdd);
+            MyExchangesHistory.Add(exchangeHistoryToAdd);
+        }
 
+        private void ChecksIfDateIsUsed(ExchangeHistory exchangeHistoryToAdd)
+        {
+            foreach (var oneExchange in MyExchangesHistory)
+            {
                 if (DateTime.Compare(oneExchange.ValueDate, exchangeHistoryToAdd.ValueDate) == 0)
                 {
                     throw new ExceptionExchangeHistoryManagement("There already exists a exchange history " +
                         "for this date, modify it instead.");
                 }
             }
-            MyExchangesHistory.Add(exchangeHistoryToAdd);
         }
-
     }
 }
