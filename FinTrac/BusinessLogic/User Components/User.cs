@@ -434,14 +434,19 @@ namespace BusinessLogic.User_Components
         public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
         {
             int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
-
+            bool finded = false;
             for(int i = 0; i < MyExchangesHistory.Count; i++)
             {
 
                 if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {
                     MyExchangesHistory[i] = exchangeHistoryToUpdate;
+                    finded = true;
                 }
+            }
+            if (!finded)
+            {
+                throw new ExceptionExchangeHistoryManagement("This exchange does not exist, impossible to modify");
             }
         }
         #endregion
