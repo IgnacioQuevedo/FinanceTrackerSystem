@@ -385,7 +385,6 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-
         #region Exchange History Management
 
         #region Add Exchange History
@@ -438,7 +437,6 @@ namespace BusinessLogic.User_Components
 
             for(int i = 0; i < MyExchangesHistory.Count && !updated; i++)
             {
-
                 if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {
                     MyExchangesHistory[i] = exchangeHistoryToUpdate;
