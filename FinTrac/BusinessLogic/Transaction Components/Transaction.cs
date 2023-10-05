@@ -71,11 +71,16 @@ namespace BusinessLogic.Transaction_Components
 
         public void ValidateCategory()
         {
-            if (TransactionCategory.Status == StatusEnum.Disabled)
+            if (IsDisabledCategory())
             {
                 throw new ExceptionValidateTransaction("Error: Category can't be disabled");
             }
 
+        }
+
+        private bool IsDisabledCategory()
+        {
+            return TransactionCategory.Status == StatusEnum.Disabled;
         }
     }
 }
