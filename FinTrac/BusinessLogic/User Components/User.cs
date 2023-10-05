@@ -432,7 +432,16 @@ namespace BusinessLogic.User_Components
 
         public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
         {
-            throw new NotImplementedException();
+            for(int i = 0; i < MyExchangesHistory.Count; i++)
+            {
+
+                if (exchangeHistoryToUpdate.ExchangeHistoryId 
+                    == MyExchangesHistory[i].ExchangeHistoryId)
+                {
+                    MyExchangesHistory[i] = exchangeHistoryToUpdate;
+                }
+
+            }
         }
 
         #endregion

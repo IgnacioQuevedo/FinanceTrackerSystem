@@ -110,11 +110,11 @@ namespace TestProject1
             ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
                 newValueOfDollar, exchangeHistoryExample.ValueDate);
 
+            exchangeUpdated.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
+
             genericUser.ModifyExchangeHistory(exchangeUpdated);
             
-
-
-            Assert.AreEqual(newValueOfDollar, exchangeHistoryExample.Value);
+            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[exchangeHistoryExample.ExchangeHistoryId -1].Value);
 
 
         }
