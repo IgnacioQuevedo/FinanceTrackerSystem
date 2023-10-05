@@ -100,5 +100,25 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenNewValues_ShouldBePossibleToUpdateThem()
+        {
+            decimal newValueOfDollar = 45.7M;
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
+                newValueOfDollar, exchangeHistoryExample.ValueDate);
+
+            genericUser.ModifyExchangeHistory(exchangeUpdated);
+            
+
+
+            Assert.AreEqual(newValueOfDollar, exchangeHistoryExample.Value);
+
+
+        }
+
+
     }
 }

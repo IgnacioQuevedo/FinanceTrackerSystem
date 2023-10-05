@@ -430,7 +430,10 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
-
+        public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
