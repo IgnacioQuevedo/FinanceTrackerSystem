@@ -432,15 +432,15 @@ namespace BusinessLogic.User_Components
 
         public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
         {
+            int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
+
             for(int i = 0; i < MyExchangesHistory.Count; i++)
             {
 
-                if (exchangeHistoryToUpdate.ExchangeHistoryId 
-                    == MyExchangesHistory[i].ExchangeHistoryId)
+                if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {
                     MyExchangesHistory[i] = exchangeHistoryToUpdate;
                 }
-
             }
         }
 

@@ -105,16 +105,15 @@ namespace TestProject1
         public void GivenNewValues_ShouldBePossibleToUpdateThem()
         {
             decimal newValueOfDollar = 45.7M;
-            genericUser.AddExchangeHistory(exchangeHistoryExample);
-
+            int idOfUpdated = exchangeHistoryExample.ExchangeHistoryId;
             ExchangeHistory exchangeUpdated = new ExchangeHistory(exchangeHistoryExample.Currency,
                 newValueOfDollar, exchangeHistoryExample.ValueDate);
 
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
             exchangeUpdated.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
-
             genericUser.ModifyExchangeHistory(exchangeUpdated);
             
-            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[exchangeHistoryExample.ExchangeHistoryId].Value);
+            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[idOfUpdated].Value);
 
 
         }
