@@ -423,10 +423,14 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #region Delete Exchange
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
             MyExchangesHistory.Remove(exchangeHistoryToDelete);
         }
+        #endregion
+
+
 
         #endregion
     }

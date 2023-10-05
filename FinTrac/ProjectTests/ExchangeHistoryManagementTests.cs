@@ -81,6 +81,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Delete Of Exchange
+
         [TestMethod]    
         public void GivenExchangeToDelete_ShouldBePossibleToDelete()
         {
@@ -96,5 +98,7 @@ namespace TestProject1
 
             Assert.AreEqual(numberOfExchangesBeforeDeleting -1, numberOfExchangesAfterDeleting);
         }
+
+        #endregion
     }
 }
