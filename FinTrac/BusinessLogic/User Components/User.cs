@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BusinessLogic.ExchangeHistory_Components;
 
 namespace BusinessLogic.User_Components
 {
@@ -25,6 +26,7 @@ namespace BusinessLogic.User_Components
         public List<Category> MyCategories { get; set; }
         public List<Account> MyAccounts { get; set; }
         public List<Goal> MyGoals { get; set; }
+        public List<ExchangeHistory> MyExchangesHistory { get; set; }
 
         #endregion
 
@@ -47,6 +49,7 @@ namespace BusinessLogic.User_Components
                 MyCategories = new List<Category>();
                 MyAccounts = new List<Account>();
                 MyGoals = new List<Goal>();
+                MyExchangesHistory = new List<ExchangeHistory>();
             }
 
 
@@ -382,5 +385,72 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+        #region Exchange History Management
+
+        #region Add Exchange History
+        public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
+        {
+            ChecksIfDateIsUsed(exchangeHistoryToAdd);
+            SettingExchangeHistoryId(exchangeHistoryToAdd);
+
+            MyExchangesHistory.Add(exchangeHistoryToAdd);
+        }
+
+        private void SettingExchangeHistoryId(ExchangeHistory exchangeHistoryToAdd)
+        {
+            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count;
+        }
+
+        private void ChecksIfDateIsUsed(ExchangeHistory exchangeHistoryToAdd)
+        {
+            foreach (var oneExchange in MyExchangesHistory)
+            {
+                if (DateTime.Compare(oneExchange.ValueDate, exchangeHistoryToAdd.ValueDate) == 0)
+                {
+                    throw new ExceptionExchangeHistoryManagement("There already exists a exchange history " +
+                        "for this date, modify it instead.");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Get Exchanges History
+        public List<ExchangeHistory> GetExchangesHistory()
+        {
+            return MyExchangesHistory;
+        }
+        #endregion
+
+        #region Delete Exchange
+        public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
+        {
+            MyExchangesHistory.Remove(exchangeHistoryToDelete);
+        }
+        #endregion
+
+        #region Modify Exchange
+        public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
+        {
+            int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
+            bool updated = false;
+
+            for(int i = 0; i < MyExchangesHistory.Count && !updated; i++)
+            {
+                if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
+                {
+                    MyExchangesHistory[i] = exchangeHistoryToUpdate;
+                    updated = true;
+                }
+            }
+            if (!updated)
+            {
+                throw new ExceptionExchangeHistoryManagement("This exchange does not exist, impossible to modify");
+            }
+        }
+        #endregion
+
+
+        #endregion
     }
 }
