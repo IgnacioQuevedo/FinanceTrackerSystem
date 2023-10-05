@@ -385,14 +385,21 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-        
+
+        #region Exchange History Management
+
+        #region Add Exchange History
         public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
         {
             ChecksIfDateIsUsed(exchangeHistoryToAdd);
-
-            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count + 1;
+            SettingExchangeHistoryId(exchangeHistoryToAdd);
 
             MyExchangesHistory.Add(exchangeHistoryToAdd);
+        }
+
+        private void SettingExchangeHistoryId(ExchangeHistory exchangeHistoryToAdd)
+        {
+            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count + 1;
         }
 
         private void ChecksIfDateIsUsed(ExchangeHistory exchangeHistoryToAdd)
@@ -406,5 +413,9 @@ namespace BusinessLogic.User_Components
                 }
             }
         }
+
+        #endregion
+
+        #endregion
     }
 }

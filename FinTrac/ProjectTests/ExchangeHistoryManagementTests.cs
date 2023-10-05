@@ -19,6 +19,9 @@ namespace TestProject1
         private string address;
         private User genericUser;
 
+        private DateTime date;
+        ExchangeHistory exchangeHistoryExample;
+
         [TestInitialize]
         public void Init()
         {
@@ -28,6 +31,9 @@ namespace TestProject1
             password = "AustinF2003";
             address = "NW 2nd Ave";
             genericUser = new User(firstName, lastName, email, password, address);
+
+            date = new DateTime(2023 / 10 / 4);
+            exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
         }
 
         #endregion
@@ -37,8 +43,6 @@ namespace TestProject1
         [TestMethod]
         public void GivenAExchangeHistory_ShouldBePossibleToAdd()
         {
-            DateTime date = new DateTime(2023 / 10 / 4);
-            ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
             Assert.AreEqual(exchangeHistoryExample, genericUser.MyExchangesHistory[0]);
@@ -48,8 +52,6 @@ namespace TestProject1
         [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
         public void GivenAExchangeWhereItsDateHasBeenAlreadyUsed_ShouldThrowException()
         {
-            DateTime date = new DateTime(2023 / 10 / 4);
-            ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
             ExchangeHistory exchangeWithDateUsed = new ExchangeHistory(CurrencyEnum.USA, 45.9M, date);
@@ -62,12 +64,7 @@ namespace TestProject1
 
         public void GivenAnExchange_ShouldBePossibleToSetAnId()
         {
-
-            DateTime date = new DateTime(2023 / 10 / 4);
-            ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
-
             genericUser.AddExchangeHistory(exchangeHistoryExample);
-
             Assert.AreEqual(exchangeHistoryExample.ExchangeHistoryId, genericUser.MyExchangesHistory.Count);
 
 
