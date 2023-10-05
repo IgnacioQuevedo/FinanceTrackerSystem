@@ -147,6 +147,8 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenDisabledCategory_ShouldThrowException()
     {
+        genericCategory.Status = StatusEnum.Disabled;
+        genericTransaction.TransactionCategory = genericCategory;
         genericTransaction.ValidateCategory();
     }
 
