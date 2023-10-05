@@ -69,6 +69,5 @@ namespace BusinessLogic.Transaction_Components
         }
         #endregion
 
-
     }
 }

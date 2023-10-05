@@ -139,6 +139,8 @@ public class TransactionTests
     public void GivenCorrectCategory_ShouldBeSetted()
     {
         genericTransaction.TransactionCategory = genericCategory;
+
         Assert.AreEqual(genericCategory, genericTransaction.TransactionCategory);
     }
+
 }
