@@ -352,7 +352,14 @@ namespace BusinessLogic.User_Components
 
         public void DeleteAccount(Account accountToDelete)
         {
-            MyAccounts.Remove(accountToDelete);
+            if (accountToDelete.MyTransactions.Count == 0)
+            {
+                MyAccounts.Remove(accountToDelete);
+            }
+            else
+            {
+                throw new ExceptionAccountManagement("Error: You can't delete your account because it has transactions");
+            }
         }
 
         #endregion
