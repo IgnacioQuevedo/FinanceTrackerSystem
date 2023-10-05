@@ -352,7 +352,7 @@ namespace BusinessLogic.User_Components
 
         public void DeleteAccount(Account accountToDelete)
         {
-            if (accountToDelete.MyTransactions.Count == 0)
+            if (ThereIsNoTransactions(accountToDelete))
             {
                 MyAccounts.Remove(accountToDelete);
             }
@@ -360,6 +360,11 @@ namespace BusinessLogic.User_Components
             {
                 throw new ExceptionAccountManagement("Error: You can't delete your account because it has transactions");
             }
+        }
+
+        private static bool ThereIsNoTransactions(Account accountToDelete)
+        {
+            return accountToDelete.MyTransactions.Count == 0;
         }
 
         #endregion
