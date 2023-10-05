@@ -101,6 +101,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Modify Of Exchange
+
         [TestMethod]
         public void GivenNewValues_ShouldBePossibleToUpdateThem()
         {
@@ -118,6 +120,6 @@ namespace TestProject1
 
         }
 
-
+        #endregion
     }
 }

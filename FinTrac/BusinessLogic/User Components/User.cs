@@ -430,6 +430,7 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #region Modify Exchange
         public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
         {
             int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
@@ -443,6 +444,8 @@ namespace BusinessLogic.User_Components
                 }
             }
         }
+        #endregion
+
 
         #endregion
     }
