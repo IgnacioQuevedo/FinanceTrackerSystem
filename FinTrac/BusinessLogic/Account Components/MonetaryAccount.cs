@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLogic.Category_Components;
+using BusinessLogic.Transaction_Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +39,30 @@ namespace BusinessLogic.Account_Components
                 throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
             }
         }
+
+        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        {
+            if (IsOutcome(transactionToBeAdded))
+            {
+                Ammount = Ammount - transactionToBeAdded.Amount;
+            }
+            else if (IsIncome(transactionToBeAdded))
+            {
+                Ammount = Ammount + transactionToBeAdded.Amount;
+            }
+        }
+
+        protected static bool IsIncome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == TypeEnum.Income;
+        }
+
+        protected bool IsOutcome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == TypeEnum.Outcome;
+        }
+
+
 
         #endregion
     }

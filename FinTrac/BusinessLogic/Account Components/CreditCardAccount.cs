@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Transaction_Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace BusinessLogic.Account_Components
         #region Properties
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
-        public int AvailableCredit { get; set; }
+        public decimal AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
 
         #endregion
@@ -93,6 +94,11 @@ namespace BusinessLogic.Account_Components
                 }
             }
             return true;
+        }
+
+        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        {
+            AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
         }
         #endregion
 

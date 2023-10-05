@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Transaction_Components;
 
 namespace BusinessLogic.Account_Components
 {
@@ -13,6 +14,9 @@ namespace BusinessLogic.Account_Components
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; } = DateTime.Now.Date;
         public int AccountId { get; set; } = -1;
+        public List<Transaction> MyTransactions { get; set; }
+
+
         #endregion
 
         #region Constructor
@@ -25,8 +29,17 @@ namespace BusinessLogic.Account_Components
             Currency = currency;
 
 
-            ValidateAccount();
+            if (ValidateAccount())
+            {
+                MyTransactions = new List<Transaction>();
+            }
+
         }
+
+        #endregion
+
+        #region Mandatory Methods
+        public abstract void UpdateAccountMoney(Transaction transactionToBeAdded);
 
         #endregion
 
@@ -39,6 +52,56 @@ namespace BusinessLogic.Account_Components
             }
             return true;
         }
+        #endregion
+
+        #region Transaction Management
+
+        #region Add Transaction
+        public void AddTransaction(Transaction transactionToBeAdded)
+        {
+            SetTransactionId(transactionToBeAdded);
+            MyTransactions.Add(transactionToBeAdded);
+        }
+
+        private void SetTransactionId(Transaction transactionToBeAdded)
+        {
+            transactionToBeAdded.TransactionId = MyTransactions.Count;
+        }
+
+        #endregion
+
+        #region Modify Transaction
+
+        public void ModifyTransaction(Transaction transactionToUpdate)
+        {
+            bool flag = false;
+
+            for (int i = 0; i < MyTransactions.Count && !flag; i++)
+            {
+                if (HaveSameId(transactionToUpdate, i))
+                {
+                    MyTransactions[i] = transactionToUpdate;
+                    flag = true;
+                }
+            }
+        }
+
+        private bool HaveSameId(Transaction transactionToUpdate, int i)
+        {
+            return MyTransactions[i].TransactionId == transactionToUpdate.TransactionId;
+        }
+
+        #endregion
+
+        #region Get All Transactions
+
+        public List<Transaction> GetAllTransactions()
+        {
+            return MyTransactions;
+        }
+
+        #endregion
+
         #endregion
 
     }
