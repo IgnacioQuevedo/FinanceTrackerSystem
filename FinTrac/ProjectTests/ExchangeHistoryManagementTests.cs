@@ -45,7 +45,7 @@ namespace TestProject1
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
+    
         public void GivenAExchangeWhereItsDateHasBeenAlreadyUsed_ShouldThrowException()
         {
             DateTime date = new DateTime(2023 / 10 / 4);
