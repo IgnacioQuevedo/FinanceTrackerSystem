@@ -33,13 +33,14 @@ namespace BusinessLogic.Transaction_Components
         {
         }
 
-        public Transaction(string title, decimal amount, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
+        public Transaction(string title, decimal amount, DateTime date, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
         {
             Title = title;
             Amount = amount;
             Currency = currency;
             Type = type;
             TransactionCategory = transactionCategory;
+            CreationDate = date;
 
             ValidateTitle();
             ValidateAmount();

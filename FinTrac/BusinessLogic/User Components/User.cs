@@ -346,15 +346,14 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #endregion
+
         #region DeleteAccount
 
         public void DeleteAccount(Account accountToDelete)
         {
             MyAccounts.Remove(accountToDelete);
         }
-
-        #endregion
-
 
         #endregion
 
@@ -435,7 +434,7 @@ namespace BusinessLogic.User_Components
             int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
             bool updated = false;
 
-            for(int i = 0; i < MyExchangesHistory.Count && !updated; i++)
+            for (int i = 0; i < MyExchangesHistory.Count && !updated; i++)
             {
                 if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {
