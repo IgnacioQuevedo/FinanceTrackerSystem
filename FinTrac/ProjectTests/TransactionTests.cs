@@ -159,6 +159,8 @@ public class TransactionTests
         genericCategory.Type = TypeEnum.Income;
         genericTransaction.Type = TypeEnum.Outcome;
         genericTransaction.TransactionCategory = genericCategory;
+        genericTransaction.ValidateCategory();
+
     }
 
 }
