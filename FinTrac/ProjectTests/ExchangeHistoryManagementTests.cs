@@ -57,5 +57,20 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+
+        public void GivenAnExchange_ShouldBePossibleToSetAnId()
+        {
+
+            DateTime date = new DateTime(2023 / 10 / 4);
+            ExchangeHistory exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
+
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
+            Assert.AreEqual(exchangeHistoryExample.Id, genericUser.MyExchangesHistory.Count);
+
+
+        }
     }
 }
