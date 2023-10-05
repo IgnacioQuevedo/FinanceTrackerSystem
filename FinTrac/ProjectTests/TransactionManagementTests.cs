@@ -131,7 +131,7 @@ public class TransactionManagementTests
     #region Delete Test
 
     [TestMethod]
-    public void GivenCategoryToDelete_ShouldDelete()
+    public void GivenTransactionToDelete_ShouldDelete()
     {
         genericMonetaryAccount.AddTransaction(genericTransactionOutcome1);
         int lengthBeforeDelete = genericMonetaryAccount.MyTransactions.Count;
