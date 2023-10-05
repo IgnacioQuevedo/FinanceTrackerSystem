@@ -11,13 +11,13 @@ namespace BusinessLogic.ExchangeHistory_Components
     {
         #region Properties
         public CurrencyEnum Currency { get; set; }
-
         public decimal Value { get; set; }
-
         public DateTime ValueDate { get; set; }
+        public int ExchangeHistoryId { get; set; } = -1;
 
         #endregion
 
+        #region Constructor
         public ExchangeHistory() { }
 
         public ExchangeHistory(CurrencyEnum currency, decimal value, DateTime valueDate) 
@@ -29,6 +29,7 @@ namespace BusinessLogic.ExchangeHistory_Components
             ValidateExchange();
         }
 
+        #endregion
 
         #region Validate Exchange
         public void ValidateExchange()
