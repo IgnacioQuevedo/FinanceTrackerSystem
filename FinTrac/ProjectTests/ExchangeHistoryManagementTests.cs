@@ -74,7 +74,7 @@ namespace TestProject1
         [TestMethod]
         public void ShouldBePossibleToReturnListOfExchanges()
         {
-            Assert.AreEqual(genericUser.MyExchangesHistory, genericUser.GetExchangesHistory);
+            Assert.AreEqual(genericUser.MyExchangesHistory, genericUser.GetExchangesHistory());
         }
     }
 }

@@ -420,7 +420,7 @@ namespace BusinessLogic.User_Components
         #region Get Exchanges History
         public List<ExchangeHistory> GetExchangesHistory()
         {
-            throw new NotImplementedException();
+            return MyExchangesHistory;
         }
         #endregion
 
