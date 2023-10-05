@@ -68,7 +68,7 @@ namespace TestProject1
 
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
-            Assert.AreEqual(exchangeHistoryExample.Id, genericUser.MyExchangesHistory.Count);
+            Assert.AreEqual(exchangeHistoryExample.ExchangeHistoryId, genericUser.MyExchangesHistory.Count);
 
 
         }

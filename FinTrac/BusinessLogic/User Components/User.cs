@@ -389,6 +389,9 @@ namespace BusinessLogic.User_Components
         public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
         {
             ChecksIfDateIsUsed(exchangeHistoryToAdd);
+
+            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count + 1;
+
             MyExchangesHistory.Add(exchangeHistoryToAdd);
         }
 

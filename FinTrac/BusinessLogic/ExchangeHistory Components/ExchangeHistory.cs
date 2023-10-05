@@ -16,6 +16,8 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public DateTime ValueDate { get; set; }
 
+        public int ExchangeHistoryId { get; set; }
+
         #endregion
 
         public ExchangeHistory() { }
