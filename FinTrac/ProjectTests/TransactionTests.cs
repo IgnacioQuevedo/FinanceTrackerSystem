@@ -143,4 +143,11 @@ public class TransactionTests
         Assert.AreEqual(genericCategory, genericTransaction.TransactionCategory);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenDisabledCategory_ShouldThrowException()
+    {
+        genericTransaction.ValidateCategory();
+    }
+
 }

@@ -69,5 +69,10 @@ namespace BusinessLogic.Transaction_Components
         }
         #endregion
 
+        public void ValidateCategory()
+        {
+            throw new NotImplementedException();
+
+        }
     }
 }
