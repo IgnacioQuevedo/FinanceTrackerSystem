@@ -76,6 +76,10 @@ namespace BusinessLogic.Transaction_Components
                 throw new ExceptionValidateTransaction("Error: Category can't be disabled");
             }
 
+            if (TransactionCategory.Type != Type)
+            {
+
+            }
         }
 
         private bool IsDisabledCategory()

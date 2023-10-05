@@ -66,7 +66,7 @@ public class TransactionTests
 
     #region Validate Title Tests
     [TestMethod]
-    public void GivenCorrectTitle_ShouldReturnTrue()
+    public void GivenCorrectTitle_ShouldBeSetted()
     {
         string titleToBeSet = "Title";
         Assert.AreEqual(titleToBeSet, genericTransaction.Title);
@@ -74,7 +74,7 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenEmptyTitle_ShouldReturnFalse()
+    public void GivenEmptyTitle_ShouldThrowException()
     {
         genericTransaction.Title = "";
         genericTransaction.ValidateTitle();
@@ -97,7 +97,7 @@ public class TransactionTests
     #region Amount Tests
 
     [TestMethod]
-    public void GivenCorrectAmount_ShouldReturnTrue()
+    public void GivenCorrectAmount_ShouldBeSetted()
     {
         decimal amountToBeSet = 100;
         Assert.AreEqual(amountToBeSet, genericTransaction.Amount);
@@ -150,6 +150,15 @@ public class TransactionTests
         genericCategory.Status = StatusEnum.Disabled;
         genericTransaction.TransactionCategory = genericCategory;
         genericTransaction.ValidateCategory();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenDifferenceInCategoryTypeWithTransactionType_ShouldThrowException()
+    {
+        genericCategory.Type = TypeEnum.Income;
+        genericTransaction.Type = TypeEnum.Outcome;
+        genericTransaction.TransactionCategory = genericCategory;
     }
 
 }
