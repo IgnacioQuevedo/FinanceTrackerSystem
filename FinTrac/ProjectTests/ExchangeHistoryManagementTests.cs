@@ -60,14 +60,21 @@ namespace TestProject1
 
         #endregion
 
-        [TestMethod]
+        #region Setting Id
 
+        [TestMethod]
         public void GivenAnExchange_ShouldBePossibleToSetAnId()
         {
             genericUser.AddExchangeHistory(exchangeHistoryExample);
             Assert.AreEqual(exchangeHistoryExample.ExchangeHistoryId, genericUser.MyExchangesHistory.Count);
+        }
 
+        #endregion
 
+        [TestMethod]
+        public void ShouldBePossibleToReturnListOfExchanges()
+        {
+            Assert.AreEqual(genericUser.MyExchangesHistory, genericUser.GetExchangesHistory);
         }
     }
 }

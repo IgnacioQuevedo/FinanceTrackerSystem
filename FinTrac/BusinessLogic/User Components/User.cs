@@ -416,6 +416,14 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
+
+        #region Get Exchanges History
+        public List<ExchangeHistory> GetExchangesHistory()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         #endregion
     }
 }
