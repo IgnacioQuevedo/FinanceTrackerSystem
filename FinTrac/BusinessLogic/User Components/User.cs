@@ -423,6 +423,11 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
+        {
+           throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

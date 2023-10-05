@@ -81,6 +81,20 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]    
+        public void GivenExchangeToDelete_ShouldBePossibleToDelete()
+        {
 
+            int numberOfExchangesBeforeDeleting = 0;
+            int numberOfExchangesAfterDeleting = 0;
+
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+            numberOfExchangesBeforeDeleting = genericUser.GetExchangesHistory().Count;
+
+            genericUser.DeleteExchangeHistory(exchangeHistoryExample);
+            numberOfExchangesAfterDeleting = genericUser.GetExchangesHistory().Count;
+
+            Assert.AreEqual(numberOfExchangesBeforeDeleting -1, numberOfExchangesAfterDeleting);
+        }
     }
 }
