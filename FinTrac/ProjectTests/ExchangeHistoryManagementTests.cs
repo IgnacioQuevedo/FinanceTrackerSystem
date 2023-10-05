@@ -66,7 +66,7 @@ namespace TestProject1
         public void GivenAnExchange_ShouldBePossibleToSetAnId()
         {
             genericUser.AddExchangeHistory(exchangeHistoryExample);
-            Assert.AreEqual(exchangeHistoryExample.ExchangeHistoryId, genericUser.MyExchangesHistory.Count);
+            Assert.AreEqual(exchangeHistoryExample.ExchangeHistoryId, genericUser.MyExchangesHistory.Count - 1);
         }
 
         #endregion
@@ -114,7 +114,7 @@ namespace TestProject1
 
             genericUser.ModifyExchangeHistory(exchangeUpdated);
             
-            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[exchangeHistoryExample.ExchangeHistoryId -1].Value);
+            Assert.AreEqual(newValueOfDollar, genericUser.MyExchangesHistory[exchangeHistoryExample.ExchangeHistoryId].Value);
 
 
         }

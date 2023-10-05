@@ -399,7 +399,7 @@ namespace BusinessLogic.User_Components
 
         private void SettingExchangeHistoryId(ExchangeHistory exchangeHistoryToAdd)
         {
-            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count + 1;
+            exchangeHistoryToAdd.ExchangeHistoryId = MyExchangesHistory.Count;
         }
 
         private void ChecksIfDateIsUsed(ExchangeHistory exchangeHistoryToAdd)
