@@ -102,6 +102,15 @@ namespace BusinessLogic.Account_Components
 
         #endregion
 
+        #region Delete Transactions
+
+        public void DeleteTransaction(Transaction transactionToDelete)
+        {
+
+        }
+
+        #endregion
+
         #endregion
 
     }

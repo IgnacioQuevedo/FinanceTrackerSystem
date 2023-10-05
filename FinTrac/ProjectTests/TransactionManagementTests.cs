@@ -127,4 +127,21 @@ public class TransactionManagementTests
         Assert.AreEqual(genericUser.MyAccounts[0].MyTransactions, genericMonetaryAccount.GetAllTransactions());
     }
     #endregion
+
+    #region Delete Test
+
+    [TestMethod]
+    public void GivenCategoryToDelete_ShouldDelete()
+    {
+        genericMonetaryAccount.AddTransaction(genericTransactionOutcome1);
+        int lengthBeforeDelete = genericMonetaryAccount.MyTransactions.Count;
+
+        genericMonetaryAccount.DeleteTransaction(genericTransactionOutcome1);
+        int lengthAfterDelete = lengthBeforeDelete - 1;
+
+        int actualLength = genericMonetaryAccount.MyTransactions.Count;
+        Assert.AreEqual(actualLength, lengthAfterDelete);
+    }
+
+    #endregion
 }
