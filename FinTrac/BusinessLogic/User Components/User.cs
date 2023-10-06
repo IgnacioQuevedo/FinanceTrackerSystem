@@ -243,6 +243,12 @@ namespace BusinessLogic.User_Components
 
         public void DeleteCategory(Category categoryToDelete)
         {
+            ValidateIfCategoryHasTransactions(categoryToDelete);
+            MyCategories.Remove(categoryToDelete);
+        }
+
+        private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
+        {
             bool founded = false;
             foreach (Account account in MyAccounts)
             {
@@ -253,15 +259,12 @@ namespace BusinessLogic.User_Components
                         founded = true;
                         break;
                     }
-
                 }
             }
-
             if (founded)
             {
                 throw new ExceptionCategoryManagement("Error: You can't delete this category because is being used in a transaction");
             }
-            MyCategories.Remove(categoryToDelete);
         }
 
         #endregion
