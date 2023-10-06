@@ -57,6 +57,8 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #region User Management
+        
         #region Validate User
 
         private bool ValidateUser()
@@ -181,6 +183,8 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
         }
+        #endregion
+
         #endregion
 
         #region Category Management
@@ -404,7 +408,7 @@ namespace BusinessLogic.User_Components
 
         private void SettingGoalId(Goal goalToAdd)
         {
-            goalToAdd.GoalId = MyGoals.Count + 1;
+            goalToAdd.GoalId = MyGoals.Count;
         }
 
         #endregion
