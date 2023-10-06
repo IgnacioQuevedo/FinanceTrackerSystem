@@ -196,7 +196,7 @@ namespace BusinessLogic.User_Components
 
         private void setCategoryId(Category categoryToAdd)
         {
-            categoryToAdd.CategoryId = MyCategories.Count + 1;
+            categoryToAdd.CategoryId = MyCategories.Count;
         }
 
         private void ValidateRegisteredCategory(Category categoryToAdd)
