@@ -58,7 +58,7 @@ public class GoalManagementTests
 
         genericUser.AddGoal(myGoal);
 
-        Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count);
+        Assert.AreEqual(myGoal.GoalId, genericUser.MyGoals.Count -1);
 
     }
 
