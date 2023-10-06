@@ -15,7 +15,32 @@ namespace BusinessLogic.Report_Components
     {
         public static void ConvertDolar(Transaction myTransaction, User loggedUser)
         {
-            throw new NotImplementedException();
+            bool found = false;
+            decimal dolarValue = 0;
+            DateTime bestDate = DateTime.MinValue;
+            if (myTransaction.Currency == CurrencyEnum.USA)
+            {
+                foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
+                {
+                    if (exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate && !found)
+                    {
+                        if (exchange.ValueDate == myTransaction.CreationDate)
+                        {
+                            found = true;
+                            bestDate = exchange.ValueDate;
+                            dolarValue = exchange.Value;
+                        }
+                        else
+                        {
+                            bestDate = exchange.ValueDate;
+                            dolarValue = exchange.Value;
+                        }
+                    }
+                }
+
+                myTransaction.Amount = myTransaction.Amount * dolarValue;
+
+            }
         }
     }
 }
