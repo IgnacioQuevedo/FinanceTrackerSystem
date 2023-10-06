@@ -24,11 +24,16 @@ namespace BusinessLogic.Report_Components
                 {
                     if (exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate && !found)
                     {
-                        bestDate = exchange.ValueDate;
-                        dolarValue = exchange.Value;
                         if (exchange.ValueDate == myTransaction.CreationDate)
                         {
                             found = true;
+                            bestDate = exchange.ValueDate;
+                            dolarValue = exchange.Value;
+                        }
+                        else
+                        {
+                            bestDate = exchange.ValueDate;
+                            dolarValue = exchange.Value;
                         }
                     }
                 }
