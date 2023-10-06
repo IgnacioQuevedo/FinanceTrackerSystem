@@ -346,15 +346,26 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #endregion
+
         #region DeleteAccount
 
         public void DeleteAccount(Account accountToDelete)
         {
-            MyAccounts.Remove(accountToDelete);
+            if (ThereIsNoTransactions(accountToDelete))
+            {
+                MyAccounts.Remove(accountToDelete);
+            }
+            else
+            {
+                throw new ExceptionAccountManagement("Error: You can't delete your account because it has transactions");
+            }
         }
 
-        #endregion
-
+        private static bool ThereIsNoTransactions(Account accountToDelete)
+        {
+            return accountToDelete.MyTransactions.Count == 0;
+        }
 
         #endregion
 
@@ -435,7 +446,7 @@ namespace BusinessLogic.User_Components
             int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
             bool updated = false;
 
-            for(int i = 0; i < MyExchangesHistory.Count && !updated; i++)
+            for (int i = 0; i < MyExchangesHistory.Count && !updated; i++)
             {
                 if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {

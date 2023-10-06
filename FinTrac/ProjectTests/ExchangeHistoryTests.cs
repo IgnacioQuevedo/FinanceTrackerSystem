@@ -76,7 +76,7 @@ public class ExchangeHistoryTests
     [TestMethod]
     public void GivenAValueDate_ShouldBeSetted()
     {
-        DateTime dateOfDollarValue = new DateTime(2023/8/4);
+        DateTime dateOfDollarValue = new DateTime(2023 / 8 / 4);
         genericExchange.ValueDate = dateOfDollarValue;
         Assert.AreEqual(dateOfDollarValue, genericExchange.ValueDate);
     }
@@ -89,16 +89,16 @@ public class ExchangeHistoryTests
     {
         CurrencyEnum currency = CurrencyEnum.USA;
         decimal exchangeValue = 38.5M;
-        DateTime valueDate = new DateTime(2023/10/4);
+        DateTime valueDate = new DateTime(2023 / 10 / 4);
 
-        ExchangeHistory historyToday = new ExchangeHistory(currency,exchangeValue,valueDate);
+        ExchangeHistory historyToday = new ExchangeHistory(currency, exchangeValue, valueDate);
         Assert.AreEqual(currency, historyToday.Currency);
         Assert.AreEqual(exchangeValue, historyToday.Value);
         Assert.AreEqual(valueDate, historyToday.ValueDate);
     }
 
     [TestMethod]
-    [ExpectedException (typeof(ExceptionExchangeHistory))]
+    [ExpectedException(typeof(ExceptionExchangeHistory))]
 
     public void GivenIncorrectValues_ShouldThrowExcepton()
     {
@@ -107,6 +107,20 @@ public class ExchangeHistoryTests
         DateTime valueDate = new DateTime(2023 / 10 / 4);
 
         ExchangeHistory historyToday = new ExchangeHistory(currency, exchangeValue, valueDate);
+    }
+
+    #endregion
+
+    #region Static methods Tests
+
+    [TestMethod]
+    public void GivenUser_ShouldReturnTrueIfThereAreExchangesRegistered()
+    {
+        User myUser = new User("Rodrigo", "Martinez", "gag@gmail.com", "12345A47888", "Nort ave 33");
+
+        myUser.MyExchangesHistory.Add(genericExchange);
+
+        Assert.AreEqual(true, ExchangeHistory.HaveExchanges(myUser));
     }
 
     #endregion

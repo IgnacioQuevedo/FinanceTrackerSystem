@@ -29,11 +29,6 @@ public class TransactionTests
         TypeEnum typeCategory = TypeEnum.Income;
         genericCategory = new Category(nameCategory, statusCategory, typeCategory);
 
-        string name2 = "Food";
-        StatusEnum status2 = StatusEnum.Enabled;
-        TypeEnum type2 = TypeEnum.Outcome;
-        genericCategory2 = new Category(name2, status2, type2);
-
         genericTransaction = new Transaction();
         genericTransaction.Title = "Title";
         genericTransaction.CreationDate = DateTime.Now.Date;
@@ -41,32 +36,16 @@ public class TransactionTests
         genericTransaction.Currency = CurrencyEnum.UY;
         genericTransaction.Type = TypeEnum.Income;
 
-        myCreditCardAccount = new CreditCardAccount();
-        myCreditCardAccount.Name = "Scotia Credit Card";
-        myCreditCardAccount.Currency = CurrencyEnum.UY;
-        myCreditCardAccount.IssuingBank = "Santander";
-        myCreditCardAccount.Last4Digits = "1233";
-        myCreditCardAccount.AvailableCredit = 15000;
-        myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
-
         genericMonetaryAccount = new MonetaryAccount();
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
         genericMonetaryAccount.Ammount = 10;
-
-        string firstName = "Austin";
-        string lastName = "Ford";
-        string email = "austinFord@gmail.com";
-        string password = "Austin1980";
-        string address = "East 25 Av";
-        genericUser = new User(firstName, lastName, email, password, address);
-        genericUser.MyCategories.Add(genericCategory);
     }
     #endregion
 
     #region Validate Title Tests
     [TestMethod]
-    public void GivenCorrectTitle_ShouldReturnTrue()
+    public void GivenCorrectTitle_ShouldBeSetted()
     {
         string titleToBeSet = "Title";
         Assert.AreEqual(titleToBeSet, genericTransaction.Title);
@@ -74,7 +53,7 @@ public class TransactionTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenEmptyTitle_ShouldReturnFalse()
+    public void GivenEmptyTitle_ShouldThrowException()
     {
         genericTransaction.Title = "";
         genericTransaction.ValidateTitle();
@@ -97,7 +76,7 @@ public class TransactionTests
     #region Amount Tests
 
     [TestMethod]
-    public void GivenCorrectAmount_ShouldReturnTrue()
+    public void GivenCorrectAmount_ShouldBeSetted()
     {
         decimal amountToBeSet = 100;
         Assert.AreEqual(amountToBeSet, genericTransaction.Amount);
@@ -135,158 +114,34 @@ public class TransactionTests
 
     #endregion
 
-    #region Account Tests
-
     [TestMethod]
-    public void GivenMonetaryAccount_ShouldBeSetted()
+    public void GivenCorrectCategory_ShouldBeSetted()
     {
-        genericTransaction.Account = genericMonetaryAccount;
-        Assert.AreEqual(genericTransaction.Account, genericMonetaryAccount);
+        genericTransaction.TransactionCategory = genericCategory;
 
-    }
-
-    [TestMethod]
-    public void GivenCreditAccount_ShouldBeSetted()
-    {
-        genericTransaction.Account = myCreditCardAccount;
-
-        Assert.AreEqual(genericTransaction.Account, myCreditCardAccount);
+        Assert.AreEqual(genericCategory, genericTransaction.TransactionCategory);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenCreditAccountWithTransactionTypeAsIncome_ShouldThrowException()
+    public void GivenDisabledCategory_ShouldThrowException()
     {
-        genericTransaction.Account = myCreditCardAccount;
-        genericTransaction.ValidateAccount();
-    }
-
-    #endregion
-
-    #region List of Categories Tests
-
-    [TestMethod]
-    public void GivenCorrectListToValidate_ShouldNotThrowException()
-    {
-        genericUser.MyCategories.Add(genericCategory);
-        genericTransaction.MyCategories = genericUser.MyCategories;
-        genericTransaction.ValidateListOfCategories();
+        genericCategory.Status = StatusEnum.Disabled;
+        genericTransaction.TransactionCategory = genericCategory;
+        genericTransaction.ValidateCategory();
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenListWithDisabledCategory_ShouldThrowException()
+    public void GivenDifferenceInCategoryTypeWithTransactionType_ShouldThrowException()
     {
-        string name2 = "Business Two";
-        StatusEnum status2 = StatusEnum.Disabled;
-        TypeEnum type2 = TypeEnum.Income;
-        Category categoryToBeAdded2 = new Category(name2, status2, type2);
-
-        genericUser.MyCategories.Add(genericCategory);
-        genericUser.MyCategories.Add(categoryToBeAdded2);
-
-        genericTransaction.MyCategories = genericUser.MyCategories;
-        genericTransaction.ValidateListOfCategories();
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenListWithTypeOutcomeInTransactionIncome_ShouldThrowException()
-    {
-        genericUser.MyCategories.Add(genericCategory);
-        genericUser.MyCategories.Add(genericCategory2);
-        genericTransaction.MyCategories = genericUser.MyCategories;
-        genericTransaction.ValidateListOfCategories();
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenEmptyList_ShouldThrowException()
-    {
-        genericTransaction.MyCategories = new List<Category>();
-        genericTransaction.ValidateListOfCategories();
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenListWithTypeIncomeInTransactionOutcome_ShouldThrowException()
-    {
-        List<Category> listToSet = new List<Category>();
-        genericUser.MyCategories.Add(genericCategory);
-        genericUser.MyCategories.Add(genericCategory2);
-
-        genericTransaction.MyCategories = genericUser.MyCategories;
-        genericTransaction.ValidateListOfCategories();
-    }
-    #endregion
-
-    #region Creation of transaction Tests
-
-    [TestMethod]
-    public void GivenCorrectTransactionThatBelongsToCreditAccount_ShouldNotThrowException()
-    {
-        genericCategory.Type = TypeEnum.Outcome;
-        List<Category> list = new List<Category>();
-        list.Add(genericCategory);
-
-        string title = "Payment of education";
-        DateTime date = DateTime.Now.Date;
-        decimal amount = 100;
-        CurrencyEnum currency = CurrencyEnum.UY;
-        TypeEnum type = TypeEnum.Outcome;
-
-        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, list);
+        genericCategory.Type = TypeEnum.Income;
+        genericTransaction.Type = TypeEnum.Outcome;
+        genericTransaction.TransactionCategory = genericCategory;
+        genericTransaction.ValidateCategory();
 
     }
 
-    [TestMethod]
-    public void GivenCorrectTransactionThatBelongsToMonetaryAccount_ShouldNotThrowException()
-    {
-        genericCategory.Type = TypeEnum.Outcome;
-        List<Category> list = new List<Category>();
-        list.Add(genericCategory);
 
-        string title = "Payment of education";
-        DateTime date = DateTime.Now.Date;
-        decimal amount = 100;
-        CurrencyEnum currency = CurrencyEnum.UY;
-        TypeEnum type = TypeEnum.Outcome;
 
-        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, list);
-
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenIncorrectTransactionThatBelongsToCreditAccount_ShouldThrowException()
-    {
-        genericCategory.Type = TypeEnum.Outcome;
-        genericUser.MyCategories.Add(genericCategory);
-
-        string title = "Payment of education";
-        DateTime date = DateTime.Now.Date;
-        decimal amount = 100;
-        CurrencyEnum currency = CurrencyEnum.UY;
-        TypeEnum type = TypeEnum.Income;
-
-        Transaction myTransaction = new Transaction(title, amount, currency, type, myCreditCardAccount, genericUser.MyCategories);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionValidateTransaction))]
-    public void GivenIncorrectTransactionThatBelongsToMonetaryAccount_ShouldThrowException()
-    {
-        genericCategory.Type = TypeEnum.Outcome;
-        genericUser.MyCategories.Add(genericCategory);
-
-        string title = "Payment of education";
-        DateTime date = DateTime.Now.Date;
-        decimal amount = 100;
-        CurrencyEnum currency = CurrencyEnum.UY;
-        TypeEnum type = TypeEnum.Income;
-
-        Transaction myTransaction = new Transaction(title, amount, currency, type, genericMonetaryAccount, genericUser.MyCategories);
-    }
-
-    #endregion
 }

@@ -1,10 +1,12 @@
 ﻿using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
+using BusinessLogic.Transaction_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Category_Components;
 
 namespace BusinessLogicTests
 {
@@ -217,6 +219,20 @@ namespace BusinessLogicTests
 
             Assert.AreEqual(numberOfAccountsAdded - 1, genericUser.GetAccounts().Count());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionAccountManagement))]
+        public void GivenAccountWithTransactionsToDelete_ShouldThrowException()
+        {
+            Category myCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            Transaction myTransaction = new Transaction("Payments", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, myCategory);
+            genericUser.AddAccount(genericMonetaryAccount);
+
+            genericMonetaryAccount.AddTransaction(myTransaction);
+
+            genericUser.DeleteAccount(genericMonetaryAccount);
+        }
+
         #endregion
 
     }

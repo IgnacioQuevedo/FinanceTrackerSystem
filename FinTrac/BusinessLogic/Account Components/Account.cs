@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Transaction_Components;
+using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.User_Components;
+
 
 namespace BusinessLogic.Account_Components
 {
@@ -101,6 +104,16 @@ namespace BusinessLogic.Account_Components
         }
 
         #endregion
+
+        #region Delete Transactions
+
+        public void DeleteTransaction(Transaction transactionToDelete)
+        {
+            MyTransactions.Remove(transactionToDelete);
+        }
+
+        #endregion
+
 
         #endregion
 

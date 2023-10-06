@@ -22,10 +22,7 @@ namespace BusinessLogic.Transaction_Components
 
         public TypeEnum Type { get; set; }
 
-        public Account Account { get; set; }
-
-        public List<Category> MyCategories { get; set; }
-
+        public Category TransactionCategory { get; set; }
         public int TransactionId { get; set; } = -1;
 
         #endregion
@@ -35,19 +32,18 @@ namespace BusinessLogic.Transaction_Components
         {
         }
 
-        public Transaction(string title, decimal amount, CurrencyEnum currency, TypeEnum type, Account account, List<Category> myCategories)
+        public Transaction(string title, decimal amount, DateTime date, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
+
         {
             Title = title;
             Amount = amount;
             Currency = currency;
             Type = type;
-            Account = account;
-            MyCategories = myCategories;
+            TransactionCategory = transactionCategory;
+            CreationDate = date;
 
             ValidateTitle();
-            ValidateAccount();
             ValidateAmount();
-            ValidateListOfCategories();
         }
 
         #endregion
@@ -62,20 +58,6 @@ namespace BusinessLogic.Transaction_Components
         }
         #endregion
 
-        #region Validate Account
-
-        public void ValidateAccount()
-        {
-            bool typeIsIncome = (Type == TypeEnum.Income);
-
-            if (Account is CreditCardAccount && typeIsIncome)
-            {
-                throw new ExceptionValidateTransaction("Transaction of type income can't be associated to a credit account");
-            }
-        }
-
-        #endregion
-
         #region Validate Amount
         public void ValidateAmount()
         {
@@ -88,57 +70,18 @@ namespace BusinessLogic.Transaction_Components
         }
         #endregion
 
-        #region Validate List of Categories
-
-        public void ValidateListOfCategories()
+        public void ValidateCategory()
         {
-            bool isNotValidList = !ValidateAllCategoriesAreEnabled() || !ValidateAllCategoriesBelongToTypeOfTransaction() || !ValidateEmptyList();
-
-            if (isNotValidList)
+            if (IsDisabledCategory() || TransactionCategory.Type != Type)
             {
-                throw new ExceptionValidateTransaction("Error");
+                throw new ExceptionValidateTransaction("Error: Category can't be disabled");
             }
-
-        }
-        private bool ValidateEmptyList()
-        {
-            if (MyCategories.Count == 0)
-            {
-                return false;
-            }
-            return true;
         }
 
-        private bool ValidateAllCategoriesBelongToTypeOfTransaction()
+        private bool IsDisabledCategory()
         {
-            bool allCategoriesAreIncome = false;
-            bool allCategoriesAreOutcome = false;
-
-            if (Type is TypeEnum.Income)
-            {
-                allCategoriesAreIncome = MyCategories.All(c => c.Type == TypeEnum.Income);
-                if (allCategoriesAreIncome)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                allCategoriesAreOutcome = MyCategories.All(c => c.Type == TypeEnum.Outcome);
-                if (allCategoriesAreOutcome)
-                {
-                    return true;
-                }
-            }
-            return false;
-
-        }
-        private bool ValidateAllCategoriesAreEnabled()
-        {
-            bool allCategoriesAreEnabled = MyCategories.All(c => c.Status == StatusEnum.Enabled);
-            return allCategoriesAreEnabled;
+            return TransactionCategory.Status == StatusEnum.Disabled;
         }
 
-        #endregion
     }
 }
