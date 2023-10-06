@@ -119,7 +119,7 @@ public class CategoryTests
     public void GivenCategoryToAdd_ShouldAssignId()
     {
         genericUser.AddCategory(genericCategory);
-        Assert.AreEqual(genericUser.MyCategories.Count, genericCategory.CategoryId);
+        Assert.AreEqual(genericUser.MyCategories.Count -1, genericCategory.CategoryId);
     }
 
     [TestMethod]
@@ -140,7 +140,7 @@ public class CategoryTests
 
         anotherCategory.CategoryId = genericCategory.CategoryId;
         genericUser.ModifyCategory(anotherCategory);
-        int indexOfCategoryToUpdate = genericCategory.CategoryId - 1;
+        int indexOfCategoryToUpdate = genericCategory.CategoryId;
 
         Assert.AreEqual(anotherCategory, genericUser.MyCategories[indexOfCategoryToUpdate]);
     }
