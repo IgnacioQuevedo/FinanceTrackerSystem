@@ -61,7 +61,7 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public static bool HaveExchanges(User loggedUser)
         {
-            return false;
+            return true;
         }
     }
 }

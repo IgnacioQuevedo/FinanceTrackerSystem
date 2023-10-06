@@ -116,7 +116,7 @@ public class ExchangeHistoryTests
     [TestMethod]
     public void GivenUser_ShouldReturnTrueIfThereAreExchangesRegistered()
     {
-        User myUser = new User("Rodrigo", "Martinez", "gag@gmail.com", "12345647888", "Nort ave 33");
+        User myUser = new User("Rodrigo", "Martinez", "gag@gmail.com", "12345A47888", "Nort ave 33");
         myUser.MyExchangesHistory.Add(genericExchange);
         Assert.AreEqual(true, ExchangeHistory.HaveExchanges(myUser));
     }
