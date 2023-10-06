@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Account_Components;
+using BusinessLogic.User_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,8 @@ namespace BusinessLogic.ExchangeHistory_Components
         #region Constructor
         public ExchangeHistory() { }
 
-        public ExchangeHistory(CurrencyEnum currency, decimal value, DateTime valueDate) 
-        { 
+        public ExchangeHistory(CurrencyEnum currency, decimal value, DateTime valueDate)
+        {
             Currency = currency;
             Value = value;
             ValueDate = valueDate;
@@ -57,5 +58,10 @@ namespace BusinessLogic.ExchangeHistory_Components
 
 
         #endregion
+
+        public static bool HaveExchanges(User loggedUser)
+        {
+            return false;
+        }
     }
 }
