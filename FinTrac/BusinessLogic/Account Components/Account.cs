@@ -7,6 +7,7 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.User_Components;
 
+
 namespace BusinessLogic.Account_Components
 {
     public abstract class Account
@@ -112,6 +113,7 @@ namespace BusinessLogic.Account_Components
         }
 
         #endregion
+
 
         #endregion
 

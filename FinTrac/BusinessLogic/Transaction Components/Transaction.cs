@@ -23,7 +23,6 @@ namespace BusinessLogic.Transaction_Components
         public TypeEnum Type { get; set; }
 
         public Category TransactionCategory { get; set; }
-
         public int TransactionId { get; set; } = -1;
 
         #endregion
@@ -34,6 +33,7 @@ namespace BusinessLogic.Transaction_Components
         }
 
         public Transaction(string title, decimal amount, DateTime date, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
+
         {
             Title = title;
             Amount = amount;
@@ -82,5 +82,6 @@ namespace BusinessLogic.Transaction_Components
         {
             return TransactionCategory.Status == StatusEnum.Disabled;
         }
+
     }
 }
