@@ -29,11 +29,6 @@ public class TransactionTests
         TypeEnum typeCategory = TypeEnum.Income;
         genericCategory = new Category(nameCategory, statusCategory, typeCategory);
 
-        string name2 = "Food";
-        StatusEnum status2 = StatusEnum.Enabled;
-        TypeEnum type2 = TypeEnum.Outcome;
-        genericCategory2 = new Category(name2, status2, type2);
-
         genericTransaction = new Transaction();
         genericTransaction.Title = "Title";
         genericTransaction.CreationDate = DateTime.Now.Date;
@@ -41,26 +36,10 @@ public class TransactionTests
         genericTransaction.Currency = CurrencyEnum.UY;
         genericTransaction.Type = TypeEnum.Income;
 
-        myCreditCardAccount = new CreditCardAccount();
-        myCreditCardAccount.Name = "Scotia Credit Card";
-        myCreditCardAccount.Currency = CurrencyEnum.UY;
-        myCreditCardAccount.IssuingBank = "Santander";
-        myCreditCardAccount.Last4Digits = "1233";
-        myCreditCardAccount.AvailableCredit = 15000;
-        myCreditCardAccount.ClosingDate = new DateTime(2023, 11, 1);
-
         genericMonetaryAccount = new MonetaryAccount();
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
         genericMonetaryAccount.Ammount = 10;
-
-        string firstName = "Austin";
-        string lastName = "Ford";
-        string email = "austinFord@gmail.com";
-        string password = "Austin1980";
-        string address = "East 25 Av";
-        genericUser = new User(firstName, lastName, email, password, address);
-        genericUser.MyCategories.Add(genericCategory);
     }
     #endregion
 
