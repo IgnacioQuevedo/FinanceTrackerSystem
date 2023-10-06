@@ -9,7 +9,8 @@ namespace DataManagersTests
     {
 
 
-        #region initializingAspects
+        #region Initialize
+
         private User genericUser;
         private UserManagement userManager;
         private Repository memoryDatabase;
@@ -31,7 +32,7 @@ namespace DataManagersTests
 
         #endregion
 
-        #region AddUser
+        #region Add User
 
         [TestMethod]
 
@@ -83,7 +84,7 @@ namespace DataManagersTests
         }
         #endregion
 
-        #region LoginUser
+        #region Login User
 
         [TestMethod]
 
@@ -102,7 +103,7 @@ namespace DataManagersTests
 
         #endregion
 
-        #region UserModify
+        #region User Modify
 
         [TestMethod]
         public void GivenAspectsOfUserToChange_ShouldBeChanged()
@@ -126,14 +127,12 @@ namespace DataManagersTests
 
         #endregion
 
-        #region IdUser
+        #region User Id
 
         [TestMethod]
         public void GivenUserToAdd_ShouldGenerateAnId()
         {
-            //The id is the ammount of users because we already added the user on the initialized section.
-            int ammountOfUsers = memoryDatabase.Users.Count;
-            Assert.AreEqual(genericUser.UserId, ammountOfUsers);
+            Assert.AreEqual(genericUser.UserId, memoryDatabase.Users.Count -1);
         }
 
         #endregion

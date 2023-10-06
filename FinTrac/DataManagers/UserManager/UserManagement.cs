@@ -21,7 +21,7 @@ namespace DataManagers.UserManager
             if (ValidateAddUser(user))
             {
                 FormatUserProperties(user);
-                user.UserId = _memoryDatabase.Users.Count + 1;
+                user.UserId = _memoryDatabase.Users.Count;
                 _memoryDatabase.Users.Add(user);
             }
         }
