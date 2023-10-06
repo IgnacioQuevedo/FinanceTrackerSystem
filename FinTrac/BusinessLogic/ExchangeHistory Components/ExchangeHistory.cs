@@ -61,6 +61,10 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public static bool HaveExchanges(User loggedUser)
         {
+            if (loggedUser.MyExchangesHistory.Count == 0)
+            {
+                return false;
+            }
             return true;
         }
     }
