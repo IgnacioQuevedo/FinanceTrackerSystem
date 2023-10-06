@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Transaction_Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

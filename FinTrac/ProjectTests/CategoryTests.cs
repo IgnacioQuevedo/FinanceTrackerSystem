@@ -1,7 +1,8 @@
 using BusinessLogic;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
-
+using BusinessLogic.Account_Components;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using System.Net.Security;
 using BusinessLogic.User_Components;
@@ -20,7 +21,7 @@ public class CategoryTests
     {
         string name = "Outcomes";
         StatusEnum status = (StatusEnum)1;
-        TypeEnum type = (TypeEnum)1;
+        TypeEnum type = TypeEnum.Income;
         genericCategory = new Category(name, status, type);
 
         string firstName = "Austin";
@@ -156,6 +157,20 @@ public class CategoryTests
         int actualLength = genericUser.MyCategories.Count;
         Assert.AreEqual(actualLength, lengthAfterDelete);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionCategoryManagement))]
+    public void GivenCategoryToDeleteThatHasAssociatedTransactions_ShoulThrowException()
+    {
+        MonetaryAccount myMonetaryAccount = new MonetaryAccount("Saving Bank", 1000, CurrencyEnum.UY);
+        Transaction myTransaction = new Transaction("Payments", 10000, DateTime.Now, CurrencyEnum.UY, TypeEnum.Income, genericCategory);
+
+        genericUser.AddAccount(myMonetaryAccount);
+        genericUser.MyAccounts[0].AddTransaction(myTransaction);
+        genericUser.DeleteCategory(genericCategory);
+
+    }
+
 
     #endregion
 }
