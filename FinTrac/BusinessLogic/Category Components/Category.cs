@@ -9,7 +9,7 @@ namespace BusinessLogic.Category_Components
     public class Category
     {
         #region Properties
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; } = -1;
         public string Name { get; set; } = "";
         public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
         public StatusEnum Status { get; set; }

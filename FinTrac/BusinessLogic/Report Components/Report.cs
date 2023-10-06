@@ -8,37 +8,69 @@ using BusinessLogic.Category_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.Goal_Components;
 
 namespace BusinessLogic.Report_Components
 {
     public abstract class Report
     {
-        public static void ConvertDolar(Transaction myTransaction, User loggedUser)
+
+        public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)
         {
             bool found = false;
             decimal dolarValue = 0;
             DateTime bestDate = DateTime.MinValue;
-            if (myTransaction.Currency == CurrencyEnum.USA)
+            foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
             {
-                foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
+                if (exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate && !found)
                 {
-                    if (exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate && !found)
+                    if (exchange.ValueDate == myTransaction.CreationDate)
                     {
-                        if (exchange.ValueDate == myTransaction.CreationDate)
+                        found = true;
+                        bestDate = exchange.ValueDate;
+                        dolarValue = exchange.Value;
+                    }
+                    else
+                    {
+                        bestDate = exchange.ValueDate;
+                        dolarValue = exchange.Value;
+                    }
+                }
+            }
+            return myTransaction.Amount * dolarValue;
+        }
+
+        public static decimal[] SpendingsPerCategory(User loggedUser)
+        {
+            decimal[] spendings = new decimal[loggedUser.MyCategories.Count];
+            decimal amountConverted = 0;
+
+            foreach (var account in loggedUser.MyAccounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if (transaction.CreationDate.Month == DateTime.Now.Month)
+                    {
+                        if (transaction.TransactionCategory.Type == TypeEnum.Outcome)
                         {
-                            found = true;
-                            bestDate = exchange.ValueDate;
-                            dolarValue = exchange.Value;
-                        }
-                        else
-                        {
-                            bestDate = exchange.ValueDate;
-                            dolarValue = exchange.Value;
+                            if (transaction.Currency == Account_Components.CurrencyEnum.USA)
+                            {
+                                amountConverted = ConvertDolar(transaction, loggedUser);
+                                spendings[transaction.TransactionCategory.CategoryId] += amountConverted;
+                            }
+                            else
+                            {
+                                spendings[transaction.TransactionCategory.CategoryId] += transaction.Amount;
+                            }
                         }
                     }
                 }
-                myTransaction.Amount = myTransaction.Amount * dolarValue;
             }
+            return spendings;
         }
+
     }
 }
+
+
+

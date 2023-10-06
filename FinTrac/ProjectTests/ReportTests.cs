@@ -19,7 +19,10 @@ public class ReportTests
     private ExchangeHistory genericExchangeHistory3;
     private ExchangeHistory genericExchangeHistory4;
     private Category genericCategory;
+    private Category genericCategory2;
     private Transaction genericTransaction;
+    private Goal goalFood;
+    private Goal goalParty;
 
     [TestInitialize]
     public void Initialize()
@@ -40,7 +43,31 @@ public class ReportTests
         loggedUser.AddExchangeHistory(genericExchangeHistory4);
 
         genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-        genericTransaction = new Transaction("Payment of food", 100, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
+        genericCategory2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+
+        Account myMonetaryAcount = new MonetaryAccount("Brou Savings", 1000, CurrencyEnum.UY);
+
+        loggedUser.AddAccount(myMonetaryAcount);
+
+        genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
+
+        myMonetaryAcount.AddTransaction(genericTransaction);
+
+        genericTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+
+        myMonetaryAcount.AddTransaction(genericTransaction);
+
+        loggedUser.AddCategory(genericCategory);
+        loggedUser.AddCategory(genericCategory2);
+
+        List<Category> myCategoriesForGoal = new List<Category>() { loggedUser.MyCategories[0] };
+
+        goalFood = new Goal("Less food", 100, myCategoriesForGoal);
+
+        myCategoriesForGoal = new List<Category>() { loggedUser.MyCategories[1] };
+
+        goalParty = new Goal("Less party", 400, myCategoriesForGoal);
+
     }
 
 
@@ -49,10 +76,20 @@ public class ReportTests
     {
         Report.ConvertDolar(genericTransaction, loggedUser);
 
-        decimal convertionNeeded = 100 * 38.9M;
+        decimal convertionNeeded = 200 * 38.9M;
 
-        Assert.AreEqual(convertionNeeded, genericTransaction.Amount);
+        Assert.AreEqual(convertionNeeded, Report.ConvertDolar(genericTransaction, loggedUser));
     }
 
+    [TestMethod]
+    public void GivenUser_ShouldBePossibleToRegisterAllSpendingsPerCategory()
+    {
+        decimal[] arrayNeeded = new decimal[2];
+        arrayNeeded[0] = 3890;
+        arrayNeeded[1] = 200;
+        decimal[] arrayObtained = Report.SpendingsPerCategory(loggedUser);
+
+        Assert.AreEqual(arrayNeeded, arrayObtained);
+    }
 
 }
