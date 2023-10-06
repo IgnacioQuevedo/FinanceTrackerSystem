@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Transaction_Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -242,7 +243,28 @@ namespace BusinessLogic.User_Components
 
         public void DeleteCategory(Category categoryToDelete)
         {
+            ValidateIfCategoryHasTransactions(categoryToDelete);
             MyCategories.Remove(categoryToDelete);
+        }
+
+        private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
+        {
+            bool founded = false;
+            foreach (Account account in MyAccounts)
+            {
+                foreach (Transaction transaction in account.MyTransactions)
+                {
+                    if (transaction.TransactionCategory == categoryToDelete)
+                    {
+                        founded = true;
+                        break;
+                    }
+                }
+            }
+            if (founded)
+            {
+                throw new ExceptionCategoryManagement("Error: You can't delete this category because is being used in a transaction");
+            }
         }
 
         #endregion
