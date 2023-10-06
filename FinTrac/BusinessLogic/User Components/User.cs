@@ -18,7 +18,7 @@ namespace BusinessLogic.User_Components
     public class User
     {
         #region Properties
-        public long UserId { get; set; }
+        public long UserId { get; set; } = -1;
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
@@ -32,7 +32,6 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region Constructors
-
 
         public User()
         {
@@ -57,6 +56,8 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #region User Management
+        
         #region Validate User
 
         private bool ValidateUser()
@@ -183,6 +184,8 @@ namespace BusinessLogic.User_Components
         }
         #endregion
 
+        #endregion
+
         #region Category Management
 
         #region Add Category
@@ -196,7 +199,7 @@ namespace BusinessLogic.User_Components
 
         private void setCategoryId(Category categoryToAdd)
         {
-            categoryToAdd.CategoryId = MyCategories.Count + 1;
+            categoryToAdd.CategoryId = MyCategories.Count;
         }
 
         private void ValidateRegisteredCategory(Category categoryToAdd)
@@ -284,13 +287,11 @@ namespace BusinessLogic.User_Components
             SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
-        #endregion
-
-        #region SetAccountOfId
         private void SetAccountId(Account accountToAdd)
         {
             accountToAdd.AccountId = MyAccounts.Count;
         }
+ 
         #endregion
 
         #region GetAccounts
@@ -404,7 +405,7 @@ namespace BusinessLogic.User_Components
 
         private void SettingGoalId(Goal goalToAdd)
         {
-            goalToAdd.GoalId = MyGoals.Count + 1;
+            goalToAdd.GoalId = MyGoals.Count;
         }
 
         #endregion
