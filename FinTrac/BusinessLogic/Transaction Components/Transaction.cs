@@ -70,6 +70,7 @@ namespace BusinessLogic.Transaction_Components
         }
         #endregion
 
+        #region Validate Category
         public void ValidateCategory()
         {
             if (IsDisabledCategory() || TransactionCategory.Type != Type)
@@ -82,6 +83,8 @@ namespace BusinessLogic.Transaction_Components
         {
             return TransactionCategory.Status == StatusEnum.Disabled;
         }
+
+        #endregion
 
     }
 }
