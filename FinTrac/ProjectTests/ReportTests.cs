@@ -89,7 +89,8 @@ public class ReportTests
         arrayNeeded[1] = 200;
         decimal[] arrayObtained = Report.SpendingsPerCategory(loggedUser);
 
-        Assert.AreEqual(arrayNeeded, arrayObtained);
+        Assert.AreEqual(arrayNeeded[0], arrayObtained[0]);
+        Assert.AreEqual(arrayNeeded[1], arrayObtained[1]);
     }
 
 }

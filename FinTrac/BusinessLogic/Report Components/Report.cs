@@ -42,31 +42,7 @@ namespace BusinessLogic.Report_Components
 
         public static decimal[] SpendingsPerCategory(User loggedUser)
         {
-            decimal[] spendings = new decimal[loggedUser.MyCategories.Count];
-            decimal amountConverted = 0;
-
-            foreach (var account in loggedUser.MyAccounts)
-            {
-                foreach (var transaction in account.MyTransactions)
-                {
-                    if (transaction.CreationDate.Month == DateTime.Now.Month)
-                    {
-                        if (transaction.TransactionCategory.Type == TypeEnum.Outcome)
-                        {
-                            if (transaction.Currency == Account_Components.CurrencyEnum.USA)
-                            {
-                                amountConverted = ConvertDolar(transaction, loggedUser);
-                                spendings[transaction.TransactionCategory.CategoryId] += amountConverted;
-                            }
-                            else
-                            {
-                                spendings[transaction.TransactionCategory.CategoryId] += transaction.Amount;
-                            }
-                        }
-                    }
-                }
-            }
-            return spendings;
+            throw new NotImplementedException();
         }
 
     }
