@@ -122,6 +122,12 @@ public class ReportTests
 
     }
 
+    [TestMethod]
+    public void GivenUser_ShouldReturnAllSpendingsPerCategoryWithPercentajes()
+    {
+        Report.GiveAllSpendingsPerCategoryDetailed(loggedUser, (MonthsEnum)DateTime.Now.Month);
+    }
+
 
 
 }

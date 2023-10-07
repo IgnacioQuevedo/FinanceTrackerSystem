@@ -100,7 +100,16 @@ namespace BusinessLogic.Report_Components
             }
             return listOfSpendingsResumes;
         }
+
+        #region PARTE B
+        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
+
 
     public class ResumeOfGoalReport
     {
@@ -115,6 +124,22 @@ namespace BusinessLogic.Report_Components
             GoalAchieved = goalAchieved;
         }
     }
+
+    public class ResumeOfSpendigsReport
+    {
+        public Category CategoryRelated { get; set; }
+        public decimal TotalSpentInCategory { get; set; }
+        public decimal PercentajeOfTotal { get; set; }
+
+        public ResumeOfSpendigsReport(Category categoryRelated, decimal totalSpent, decimal percentajeOfTotal)
+        {
+            CategoryRelated = categoryRelated;
+            TotalSpentInCategory = totalSpent;
+            PercentajeOfTotal = percentajeOfTotal;
+        }
+
+    }
+
 }
 
 
