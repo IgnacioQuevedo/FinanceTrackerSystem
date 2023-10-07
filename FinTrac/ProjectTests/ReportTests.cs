@@ -149,7 +149,7 @@ public class ReportTests
 
         Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
-        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023 / 09 / 08), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
         loggedUser.AddAccount(credit);
 
@@ -158,6 +158,9 @@ public class ReportTests
 
 
         List<Transaction> listObtained = Report.ReportOfSpendingsPerCard(credit);
+
+        Assert.AreEqual(myTransaction, listObtained[0]);
+        Assert.AreEqual(myTransaction2, listObtained[1]);
 
     }
 

@@ -96,7 +96,18 @@ namespace BusinessLogic.Report_Components
 
         public static List<Transaction> ReportOfSpendingsPerCard(CreditCardAccount creditCard)
         {
-            throw new NotImplementedException();
+            DateTime dateTimInit = new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1, creditCard.CreationDate.Day + 1);
+            List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
+            foreach (var transaction in creditCard.MyTransactions)
+            {
+                if (transaction.Type == TypeEnum.Outcome)
+
+                    if (transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0)
+                    {
+                        listOfAllOutcomeTransactions.Add(transaction);
+                    }
+            }
+            return listOfAllOutcomeTransactions;
         }
 
 
