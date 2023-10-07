@@ -49,19 +49,34 @@ namespace BusinessLogic.Report_Components
                         && transaction.TransactionCategory.Type == TypeEnum.Outcome)
                     {
                         decimal amountToAdd = ConvertDolar(transaction, loggedUser);
-                        spendings[transaction.TransactionCategory.CategoryId] += amountToAdd;
-                        if (transaction.Type == TypeEnum.Income)
-                        {
-                            spendings[spendings.Length - 2] += amountToAdd;
-                        }
-                        else
-                        {
-                            spendings[spendings.Length - 1] += amountToAdd;
-                        }
+                        LoadArray(spendings, transaction, amountToAdd);
                     }
                 }
             }
             return spendings;
+        }
+        private static void LoadArray(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
+        {
+            LoadPerCategory(arrayToLoad, transaction, amountToAdd);
+            LoadTotalsInArray(arrayToLoad, transaction, amountToAdd);
+
+        }
+
+        private static void LoadTotalsInArray(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
+        {
+            if (transaction.Type == TypeEnum.Income)
+            {
+                arrayToLoad[arrayToLoad.Length - 2] += amountToAdd;
+            }
+            else
+            {
+                arrayToLoad[arrayToLoad.Length - 1] += amountToAdd;
+            }
+        }
+
+        private static void LoadPerCategory(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
+        {
+            arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
         }
     }
 }
