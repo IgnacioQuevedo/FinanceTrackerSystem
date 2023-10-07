@@ -104,7 +104,21 @@ namespace BusinessLogic.Report_Components
         #region PARTE B
         public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
         {
-            throw new NotImplementedException();
+            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
+            decimal totalSpentPerCategory = 0;
+            decimal percentajeOfTotal = 0;
+            Category categoryRelatedToSpending = new Category();
+            List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
+
+            foreach (var category in loggedUser.MyCategories)
+            {
+                totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
+                percentajeOfTotal = (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
+                categoryRelatedToSpending = category;
+                ResumeOfSpendigsReport myCategorySpendingsResume = new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+                listOfSpendingsResumes.Add(myCategorySpendingsResume);
+            }
+            return listOfSpendingsResumes;
         }
 
         #endregion
