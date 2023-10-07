@@ -92,17 +92,12 @@ namespace BusinessLogic.Report_Components
                 goalAchieved = true;
                 foreach (var category in myGoal.CategoriesOfGoal)
                 {
-                    totalSpent = spendingsPerCategory[category.CategoryId] + totalSpent;
-
+                    totalSpent += spendingsPerCategory[category.CategoryId];
                 }
-                if (totalSpent > myGoal.MaxAmountToSpend)
-                {
-                    goalAchieved = false;
-                }
+                if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
                 ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
                 listOfSpendingsResumes.Add(myResume);
             }
-
             return listOfSpendingsResumes;
         }
     }
