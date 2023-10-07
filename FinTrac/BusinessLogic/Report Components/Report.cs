@@ -79,9 +79,45 @@ namespace BusinessLogic.Report_Components
             arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
         }
 
-        public static void MonthlyReportPerGoal(User loggedUser)
+        public static List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
         {
-            throw new NotImplementedException();
+            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
+            decimal totalSpent = 0;
+            List<ResumeOfGoalReport> listOfSpendingsResumes = new List<ResumeOfGoalReport>();
+            bool goalAchieved = false;
+
+            foreach (var myGoal in loggedUser.MyGoals)
+            {
+                totalSpent = 0;
+                goalAchieved = true;
+                foreach (var category in myGoal.CategoriesOfGoal)
+                {
+                    totalSpent = spendingsPerCategory[category.CategoryId] + totalSpent;
+
+                }
+                if (totalSpent > myGoal.MaxAmountToSpend)
+                {
+                    goalAchieved = false;
+                }
+                ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
+                listOfSpendingsResumes.Add(myResume);
+            }
+
+            return listOfSpendingsResumes;
+        }
+    }
+
+    public class ResumeOfGoalReport
+    {
+        public decimal AmountDefined { get; set; }
+        public decimal TotalSpent { get; set; }
+        public bool GoalAchieved { get; set; }
+
+        public ResumeOfGoalReport(decimal amountDefined, decimal totalSpent, bool goalAchieved)
+        {
+            AmountDefined = amountDefined;
+            TotalSpent = totalSpent;
+            GoalAchieved = goalAchieved;
         }
     }
 }

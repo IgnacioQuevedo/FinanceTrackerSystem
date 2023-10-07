@@ -68,6 +68,9 @@ public class ReportTests
 
         goalParty = new Goal("Less party", 400, myCategoriesForGoal);
 
+        loggedUser.AddGoal(goalFood);
+        loggedUser.AddGoal(goalParty);
+
     }
 
 
@@ -110,7 +113,13 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldReturnReportOfGoals()
     {
-        Report.MonthlyReportPerGoal(loggedUser);
+        ResumeOfGoalReport resumeNeeded = new ResumeOfGoalReport(100, 100, true);
+        List<ResumeOfGoalReport> listObtained = Report.MonthlyReportPerGoal(loggedUser);
+
+        Assert.AreEqual(resumeNeeded.AmountDefined, listObtained[0].AmountDefined);
+        Assert.AreEqual(resumeNeeded.TotalSpent, listObtained[0].TotalSpent);
+        Assert.AreEqual(resumeNeeded.GoalAchieved, listObtained[0].GoalAchieved);
+
     }
 
 
