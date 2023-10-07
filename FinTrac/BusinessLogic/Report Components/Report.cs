@@ -96,18 +96,28 @@ namespace BusinessLogic.Report_Components
 
         public static List<Transaction> ReportOfSpendingsPerCard(CreditCardAccount creditCard)
         {
-            DateTime dateTimInit = new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1, creditCard.CreationDate.Day + 1);
+            DateTime dateTimInit = GetDateTimInit(creditCard);
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
             foreach (var transaction in creditCard.MyTransactions)
             {
                 if (transaction.Type == TypeEnum.Outcome)
 
-                    if (transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0)
+                    if (IsBetweenBalanceDates(creditCard, dateTimInit, transaction))
                     {
                         listOfAllOutcomeTransactions.Add(transaction);
                     }
             }
             return listOfAllOutcomeTransactions;
+        }
+
+        private static DateTime GetDateTimInit(CreditCardAccount creditCard)
+        {
+            return new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1, creditCard.CreationDate.Day + 1);
+        }
+
+        private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit, Transaction transaction)
+        {
+            return transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0;
         }
 
 
