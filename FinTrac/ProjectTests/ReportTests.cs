@@ -96,13 +96,15 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldBePossibleToRegisterTotalSpendingInTheEndOfArray()
     {
-        decimal[] arrayNeeded = new decimal[2];
+        decimal[] arrayNeeded = new decimal[4];
         arrayNeeded[0] = 100;
         arrayNeeded[1] = 7780;
+        arrayNeeded[2] = 0;
+        arrayNeeded[3] = 7880;
         decimal[] arrayObtained = Report.CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
 
-        Assert.AreEqual(arrayNeeded[0], arrayObtained[3]);
-        Assert.AreEqual(arrayNeeded[1], arrayObtained[3]);
+        Assert.AreEqual(arrayNeeded[2], arrayObtained[2]);
+        Assert.AreEqual(arrayNeeded[3], arrayObtained[3]);
     }
 
 

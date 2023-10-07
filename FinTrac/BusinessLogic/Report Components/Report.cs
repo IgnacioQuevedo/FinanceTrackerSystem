@@ -39,7 +39,7 @@ namespace BusinessLogic.Report_Components
 
         public static decimal[] CategorySpendings(User loggedUser, MonthsEnum monthSelected, List<Account> listOfAccounts)
         {
-            decimal[] spendings = new decimal[loggedUser.MyCategories.Count];
+            decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
 
             foreach (var account in listOfAccounts)
             {
@@ -50,6 +50,14 @@ namespace BusinessLogic.Report_Components
                     {
                         decimal amountToAdd = ConvertDolar(transaction, loggedUser);
                         spendings[transaction.TransactionCategory.CategoryId] += amountToAdd;
+                        if (transaction.Type == TypeEnum.Income)
+                        {
+                            spendings[spendings.Length - 2] += amountToAdd;
+                        }
+                        else
+                        {
+                            spendings[spendings.Length - 1] += amountToAdd;
+                        }
                     }
                 }
             }
