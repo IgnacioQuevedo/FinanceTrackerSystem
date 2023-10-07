@@ -113,12 +113,19 @@ namespace BusinessLogic.Report_Components
             foreach (var category in loggedUser.MyCategories)
             {
                 totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
-                percentajeOfTotal = (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
+                percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
+
                 ResumeOfSpendigsReport myCategorySpendingsResume = new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+
                 listOfSpendingsResumes.Add(myCategorySpendingsResume);
             }
             return listOfSpendingsResumes;
+        }
+
+        private static decimal CalulatePercent(decimal[] spendingsPerCategory, decimal totalSpentPerCategory)
+        {
+            return (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
         }
 
         #endregion
