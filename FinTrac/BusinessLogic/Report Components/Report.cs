@@ -77,13 +77,18 @@ namespace BusinessLogic.Report_Components
             {
                 foreach (var transaction in account.MyTransactions)
                 {
-                    if (transaction.Type == TypeEnum.Outcome)
-                    {
-                        listOfAllOutcomeTransactions.Add(transaction);
-                    }
+                    AddToListOfOutcomest(listOfAllOutcomeTransactions, transaction);
                 }
             }
             return listOfAllOutcomeTransactions;
+        }
+
+        private static void AddToListOfOutcomest(List<Transaction> listOfAllOutcomeTransactions, Transaction transaction)
+        {
+            if (transaction.Type == TypeEnum.Outcome)
+            {
+                listOfAllOutcomeTransactions.Add(transaction);
+            }
         }
 
 
