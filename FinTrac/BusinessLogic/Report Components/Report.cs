@@ -94,6 +94,8 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
+        #region Report Of Spendings For Credit Card
+
         public static List<Transaction> ReportOfSpendingsPerCard(CreditCardAccount creditCard)
         {
             DateTime dateTimInit = GetDateTimInit(creditCard);
@@ -120,6 +122,16 @@ namespace BusinessLogic.Report_Components
             return transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0;
         }
 
+        #endregion
+
+        #region Report Of Balance For Monetary Account
+
+        public static decimal GiveAccountBalance(MonetaryAccount account)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #region Methods used by reports
         public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)

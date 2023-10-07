@@ -23,6 +23,7 @@ public class ReportTests
     private Transaction genericTransaction;
     private Goal goalFood;
     private Goal goalParty;
+    private MonetaryAccount myMonetaryAccount;
 
     [TestInitialize]
     public void Initialize()
@@ -45,17 +46,17 @@ public class ReportTests
         genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
         genericCategory2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
 
-        Account myMonetaryAcount = new MonetaryAccount("Brou Savings", 1000, CurrencyEnum.UY);
+        myMonetaryAccount = new MonetaryAccount("Brou Savings", 1000, CurrencyEnum.UY);
 
-        loggedUser.AddAccount(myMonetaryAcount);
+        loggedUser.AddAccount(myMonetaryAccount);
 
         genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
-        myMonetaryAcount.AddTransaction(genericTransaction);
+        myMonetaryAccount.AddTransaction(genericTransaction);
 
         genericTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory2);
 
-        myMonetaryAcount.AddTransaction(genericTransaction);
+        myMonetaryAccount.AddTransaction(genericTransaction);
 
         loggedUser.AddCategory(genericCategory);
         loggedUser.AddCategory(genericCategory2);
@@ -162,6 +163,12 @@ public class ReportTests
         Assert.AreEqual(myTransaction, listObtained[0]);
         Assert.AreEqual(myTransaction2, listObtained[1]);
 
+    }
+
+    [TestMethod]
+    public void GivenMonetaryAccount_ShouldReportBalance()
+    {
+        Report.GiveAccountBalance(myMonetaryAccount);
     }
 
 
