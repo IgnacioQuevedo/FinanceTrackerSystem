@@ -78,6 +78,11 @@ namespace BusinessLogic.Report_Components
         {
             arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
         }
+
+        public static void MonthlyReportPerGoal(User loggedUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

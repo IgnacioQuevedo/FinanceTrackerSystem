@@ -107,6 +107,12 @@ public class ReportTests
         Assert.AreEqual(arrayNeeded[3], arrayObtained[3]);
     }
 
+    [TestMethod]
+    public void GivenUser_ShouldReturnReportOfGoals()
+    {
+        Report.MonthlyReportPerGoal(loggedUser);
+    }
+
 
 
 }
