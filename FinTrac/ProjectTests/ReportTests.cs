@@ -125,13 +125,19 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldReturnAllSpendingsPerCategoryWithPercentajes()
     {
-        decimal percent = (100.0M / 7880.0M)*100.0M;
+        decimal percent = (100.0M / 7880.0M) * 100.0M;
         ResumeOfSpendigsReport resumeNeeded = new ResumeOfSpendigsReport(genericCategory, 100, percent);
         List<ResumeOfSpendigsReport> listObtained = Report.GiveAllSpendingsPerCategoryDetailed(loggedUser, (MonthsEnum)DateTime.Now.Month);
 
         Assert.AreEqual(resumeNeeded.CategoryRelated, listObtained[0].CategoryRelated);
         Assert.AreEqual(resumeNeeded.TotalSpentInCategory, listObtained[0].TotalSpentInCategory);
         Assert.AreEqual(resumeNeeded.PercentajeOfTotal, listObtained[0].PercentajeOfTotal);
+    }
+
+    [TestMethod]
+    public void GivenUser_ShouldReturnListOfAllOutcomeTransactions()
+    {
+        Report.GiveAllOutcomeTransactions(loggedUser);
     }
 
 

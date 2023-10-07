@@ -41,6 +41,7 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region Report of all spendings per cateogry detailed
+
         public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
         {
             decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
@@ -68,6 +69,12 @@ namespace BusinessLogic.Report_Components
         }
 
         #endregion
+
+        public static List<Transaction> GiveAllOutcomeTransactions(User loggedUser)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #region Methods used by reports
         public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)
