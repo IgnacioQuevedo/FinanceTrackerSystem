@@ -137,7 +137,9 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldReturnListOfAllOutcomeTransactions()
     {
-        Report.GiveAllOutcomeTransactions(loggedUser);
+        List<Transaction> listObtained = Report.GiveAllOutcomeTransactions(loggedUser);
+        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[0], listObtained[0]);
+        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[1], listObtained[1]);
     }
 
 

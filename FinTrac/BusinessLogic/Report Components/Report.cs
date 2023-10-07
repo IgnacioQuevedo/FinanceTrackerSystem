@@ -72,7 +72,18 @@ namespace BusinessLogic.Report_Components
 
         public static List<Transaction> GiveAllOutcomeTransactions(User loggedUser)
         {
-            throw new NotImplementedException();
+            List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
+            foreach (var account in loggedUser.MyAccounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if (transaction.Type == TypeEnum.Outcome)
+                    {
+                        listOfAllOutcomeTransactions.Add(transaction);
+                    }
+                }
+            }
+            return listOfAllOutcomeTransactions;
         }
 
 
