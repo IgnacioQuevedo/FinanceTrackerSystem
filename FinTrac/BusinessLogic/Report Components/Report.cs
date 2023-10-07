@@ -128,7 +128,36 @@ namespace BusinessLogic.Report_Components
 
         public static decimal GiveAccountBalance(MonetaryAccount account)
         {
-            throw new NotImplementedException();
+            decimal initialMoney = account.Ammount;
+            decimal actualBalance = 0;
+            decimal accountBalance = 0;
+
+            foreach (var transaction in account.GetAllTransactions())
+            {
+                if (DateTime.Compare(transaction.CreationDate, DateTime.Now.Date) <= 0)
+                {
+                    if (transaction.Type == TypeEnum.Income)
+
+                    {
+                        actualBalance += transaction.Amount;
+                    }
+                    else
+                    {
+                        actualBalance -= transaction.Amount;
+                    }
+                }
+            }
+
+            if (actualBalance < 0)
+            {
+                accountBalance = initialMoney + actualBalance;
+            }
+            else
+            {
+                accountBalance = initialMoney - actualBalance;
+            }
+
+            return accountBalance;
         }
 
         #endregion
@@ -198,10 +227,7 @@ namespace BusinessLogic.Report_Components
             arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
         }
         #endregion
-
-
     }
-
 
     public class ResumeOfGoalReport
     {
@@ -231,8 +257,11 @@ namespace BusinessLogic.Report_Components
         }
 
     }
-
 }
+
+
+
+
 
 
 

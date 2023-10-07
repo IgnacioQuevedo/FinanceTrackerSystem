@@ -168,7 +168,10 @@ public class ReportTests
     [TestMethod]
     public void GivenMonetaryAccount_ShouldReportBalance()
     {
-        Report.GiveAccountBalance(myMonetaryAccount);
+       decimal balanceNeeded = 1000.0M - 200.0M - 100.0M;
+       decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount);
+
+       Assert.AreEqual(balanceNeeded, balanceObtained);
     }
 
 
