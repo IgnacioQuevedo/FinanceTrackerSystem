@@ -17,34 +17,44 @@ namespace BusinessLogic.Report_Components
 
         public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)
         {
-            bool found = false;
-            decimal dolarValue = 0;
-            DateTime bestDate = DateTime.MinValue;
-            foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
+            decimal amountToReturn = myTransaction.Amount;
+            if (myTransaction.Currency == CurrencyEnum.USA)
             {
-                if (exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate && !found)
+                bool found = false;
+                decimal dolarValue = 0;
+                DateTime bestDate = DateTime.MinValue;
+                foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
                 {
-                    if (exchange.ValueDate == myTransaction.CreationDate)
+                    if (!found && exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate)
                     {
-                        found = true;
                         bestDate = exchange.ValueDate;
                         dolarValue = exchange.Value;
+                        if (exchange.ValueDate == myTransaction.CreationDate) { found = true; }
                     }
-                    else
+                }
+                amountToReturn = myTransaction.Amount * dolarValue;
+            }
+            return amountToReturn;
+        }
+
+        public static decimal[] CategorySpendings(User loggedUser, MonthsEnum monthSelected, List<Account> listOfAccounts)
+        {
+            decimal[] spendings = new decimal[loggedUser.MyCategories.Count];
+
+            foreach (var account in listOfAccounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
+                        && transaction.TransactionCategory.Type == TypeEnum.Outcome)
                     {
-                        bestDate = exchange.ValueDate;
-                        dolarValue = exchange.Value;
+                        decimal amountToAdd = ConvertDolar(transaction, loggedUser);
+                        spendings[transaction.TransactionCategory.CategoryId] += amountToAdd;
                     }
                 }
             }
-            return myTransaction.Amount * dolarValue;
+            return spendings;
         }
-
-        public static decimal[] SpendingsPerCategory(User loggedUser)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
 

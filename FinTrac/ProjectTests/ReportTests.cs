@@ -49,11 +49,11 @@ public class ReportTests
 
         loggedUser.AddAccount(myMonetaryAcount);
 
-        genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
+        genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
         myMonetaryAcount.AddTransaction(genericTransaction);
 
-        genericTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+        genericTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory2);
 
         myMonetaryAcount.AddTransaction(genericTransaction);
 
@@ -85,9 +85,9 @@ public class ReportTests
     public void GivenUser_ShouldBePossibleToRegisterAllSpendingsPerCategory()
     {
         decimal[] arrayNeeded = new decimal[2];
-        arrayNeeded[0] = 3890;
-        arrayNeeded[1] = 200;
-        decimal[] arrayObtained = Report.SpendingsPerCategory(loggedUser);
+        arrayNeeded[0] = 100;
+        arrayNeeded[1] = 7780;
+        decimal[] arrayObtained = Report.CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
 
         Assert.AreEqual(arrayNeeded[0], arrayObtained[0]);
         Assert.AreEqual(arrayNeeded[1], arrayObtained[1]);
