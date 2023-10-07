@@ -131,7 +131,28 @@ namespace BusinessLogic.Report_Components
             decimal initialMoney = account.Ammount;
             decimal actualBalance = 0;
             decimal accountBalance = 0;
+            actualBalance = SummationOfTransactions(account, actualBalance);
+            accountBalance = CalculateBalance(initialMoney, actualBalance);
+            return accountBalance;
+        }
 
+        private static decimal CalculateBalance(decimal initialMoney, decimal actualBalance)
+        {
+            decimal accountBalance;
+            if (actualBalance < 0)
+            {
+                accountBalance = initialMoney + actualBalance;
+            }
+            else
+            {
+                accountBalance = initialMoney - actualBalance;
+            }
+
+            return accountBalance;
+        }
+
+        private static decimal SummationOfTransactions(MonetaryAccount account, decimal actualBalance)
+        {
             foreach (var transaction in account.GetAllTransactions())
             {
                 if (DateTime.Compare(transaction.CreationDate, DateTime.Now.Date) <= 0)
@@ -148,16 +169,7 @@ namespace BusinessLogic.Report_Components
                 }
             }
 
-            if (actualBalance < 0)
-            {
-                accountBalance = initialMoney + actualBalance;
-            }
-            else
-            {
-                accountBalance = initialMoney - actualBalance;
-            }
-
-            return accountBalance;
+            return actualBalance;
         }
 
         #endregion
@@ -229,6 +241,8 @@ namespace BusinessLogic.Report_Components
         #endregion
     }
 
+    #region Class for reports
+
     public class ResumeOfGoalReport
     {
         public decimal AmountDefined { get; set; }
@@ -257,6 +271,7 @@ namespace BusinessLogic.Report_Components
         }
 
     }
+    #endregion
 }
 
 
