@@ -13,6 +13,9 @@ namespace TestProject1;
 [TestClass]
 public class ReportTests
 {
+
+    #region Intializing Aspects
+
     private User loggedUser;
     private ExchangeHistory genericExchangeHistory;
     private ExchangeHistory genericExchangeHistory2;
@@ -74,6 +77,92 @@ public class ReportTests
 
     }
 
+    #endregion
+
+    #region Monthly Report Of Goals
+
+    [TestMethod]
+    public void GivenUser_ShouldReturnReportOfGoals()
+    {
+        ResumeOfGoalReport resumeNeeded = new ResumeOfGoalReport(100, 100, true);
+        List<ResumeOfGoalReport> listObtained = Report.MonthlyReportPerGoal(loggedUser);
+
+        Assert.AreEqual(resumeNeeded.AmountDefined, listObtained[0].AmountDefined);
+        Assert.AreEqual(resumeNeeded.TotalSpent, listObtained[0].TotalSpent);
+        Assert.AreEqual(resumeNeeded.GoalAchieved, listObtained[0].GoalAchieved);
+
+    }
+
+    #endregion
+
+    #region Report of all spendings per cateogry detailed
+
+    [TestMethod]
+    public void GivenUser_ShouldReturnAllSpendingsPerCategoryWithPercentajes()
+    {
+        decimal percent = (100.0M / 7880.0M) * 100.0M;
+        ResumeOfSpendigsReport resumeNeeded = new ResumeOfSpendigsReport(genericCategory, 100, percent);
+        List<ResumeOfSpendigsReport> listObtained = Report.GiveAllSpendingsPerCategoryDetailed(loggedUser, (MonthsEnum)DateTime.Now.Month);
+
+        Assert.AreEqual(resumeNeeded.CategoryRelated, listObtained[0].CategoryRelated);
+        Assert.AreEqual(resumeNeeded.TotalSpentInCategory, listObtained[0].TotalSpentInCategory);
+        Assert.AreEqual(resumeNeeded.PercentajeOfTotal, listObtained[0].PercentajeOfTotal);
+    }
+
+    #endregion
+
+    #region Report of All Outcome Transactions
+
+    [TestMethod]
+    public void GivenUser_ShouldReturnListOfAllOutcomeTransactions()
+    {
+        List<Transaction> listObtained = Report.GiveAllOutcomeTransactions(loggedUser);
+        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[0], listObtained[0]);
+        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[1], listObtained[1]);
+    }
+
+    #endregion
+
+    #region Report Of Spendings For Credit Card
+
+    [TestMethod]
+    public void GivenCreditCardAccount_ShouldGiveAReportOfSpendingsInTheRangeOfBalance()
+    {
+        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, "Brou", "1234", 1000, DateTime.Now);
+
+        Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+
+        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+
+        loggedUser.AddAccount(credit);
+
+        loggedUser.MyAccounts[1].AddTransaction(myTransaction);
+        loggedUser.MyAccounts[1].AddTransaction(myTransaction2);
+
+
+        List<Transaction> listObtained = Report.ReportOfSpendingsPerCard(credit);
+
+        Assert.AreEqual(myTransaction, listObtained[0]);
+        Assert.AreEqual(myTransaction2, listObtained[1]);
+
+    }
+
+    #endregion
+
+    #region Report Of Balance For Monetary Account
+
+    [TestMethod]
+    public void GivenMonetaryAccount_ShouldReportBalance()
+    {
+        decimal balanceNeeded = 1000.0M - 200.0M - 100.0M;
+        decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount);
+
+        Assert.AreEqual(balanceNeeded, balanceObtained);
+    }
+
+    #endregion
+
+    #region Methods Used By Reports
 
     [TestMethod]
     public void GivenTransactionInUSA_ShouldBeConvertedToUY()
@@ -111,69 +200,5 @@ public class ReportTests
         Assert.AreEqual(arrayNeeded[3], arrayObtained[3]);
     }
 
-    [TestMethod]
-    public void GivenUser_ShouldReturnReportOfGoals()
-    {
-        ResumeOfGoalReport resumeNeeded = new ResumeOfGoalReport(100, 100, true);
-        List<ResumeOfGoalReport> listObtained = Report.MonthlyReportPerGoal(loggedUser);
-
-        Assert.AreEqual(resumeNeeded.AmountDefined, listObtained[0].AmountDefined);
-        Assert.AreEqual(resumeNeeded.TotalSpent, listObtained[0].TotalSpent);
-        Assert.AreEqual(resumeNeeded.GoalAchieved, listObtained[0].GoalAchieved);
-
-    }
-
-    [TestMethod]
-    public void GivenUser_ShouldReturnAllSpendingsPerCategoryWithPercentajes()
-    {
-        decimal percent = (100.0M / 7880.0M) * 100.0M;
-        ResumeOfSpendigsReport resumeNeeded = new ResumeOfSpendigsReport(genericCategory, 100, percent);
-        List<ResumeOfSpendigsReport> listObtained = Report.GiveAllSpendingsPerCategoryDetailed(loggedUser, (MonthsEnum)DateTime.Now.Month);
-
-        Assert.AreEqual(resumeNeeded.CategoryRelated, listObtained[0].CategoryRelated);
-        Assert.AreEqual(resumeNeeded.TotalSpentInCategory, listObtained[0].TotalSpentInCategory);
-        Assert.AreEqual(resumeNeeded.PercentajeOfTotal, listObtained[0].PercentajeOfTotal);
-    }
-
-    [TestMethod]
-    public void GivenUser_ShouldReturnListOfAllOutcomeTransactions()
-    {
-        List<Transaction> listObtained = Report.GiveAllOutcomeTransactions(loggedUser);
-        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[0], listObtained[0]);
-        Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[1], listObtained[1]);
-    }
-
-    [TestMethod]
-    public void GivenCreditCardAccount_ShouldGiveAReportOfSpendingsInTheRangeOfBalance()
-    {
-        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, "Brou", "1234", 1000, DateTime.Now);
-
-        Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
-
-        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-
-        loggedUser.AddAccount(credit);
-
-        loggedUser.MyAccounts[1].AddTransaction(myTransaction);
-        loggedUser.MyAccounts[1].AddTransaction(myTransaction2);
-
-
-        List<Transaction> listObtained = Report.ReportOfSpendingsPerCard(credit);
-
-        Assert.AreEqual(myTransaction, listObtained[0]);
-        Assert.AreEqual(myTransaction2, listObtained[1]);
-
-    }
-
-    [TestMethod]
-    public void GivenMonetaryAccount_ShouldReportBalance()
-    {
-       decimal balanceNeeded = 1000.0M - 200.0M - 100.0M;
-       decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount);
-
-       Assert.AreEqual(balanceNeeded, balanceObtained);
-    }
-
-
-
+    #endregion
 }
