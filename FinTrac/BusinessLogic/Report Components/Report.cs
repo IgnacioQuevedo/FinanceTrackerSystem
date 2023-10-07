@@ -15,6 +15,61 @@ namespace BusinessLogic.Report_Components
     public abstract class Report
     {
 
+        #region Monthly report
+
+        public static List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
+        {
+            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
+            decimal totalSpent = 0;
+            List<ResumeOfGoalReport> listOfSpendingsResumes = new List<ResumeOfGoalReport>();
+            bool goalAchieved = false;
+
+            foreach (var myGoal in loggedUser.MyGoals)
+            {
+                totalSpent = 0;
+                goalAchieved = true;
+                foreach (var category in myGoal.CategoriesOfGoal)
+                {
+                    totalSpent += spendingsPerCategory[category.CategoryId];
+                }
+                if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
+                ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
+                listOfSpendingsResumes.Add(myResume);
+            }
+            return listOfSpendingsResumes;
+        }
+        #endregion
+
+        #region Report of all spendings per cateogry detailed
+        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
+        {
+            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
+            decimal totalSpentPerCategory = 0;
+            decimal percentajeOfTotal = 0;
+            Category categoryRelatedToSpending = new Category();
+            List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
+
+            foreach (var category in loggedUser.MyCategories)
+            {
+                totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
+                percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
+                categoryRelatedToSpending = category;
+
+                ResumeOfSpendigsReport myCategorySpendingsResume = new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+
+                listOfSpendingsResumes.Add(myCategorySpendingsResume);
+            }
+            return listOfSpendingsResumes;
+        }
+
+        private static decimal CalulatePercent(decimal[] spendingsPerCategory, decimal totalSpentPerCategory)
+        {
+            return (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
+        }
+
+        #endregion
+
+        #region Methods used by reports
         public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
@@ -78,57 +133,9 @@ namespace BusinessLogic.Report_Components
         {
             arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
         }
-
-        public static List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
-        {
-            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
-            decimal totalSpent = 0;
-            List<ResumeOfGoalReport> listOfSpendingsResumes = new List<ResumeOfGoalReport>();
-            bool goalAchieved = false;
-
-            foreach (var myGoal in loggedUser.MyGoals)
-            {
-                totalSpent = 0;
-                goalAchieved = true;
-                foreach (var category in myGoal.CategoriesOfGoal)
-                {
-                    totalSpent += spendingsPerCategory[category.CategoryId];
-                }
-                if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
-                ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
-                listOfSpendingsResumes.Add(myResume);
-            }
-            return listOfSpendingsResumes;
-        }
-
-        #region PARTE B
-        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
-        {
-            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
-            decimal totalSpentPerCategory = 0;
-            decimal percentajeOfTotal = 0;
-            Category categoryRelatedToSpending = new Category();
-            List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
-
-            foreach (var category in loggedUser.MyCategories)
-            {
-                totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
-                percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
-                categoryRelatedToSpending = category;
-
-                ResumeOfSpendigsReport myCategorySpendingsResume = new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
-
-                listOfSpendingsResumes.Add(myCategorySpendingsResume);
-            }
-            return listOfSpendingsResumes;
-        }
-
-        private static decimal CalulatePercent(decimal[] spendingsPerCategory, decimal totalSpentPerCategory)
-        {
-            return (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
-        }
-
         #endregion
+
+
     }
 
 
