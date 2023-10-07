@@ -142,6 +142,25 @@ public class ReportTests
         Assert.AreEqual(loggedUser.MyAccounts[0].MyTransactions[1], listObtained[1]);
     }
 
+    [TestMethod]
+    public void GivenCreditCardAccount_ShouldGiveAReportOfSpendingsInTheRangeOfBalance()
+    {
+        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, "Brou", "1234", 1000, DateTime.Now);
+
+        Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+
+        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023 / 09 / 08), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+
+        loggedUser.AddAccount(credit);
+
+        loggedUser.MyAccounts[1].AddTransaction(myTransaction);
+        loggedUser.MyAccounts[1].AddTransaction(myTransaction2);
+
+
+        List<Transaction> listObtained = Report.ReportOfSpendingsPerCard(credit);
+
+    }
+
 
 
 }

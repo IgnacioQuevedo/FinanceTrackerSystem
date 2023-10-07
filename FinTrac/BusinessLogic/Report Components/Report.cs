@@ -70,6 +70,7 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
+        #region Report of All Outcome Transactions
         public static List<Transaction> GiveAllOutcomeTransactions(User loggedUser)
         {
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
@@ -89,6 +90,13 @@ namespace BusinessLogic.Report_Components
             {
                 listOfAllOutcomeTransactions.Add(transaction);
             }
+        }
+
+        #endregion
+
+        public static List<Transaction> ReportOfSpendingsPerCard(CreditCardAccount creditCard)
+        {
+            throw new NotImplementedException();
         }
 
 
