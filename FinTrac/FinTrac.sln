@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicTests", "ProjectTests\BusinessLogicTests.csproj", "{BA1E578A-2005-48D6-951A-732E8584ADF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManagers", "DataManagers\DataManagers.csproj", "{9E6A30CE-7DEF-472C-B82E-EF0967C41069}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManagers", "DataManagers\DataManagers.csproj", "{9E6A30CE-7DEF-472C-B82E-EF0967C41069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManagersTests", "DataManagersTests\DataManagersTests.csproj", "{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManagersTests", "DataManagersTests\DataManagersTests.csproj", "{7CAC122B-0190-40BC-9E51-7ADFD27B06F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
