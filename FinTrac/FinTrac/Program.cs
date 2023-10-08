@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using DataManagers;
 using DataManagers.UserManager;
+using FinTrac.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddServerSideBlazor();
 
 //Repository is a singleton, because we want it to be initialized only one time in all the proyect.
 builder.Services.AddSingleton<Repository>();
+builder.Services.AddSingleton<UserLogged>();
+
 builder.Services.AddScoped<UserManagement>();
 
 
