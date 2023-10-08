@@ -7,8 +7,6 @@ namespace DataManagersTests
     [TestClass]
     public class UserManagementTests
     {
-
-
         #region Initialize
 
         private User genericUser;
@@ -135,8 +133,13 @@ namespace DataManagersTests
             Assert.AreEqual(genericUser.UserId, memoryDatabase.Users.Count -1);
         }
 
+        [TestMethod]
+
+        public void GivenUser_ShouldBePossibleToFoundId()
+        {
+            Assert.AreEqual(genericUser.UserId, userManager.FindUserId(genericUser));
+        }
+
         #endregion
-
-
     }
 }
