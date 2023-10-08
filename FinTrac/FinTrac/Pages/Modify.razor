@@ -1,5 +1,12 @@
 ﻿@page "/Modify";
 
+@using BusinessLogic.User_Components;
+@using DataManagers.UserManager;
+
+@inject NavigationManager NavigationManager;
+@inject UserManagement UserManagement;
+
+
 <div class="container">
     <h1>Edit Profile</h1>
     <hr>
@@ -19,33 +26,33 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" @value ="user.FirstName" @bind = "@firstName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" @value ="user.LastName" @bind="@lastName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" @value ="user.Password" @bind="@password">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Address:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" @value ="user.Address" @bind="@address">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" value="Save Changes">
+                        <input type="button" class="btn btn-primary" value="Save Changes" @onclick = "ModifyUser">
                         <span></span>
-                        <input type="reset" class="btn btn-default" value="Cancel">
+                        <input type="button" class="btn btn-default" value="Cancel" @onclick = "presetValues">
                     </div>
                 </div>
             </form>
@@ -56,6 +63,33 @@
 
 
 
-@code {
+@code 
+{
+    private string firstName;
+    private string lastName;
+    private string password;
+    private string address;
+
+
+    protected override void OnInitialized()
+    {
+        presetValues();
+    }
+
+    private void presetValues()
+    {
+
+
+
+    }
+
+    private void ModifyUser()
+    {
+
+        // User user = new User(firstName, lastName,email, password,address);
+
+        // UserManagement.ModifyUser(user,userToModify);
+        
+    }
 
 }
