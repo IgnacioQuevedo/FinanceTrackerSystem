@@ -15,7 +15,7 @@ namespace DataManagers.UserManager
         }
 
 
-        #region addUser
+        #region Add User
         public void AddUser(User user)
         {
             if (ValidateAddUser(user))
@@ -57,8 +57,6 @@ namespace DataManagers.UserManager
 
 
         #region Login
-
-
         public bool Login(User userToBeLogged)
         {
             bool existsUser = false;
@@ -115,8 +113,10 @@ namespace DataManagers.UserManager
 
         #endregion
 
-
-
+        public int FindUserId(User userToFind)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
