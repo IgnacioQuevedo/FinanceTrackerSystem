@@ -18,7 +18,7 @@ namespace BusinessLogic.User_Components
     public class User
     {
         #region Properties
-        public long UserId { get; set; } = -1;
+        public int UserId { get; set; } = -1;
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";

@@ -15,7 +15,7 @@ namespace DataManagers.UserManager
         }
 
 
-        #region addUser
+        #region Add User
         public void AddUser(User user)
         {
             if (ValidateAddUser(user))
@@ -57,8 +57,6 @@ namespace DataManagers.UserManager
 
 
         #region Login
-
-
         public bool Login(User userToBeLogged)
         {
             bool existsUser = false;
@@ -115,8 +113,22 @@ namespace DataManagers.UserManager
 
         #endregion
 
+        #region Find User Id
+        public int FindUserId(User userToFind)
+        {
+            int idExpected = -1;
 
+            foreach(var user in _memoryDatabase.Users)
+            {
+                if (user.Email.Equals(userToFind.Email.ToLower()))
+                {
+                    idExpected = user.UserId;
+                }
+            }
+            return idExpected;  
 
+        }
+        #endregion
     }
 
 }
