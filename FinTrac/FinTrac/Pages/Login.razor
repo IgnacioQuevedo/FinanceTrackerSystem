@@ -1,6 +1,11 @@
 ﻿@page "/";
 @layout LayoutForGuest;
 
+
+@using BusinessLogic.User_Components;
+@using DataManagers.UserManager;
+
+@inject UserManagement UserManagement;
 @inject NavigationManager NavigationManager;
 
 <PageTitle>Login</PageTitle>
@@ -25,19 +30,18 @@
 
                                     <div class="form-outline mb-4">
                                         <input type="email" id="form2Example11" class="form-control"
-                                               placeholder="Email address" />
+                                               placeholder="Email address" @bind-value = "user.Email"/>
                                         <label class="form-label" for="form2Example11">Email address</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example22" class="form-control" />
+                                        <input type="password" id="form2Example22" class="form-control" @bind-value = "user.Password"  />
                                         <label class="form-label" for="form2Example22">Password</label>
                                     </div>
 
                                     <div class="text-center pt-1 mb-5 pb-1">
-                                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">
-                                            Log
-                                            in
+                                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" @onclick = "LoginUser">
+                                            Log in
                                         </button>
                                         <a class="text-muted" href="#!">Forgot password?</a>
                                     </div>
@@ -71,5 +75,22 @@
 
 @code 
 {
+
+    private User user = new User();
+
+    public void LoginUser()
+    {
+
+        if (UserManagement.Login(user))
+        {
+            NavigationManager.NavigateTo("/Register");
+        }
+
+
+
+
+    }
+
+
 
 }
