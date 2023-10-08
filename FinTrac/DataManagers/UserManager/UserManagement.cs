@@ -115,7 +115,17 @@ namespace DataManagers.UserManager
 
         public int FindUserId(User userToFind)
         {
-            throw new NotImplementedException();
+            int idExpected = -1;
+
+            foreach(var user in _memoryDatabase.Users)
+            {
+                if (user.Email.Equals(userToFind.Email.ToLower()))
+                {
+                    idExpected = user.UserId;
+                }
+            }
+            return idExpected;  
+
         }
     }
 
