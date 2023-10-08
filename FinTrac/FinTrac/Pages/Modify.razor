@@ -26,33 +26,33 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" @value ="user.FirstName" @bind = "@firstName">
+                        <input class="form-control" type="text"  @bind = "@firstName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" @value ="user.LastName" @bind="@lastName">
+                        <input class="form-control" type="text"  @bind="@lastName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" @value ="user.Password" @bind="@password">
+                        <input class="form-control" type="text"  @bind="@password">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Address:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" @value ="user.Address" @bind="@address">
+                        <input class="form-control" type="text"  @bind="@address">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" value="Save Changes" @onclick = "ModifyUser">
+                        <input type="button" class="btn btn-primary" value="Save Changes" >
                         <span></span>
-                        <input type="button" class="btn btn-default" value="Cancel" @onclick = "presetValues">
+                        <input type="button" class="btn btn-default" value="Cancel">
                     </div>
                 </div>
             </form>
@@ -73,23 +73,24 @@
 
     protected override void OnInitialized()
     {
-        presetValues();
+        User user = new User("Ignacio", "Quevedo", "nachitoquevedo@gmail.com", "Nacho200304!","");
+        // presetValues();
     }
 
-    private void presetValues()
-    {
+    // private void presetValues()
+    // {
 
 
 
-    }
+    // }
 
-    private void ModifyUser()
-    {
+    // private void ModifyUser()
+    // {
 
-        // User user = new User(firstName, lastName,email, password,address);
+    //     // User user = new User(firstName, lastName,email, password,address);
 
-        // UserManagement.ModifyUser(user,userToModify);
+    //     // UserManagement.ModifyUser(user,userToModify);
         
-    }
+    // }
 
 }
