@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" @bind-value="password">
+                        <input class="form-control" type="password" @bind-value="password">
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,7 +53,7 @@
                     <div class="col-md-8">
                         <input type="button" class="btn btn-primary" value="Save Changes" @onclick ="ModifyUser">
                         <span></span>
-                        <input type="button" class="btn btn-default" value="Cancel">
+                        <input type="button" class="btn btn-default" value="Cancel" @onclick = "presetValues">
                     </div>
                 </div>
             </form>
