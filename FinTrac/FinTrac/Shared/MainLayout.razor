@@ -1,6 +1,14 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager;
+@using BusinessLogic.User_Components;
+@using DataManagers.UserManager;
+@using DataManagers;
+@using Data;
 
+@inject NavigationManager NavigationManager;
+@inject UserManagement UserManagement;
+@inject UserLogged UserLogged;
+@inject Repository MemoryDataBase;
 
 <PageTitle>FinTrac</PageTitle>
 
@@ -16,9 +24,23 @@
         </div>
 
         <article class="content px-4">
-            @Body
+            <CascadingValue Value = "mainUser">
+                @Body
+            </CascadingValue>
+            
         </article>
 
 
     </main>
 </div>
+
+@code{
+   
+
+    public User mainUser { get; set; }
+
+    protected override void OnInitialized()
+    {
+        mainUser = MemoryDataBase.Users[UserLogged.Id];
+    }
+}

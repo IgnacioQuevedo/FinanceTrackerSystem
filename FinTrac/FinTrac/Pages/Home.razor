@@ -1,13 +1,26 @@
 ﻿@page "/home";
 
+@using Data;
+
+
+@using BusinessLogic;
+@using BusinessLogic.User_Components;
+@using DataManagers.UserManager;
+@using DataManagers;
+
+@inject NavigationManager NavigationManager;
+@inject UserManagement UserManagement;
+
 
 <h3>Home</h3>
 
-@code 
+<p>@mainUser.Email</p>
+<p>@mainUser.FirstName</p>
+<p>@mainUser.Address</p>
 
+@code
 {
-
-
-
+    [CascadingParameter]
+    public User mainUser { get; set; }
 
 }

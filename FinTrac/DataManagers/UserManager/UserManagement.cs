@@ -55,7 +55,6 @@ namespace DataManagers.UserManager
         }
         #endregion
 
-
         #region Login
         public bool Login(User userToBeLogged)
         {
@@ -86,7 +85,6 @@ namespace DataManagers.UserManager
         }
 
         #endregion
-
 
         #region Modify
 

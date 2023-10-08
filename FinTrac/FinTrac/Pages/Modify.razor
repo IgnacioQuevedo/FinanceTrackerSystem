@@ -27,31 +27,31 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text"  @bind = "@firstName">
+                        <input class="form-control" type="text"  @bind-value = "firstName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Last name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text"  @bind="@lastName">
+                        <input class="form-control" type="text" @bind-value="lastName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Password:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text"  @bind="@password">
+                        <input class="form-control" type="text" @bind-value="password">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Address:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text"  @bind="@address">
+                        <input class="form-control" type="text" @bind-value="address">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" value="Save Changes" >
+                        <input type="button" class="btn btn-primary" value="Save Changes" @onclick ="ModifyUser">
                         <span></span>
                         <input type="button" class="btn btn-default" value="Cancel">
                     </div>
@@ -62,8 +62,6 @@
 </div>
 <hr>
 
-
-
 @code 
 {
     private string firstName;
@@ -71,27 +69,30 @@
     private string password;
     private string address;
 
+    [CascadingParameter]
+    private User user { get;set; }
+
 
     protected override void OnInitialized()
     {
-        User user = new User("Ignacio", "Quevedo", "nachitoquevedo@gmail.com", "Nacho200304!","");
-        // presetValues();
+        presetValues();
     }
 
-    // private void presetValues()
-    // {
+    private void presetValues()
+    {
+        firstName = user.FirstName;
+        lastName = user.LastName;
+        password = user.Password;
+        address = user.Address;
+    }
 
+    private void ModifyUser()
+    {
 
+        User userToModify = new User(firstName, lastName,user.Email,password,address);
 
-    // }
-
-    // private void ModifyUser()
-    // {
-
-    //     // User user = new User(firstName, lastName,email, password,address);
-
-    //     // UserManagement.ModifyUser(user,userToModify);
+        UserManagement.ModifyUser(user, userToModify);
         
-    // }
+    }
 
 }

@@ -4,9 +4,11 @@
 
 @using BusinessLogic.User_Components;
 @using DataManagers.UserManager;
+@using Data;
 
 @inject UserManagement UserManagement;
 @inject NavigationManager NavigationManager;
+@inject UserLogged UserLogged;
 
 <PageTitle>Login</PageTitle>
 
@@ -73,6 +75,7 @@
     </div>
 </section>
 
+
 @code 
 {
 
@@ -83,6 +86,9 @@
 
         if (UserManagement.Login(user))
         {
+
+            UserLogged.Id = UserManagement.FindUserId(user);
+
             NavigationManager.NavigateTo("/Home");
         }
     }
