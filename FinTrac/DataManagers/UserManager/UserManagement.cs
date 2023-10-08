@@ -113,6 +113,7 @@ namespace DataManagers.UserManager
 
         #endregion
 
+        #region Find User Id
         public int FindUserId(User userToFind)
         {
             int idExpected = -1;
@@ -127,6 +128,7 @@ namespace DataManagers.UserManager
             return idExpected;  
 
         }
+        #endregion
     }
 
 }
