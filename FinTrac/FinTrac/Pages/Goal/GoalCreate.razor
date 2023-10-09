@@ -22,12 +22,11 @@
     </div>
     <br />
 
-    <select class="form-select" aria-label="multiple select example" multiple
-    >
+    <select class="form-select" aria-label="multiple select example" multiple @onchange="OnChangeCategories">
 
         @foreach (var category in allCategoriesCreated)
         {
-            <option value="@category">@category.Name</option>
+            <option value="@category.CategoryId">@category.Name</option>
         }
 
     </select>
@@ -44,8 +43,6 @@
     private int maxAmount;
     private List<Category> categoriesAssignedToGoal;
     private List<Category> allCategoriesCreated;
-    private int categoryId;
-    private string categoryString;
 
     [CascadingParameter]
 
@@ -62,15 +59,22 @@
 
     private void SaveChanges()
     {
-
         goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
+        user.AddGoal(goalToCreate);
+        NavigationManager.NavigateTo("/Goals");
+    }
 
-   
+    public void OnChangeCategories(ChangeEventArgs e)
+    {
+        var stringValue = (string[])e.Value;
+        var categoriesSelected = new List<Category>();
 
-
-        categoriesAssignedToGoal.Add(user.MyCategories[categoryId]);
-
-
+        foreach (var stringId in stringValue)
+        {
+            var categorySelected = user.MyCategories[int.Parse(stringId)];
+            categoriesSelected.Add(categorySelected);
+        }
+        categoriesAssignedToGoal = categoriesSelected;
     }
 
 

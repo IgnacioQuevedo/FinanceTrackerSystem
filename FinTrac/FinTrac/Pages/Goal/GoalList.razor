@@ -30,7 +30,19 @@
             <tr>
                 <td>@goal.Title</td>
                 <td>@goal.MaxAmountToSpend</td>
-                <td>@goal.CategoriesOfGoal</td>
+
+                @for(int i=0;i<goal.CategoriesOfGoal.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        nestedCategoryNames = nestedCategoryNames + ", " + goal.CategoriesOfGoal[i].Name;
+                    }
+                    else
+                    {
+                        nestedCategoryNames = goal.CategoriesOfGoal[i].Name;
+                    }      
+                }
+                <td>@nestedCategoryNames</td>
             </tr>
         }
     </tbody>
@@ -38,6 +50,7 @@
 
 @code {
     private List<Goal>? categoryGoal;
+    private string nestedCategoryNames;
 
     [CascadingParameter]
     public User user { get; set; }
