@@ -1,0 +1,80 @@
+﻿@page "/Goal/GoalCreation"
+
+@using BusinessLogic.Goal_Components;
+@using BusinessLogic.Category_Components;
+
+<PageTitle>Goal Creation</PageTitle>
+
+<br />
+
+<h3>Goal Creation</h3>
+
+<form>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="Name" @bind="title" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="title">Max Amount To Spend</label>
+        <input type="number" class="form-control" id="Name" @bind="maxAmount" />
+    </div>
+    <br />
+
+    <select class="form-select" aria-label="multiple select example" multiple @onchange="OnChangeCategories">
+
+        @foreach (var category in allCategoriesCreated)
+        {
+            <option value="@category.CategoryId">@category.Name</option>
+        }
+
+    </select>
+
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+    <a href="/Goal">Cancelar</a>
+</form>
+
+
+@code
+{
+
+    private string title;
+    private int maxAmount;
+    private List<Category> categoriesAssignedToGoal;
+    private List<Category> allCategoriesCreated;
+
+    [CascadingParameter]
+
+    public User user { get; set; }
+
+    private Goal goalToCreate;
+
+
+    protected override void OnInitialized()
+    {
+        allCategoriesCreated = user.GetCategories();
+        categoriesAssignedToGoal = new List<Category>();
+    }
+
+    private void SaveChanges()
+    {
+        goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
+        user.AddGoal(goalToCreate);
+        NavigationManager.NavigateTo("/Goals");
+    }
+
+    public void OnChangeCategories(ChangeEventArgs elementSelected)
+    {
+        var stringValue = (string[])elementSelected.Value;
+        var categoriesSelected = new List<Category>();
+
+        foreach (var stringId in stringValue)
+        {
+            var categorySelected = user.MyCategories[int.Parse(stringId)];
+            categoriesSelected.Add(categorySelected);
+        }
+        categoriesAssignedToGoal = categoriesSelected;
+    }
+
+
+}
