@@ -40,8 +40,9 @@
     private string name;
     private decimal initialAmount;
     private CurrencyEnum currencyType;
+    private DateTime creationDate;
     private List<Account> accountList;
-    private Account accountToAdd;
+    private MonetaryAccount accountToAdd;
 
     [CascadingParameter]
     public User mainUser { get; set; }
@@ -50,12 +51,13 @@
     {
         currencyType = CurrencyEnum.UY;
         accountList = mainUser.GetAccounts();
+        creationDate = DateTime.Now.Date;
     }
 
     private void SaveChanges()
     {
-        accountToAdd = new MonetaryAccount(name, initialAmount, currencyType);
-        mainUser.AddAccount(accountToAdd);
+        accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
+        mainUser.AddMonetaryAccount(accountToAdd);
         NavigationManager.NavigateTo("/Accounts");
     }
 

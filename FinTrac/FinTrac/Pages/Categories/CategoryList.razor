@@ -24,7 +24,7 @@
         {
             <tr>
                 <td>@category.Name</td>
-                <td>@category.CreationDate</td>
+                <td>@GetFormattedDate(category.CreationDate)</td>
                 <td>@category.Status</td>
                 <td>@category.Type</td>
                 <td>
@@ -52,5 +52,12 @@
     {
         user.DeleteCategory(user.MyCategories[categoryId]);
     }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
 }
 

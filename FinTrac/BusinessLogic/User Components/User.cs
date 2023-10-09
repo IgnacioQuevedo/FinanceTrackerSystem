@@ -57,7 +57,7 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region User Management
-        
+
         #region Validate User
 
         private bool ValidateUser()
@@ -277,21 +277,37 @@ namespace BusinessLogic.User_Components
         #region Account Management
 
         #region AddAccount
-        public void AddAccount(Account accountToAdd)
+
+        public void AddMonetaryAccount(MonetaryAccount accountToAdd)
         {
             for (int i = 0; i < MyAccounts.Count; i++)
             {
-                ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
-                ValidateIssuingBankAnd4LastDigits(accountToAdd, MyAccounts[i]);
+                if (MyAccounts[i] is MonetaryAccount)
+                {
+                    ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
+                }
             }
             SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
+        public void AddCreditAccount(CreditCardAccount accountToAdd)
+        {
+            for (int i = 0; i < MyAccounts.Count; i++)
+            {
+                if (MyAccounts[i] is CreditCardAccount)
+                {
+                    ValidateIssuingBankAnd4LastDigits(accountToAdd, (CreditCardAccount)MyAccounts[i]);
+                }
+            }
+            SetAccountId(accountToAdd);
+            MyAccounts.Add(accountToAdd);
+        }
+
         private void SetAccountId(Account accountToAdd)
         {
             accountToAdd.AccountId = MyAccounts.Count;
         }
- 
+
         #endregion
 
         #region GetAccounts
@@ -304,16 +320,36 @@ namespace BusinessLogic.User_Components
 
         #region Modify Account
 
-        public void ModifyAccount(Account accountToUpdate)
+        public void ModifyMonetaryAccount(MonetaryAccount accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
             int indexOfUpdate = 0;
 
             for (int i = 0; i < lengthOfAccounts; i++)
             {
-                ValidateNameIsNotRegistered(accountToUpdate, MyAccounts[i]);
-                ValidateIssuingBankAnd4LastDigits(accountToUpdate, MyAccounts[i]);
+                if (MyAccounts[i] is MonetaryAccount)
+                {
+                    ValidateNameIsNotRegistered(accountToUpdate, MyAccounts[i]);
+                }
+                if (haveSameId(accountToUpdate, MyAccounts[i]))
+                {
+                    indexOfUpdate = i;
+                }
+            }
+            UpdateValues(accountToUpdate, indexOfUpdate);
+        }
 
+        public void ModifyCreditAccount(CreditCardAccount accountToUpdate)
+        {
+            int lengthOfAccounts = MyAccounts.Count;
+            int indexOfUpdate = 0;
+
+            for (int i = 0; i < lengthOfAccounts; i++)
+            {
+                if (MyAccounts[i] is CreditCardAccount)
+                {
+                    ValidateIssuingBankAnd4LastDigits(accountToUpdate, (CreditCardAccount)MyAccounts[i]);
+                }
                 if (haveSameId(accountToUpdate, MyAccounts[i]))
                 {
                     indexOfUpdate = i;
@@ -323,14 +359,11 @@ namespace BusinessLogic.User_Components
         }
 
         #region Auxiliary Methods for Modify
-        private void ValidateNameIsNotRegistered(Account accountToUpdate, Account accountToCompare)
+        private void ValidateNameIsNotRegistered(MonetaryAccount accountToUpdate, Account accountToCompare)
         {
-            if (accountToUpdate is MonetaryAccount)
+            if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
             {
-                if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
-                {
-                    throw new ExceptionAccountManagement("Not possible to modify, name already registered.");
-                }
+                throw new ExceptionAccountManagement("Not possible to modify, name already registered.");
             }
         }
         private bool haveSameId(Account account1, Account account2)
@@ -346,19 +379,12 @@ namespace BusinessLogic.User_Components
         {
             MyAccounts[index] = accountToUpdate;
         }
-        private void ValidateIssuingBankAnd4LastDigits(Account accountToUpdate, Account oneCreditCardAccount)
+        private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate, CreditCardAccount oneCreditCardAccount)
         {
-            if (accountToUpdate is CreditCardAccount && oneCreditCardAccount is CreditCardAccount)
+            if (UsedIssuingNameAndLastDigits(accountToUpdate, oneCreditCardAccount)
+                && !haveSameId(accountToUpdate, oneCreditCardAccount))
             {
-                CreditCardAccount creditCardAccountToUpdate = accountToUpdate as CreditCardAccount;
-                CreditCardAccount creditCardAccountToCompare = oneCreditCardAccount as CreditCardAccount;
-
-                if (UsedIssuingNameAndLastDigits(creditCardAccountToUpdate, creditCardAccountToCompare)
-                    && !haveSameId(creditCardAccountToUpdate, creditCardAccountToCompare))
-
-                {
-                    throw new ExceptionAccountManagement("Issuing name and last 4 digits already used, try others.");
-                }
+                throw new ExceptionAccountManagement("Issuing name and last 4 digits already used, try others.");
             }
         }
 

@@ -11,16 +11,16 @@ namespace BusinessLogic.Account_Components
     public class MonetaryAccount : Account
     {
         #region Properties
-        public decimal Ammount { get; set; }
+        public decimal Amount { get; set; }
 
         #endregion
 
         #region Constructor
         public MonetaryAccount() { }
 
-        public MonetaryAccount(string accountName, decimal ammount, CurrencyEnum currencyType) : base(accountName, currencyType)
+        public MonetaryAccount(string accountName, decimal amount, CurrencyEnum currencyType, DateTime creationDate) : base(accountName, currencyType, creationDate)
         {
-            Ammount = ammount;
+            Amount = amount;
             ValidateMonetaryAccount();
         }
 
@@ -34,7 +34,7 @@ namespace BusinessLogic.Account_Components
 
         private void ValidateAmmount()
         {
-            if (Ammount < 0)
+            if (Amount < 0)
             {
                 throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
             }
@@ -44,11 +44,11 @@ namespace BusinessLogic.Account_Components
         {
             if (IsOutcome(transactionToBeAdded))
             {
-                Ammount = Ammount - transactionToBeAdded.Amount;
+                Amount = Amount - transactionToBeAdded.Amount;
             }
             else if (IsIncome(transactionToBeAdded))
             {
-                Ammount = Ammount + transactionToBeAdded.Amount;
+                Amount = Amount + transactionToBeAdded.Amount;
             }
         }
 

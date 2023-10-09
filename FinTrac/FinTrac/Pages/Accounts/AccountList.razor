@@ -38,9 +38,9 @@
                 MonetaryAccount accounToList = account as MonetaryAccount;
                 <tr>
                     <td>@accounToList.Name</td>
-                    <td>@accounToList.Ammount</td>
+                    <td>@accounToList.Amount</td>
                     <td>@accounToList.Currency</td>
-                    <td>@accounToList.CreationDate</td>
+                    <td>@GetFormattedDate(accounToList.CreationDate)</td>
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/ModifyMonetary"))"> Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
@@ -92,8 +92,8 @@
                     <td>@accounToList.Last4Digits</td>
                     <td>@accounToList.Currency</td>
                     <td>@accounToList.AvailableCredit</td>
-                    <td>@accounToList.CreationDate</td>
-                    <td>@accounToList.ClosingDate</td>
+                    <td>@GetFormattedDate(accounToList.CreationDate)</td>
+                    <td>@GetFormattedDate(accounToList.ClosingDate)</td>
 
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
@@ -123,6 +123,13 @@
     {
         user.DeleteAccount(user.MyAccounts[accountId]);
     }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
 
 }
 

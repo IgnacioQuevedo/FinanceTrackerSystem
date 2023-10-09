@@ -33,7 +33,9 @@
 
     private string issuingBank;
     private string last4Digits;
+    private DateTime creationDate;
     private DateTime closingDate;
+
 
     [CascadingParameter]
     public User mainUser { get; set; }
@@ -51,14 +53,13 @@
         issuingBank = accountToUpdate.IssuingBank;
         last4Digits = accountToUpdate.Last4Digits;
         closingDate = accountToUpdate.ClosingDate;
-
     }
 
     private void SaveChanges()
     {
-        accountUpdated = new CreditCardAccount(accountToUpdate.Name,accountToUpdate.Currency,issuingBank,last4Digits,accountToUpdate.AvailableCredit,closingDate);
+        accountUpdated = new CreditCardAccount(accountToUpdate.Name,accountToUpdate.Currency,creationDate,issuingBank,last4Digits,accountToUpdate.AvailableCredit,closingDate);
         accountUpdated.AccountId = accountId;
-        mainUser.ModifyAccount(accountUpdated);
+        mainUser.ModifyCreditAccount(accountUpdated);
         NavigationManager.NavigateTo("/Accounts");
     }
 

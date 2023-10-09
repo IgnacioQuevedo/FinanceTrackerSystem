@@ -7,6 +7,7 @@ namespace TestProject1;
 [TestClass]
 public class UserTests
 {
+    #region Generic User
     private User genericUser;
 
     [TestInitialize]
@@ -15,7 +16,7 @@ public class UserTests
     {
         genericUser = new User();
     }
-
+    #endregion
 
     #region Firstname
     [TestMethod]

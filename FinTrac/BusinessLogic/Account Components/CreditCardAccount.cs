@@ -20,8 +20,7 @@ namespace BusinessLogic.Account_Components
 
         #region Constructor
         public CreditCardAccount() { }
-
-        public CreditCardAccount(string name, CurrencyEnum currency, string issuingBank, string last4Digits, decimal availableCredit, DateTime closingDate) : base(name, currency)
+        public CreditCardAccount(string name, CurrencyEnum currency, DateTime creationDate, string issuingBank, string last4Digits, decimal availableCredit, DateTime closingDate) : base(name, currency, creationDate)
         {
             IssuingBank = issuingBank;
             Last4Digits = last4Digits;

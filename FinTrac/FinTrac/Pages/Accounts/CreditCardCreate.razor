@@ -51,7 +51,7 @@
     <br />
 
     <div>
-        <label for="title">Status</label>
+        <label for="title">Closing Date</label>
         <input type="date" class="form-control" id="InitialAmount" @bind="closingDate" />
     </div>
 
@@ -73,7 +73,7 @@
     private DateTime creationDate;
     private DateTime closingDate;
 
-    private Account accountToAdd;
+    private CreditCardAccount accountToAdd;
 
     [CascadingParameter]
     public User mainUser { get; set; }
@@ -82,12 +82,13 @@
     {
         currencyType = CurrencyEnum.UY;
         creationDate = DateTime.Now.Date;
+        closingDate = DateTime.Now.Date;
     }
 
     private void SaveChanges()
     {
-        accountToAdd = new CreditCardAccount(name, currencyType, issuingBank, last4Digits,availableCredit, closingDate);
-        mainUser.AddAccount(accountToAdd);
+        accountToAdd = new CreditCardAccount(name, currencyType,creationDate, issuingBank, last4Digits,availableCredit, closingDate);
+        mainUser.AddCreditAccount(accountToAdd);
         NavigationManager.NavigateTo("/Accounts");
     }
 

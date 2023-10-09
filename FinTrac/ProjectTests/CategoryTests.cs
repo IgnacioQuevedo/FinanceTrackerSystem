@@ -53,9 +53,8 @@ public class CategoryTests
     [TestMethod]
     public void GivenCategory_ShouldReturnDate()
     {
-        DateTime dateNow = DateTime.Now;
-        string dateNowString = dateNow.ToString("dd/MM/yyyy");
-        Assert.AreEqual(dateNowString, genericCategory.CreationDate);
+        DateTime dateNow = DateTime.Now.Date;
+        Assert.AreEqual(dateNow, genericCategory.CreationDate);
     }
 
     [TestMethod]
@@ -119,7 +118,7 @@ public class CategoryTests
     public void GivenCategoryToAdd_ShouldAssignId()
     {
         genericUser.AddCategory(genericCategory);
-        Assert.AreEqual(genericUser.MyCategories.Count -1, genericCategory.CategoryId);
+        Assert.AreEqual(genericUser.MyCategories.Count - 1, genericCategory.CategoryId);
     }
 
     [TestMethod]
@@ -162,10 +161,10 @@ public class CategoryTests
     [ExpectedException(typeof(ExceptionCategoryManagement))]
     public void GivenCategoryToDeleteThatHasAssociatedTransactions_ShoulThrowException()
     {
-        MonetaryAccount myMonetaryAccount = new MonetaryAccount("Saving Bank", 1000, CurrencyEnum.UY);
+        MonetaryAccount myMonetaryAccount = new MonetaryAccount("Saving Bank", 1000, CurrencyEnum.UY, DateTime.Now);
         Transaction myTransaction = new Transaction("Payments", 10000, DateTime.Now, CurrencyEnum.UY, TypeEnum.Income, genericCategory);
 
-        genericUser.AddAccount(myMonetaryAccount);
+        genericUser.AddMonetaryAccount(myMonetaryAccount);
         genericUser.MyAccounts[0].AddTransaction(myTransaction);
         genericUser.DeleteCategory(genericCategory);
 
