@@ -9,7 +9,6 @@
 
 <h3>Goal Creation</h3>
 
-
 <form>
     <div class="form-group">
         <label for="title">Title</label>
@@ -64,9 +63,9 @@
         NavigationManager.NavigateTo("/Goals");
     }
 
-    public void OnChangeCategories(ChangeEventArgs e)
+    public void OnChangeCategories(ChangeEventArgs elementSelected)
     {
-        var stringValue = (string[])e.Value;
+        var stringValue = (string[])elementSelected.Value;
         var categoriesSelected = new List<Category>();
 
         foreach (var stringId in stringValue)
