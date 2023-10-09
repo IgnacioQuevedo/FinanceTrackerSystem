@@ -102,14 +102,24 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
-            if (transactionToBeAdded.Type == Category_Components.TypeEnum.Income)
+            if (IsIncome(transactionToBeAdded))
             {
                 ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
-            if (transactionToBeAdded.Type == Category_Components.TypeEnum.Outcome)
+            if (IsOutcome(transactionToBeAdded))
             {
                 ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
+        }
+
+        private static bool IsOutcome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == Category_Components.TypeEnum.Outcome;
+        }
+
+        private static bool IsIncome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == Category_Components.TypeEnum.Income;
         }
 
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
