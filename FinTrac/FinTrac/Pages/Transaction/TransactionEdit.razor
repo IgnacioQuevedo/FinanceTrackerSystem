@@ -1,0 +1,97 @@
+﻿@page "/Transactions/{accountId:int}/EditTransaction/{transactionId:int}"
+
+@using BusinessLogic.Account_Components;
+@using BusinessLogic.Transaction_Components;
+@using BusinessLogic.Category_Components;
+
+<h3>Transaction Creation</h3>
+
+
+<form>
+
+    <div>
+        <label for="title">Amount</label>
+        <input type="number" class="form-control" id="InitialAmount" @bind="amount" />
+    </div>
+
+    <div>
+        <label for="title">Currency Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="currencyType">
+            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
+            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+        </select>
+    </div>
+
+    <br />
+    <div>
+        <label for="title">Category</label>
+        <select class="form-select" aria-label="Default select example" @bind="categoryId">
+            @foreach (var category in myCategories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+
+    <br />
+
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+    <a href="/Transactions">Cancelar</a>
+</form>
+
+
+@code
+{
+    private string title;
+    private decimal amount;
+    private TypeEnum type;
+    private CurrencyEnum currencyType;
+    private TypeEnum transactionType;
+    private DateTime creationDate;
+    private int categoryId;
+
+    private decimal oldAmount;
+
+    private List<Category> myCategories;
+    private Category category;
+
+    private Account accountSelected;
+
+    private Transaction transactionUpdated;
+
+    [Parameter]
+    public int accountId { get; set; }
+
+    [Parameter]
+    public int transactionId { get; set; }
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    protected override void OnInitialized()
+    {
+        title = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Title;
+        oldAmount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
+        amount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
+        type = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Type;
+        creationDate = mainUser.MyAccounts[accountId].MyTransactions[transactionId].CreationDate;
+        currencyType = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Currency;
+        category = mainUser.MyAccounts[accountId].MyTransactions[transactionId].TransactionCategory;
+        accountSelected = mainUser.MyAccounts[accountId];
+        myCategories = mainUser.GetCategories();
+
+    }
+
+    private void SaveChanges()
+    {
+        transactionUpdated = new Transaction(title, amount, creationDate, currencyType, type, category);
+        transactionUpdated.TransactionId = transactionId;
+        accountSelected.ModifyTransaction(transactionUpdated);
+        accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
+        NavigationManager.NavigateTo($"/Transactions/{accountId}");
+
+
+    }
+
+}
+
