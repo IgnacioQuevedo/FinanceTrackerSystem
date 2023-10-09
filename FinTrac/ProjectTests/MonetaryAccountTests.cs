@@ -17,7 +17,9 @@ public class MonetaryAccountTests
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
     private Transaction genericTransaction;
+    private Transaction transactionUpdated;
     private Category genericCategory;
+    private User genericUser;
 
 
     [TestInitialize]
@@ -103,7 +105,23 @@ public class MonetaryAccountTests
     [TestMethod]
     public void GivenTransaction_ShouldReturnAmountfterModifyCorrect()
     {
-        myMonetaryAccount.UpdateAccountAfterModify(genericTransaction, 1000);
+        string firstName = "Michael";
+        string lastName = "Santa";
+        string email = "michSanta@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+        genericUser = new User(firstName, lastName, email, password, address);
+
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        myMonetaryAccount.Amount = 1000;
+        genericUser.AddMonetaryAccount(myMonetaryAccount);
+        decimal oldAmount = myMonetaryAccount.Amount;
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+        myMonetaryAccount.UpdateAccountMoney(genericTransaction);
+        myMonetaryAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
+
+        Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
     }
 
     #region Currency

@@ -54,7 +54,16 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
-            throw new NotImplementedException();
+            if (IsIncome(transactionToBeAdded))
+            {
+                Amount = Amount - oldAmountOfTransaction;
+                Amount = Amount + transactionToBeAdded.Amount;
+            }
+            if (IsOutcome(transactionToBeAdded))
+            {
+                Amount = Amount + oldAmountOfTransaction;
+                Amount = Amount - transactionToBeAdded.Amount;
+            }
         }
 
         protected static bool IsIncome(Transaction transactionToBeAdded)
