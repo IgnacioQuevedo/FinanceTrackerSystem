@@ -124,7 +124,28 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
     }
 
+    [TestMethod]
+    public void GivenTransactionAndCreditAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
+    {
+        CreditCardAccount myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, DateTime.Now);
+        string firstName = "Michael";
+        string lastName = "Santa";
+        string email = "michSanta@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+        genericUser = new User(firstName, lastName, email, password, address);
 
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        myCreditAccount.AvailableCredit = 1000;
+        genericUser.AddMonetaryAccount(myMonetaryAccount);
+        decimal oldAmount = myMonetaryAccount.Amount;
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+        myCreditAccount.UpdateAccountMoney(genericTransaction);
+        myCreditAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
+
+        Assert.AreEqual(myCreditAccount.AvailableCredit, oldAmount - transactionUpdated.Amount);
+    }
 
 
     #region Currency
