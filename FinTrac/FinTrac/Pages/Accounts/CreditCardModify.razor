@@ -1,0 +1,66 @@
+﻿@page "/Accounts/{accountId:int}/CreditCardModification"
+
+@using BusinessLogic.Account_Components;
+
+
+<h3>Credit Card Modification</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="title">IssuingBank</label>
+        <input type="text" class="form-control" id="title" @bind="issuingBank" />
+    </div>
+    <div class="form-group">
+        <label for="title">Last 4 Digits Of Card</label>
+        <input type="text" class="form-control" id="title" @bind="last4Digits" />
+    </div>
+    <div class="form-group">
+        <label for="title">Closing Date</label>
+        <input type="date" class="form-control" id="title" @bind="closingDate" />
+    </div>
+    <br />
+    <div>
+        <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+        <a href="/Accounts">Cancelar</a>
+    </div>
+</form>
+
+
+
+@code
+{
+
+    private string issuingBank;
+    private string last4Digits;
+    private DateTime creationDate;
+    private DateTime closingDate;
+
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    [Parameter]
+    public int accountId { get; set; }
+
+    private CreditCardAccount accountToUpdate;
+    private CreditCardAccount accountUpdated;
+
+    protected override void OnInitialized()
+    {
+
+        accountToUpdate = mainUser.MyAccounts[accountId] as CreditCardAccount;
+        issuingBank = accountToUpdate.IssuingBank;
+        last4Digits = accountToUpdate.Last4Digits;
+        closingDate = accountToUpdate.ClosingDate;
+    }
+
+    private void SaveChanges()
+    {
+        accountUpdated = new CreditCardAccount(accountToUpdate.Name,accountToUpdate.Currency,creationDate,issuingBank,last4Digits,accountToUpdate.AvailableCredit,closingDate);
+        accountUpdated.AccountId = accountId;
+        mainUser.ModifyCreditAccount(accountUpdated);
+        NavigationManager.NavigateTo("/Accounts");
+    }
+
+}

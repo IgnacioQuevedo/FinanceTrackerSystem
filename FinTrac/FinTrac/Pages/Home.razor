@@ -1,0 +1,17 @@
+﻿@page "/Home";
+
+@using Data;
+@using DataManagers;
+
+<h3>Home</h3>
+
+<p>@mainUser.Email</p>
+<p>@mainUser.FirstName</p>
+<p>@mainUser.Address</p>
+
+@code
+{
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+}

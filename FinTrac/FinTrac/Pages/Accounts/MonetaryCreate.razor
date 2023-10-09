@@ -1,0 +1,64 @@
+﻿@page "/Account/MonetaryCreation"
+
+@using BusinessLogic.Account_Components;
+
+<h3>Monetary Account Creation</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" class="form-control" id="Name" @bind="name"/>
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Initial Amount</label>
+        <input type="number" class="form-control" id="InitialAmount" @bind="initialAmount" />
+    </div>
+
+    <br />
+    <div>
+        <label for="title">Status</label>
+        <select class="form-select" aria-label="Default select example" @bind="currencyType">
+            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
+            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+        </select>
+    </div>
+
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+    <a href="/Accounts">Cancelar</a>
+</form>
+
+
+
+
+@code
+{
+
+    private string name;
+    private decimal initialAmount;
+    private CurrencyEnum currencyType;
+    private DateTime creationDate;
+    private List<Account> accountList;
+    private MonetaryAccount accountToAdd;
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    protected override void OnInitialized()
+    {
+        currencyType = CurrencyEnum.UY;
+        accountList = mainUser.GetAccounts();
+        creationDate = DateTime.Now.Date;
+    }
+
+    private void SaveChanges()
+    {
+        accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
+        mainUser.AddMonetaryAccount(accountToAdd);
+        NavigationManager.NavigateTo("/Accounts");
+    }
+
+}

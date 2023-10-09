@@ -1,0 +1,53 @@
+﻿@page "/Accounts/{accountId:int}/ModifyMonetary"
+
+@using BusinessLogic.Account_Components;
+
+<h3>Monetary Modification</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" class="form-control" id="title" @bind="name" />
+    </div>
+    <br />
+    <div>
+        <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+        <a href="/Accounts">Cancelar</a>
+    </div>
+</form>
+
+
+
+@code
+{
+
+    private string name;
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    [Parameter]
+    public int accountId { get; set; }
+
+    private MonetaryAccount accountToUpdate;
+    private MonetaryAccount accountUpdated;
+
+    protected override void OnInitialized()
+    {
+        accountToUpdate = mainUser.MyAccounts[accountId] as MonetaryAccount;
+        name = accountToUpdate.Name;
+    }
+
+    private void SaveChanges()
+    {
+        accountUpdated = new MonetaryAccount(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate);
+        accountUpdated.AccountId = accountId;
+
+        mainUser.ModifyMonetaryAccount(accountUpdated);
+        NavigationManager.NavigateTo("/Accounts");
+    }
+
+
+
+}

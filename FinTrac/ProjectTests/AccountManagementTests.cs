@@ -131,7 +131,7 @@ namespace BusinessLogicTests
 
             MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
 
-            genericUser.MoidfyMonetaryAccount(accountToUpdate);
+            genericUser.ModifyMonetaryAccount(accountToUpdate);
 
             Assert.AreEqual(accountToUpdate, genericUser.MyAccounts[genericMonetaryAccount.AccountId]);
         }
@@ -148,7 +148,7 @@ namespace BusinessLogicTests
             MonetaryAccount accountWithChanges = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
             accountWithChanges.AccountId = accountToUpdate.AccountId;
 
-            genericUser.MoidfyMonetaryAccount(accountWithChanges);
+            genericUser.ModifyMonetaryAccount(accountWithChanges);
         }
         #endregion
 

@@ -1,0 +1,92 @@
+﻿@page "/Modify";
+
+<div class="container">
+    <h1>Edit Profile</h1>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="https://avatarfiles.alphacoders.com/813/81325.jpg" class="rounded-circle" style="width: 150px;"
+                     alt="Avatar" />
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <h3>Personal info</h3>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text"  @bind-value = "firstName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" @bind-value="lastName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Password:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="password" @bind-value="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Address:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" @bind-value="address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" value="Save Changes" @onclick ="ModifyUser">
+                        <span></span>
+                        <input type="button" class="btn btn-default" value="Cancel" @onclick = "presetValues">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+
+@code 
+{
+    private string firstName;
+    private string lastName;
+    private string password;
+    private string address;
+
+    [CascadingParameter]
+    private User user { get;set; }
+
+
+    protected override void OnInitialized()
+    {
+        presetValues();
+    }
+
+    private void presetValues()
+    {
+        firstName = user.FirstName;
+        lastName = user.LastName;
+        password = user.Password;
+        address = user.Address;
+    }
+
+    private void ModifyUser()
+    {
+
+        User userToModify = new User(firstName, lastName,user.Email,password,address);
+
+        UserManagement.ModifyUser(user, userToModify);
+        NavigationManager.NavigateTo("/Home");
+
+    }
+
+}

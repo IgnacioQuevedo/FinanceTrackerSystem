@@ -320,7 +320,7 @@ namespace BusinessLogic.User_Components
 
         #region Modify Account
 
-        public void MoidfyMonetaryAccount(MonetaryAccount accountToUpdate)
+        public void ModifyMonetaryAccount(MonetaryAccount accountToUpdate)
         {
             int lengthOfAccounts = MyAccounts.Count;
             int indexOfUpdate = 0;

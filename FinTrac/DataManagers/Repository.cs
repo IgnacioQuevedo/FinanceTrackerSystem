@@ -14,6 +14,18 @@ namespace DataManagers
         public Repository()
         {
             Users = new List<User>();
+            DefaultUser();
         }
+
+
+
+        private void DefaultUser()
+        {
+            User userTest = new User("Ignacio", "Quevedo", "nachitoquevedo@gmail.com", "Nacho200304!", "");
+            userTest.UserId = 0;
+            Users.Add(userTest);
+        }
+
+
     }
 }
