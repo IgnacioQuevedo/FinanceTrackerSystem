@@ -99,6 +99,40 @@ namespace BusinessLogic.Account_Components
         {
             AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
         }
+
+        public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            if (IsIncome(transactionToBeAdded))
+            {
+                ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
+            }
+            if (IsOutcome(transactionToBeAdded))
+            {
+                ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
+            }
+        }
+
+        private static bool IsOutcome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == Category_Components.TypeEnum.Outcome;
+        }
+
+        private static bool IsIncome(Transaction transactionToBeAdded)
+        {
+            return transactionToBeAdded.Type == Category_Components.TypeEnum.Income;
+        }
+
+        private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            AvailableCredit = AvailableCredit + oldAmountOfTransaction;
+            AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
+        }
+
+        private void ModifyIncomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            AvailableCredit = AvailableCredit - oldAmountOfTransaction;
+            AvailableCredit = AvailableCredit + transactionToBeAdded.Amount;
+        }
         #endregion
 
         #endregion

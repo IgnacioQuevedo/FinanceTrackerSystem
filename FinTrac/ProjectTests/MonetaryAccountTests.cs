@@ -3,7 +3,9 @@ using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Transaction_Components;
 using System.Security.Principal;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1;
 [TestClass]
@@ -14,6 +16,10 @@ public class MonetaryAccountTests
     #region Init
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
+    private Transaction genericTransaction;
+    private Transaction transactionUpdated;
+    private Category genericCategory;
+    private User genericUser;
 
 
     [TestInitialize]
@@ -30,6 +36,10 @@ public class MonetaryAccountTests
         myMonetaryAccount.Name = myAccount.Name;
         myMonetaryAccount.Currency = CurrencyEnum.UY;
         myMonetaryAccount.Amount = 10;
+
+        genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+
+        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
     }
 
     #endregion
@@ -91,6 +101,51 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
     #endregion
+
+    [TestMethod]
+    public void GivenTransactionAndMonetaryAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
+    {
+        string firstName = "Michael";
+        string lastName = "Santa";
+        string email = "michSanta@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+        genericUser = new User(firstName, lastName, email, password, address);
+
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        myMonetaryAccount.Amount = 1000;
+        genericUser.AddMonetaryAccount(myMonetaryAccount);
+        decimal oldAmount = myMonetaryAccount.Amount;
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+        myMonetaryAccount.UpdateAccountMoney(genericTransaction);
+        myMonetaryAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
+
+        Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
+    }
+
+    [TestMethod]
+    public void GivenTransactionAndCreditAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
+    {
+        CreditCardAccount myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, DateTime.Now);
+        string firstName = "Michael";
+        string lastName = "Santa";
+        string email = "michSanta@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+        genericUser = new User(firstName, lastName, email, password, address);
+
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericUser.AddCreditAccount(myCreditAccount);
+        decimal oldAmount = myCreditAccount.AvailableCredit;
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+        myCreditAccount.UpdateAccountMoney(genericTransaction);
+        myCreditAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
+
+        Assert.AreEqual(myCreditAccount.AvailableCredit, oldAmount - transactionUpdated.Amount);
+    }
+
 
     #region Currency
 

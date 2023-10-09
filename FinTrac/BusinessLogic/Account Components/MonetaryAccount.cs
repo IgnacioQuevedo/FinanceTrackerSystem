@@ -52,6 +52,30 @@ namespace BusinessLogic.Account_Components
             }
         }
 
+        public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            if (IsIncome(transactionToBeAdded))
+            {
+                ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
+            }
+            if (IsOutcome(transactionToBeAdded))
+            {
+                ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
+            }
+        }
+
+        private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            Amount = Amount + oldAmountOfTransaction;
+            Amount = Amount - transactionToBeAdded.Amount;
+        }
+
+        private void ModifyIncomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            Amount = Amount - oldAmountOfTransaction;
+            Amount = Amount + transactionToBeAdded.Amount;
+        }
+
         protected static bool IsIncome(Transaction transactionToBeAdded)
         {
             return transactionToBeAdded.Type == TypeEnum.Income;
