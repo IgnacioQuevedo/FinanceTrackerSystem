@@ -1,0 +1,106 @@
+﻿@page "/Transactions/{accountId:int}/CreateTransaction"
+
+@using BusinessLogic.Account_Components;
+@using BusinessLogic.Transaction_Components;
+@using BusinessLogic.Category_Components;
+
+<h3>Transaction Creation</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="Name" @bind="title" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Creation Date</label>
+        <input type="text" class="form-control" id="creationDate" @bind="creationDate" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Amount</label>
+        <input type="number" class="form-control" id="InitialAmount" @bind="amount" />
+    </div>
+
+    <div>
+        <label for="title">Currency Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="currencyType">
+            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
+            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="transactionType">
+            <option value="@TypeEnum.Income">@TypeEnum.Income</option>
+            <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+        </select>
+    </div>
+
+    <br />
+    <div>
+        <label for="title">Currency Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="categoryId">
+            @foreach (var category in myCategories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+
+    <br />
+
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+    <a href="/Transactions">Cancelar</a>
+</form>
+
+
+@code
+{
+
+    private string title;
+    private DateTime creationDate;
+    private decimal amount;
+    private CurrencyEnum currencyType;
+    private TypeEnum transactionType;
+    private int categoryId;
+    private Category category;
+
+    private Account accountSelected;
+    private List<Category> myCategories;
+
+    private Transaction transactionToAdd;
+
+    [Parameter]
+    public int accountId { get; set; }
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    protected override void OnInitialized()
+    {
+        currencyType = CurrencyEnum.UY;
+        transactionType = TypeEnum.Outcome;
+        accountSelected = mainUser.MyAccounts[accountId];
+        creationDate = DateTime.Now.Date;
+        myCategories = mainUser.GetCategories();
+        category = myCategories[categoryId];
+    }
+
+    private void SaveChanges()
+    {
+        transactionToAdd = new Transaction(title, amount, creationDate, currencyType, transactionType, category);
+        accountSelected.AddTransaction(transactionToAdd);
+        accountSelected.UpdateAccountMoney(transactionToAdd);
+        NavigationManager.NavigateTo($"/Transactions/{accountId}");
+    }
+
+}
