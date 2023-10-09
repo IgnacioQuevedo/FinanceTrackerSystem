@@ -44,7 +44,7 @@
                 <td>@transaction.TransactionCategory.Name</td>
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(transaction.TransactionId))">Delete</button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete</button>
                     </td>
                 </tr>
 
@@ -60,6 +60,8 @@
 
     private Account accountSelected;
 
+    private Transaction transactionBeforeDelete;
+
     [CascadingParameter]
     public User user { get; set; }
 
@@ -72,9 +74,12 @@
         transactionList = accountSelected.MyTransactions;
     }
 
-    private void DeleteAccount(int accountId)
+    private void DeleteTransaction(int transactionId)
     {
-        user.DeleteAccount(user.MyAccounts[accountId]);
+        transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
+        user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
+        transactionBeforeDelete.Amount = transactionBeforeDelete.Amount * -1;
+        accountSelected.UpdateAccountMoney(transactionBeforeDelete);
     }
 
     string GetFormattedDate(DateTime date)

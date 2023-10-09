@@ -41,7 +41,7 @@ namespace BusinessLogic.Transaction_Components
             Type = type;
             TransactionCategory = transactionCategory;
             CreationDate = date;
-
+            ValidateCategory();
             ValidateTitle();
             ValidateAmount();
         }
@@ -75,7 +75,7 @@ namespace BusinessLogic.Transaction_Components
         {
             if (IsDisabledCategory() || TransactionCategory.Type != Type)
             {
-                throw new ExceptionValidateTransaction("Error: Category can't be disabled");
+                throw new ExceptionValidateTransaction("Error: Seems like you have a disabled category or not available type");
             }
         }
 

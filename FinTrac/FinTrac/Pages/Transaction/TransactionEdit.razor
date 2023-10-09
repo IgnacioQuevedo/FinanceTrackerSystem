@@ -50,6 +50,8 @@
     private DateTime creationDate;
     private int categoryId;
 
+    private decimal oldAmount;
+
     private List<Category> myCategories;
     private Category category;
 
@@ -69,6 +71,7 @@
     protected override void OnInitialized()
     {
         title = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Title;
+        oldAmount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
         amount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
         type = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Type;
         creationDate = mainUser.MyAccounts[accountId].MyTransactions[transactionId].CreationDate;
@@ -84,7 +87,7 @@
         transactionUpdated = new Transaction(title, amount, creationDate, currencyType, type, category);
         transactionUpdated.TransactionId = transactionId;
         accountSelected.ModifyTransaction(transactionUpdated);
-        accountSelected.UpdateAccountMoney(transactionUpdated);
+        accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
         NavigationManager.NavigateTo($"/Transactions/{accountId}");
     }
 
