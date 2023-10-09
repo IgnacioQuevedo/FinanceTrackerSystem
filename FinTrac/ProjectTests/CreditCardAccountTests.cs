@@ -2,9 +2,11 @@ using BusinessLogic;
 using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.Account_Components;
 using System.Security.Principal;
 using System.Security.Cryptography.X509Certificates;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1;
 
@@ -16,6 +18,7 @@ public class CreditCardAccountTests
 
     private Account myCreditCard;
     private CreditCardAccount myCreditCardAccount;
+    private User genericUser;
 
     [TestInitialize]
     public void TestInitialized()
@@ -162,6 +165,27 @@ public class CreditCardAccountTests
         myCreditCardAccount.ValidateCreditCardAccount();
     }
 
+    [TestMethod]
+    public void GivenTransactionAndCreditAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
+    {
+        Category genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+        Transaction genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        CreditCardAccount myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, new DateTime(2024, 10, 05, 7, 0, 0));
+
+        genericUser = new User("Michael", "Santa", "michSanta@gmail.com", "AustinF2003", "NW 2nd Ave");
+        Transaction transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericUser.AddCreditAccount(myCreditAccount);
+
+        decimal oldAmount = myCreditAccount.AvailableCredit;
+
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+
+        myCreditAccount.UpdateAccountMoneyAfterAdd(genericTransaction);
+        myCreditAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
+
+        Assert.AreEqual(myCreditAccount.AvailableCredit, oldAmount - transactionUpdated.Amount);
+    }
 
 
     #endregion

@@ -40,7 +40,7 @@ namespace BusinessLogic.Account_Components
             }
         }
 
-        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        public override void UpdateAccountMoneyAfterAdd(Transaction transactionToBeAdded)
         {
             if (IsOutcome(transactionToBeAdded))
             {
@@ -62,6 +62,12 @@ namespace BusinessLogic.Account_Components
             {
                 ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
+        }
+
+        public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
+        {
+            throw new NotImplementedException();
+
         }
 
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
