@@ -24,7 +24,7 @@
 
     <br />
     <div>
-        <label for="title">Currency Type</label>
+        <label for="title">Category</label>
         <select class="form-select" aria-label="Default select example" @bind="categoryId">
             @foreach (var category in myCategories)
             {
@@ -89,6 +89,8 @@
         accountSelected.ModifyTransaction(transactionUpdated);
         accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
         NavigationManager.NavigateTo($"/Transactions/{accountId}");
+
+
     }
 
 }

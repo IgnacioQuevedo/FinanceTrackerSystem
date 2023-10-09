@@ -17,7 +17,7 @@
 
     <div>
         <label for="title">Creation Date</label>
-        <input type="text" class="form-control" id="creationDate" @bind="creationDate" />
+        <input type="date" class="form-control" id="creationDate" @bind="creationDate" />
     </div>
 
     <br />
@@ -99,8 +99,13 @@
     {
         transactionToAdd = new Transaction(title, amount, creationDate, currencyType, transactionType, category);
         accountSelected.AddTransaction(transactionToAdd);
-        accountSelected.UpdateAccountMoney(transactionToAdd);
+        accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
         NavigationManager.NavigateTo($"/Transactions/{accountId}");
+    }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
     }
 
 }

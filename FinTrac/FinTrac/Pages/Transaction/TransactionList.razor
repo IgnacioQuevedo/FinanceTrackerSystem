@@ -78,8 +78,7 @@
     {
         transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
         user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
-        transactionBeforeDelete.Amount = transactionBeforeDelete.Amount * -1;
-        accountSelected.UpdateAccountMoney(transactionBeforeDelete);
+        accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
     }
 
     string GetFormattedDate(DateTime date)
