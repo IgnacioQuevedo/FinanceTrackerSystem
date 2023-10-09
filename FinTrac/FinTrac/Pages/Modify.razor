@@ -85,7 +85,8 @@
         User userToModify = new User(firstName, lastName,user.Email,password,address);
 
         UserManagement.ModifyUser(user, userToModify);
-        
+        NavigationManager.NavigateTo("/Home");
+
     }
 
 }

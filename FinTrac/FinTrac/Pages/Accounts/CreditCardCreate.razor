@@ -1,0 +1,94 @@
+﻿@page "/Account/CreditCardCreation"
+
+@using BusinessLogic.Account_Components;
+
+<h3>Credit Card Creation</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" class="form-control" id="Name" @bind="name" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Issuing Bank</label>
+        <input type="text" class="form-control" id="InitialAmount" @bind="issuingBank" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Last 4 Digits Of Card</label>
+        <input type="number" class="form-control" id="last4Dibits" @bind="last4Digits" />
+    </div>
+
+    <div>
+        <label for="title">Currency Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="currencyType">
+            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
+            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Available Credit</label>
+        <input type="number" class="form-control" id="InitialAmount" @bind="availableCredit" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Creation Date</label>
+        <input type="date" class="form-control" id="InitialAmount" @bind="creationDate" />
+    </div>
+
+
+    <br />
+
+    <div>
+        <label for="title">Status</label>
+        <input type="date" class="form-control" id="InitialAmount" @bind="closingDate" />
+    </div>
+
+    <br />
+
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
+    <a href="/Accounts">Cancelar</a>
+</form>
+
+
+@code
+{
+
+    private string name;
+    private string issuingBank;
+    private string last4Digits;
+    private CurrencyEnum currencyType;
+    private decimal availableCredit;
+    private DateTime creationDate;
+    private DateTime closingDate;
+
+    private Account accountToAdd;
+
+    [CascadingParameter]
+    public User mainUser { get; set; }
+
+    protected override void OnInitialized()
+    {
+        currencyType = CurrencyEnum.UY;
+        creationDate = DateTime.Now.Date;
+    }
+
+    private void SaveChanges()
+    {
+        accountToAdd = new CreditCardAccount(name, currencyType, issuingBank, last4Digits,availableCredit, closingDate);
+        mainUser.AddAccount(accountToAdd);
+        NavigationManager.NavigateTo("/Accounts");
+    }
+
+}

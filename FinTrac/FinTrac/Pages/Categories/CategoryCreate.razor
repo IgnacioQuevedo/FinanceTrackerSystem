@@ -31,13 +31,13 @@
     </div>
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/movies">Cancelar</a>
+    <a href="/Category">Cancelar</a>
 </form>
 
 @code {
-    public string name;
-    public StatusEnum status;
-    public TypeEnum type;
+    private string name;
+    private StatusEnum status;
+    private TypeEnum type;
 
     [CascadingParameter]
     public User mainUser { get; set; }
@@ -52,7 +52,7 @@
     {
         Category newCategory = new Category(name, status, type);
         mainUser.AddCategory(newCategory);
-        NavigationManager.NavigateTo("/Categories");
+        NavigationManager.NavigateTo("/Category");
     }
 }
 

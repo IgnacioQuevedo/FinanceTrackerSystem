@@ -1,0 +1,131 @@
+﻿@page "/Accounts";
+
+@using BusinessLogic.Account_Components;
+
+<PageTitle>Accounts</PageTitle>
+<h3>AccountList</h3>
+
+
+
+<h1>
+    Monetary List
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+       onclick="@(() => NavigationManager.NavigateTo("/Account/MonetaryCreation"))">
+        Create Monetary Account +
+    </a>
+</h1>
+
+
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Initial Amount</th>
+            <th>Currency</th>
+            <th>Creation Date</th>
+            <th> Posible Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var account in accountList)
+        {
+            if (account is MonetaryAccount)
+            {
+                MonetaryAccount accounToList = account as MonetaryAccount;
+                <tr>
+                    <td>@accounToList.Name</td>
+                    <td>@accounToList.Ammount</td>
+                    <td>@accounToList.Currency</td>
+                    <td>@accounToList.CreationDate</td>
+                    <td>
+                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/ModifyMonetary"))"> Edit</button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                    </td>
+                </tr>
+            }
+            
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+
+<h1>
+    Credit Card List
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+       onclick="@(() => NavigationManager.NavigateTo("/Account/CreditCardCreation"))">
+        Create Credit Card +
+    </a>
+</h1>
+
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Issuing Bank</th>
+            <th>Last 4 Digits</th>
+            <th>Currency</th>
+            <th>Available Credit</th>
+            <th>Creation Date</th>
+            <th>Closing Date</th>
+            <th> Posible Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var account in accountList)
+        {
+            if (account is CreditCardAccount)
+            {
+                CreditCardAccount accounToList = account as CreditCardAccount;
+                <tr>
+                    <td>@accounToList.Name</td>
+                    <td>@accounToList.IssuingBank</td>
+                    <td>@accounToList.Last4Digits</td>
+                    <td>@accounToList.Currency</td>
+                    <td>@accounToList.AvailableCredit</td>
+                    <td>@accounToList.CreationDate</td>
+                    <td>@accounToList.ClosingDate</td>
+
+                    <td>
+                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
+                        <button class="btn btn-danger btn-sm"@onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                    </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    private List<Account>? accountList;
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        accountList = user.GetAccounts();
+    }
+
+    private void DeleteAccount(int accountId)
+    {
+        user.DeleteAccount(user.MyAccounts[accountId]);
+    }
+
+}
+
+
+
+
