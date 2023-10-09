@@ -59,6 +59,7 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         #endregion
 
+        #region Have Exchanges
         public static bool HaveExchanges(User loggedUser)
         {
             if (loggedUser.MyExchangesHistory.Count == 0)
@@ -67,5 +68,6 @@ namespace BusinessLogic.ExchangeHistory_Components
             }
             return true;
         }
+        #endregion
     }
 }

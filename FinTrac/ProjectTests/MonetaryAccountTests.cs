@@ -29,7 +29,7 @@ public class MonetaryAccountTests
         //monetaryAccount is a 100% object that references only to monetaryAccount
         myMonetaryAccount.Name = myAccount.Name;
         myMonetaryAccount.Currency = CurrencyEnum.UY;
-        myMonetaryAccount.Ammount = 10;
+        myMonetaryAccount.Amount = 10;
     }
 
     #endregion
@@ -64,9 +64,9 @@ public class MonetaryAccountTests
     public void GivenInitialAmmount_ShouldBeSetted()
     {
         int initialAmmount = 100;
-        myMonetaryAccount.Ammount = initialAmmount;
+        myMonetaryAccount.Amount = initialAmmount;
 
-        Assert.AreEqual(myMonetaryAccount.Ammount, initialAmmount);
+        Assert.AreEqual(myMonetaryAccount.Amount, initialAmmount);
 
     }
 
@@ -75,7 +75,7 @@ public class MonetaryAccountTests
 
     public void GivenInitialNegativeAmmount_ShouldThrowException()
     {
-        myMonetaryAccount.Ammount = -1;
+        myMonetaryAccount.Amount = -1;
         myMonetaryAccount.ValidateMonetaryAccount();
 
     }
@@ -113,12 +113,12 @@ public class MonetaryAccountTests
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
         DateTime creationDate = DateTime.Now.Date;
 
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
+        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
         Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
-        Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Ammount);
+        Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Amount);
         Assert.AreEqual(currencyToBeSetted, monetaryAccountExample.Currency);
-        Assert.AreEqual(creationDate, monetaryAccountExample.CreationDate);
+        Assert.AreEqual(creationDate.Date, monetaryAccountExample.CreationDate.Date);
     }
 
     [TestMethod]
@@ -130,7 +130,7 @@ public class MonetaryAccountTests
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
 
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted);
+        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
     }
     #endregion
