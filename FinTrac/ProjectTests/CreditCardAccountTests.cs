@@ -205,6 +205,7 @@ public class CreditCardAccountTests
         myCreditAccount.UpdateAccountMoneyAfterAdd(genericTransaction);
         myCreditAccount.UpdateAccountAfterDelete(genericTransaction);
 
+        Assert.AreEqual(1000, myCreditAccount.AvailableCredit);
     }
 
     #endregion

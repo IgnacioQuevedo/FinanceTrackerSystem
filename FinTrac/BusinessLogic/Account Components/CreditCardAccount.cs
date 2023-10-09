@@ -134,9 +134,17 @@ namespace BusinessLogic.Account_Components
             AvailableCredit = AvailableCredit + transactionToBeAdded.Amount;
         }
 
-        public override void UpdateAccountAfterDelete(Transaction transactionToBeRemoved)
+        public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
         {
-            throw new NotImplementedException();
+            if (IsIncome(transactionToBeDeleted))
+            {
+                AvailableCredit = AvailableCredit - transactionToBeDeleted.Amount;
+            }
+            if (IsOutcome(transactionToBeDeleted))
+            {
+                AvailableCredit = AvailableCredit + transactionToBeDeleted.Amount;
+            }
+
         }
         #endregion
 
