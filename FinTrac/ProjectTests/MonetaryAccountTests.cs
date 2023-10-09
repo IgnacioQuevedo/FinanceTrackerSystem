@@ -136,9 +136,8 @@ public class MonetaryAccountTests
         genericUser = new User(firstName, lastName, email, password, address);
 
         transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        myCreditAccount.AvailableCredit = 1000;
-        genericUser.AddMonetaryAccount(myMonetaryAccount);
-        decimal oldAmount = myMonetaryAccount.Amount;
+        genericUser.AddCreditAccount(myCreditAccount);
+        decimal oldAmount = myCreditAccount.AvailableCredit;
         genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
         genericUser.MyAccounts[0].AddTransaction(genericTransaction);
         myCreditAccount.UpdateAccountMoney(genericTransaction);
