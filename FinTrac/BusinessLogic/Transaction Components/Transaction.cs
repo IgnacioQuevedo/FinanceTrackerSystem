@@ -41,7 +41,7 @@ namespace BusinessLogic.Transaction_Components
             Type = type;
             TransactionCategory = transactionCategory;
             CreationDate = date;
-
+            ValidateCategory();
             ValidateTitle();
             ValidateAmount();
         }

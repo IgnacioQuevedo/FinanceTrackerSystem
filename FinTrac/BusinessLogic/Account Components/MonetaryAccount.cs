@@ -36,11 +36,11 @@ namespace BusinessLogic.Account_Components
         {
             if (Amount < 0)
             {
-                throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
+                throw new ExceptionValidateAccount("ERROR ON AMOUNT");
             }
         }
 
-        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        public override void UpdateAccountMoneyAfterAdd(Transaction transactionToBeAdded)
         {
             if (IsOutcome(transactionToBeAdded))
             {
@@ -62,6 +62,19 @@ namespace BusinessLogic.Account_Components
             {
                 ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
+        }
+
+        public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
+        {
+            if (IsIncome(transactionToBeDeleted))
+            {
+                Amount = Amount - transactionToBeDeleted.Amount;
+            }
+            if (IsOutcome(transactionToBeDeleted))
+            {
+                Amount = Amount + transactionToBeDeleted.Amount;
+            }
+
         }
 
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)

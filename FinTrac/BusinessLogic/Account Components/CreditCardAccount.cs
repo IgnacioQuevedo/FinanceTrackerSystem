@@ -95,7 +95,7 @@ namespace BusinessLogic.Account_Components
             return true;
         }
 
-        public override void UpdateAccountMoney(Transaction transactionToBeAdded)
+        public override void UpdateAccountMoneyAfterAdd(Transaction transactionToBeAdded)
         {
             AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
         }
@@ -132,6 +132,19 @@ namespace BusinessLogic.Account_Components
         {
             AvailableCredit = AvailableCredit - oldAmountOfTransaction;
             AvailableCredit = AvailableCredit + transactionToBeAdded.Amount;
+        }
+
+        public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
+        {
+            if (IsIncome(transactionToBeDeleted))
+            {
+                AvailableCredit = AvailableCredit - transactionToBeDeleted.Amount;
+            }
+            if (IsOutcome(transactionToBeDeleted))
+            {
+                AvailableCredit = AvailableCredit + transactionToBeDeleted.Amount;
+            }
+
         }
         #endregion
 

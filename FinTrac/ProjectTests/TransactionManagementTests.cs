@@ -64,7 +64,7 @@ public class TransactionManagementTests
     {
         decimal previousAccountAmount = genericMonetaryAccount.Amount;
         decimal costOfTransaction = genericTransactionOutcome1.Amount;
-        genericUser.MyAccounts[0].UpdateAccountMoney(genericTransactionOutcome1);
+        genericUser.MyAccounts[0].UpdateAccountMoneyAfterAdd(genericTransactionOutcome1);
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
         MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
 
@@ -76,7 +76,7 @@ public class TransactionManagementTests
     {
         decimal previousAccountCredit = genericCreditAccount.AvailableCredit;
         decimal costOfTransaction = genericTransactionOutcome2.Amount;
-        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[1].UpdateAccountMoneyAfterAdd(genericTransactionOutcome2);
         genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
         CreditCardAccount myCreditCard = (CreditCardAccount)genericUser.MyAccounts[1];
 
@@ -99,7 +99,7 @@ public class TransactionManagementTests
     [TestMethod]
     public void GivenTransactionToBeModified_ShouldBeModified()
     {
-        genericUser.MyAccounts[1].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[1].UpdateAccountMoneyAfterAdd(genericTransactionOutcome2);
         genericUser.MyAccounts[1].AddTransaction(genericTransactionOutcome2);
 
         List<Category> modifiedListOfCategories = new List<Category>();
@@ -121,7 +121,7 @@ public class TransactionManagementTests
     [TestMethod]
     public void GivenCallGet_ShouldReturnList()
     {
-        genericUser.MyAccounts[0].UpdateAccountMoney(genericTransactionOutcome2);
+        genericUser.MyAccounts[0].UpdateAccountMoneyAfterAdd(genericTransactionOutcome2);
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome2);
 
         Assert.AreEqual(genericUser.MyAccounts[0].MyTransactions, genericMonetaryAccount.GetAllTransactions());
