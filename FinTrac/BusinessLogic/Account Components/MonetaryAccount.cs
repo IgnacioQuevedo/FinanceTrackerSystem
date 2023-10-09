@@ -36,7 +36,7 @@ namespace BusinessLogic.Account_Components
         {
             if (Amount < 0)
             {
-                throw new ExceptionValidateAccount("ERROR ON AMMOUNT");
+                throw new ExceptionValidateAccount("ERROR ON AMOUNT");
             }
         }
 
@@ -66,7 +66,14 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
         {
-            throw new NotImplementedException();
+            if (IsIncome(transactionToBeDeleted))
+            {
+                Amount = Amount - transactionToBeDeleted.Amount;
+            }
+            if (IsOutcome(transactionToBeDeleted))
+            {
+                Amount = Amount + transactionToBeDeleted.Amount;
+            }
 
         }
 

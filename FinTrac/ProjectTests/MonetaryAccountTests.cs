@@ -173,7 +173,9 @@ public class MonetaryAccountTests
 
         myMonetaryAccount.DeleteTransaction(genericTransaction);
 
-        myMonetaryAccount.UpdateAccountAfterDelete(transactionUpdated);
+        myMonetaryAccount.UpdateAccountAfterDelete(genericTransaction);
+
+        Assert.AreEqual(1000, myMonetaryAccount.Amount);
 
     }
 
