@@ -1,0 +1,65 @@
+﻿@page "/Goals";
+
+@using BusinessLogic.Goal_Components;
+
+<PageTitle>My Goals</PageTitle>
+<br />
+
+<h3>GoalList</h3>
+
+<br />
+
+<h1>
+    Goal List
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/Goal/GoalCreation"))">Create + </a>
+</h1>
+
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Max Amount</th>
+            <th>Category List</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var goal in categoryGoal)
+        {
+            <tr>
+                <td>@goal.Title</td>
+                <td>@goal.MaxAmountToSpend</td>
+
+                @for(int i=0;i<goal.CategoriesOfGoal.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        nestedCategoryNames = nestedCategoryNames + ", " + goal.CategoriesOfGoal[i].Name;
+                    }
+                    else
+                    {
+                        nestedCategoryNames = goal.CategoriesOfGoal[i].Name;
+                    }      
+                }
+                <td>@nestedCategoryNames</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Goal>? categoryGoal;
+    private string nestedCategoryNames;
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        categoryGoal = user.GetGoals();
+    }
+
+}
+

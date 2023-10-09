@@ -13,7 +13,7 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Home" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span class="oi oi-account-logout" aria-hidden="true"></span> Home
             </NavLink>
         </div>
     </nav>
@@ -48,6 +48,17 @@
         </div>
     </nav>
 </div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Goals" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> My Goals
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
 
 
 
