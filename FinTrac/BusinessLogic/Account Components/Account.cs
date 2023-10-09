@@ -44,6 +44,8 @@ namespace BusinessLogic.Account_Components
         #region Mandatory Methods
         public abstract void UpdateAccountMoney(Transaction transactionToBeAdded);
 
+        public abstract void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction);
+
         #endregion
 
         #region Validate Account

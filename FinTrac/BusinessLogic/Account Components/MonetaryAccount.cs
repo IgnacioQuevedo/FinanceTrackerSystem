@@ -52,6 +52,11 @@ namespace BusinessLogic.Account_Components
             }
         }
 
+        public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            throw new NotImplementedException();
+        }
+
         protected static bool IsIncome(Transaction transactionToBeAdded)
         {
             return transactionToBeAdded.Type == TypeEnum.Income;

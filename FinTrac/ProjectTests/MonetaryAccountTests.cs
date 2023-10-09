@@ -3,7 +3,9 @@ using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Transaction_Components;
 using System.Security.Principal;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1;
 [TestClass]
@@ -14,6 +16,8 @@ public class MonetaryAccountTests
     #region Init
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
+    private Transaction genericTransaction;
+    private Category genericCategory;
 
 
     [TestInitialize]
@@ -30,6 +34,10 @@ public class MonetaryAccountTests
         myMonetaryAccount.Name = myAccount.Name;
         myMonetaryAccount.Currency = CurrencyEnum.UY;
         myMonetaryAccount.Amount = 10;
+
+        genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+
+        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
     }
 
     #endregion
@@ -91,6 +99,12 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
     #endregion
+
+    [TestMethod]
+    public void GivenTransaction_ShouldReturnAmountfterModifyCorrect()
+    {
+        myMonetaryAccount.UpdateAccountAfterModify(genericTransaction, 1000);
+    }
 
     #region Currency
 

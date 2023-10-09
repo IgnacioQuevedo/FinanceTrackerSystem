@@ -99,6 +99,11 @@ namespace BusinessLogic.Account_Components
         {
             AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
         }
+
+        public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #endregion
