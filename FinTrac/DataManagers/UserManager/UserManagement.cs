@@ -6,14 +6,16 @@ namespace DataManagers.UserManager
 {
     public class UserManagement
     {
-
+        #region Property
         private Repository _memoryDatabase;
+        #endregion
 
+        #region Constructor
         public UserManagement(Repository memoryDatabase)
         {
             _memoryDatabase = memoryDatabase;
         }
-
+        #endregion
 
         #region Add User
         public void AddUser(User user)
@@ -55,7 +57,6 @@ namespace DataManagers.UserManager
         }
         #endregion
 
-
         #region Login
         public bool Login(User userToBeLogged)
         {
@@ -87,7 +88,6 @@ namespace DataManagers.UserManager
 
         #endregion
 
-
         #region Modify
 
 
@@ -118,14 +118,14 @@ namespace DataManagers.UserManager
         {
             int idExpected = -1;
 
-            foreach(var user in _memoryDatabase.Users)
+            foreach (var user in _memoryDatabase.Users)
             {
                 if (user.Email.Equals(userToFind.Email.ToLower()))
                 {
                     idExpected = user.UserId;
                 }
             }
-            return idExpected;  
+            return idExpected;
 
         }
         #endregion

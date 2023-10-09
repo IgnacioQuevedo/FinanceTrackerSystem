@@ -114,6 +114,8 @@ public class TransactionTests
 
     #endregion
 
+    #region Category Tests
+
     [TestMethod]
     public void GivenCorrectCategory_ShouldBeSetted()
     {
@@ -141,7 +143,7 @@ public class TransactionTests
         genericTransaction.ValidateCategory();
 
     }
-
+    #endregion
 
 
 }
