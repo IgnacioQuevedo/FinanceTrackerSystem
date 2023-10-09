@@ -34,12 +34,12 @@ public class TransactionManagementTests
         genericUser.MyCategories.Add(genericCategoryOutcome1);
         genericUser.MyCategories.Add(genericCategoryOutcome2);
 
-        genericMonetaryAccount = new MonetaryAccount("Saving Account", 1000, CurrencyEnum.UY);
+        genericMonetaryAccount = new MonetaryAccount("Saving Account", 1000, CurrencyEnum.UY, DateTime.Now);
 
-        genericCreditAccount = new CreditCardAccount("Credit Account", CurrencyEnum.UY, "Brou", "1233", 1000, DateTime.Now);
+        genericCreditAccount = new CreditCardAccount("Credit Account", CurrencyEnum.UY, DateTime.Now, "Brou", "1233", 1000, new DateTime(2024, 3, 19, 7, 0, 0));
 
-        genericUser.AddAccount(genericMonetaryAccount);
-        genericUser.AddAccount(genericCreditAccount);
+        genericUser.AddMonetaryAccount(genericMonetaryAccount);
+        genericUser.AddCreditAccount(genericCreditAccount);
 
         genericTransactionOutcome1 = new Transaction("Payment of Clothes", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategoryOutcome1);
 
@@ -62,13 +62,13 @@ public class TransactionManagementTests
     [TestMethod]
     public void GivenTransactionToAddToMonetaryAccount_ShouldModifyAccountAmountCorrectly()
     {
-        decimal previousAccountAmount = genericMonetaryAccount.Ammount;
+        decimal previousAccountAmount = genericMonetaryAccount.Amount;
         decimal costOfTransaction = genericTransactionOutcome1.Amount;
         genericUser.MyAccounts[0].UpdateAccountMoney(genericTransactionOutcome1);
         genericUser.MyAccounts[0].AddTransaction(genericTransactionOutcome1);
         MonetaryAccount myMonetary = (MonetaryAccount)genericUser.MyAccounts[0];
 
-        Assert.AreEqual(previousAccountAmount - costOfTransaction, myMonetary.Ammount);
+        Assert.AreEqual(previousAccountAmount - costOfTransaction, myMonetary.Amount);
     }
 
     [TestMethod]
