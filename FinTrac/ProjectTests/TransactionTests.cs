@@ -39,7 +39,7 @@ public class TransactionTests
         genericMonetaryAccount = new MonetaryAccount();
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
-        genericMonetaryAccount.Ammount = 10;
+        genericMonetaryAccount.Amount = 10;
     }
     #endregion
 
@@ -114,6 +114,8 @@ public class TransactionTests
 
     #endregion
 
+    #region Category Tests
+
     [TestMethod]
     public void GivenCorrectCategory_ShouldBeSetted()
     {
@@ -141,7 +143,7 @@ public class TransactionTests
         genericTransaction.ValidateCategory();
 
     }
-
+    #endregion
 
 
 }

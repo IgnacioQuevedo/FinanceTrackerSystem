@@ -11,7 +11,7 @@ namespace BusinessLogic.Category_Components
         #region Properties
         public int CategoryId { get; set; } = -1;
         public string Name { get; set; } = "";
-        public string CreationDate { get; } = DateTime.Now.ToString("dd/MM/yyyy");
+        public DateTime CreationDate { get; } = DateTime.Now.Date;
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
         #endregion

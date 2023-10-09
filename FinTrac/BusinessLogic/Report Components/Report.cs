@@ -128,7 +128,7 @@ namespace BusinessLogic.Report_Components
 
         public static decimal GiveAccountBalance(MonetaryAccount account)
         {
-            decimal initialMoney = account.Ammount;
+            decimal initialMoney = account.Amount;
             decimal actualBalance = 0;
             decimal accountBalance = 0;
             actualBalance = SummationOfTransactions(account, actualBalance);
