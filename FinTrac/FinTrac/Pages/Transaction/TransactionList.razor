@@ -1,0 +1,95 @@
+﻿@page "/Transactions/{accountId:int}";
+
+@using BusinessLogic.Transaction_Components;
+@using BusinessLogic.Account_Components;
+
+<PageTitle>Accounts</PageTitle>
+<h3>AccountList</h3>
+
+
+
+<h1>
+    Monetary List
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+       onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/CreateTransaction"))">
+        Create Transaction +
+    </a>
+</h1>
+
+
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Creation Date</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Type</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var transaction in transactionList)
+        {
+                <tr>
+                <td>@transaction.Title</td>
+                <td>@GetFormattedDate(@transaction.CreationDate)</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Currency</td>
+                <td>@transaction.Type</td>
+                <td>@transaction.TransactionCategory.Name</td>
+                    <td>
+                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete</button>
+                    </td>
+                </tr>
+
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+
+@code {
+    private List<Transaction>? transactionList;
+
+    private Account accountSelected;
+
+    private Transaction transactionBeforeDelete;
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+    [Parameter]
+    public int accountId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        accountSelected = user.MyAccounts[accountId];
+        transactionList = accountSelected.MyTransactions;
+    }
+
+    private void DeleteTransaction(int transactionId)
+    {
+        transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
+        user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
+        accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
+    }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
+
+}
+
+
+
+

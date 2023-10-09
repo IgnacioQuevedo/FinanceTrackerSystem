@@ -44,6 +44,7 @@
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/ModifyMonetary"))"> Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
                     </td>
                 </tr>
             }
@@ -98,6 +99,7 @@
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
                         <button class="btn btn-danger btn-sm"@onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
                     </td>
             </tr>
             }
