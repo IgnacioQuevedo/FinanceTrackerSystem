@@ -1,4 +1,4 @@
-﻿@page "/Categories"
+﻿@page "/Category"
 <PageTitle>Categories List</PageTitle>
 
 @using BusinessLogic.Category_Components;
@@ -7,14 +7,14 @@
 
 <h1>
     Categories List
-    <a href="/movies/create" class="btn btn-success btn-sm" style="float: right;margin-right: 40px;">Create +</a>
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/Category/Create"))" >Create + </a>
 </h1>
 <table class="table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Creation Date</th>
-            <th>Estatus</th>
+            <th>Status</th>
             <th>Type</th>
         </tr>
     </thead>
@@ -27,6 +27,10 @@
                 <td>@category.CreationDate</td>
                 <td>@category.Status</td>
                 <td>@category.Type</td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="/Category/@category.CategoryId/Edit">Edit</a>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteCategory(category.CategoryId))">Delete</button>
+                </td>
             </tr>
         }
     </tbody>
@@ -36,13 +40,17 @@
     private List<Category>? categoryList;
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public User user { get; set; }
 
 
     protected override void OnInitialized()
     {
-        categoryList = mainUser.GetCategories();
+        categoryList = user.GetCategories();
     }
 
+    private void DeleteCategory(int categoryId)
+    {
+        user.DeleteCategory(user.MyCategories[categoryId]);
+    }
 }
 

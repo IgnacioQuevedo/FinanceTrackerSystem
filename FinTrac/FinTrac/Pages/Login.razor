@@ -76,12 +76,18 @@
 
     private User user = new User();
 
+
+    protected override void OnInitialized()
+    {
+        user.Email = "nachitoquevedo@gmail.com";
+        user.Password = "Nacho200304!";
+    }
+
     public void LoginUser()
     {
 
         if (UserManagement.Login(user))
         {
-
             UserLogged.Id = UserManagement.FindUserId(user);
 
             NavigationManager.NavigateTo("/Home");
