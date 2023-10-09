@@ -25,6 +25,12 @@ public class MonetaryAccountTests
     [TestInitialize]
     public void TestInitialize()
     {
+        string firstName = "Michael";
+        string lastName = "Santa";
+        string email = "michSanta@gmail.com";
+        string password = "AustinF2003";
+        string address = "NW 2nd Ave";
+        genericUser = new User(firstName, lastName, email, password, address);
         myAccount = new MonetaryAccount();
         myMonetaryAccount = new MonetaryAccount();
 
@@ -105,13 +111,6 @@ public class MonetaryAccountTests
     [TestMethod]
     public void GivenTransactionAndMonetaryAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
     {
-        string firstName = "Michael";
-        string lastName = "Santa";
-        string email = "michSanta@gmail.com";
-        string password = "AustinF2003";
-        string address = "NW 2nd Ave";
-        genericUser = new User(firstName, lastName, email, password, address);
-
         transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
         myMonetaryAccount.Amount = 1000;
         genericUser.AddMonetaryAccount(myMonetaryAccount);
@@ -157,12 +156,6 @@ public class MonetaryAccountTests
     [TestMethod]
     public void GivenTransactionToDelete_ShouldCorrectlyModifyAccountMoney()
     {
-        string firstName = "Michael";
-        string lastName = "Santa";
-        string email = "michSanta@gmail.com";
-        string password = "AustinF2003";
-        string address = "NW 2nd Ave";
-        genericUser = new User(firstName, lastName, email, password, address);
         myMonetaryAccount.Amount = 1000;
         genericUser.AddMonetaryAccount(myMonetaryAccount);
         decimal oldAmount = myMonetaryAccount.Amount;
