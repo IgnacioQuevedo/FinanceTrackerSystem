@@ -188,6 +188,25 @@ public class CreditCardAccountTests
     }
 
 
+    [TestMethod]
+    public void GivenTransactionToDelete_ShouldUpdateAmountCorrectly()
+    {
+        Category genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+        Transaction genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        CreditCardAccount myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, new DateTime(2024, 10, 05, 7, 0, 0));
+
+        genericUser = new User("Michael", "Santa", "michSanta@gmail.com", "AustinF2003", "NW 2nd Ave");
+        Transaction transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericUser.AddCreditAccount(myCreditAccount);
+
+        genericUser.MyAccounts[0].MyTransactions = new List<Transaction>();
+        genericUser.MyAccounts[0].AddTransaction(genericTransaction);
+
+        myCreditAccount.UpdateAccountMoneyAfterAdd(genericTransaction);
+        myCreditAccount.UpdateAccountAfterDelete(genericTransaction);
+
+    }
+
     #endregion
 
     #region ClosingDate
