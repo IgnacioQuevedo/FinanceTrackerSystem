@@ -56,14 +56,24 @@ namespace BusinessLogic.Account_Components
         {
             if (IsIncome(transactionToBeAdded))
             {
-                Amount = Amount - oldAmountOfTransaction;
-                Amount = Amount + transactionToBeAdded.Amount;
+                ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
             if (IsOutcome(transactionToBeAdded))
             {
-                Amount = Amount + oldAmountOfTransaction;
-                Amount = Amount - transactionToBeAdded.Amount;
+                ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
+        }
+
+        private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            Amount = Amount + oldAmountOfTransaction;
+            Amount = Amount - transactionToBeAdded.Amount;
+        }
+
+        private void ModifyIncomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
+        {
+            Amount = Amount - oldAmountOfTransaction;
+            Amount = Amount + transactionToBeAdded.Amount;
         }
 
         protected static bool IsIncome(Transaction transactionToBeAdded)

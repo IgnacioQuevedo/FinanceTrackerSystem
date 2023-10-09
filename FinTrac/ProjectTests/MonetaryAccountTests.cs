@@ -103,7 +103,7 @@ public class MonetaryAccountTests
     #endregion
 
     [TestMethod]
-    public void GivenTransaction_ShouldReturnAmountfterModifyCorrect()
+    public void GivenTransactionAndMonetaryAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
     {
         string firstName = "Michael";
         string lastName = "Santa";
@@ -123,6 +123,9 @@ public class MonetaryAccountTests
 
         Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
     }
+
+
+
 
     #region Currency
 
