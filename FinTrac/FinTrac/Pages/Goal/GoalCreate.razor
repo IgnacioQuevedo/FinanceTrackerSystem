@@ -22,20 +22,19 @@
     </div>
     <br />
         
-    <select class="form-select" multiple aria-label="multiple select example" @bind="categoria">
+    <select class="form-select" aria-label="multiple select example" multiple @bind="categoryId">
 
         @foreach (var category in allCategoriesCreated)
         {
-            <option>@category.Name</option>
+            <option value="@category.CategoryId">@category.Name</option>
         }
+
     </select>
 
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Category">Cancelar</a>
 </form>
-
-
 
 
 @code
@@ -45,7 +44,7 @@
     private decimal maxAmount;
     private List<Category> categoriesAssignedToGoal;
     private List<Category> allCategoriesCreated;
-    private string categoria;
+    private int categoryId;
 
     [CascadingParameter]
 
@@ -58,6 +57,7 @@
     protected override void OnInitialized()
     {
         allCategoriesCreated = user.GetCategories();
+        categoriesAssignedToGoal = allCategoriesCreated;
     }
 
     private void SaveChanges()
