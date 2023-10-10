@@ -198,6 +198,7 @@ public class TransactionTests
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
     {
+        DateTime dateTime = DateTime.Now.Date;
         Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
     }
 
