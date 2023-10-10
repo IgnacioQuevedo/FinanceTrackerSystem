@@ -41,6 +41,8 @@ public class TransactionTests
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
         genericMonetaryAccount.Amount = 10;
+
+        genericUser = new User("Ignacio","Quevedo","nachitoquevedo@gmail.com","Nacho200304!","");
     }
     #endregion
 
@@ -185,19 +187,17 @@ public class TransactionTests
 
     public void GivenUSATransactionWithExchangeForIt_ShouldBeCreated()
     {
-
         ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
-
+        genericUser.AddExchangeHistory(exchangeHistory);
+        
         string title = "Payment of Clothes";
         decimal amount = 200;
         TypeEnum transactionType = TypeEnum.Outcome;
         CurrencyEnum currencyType = CurrencyEnum.USA;
         DateTime dateTime = DateTime.Now.Date;
 
-        Transaction transacionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
-
-
-
+        Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
+      
     }
     #endregion
 }

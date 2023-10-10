@@ -89,7 +89,21 @@ namespace BusinessLogic.Transaction_Components
 
         public static void checkExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
         {
-            throw new NotImplementedException();
+            bool existsExchangeOnThatDate = false;
+
+            foreach (ExchangeHistory exchangeHistory in exchangeHistories)
+            {
+                if (DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
+                {
+                    existsExchangeOnThatDate = true;
+                }
+            }
+
+            if (!existsExchangeOnThatDate)
+            {
+                throw new ExceptionValidateTransaction("There is no exchange history for this date");
+            }
+
         }
 
 
