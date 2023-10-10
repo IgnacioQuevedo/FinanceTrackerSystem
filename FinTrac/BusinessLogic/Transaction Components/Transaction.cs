@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.ExchangeHistory_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,6 +86,13 @@ namespace BusinessLogic.Transaction_Components
         }
 
         #endregion
+
+        public static void checkExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
     }
 }

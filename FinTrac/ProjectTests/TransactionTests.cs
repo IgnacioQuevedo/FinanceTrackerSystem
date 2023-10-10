@@ -7,6 +7,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
+using BusinessLogic.ExchangeHistory_Components;
 
 namespace TestProject1;
 [TestClass]
@@ -180,6 +181,23 @@ public class TransactionTests
         Transaction transacionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
     }
 
+    [TestMethod]
 
+    public void GivenUSATransactionWithExchangeForIt_ShouldBeCreated()
+    {
+
+        ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
+
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum transactionType = TypeEnum.Outcome;
+        CurrencyEnum currencyType = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
+
+
+
+    }
     #endregion
 }
