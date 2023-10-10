@@ -5,9 +5,10 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
+using BusinessLogic.ExchangeHistory_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
-using BusinessLogic.ExchangeHistory_Components;
+
 
 namespace TestProject1;
 [TestClass]
@@ -21,6 +22,7 @@ public class TransactionTests
     private Category genericCategory2;
     private MonetaryAccount genericMonetaryAccount;
     private User genericUser;
+    private DateTime transactionDate;
 
     [TestInitialize]
     public void TestInitialize()
@@ -43,6 +45,7 @@ public class TransactionTests
         genericMonetaryAccount.Amount = 10;
 
         genericUser = new User("Ignacio","Quevedo","nachitoquevedo@gmail.com","Nacho200304!","");
+        transactionDate = DateTime.Now.Date;
     }
     #endregion
 
@@ -184,22 +187,20 @@ public class TransactionTests
     }
 
     [TestMethod]
-
     public void GivenUSATransactionWithExchangeForIt_ShouldBeCreated()
     {
         ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
         genericUser.AddExchangeHistory(exchangeHistory);
-        DateTime dateTime = DateTime.Now.Date;
 
-        Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
+        Transaction.checkExistence(transactionDate, genericUser.MyExchangesHistory);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
     {
-        DateTime dateTime = DateTime.Now.Date;
-        Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
+        
+        Transaction.checkExistence(transactionDate, genericUser.MyExchangesHistory);
     }
 
     #endregion

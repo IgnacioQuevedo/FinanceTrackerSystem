@@ -103,7 +103,7 @@ namespace BusinessLogic.Transaction_Components
 
             if (!existsExchangeOnThatDate)
             {
-                throw new ExceptionValidateTransaction("There is no exchange history for this date");
+                throw new ExceptionValidateTransaction("There is no register exchange for this date");
             }
 
         }
