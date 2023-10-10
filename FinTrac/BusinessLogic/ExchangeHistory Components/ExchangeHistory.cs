@@ -69,5 +69,12 @@ namespace BusinessLogic.ExchangeHistory_Components
             return true;
         }
         #endregion
+
+
+        public bool isApplied()
+        {
+
+            throw new NotImplementedException();
+        }
     }
 }

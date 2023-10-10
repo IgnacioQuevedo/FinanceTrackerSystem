@@ -2,8 +2,10 @@ using BusinessLogic;
 using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.User_Components;
+using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1;
 [TestClass]
