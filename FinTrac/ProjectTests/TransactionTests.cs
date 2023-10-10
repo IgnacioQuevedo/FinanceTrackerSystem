@@ -166,5 +166,17 @@ public class TransactionTests
         Assert.AreEqual(transacionExample.CreationDate, dateTime);
         Assert.AreEqual(transacionExample.TransactionCategory, genericCategory);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenIncorrectValues_ShouldThrowException()
+    {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum type = TypeEnum.Outcome;
+        CurrencyEnum currency = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory)
+    }
     #endregion
 }
