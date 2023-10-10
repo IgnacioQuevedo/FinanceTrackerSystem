@@ -45,6 +45,7 @@ namespace BusinessLogic.Transaction_Components
             ValidateCategory();
             ValidateTitle();
             ValidateAmount();
+
         }
 
         #endregion
@@ -87,13 +88,14 @@ namespace BusinessLogic.Transaction_Components
 
         #endregion
 
+        #region Validate exchange exists for transaction date
         public static void checkExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
         {
             bool existsExchangeOnThatDate = false;
 
             foreach (ExchangeHistory exchangeHistory in exchangeHistories)
             {
-                if (DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
+                if (!existsExchangeOnThatDate && DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
                 {
                     existsExchangeOnThatDate = true;
                 }
@@ -106,7 +108,7 @@ namespace BusinessLogic.Transaction_Components
 
         }
 
-
+        #endregion
 
     }
 }
