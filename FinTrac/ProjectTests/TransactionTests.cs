@@ -5,8 +5,10 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
+using BusinessLogic.ExchangeHistory_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
+
 
 namespace TestProject1;
 [TestClass]
@@ -20,6 +22,7 @@ public class TransactionTests
     private Category genericCategory2;
     private MonetaryAccount genericMonetaryAccount;
     private User genericUser;
+    private DateTime transactionDate;
 
     [TestInitialize]
     public void TestInitialize()
@@ -40,6 +43,9 @@ public class TransactionTests
         genericMonetaryAccount.Name = "Scotia Saving Bank";
         genericMonetaryAccount.Currency = CurrencyEnum.UY;
         genericMonetaryAccount.Amount = 10;
+
+        genericUser = new User("Ignacio","Quevedo","nachitoquevedo@gmail.com","Nacho200304!","");
+        transactionDate = DateTime.Now.Date;
     }
     #endregion
 
@@ -145,5 +151,57 @@ public class TransactionTests
     }
     #endregion
 
+    #region Constructor
 
+    [TestMethod]
+
+    public void GivenCorrectValuesToCreateTransaction_ShouldBeCreated()
+    {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum type = TypeEnum.Income;
+        CurrencyEnum currency = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory);
+
+
+        Assert.AreEqual(transacionExample.Title, title);
+        Assert.AreEqual(transacionExample.Amount, amount);
+        Assert.AreEqual(transacionExample.Type, type);
+        Assert.AreEqual(transacionExample.Currency, currency);
+        Assert.AreEqual(transacionExample.CreationDate, dateTime);
+        Assert.AreEqual(transacionExample.TransactionCategory, genericCategory);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenIncorrectValues_ShouldThrowException()
+    {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum transactionType = TypeEnum.Outcome;
+        CurrencyEnum currencyType = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
+    }
+
+    [TestMethod]
+    public void GivenUSATransactionWithExchangeForIt_ShouldBeCreated()
+    {
+        ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
+        genericUser.AddExchangeHistory(exchangeHistory);
+
+        Transaction.CheckExistence(transactionDate, genericUser.MyExchangesHistory);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
+    {
+        
+        Transaction.CheckExistence(transactionDate, genericUser.MyExchangesHistory);
+    }
+
+    #endregion
 }

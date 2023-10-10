@@ -132,6 +132,7 @@ namespace TestProject1
             genericUser.AddExchangeHistory(exchangeHistoryExample);
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
+
         #endregion
     }
 }
