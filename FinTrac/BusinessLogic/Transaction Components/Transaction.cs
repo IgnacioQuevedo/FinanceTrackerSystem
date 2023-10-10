@@ -104,6 +104,7 @@ namespace BusinessLogic.Transaction_Components
                 if (!existsExchangeOnThatDate && DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
                 {
                     existsExchangeOnThatDate = true;
+                    exchangeHistory.SetAppliedExchangeIntoTrue();
                 }
             }
 

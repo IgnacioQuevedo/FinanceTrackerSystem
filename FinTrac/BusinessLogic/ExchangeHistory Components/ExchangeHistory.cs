@@ -10,6 +10,10 @@ namespace BusinessLogic.ExchangeHistory_Components
 {
     public class ExchangeHistory
     {
+        #region Private Attributes
+        private bool _isAppliedInATransaction = false;
+        #endregion
+
         #region Properties
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
@@ -71,10 +75,17 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
 
-        public bool isApplied()
+        public void SetAppliedExchangeIntoTrue()
         {
+            _isAppliedInATransaction = true;
+        }
 
-            throw new NotImplementedException();
+        public void ValidateApplianceExchangeOnTransaction()
+        {
+            if(_isAppliedInATransaction)
+            {
+                throw new ExceptionExchangeHistoryManagement("Imposible to modify an exchange that is being used on a transaction.");
+            }
         }
     }
 }

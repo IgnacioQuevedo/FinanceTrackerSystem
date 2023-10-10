@@ -104,16 +104,18 @@ namespace TestProject1
         #region Modify Of Exchange
 
         [TestMethod]
-        public void GivenNewValues_ShouldBePossibleToUpdateThem()
+        public void GivenNewValues_ShouldBePossibleToUpdateThemBecauseIsNotUsedOnATransaction()
         {
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
             decimal newValue = 45.7M;
             CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
             DateTime valueDateOfExchange = exchangeHistoryExample.ValueDate;
-            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
-
-            genericUser.AddExchangeHistory(exchangeHistoryExample);
             int idUpdate = exchangeHistoryExample.ExchangeHistoryId;
-            exchangeUpdated.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
+
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
+            exchangeUpdated.ExchangeHistoryId = idUpdate;
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
             genericUser.ModifyExchangeHistory(exchangeUpdated);
 
             Assert.AreEqual(newValue, genericUser.MyExchangesHistory[idUpdate].Value);
