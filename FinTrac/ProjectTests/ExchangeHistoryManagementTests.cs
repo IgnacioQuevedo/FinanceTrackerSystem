@@ -132,8 +132,11 @@ namespace TestProject1
             ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
 
             genericUser.AddExchangeHistory(exchangeHistoryExample);
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
+
+
 
         #endregion
     }
