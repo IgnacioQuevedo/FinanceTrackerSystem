@@ -151,7 +151,7 @@ public class TransactionTests
     {
         string title = "Payment of Clothes";
         decimal amount = 200;
-        TypeEnum type = TypeEnum.Outcome;
+        TypeEnum type = TypeEnum.Income;
         CurrencyEnum currency = CurrencyEnum.USA;
         DateTime dateTime = DateTime.Now.Date;
         Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory);
@@ -164,7 +164,4 @@ public class TransactionTests
         Assert.AreEqual(transacionExample.CreationDate, dateTime);
         Assert.AreEqual(transacionExample.TransactionCategory, genericCategory);
     }
-}
-
-
 }
