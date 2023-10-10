@@ -109,18 +109,6 @@ public class MonetaryAccountTests
     #endregion
 
     [TestMethod]
-
-    public void GivenInitialAmount_ShouldBePossibleToSet()
-    {
-        decimal initialAmount = 1000;
-
-        myMonetaryAccount.InitialAmount = initialAmount;
-
-        Assert.AreEqual(initialAmount, myMonetaryAccount.InitialAmount);
-    }
-
-
-    [TestMethod]
     public void GivenTransactionAndMonetaryAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
     {
         transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
@@ -195,5 +183,20 @@ public class MonetaryAccountTests
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
     }
+
+    [TestMethod]
+    public void GivenInitialAmount_ShouldBePossibleToSet()
+    {
+        decimal initialAmount = 100;
+        string nameToBeSetted = "Itau Saving Bank";
+        int ammountToBeSetted = 100;
+        CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
+
+        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
+
+
+        Assert.AreEqual(initialAmount, monetaryAccountExample.ReturnInitialAmount());
+    }
+
     #endregion
 }
