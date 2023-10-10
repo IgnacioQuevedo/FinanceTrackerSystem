@@ -29,9 +29,9 @@
 
     <div>
         <label for="title">Currency Type</label>
-        <select class="form-select" aria-label="Default select example" @bind="currencyType">
-            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
-            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+        <select class="form-select" aria-label="Default select example">
+
+            <option value="@accountSelected.Currency">@accountSelected.Currency</option>
         </select>
     </div>
 
@@ -96,7 +96,6 @@
 
     protected override void OnInitialized()
     {
-        currencyType = CurrencyEnum.UY;
         transactionType = TypeEnum.Outcome;
         creationDate = DateTime.Now.Date;
         accountSelected = mainUser.MyAccounts[accountId];
@@ -106,7 +105,7 @@
     private void SaveChanges()
     {
         category = myCategories[categoryId];
-        transactionToAdd = new Transaction(title, amount, creationDate, currencyType, transactionType, category);
+        transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
         accountSelected.AddTransaction(transactionToAdd);
         accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
         NavigationManager.NavigateTo($"/Transactions/{accountId}");
