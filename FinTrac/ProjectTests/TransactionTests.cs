@@ -145,6 +145,8 @@ public class TransactionTests
     }
     #endregion
 
+    #region Constructor
+
     [TestMethod]
 
     public void GivenCorrectValuesToCreateTransaction_ShouldBeCreated()
@@ -164,4 +166,5 @@ public class TransactionTests
         Assert.AreEqual(transacionExample.CreationDate, dateTime);
         Assert.AreEqual(transacionExample.TransactionCategory, genericCategory);
     }
+    #endregion
 }
