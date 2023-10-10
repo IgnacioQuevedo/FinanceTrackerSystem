@@ -4,6 +4,7 @@
 
 <h3>Monetary Balance</h3>
 
+
 <select class="form-select" aria-label="select example" @bind="monetaryId">
 
     @foreach (var accountToReport in Accounts)
@@ -23,6 +24,14 @@
 
 
 <input type="number" class="form-control" id="Name" @bind="accountBalance" />
+
+<br />
+<br />
+<br>
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
 
 
 @code

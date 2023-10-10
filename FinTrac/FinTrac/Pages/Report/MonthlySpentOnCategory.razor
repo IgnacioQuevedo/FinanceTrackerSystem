@@ -3,7 +3,7 @@
 @using BusinessLogic.Report_Components;
 
 
-<h3>MontlySpentOnCategory</h3>
+<h3>Montly Spent On Category</h3>
 
 
 <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
@@ -15,10 +15,19 @@
 
 </select>
 
+
 <div class="form-group">
     <label for="title">Confirm Selection Of Month Report</label>
     <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
 </div>
+
+<br />
+<br />
+<br />
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
 
 
 
@@ -30,9 +39,6 @@
                 <th>Category Name</th>
                 <th>Amount Spent on Goal</th>
                 <th>Percentage Of Total</th>
-                <td>
-                    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Goals"))"> Go Back</button>
-                </td>
             </tr>
         </thead>
         <tbody>
