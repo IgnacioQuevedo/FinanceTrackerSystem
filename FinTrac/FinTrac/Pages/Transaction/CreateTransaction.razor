@@ -89,8 +89,9 @@
     {
         currencyType = CurrencyEnum.UY;
         transactionType = TypeEnum.Income;
-        accountSelected = mainUser.MyAccounts[accountId];
         creationDate = DateTime.Now.Date;
+
+        accountSelected = mainUser.MyAccounts[accountId];
         myCategories = mainUser.GetCategories();
     }
 
