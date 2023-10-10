@@ -194,7 +194,6 @@ public class MonetaryAccountTests
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
-
         Assert.AreEqual(initialAmount, monetaryAccountExample.ReturnInitialAmount());
     }
 

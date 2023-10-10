@@ -150,7 +150,21 @@ namespace BusinessLogicTests
 
             genericUser.ModifyMonetaryAccount(accountWithChanges);
         }
-            #endregion
+
+      [TestMethod]
+      public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
+        {
+            genericUser.AddMonetaryAccount(genericMonetaryAccount);
+
+            MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 2000, CurrencyEnum.USA, DateTime.Now);
+            genericMonetaryAccount.AccountId = accountToUpdate.AccountId;
+
+            genericUser.ModifyMonetaryAccount(accountToUpdate);
+
+            Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), genericUser.MyAccounts[accountToUpdate.AccountId].Amount);
+        }
+
+        #endregion
 
         #region Modify Aspects of Credit Card Account
         [TestMethod]
