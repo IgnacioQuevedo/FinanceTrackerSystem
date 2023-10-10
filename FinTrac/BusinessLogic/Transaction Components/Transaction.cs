@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.ExchangeHistory_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,6 @@ namespace BusinessLogic.Transaction_Components
         }
 
         public Transaction(string title, decimal amount, DateTime date, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
-
         {
             Title = title;
             Amount = amount;
@@ -41,6 +41,14 @@ namespace BusinessLogic.Transaction_Components
             Type = type;
             TransactionCategory = transactionCategory;
             CreationDate = date;
+            ValidateTransaction();
+        }
+
+        #endregion
+
+        #region Validations
+        public void ValidateTransaction()
+        {
             ValidateCategory();
             ValidateTitle();
             ValidateAmount();
@@ -82,6 +90,28 @@ namespace BusinessLogic.Transaction_Components
         private bool IsDisabledCategory()
         {
             return TransactionCategory.Status == StatusEnum.Disabled;
+        }
+
+        #endregion
+
+        #region Validate exchange exists for transaction date
+        public static void CheckExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
+        {
+            bool existsExchangeOnThatDate = false;
+
+            foreach (ExchangeHistory exchangeHistory in exchangeHistories)
+            {
+                if (!existsExchangeOnThatDate && DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
+                {
+                    existsExchangeOnThatDate = true;
+                }
+            }
+
+            if (!existsExchangeOnThatDate)
+            {
+                throw new ExceptionValidateTransaction("There is no register exchange for this date");
+            }
+
         }
 
         #endregion

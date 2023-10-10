@@ -165,11 +165,11 @@ public class ReportTests
     [TestMethod]
     public void GivenTransactionInUSA_ShouldBeConvertedToUY()
     {
-        Report.ConvertDolar(genericTransaction, loggedUser);
+        Report.ConvertDollar(genericTransaction, loggedUser);
 
         decimal convertionNeeded = 200 * 38.9M;
 
-        Assert.AreEqual(convertionNeeded, Report.ConvertDolar(genericTransaction, loggedUser));
+        Assert.AreEqual(convertionNeeded, Report.ConvertDollar(genericTransaction, loggedUser));
     }
 
     [TestMethod]

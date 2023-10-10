@@ -195,7 +195,6 @@ namespace BusinessLogicTests
 
         public void ModifyingValueIssuingBankAndLast4DigitsToValuesThatAreAlreadyRegistered_ShouldThrowException()
         {
-
             genericUser.AddCreditAccount(genericCreditCardAccount);
 
             string nameToBeSetted = "Alpha Brou";
