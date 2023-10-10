@@ -176,7 +176,7 @@ public class TransactionTests
         TypeEnum type = TypeEnum.Outcome;
         CurrencyEnum currency = CurrencyEnum.USA;
         DateTime dateTime = DateTime.Now.Date;
-        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory)
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory);
     }
     #endregion
 }
