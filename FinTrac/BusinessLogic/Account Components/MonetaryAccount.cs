@@ -13,6 +13,8 @@ namespace BusinessLogic.Account_Components
         #region Properties
         public decimal Amount { get; set; }
 
+        public decimal InitialAmount { get; set; }
+
         #endregion
 
         #region Constructor
