@@ -92,15 +92,17 @@
         accountSelected = mainUser.MyAccounts[accountId];
         creationDate = DateTime.Now.Date;
         myCategories = mainUser.GetCategories();
-        category = myCategories[categoryId];
+        
     }
 
     private void SaveChanges()
     {
+        category = myCategories[categoryId];
         transactionToAdd = new Transaction(title, amount, creationDate, currencyType, transactionType, category);
         accountSelected.AddTransaction(transactionToAdd);
         accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
         NavigationManager.NavigateTo($"/Transactions/{accountId}");
+
     }
 
     string GetFormattedDate(DateTime date)

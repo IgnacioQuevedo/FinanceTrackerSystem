@@ -1,0 +1,25 @@
+﻿@page "/Reports"
+
+<h3>ReportList</h3>
+
+
+<div class="form-group">
+    <label for="title">Create Monthly Report Per Goal</label>
+    <button type="button" class="btn btn-outline-danger" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlyReportGoals"))"> Create</button>
+</div>
+
+<div class="form-group">
+    <label for="title">Create Report Per Category</label>
+    <button type="button" class="btn btn-outline-danger" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlySpentOnCategory"))"> Create</button>
+</div>
+
+<div class="form-group">
+    <label for="title">Create Report Per Category</label>
+    <button type="button" class="btn btn-outline-danger" onclick="@(()=> NavigationManager.NavigateTo("/Report/SpendingsOfCreditCard"))"> Create</button>
+</div>
+
+<div class="form-group">
+    <label for="title">Create Report Monetary Balance</label>
+    <button type="button" class="btn btn-outline-danger" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonetaryBalance"))"> Create</button>
+</div>
+

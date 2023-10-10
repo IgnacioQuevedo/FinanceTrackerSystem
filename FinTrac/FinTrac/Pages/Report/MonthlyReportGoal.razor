@@ -1,0 +1,50 @@
+﻿@page "/Report/MonthlyReportGoals"
+
+@using BusinessLogic.Report_Components;
+
+<h3>MonthlyReportGoal</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Defined Amount For Goal </th>
+            <th>Amount Spent on Goal</th>
+            <th>Goal Achieved</th>
+            <td>
+                <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Goals"))"> Go Back</button>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var goalReport in monthlyReportOfGoals)
+        {
+
+            <tr>
+                <td>@goalReport.AmountDefined</td>
+                <td>@goalReport.TotalSpent</td>
+                <td>@goalReport.GoalAchieved</td>
+               
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+
+
+@code
+{
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+    List<ResumeOfGoalReport> monthlyReportOfGoals;
+
+    protected override void OnInitialized()
+    {
+        monthlyReportOfGoals = Report.MonthlyReportPerGoal(user);
+    }
+}

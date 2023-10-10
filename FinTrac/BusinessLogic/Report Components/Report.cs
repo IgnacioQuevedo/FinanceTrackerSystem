@@ -40,7 +40,7 @@ namespace BusinessLogic.Report_Components
         }
         #endregion
 
-        #region Report of all spendings per cateogry detailed
+        #region Report of all spendings per category detailed
 
         public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
         {
