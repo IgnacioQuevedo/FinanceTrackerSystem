@@ -34,7 +34,6 @@ namespace BusinessLogic.Transaction_Components
         }
 
         public Transaction(string title, decimal amount, DateTime date, CurrencyEnum currency, TypeEnum type, Category transactionCategory)
-
         {
             Title = title;
             Amount = amount;
@@ -42,10 +41,17 @@ namespace BusinessLogic.Transaction_Components
             Type = type;
             TransactionCategory = transactionCategory;
             CreationDate = date;
+            ValidateTransaction();
+        }
+
+        #endregion
+
+        #region Validations
+        public void ValidateTransaction()
+        {
             ValidateCategory();
             ValidateTitle();
             ValidateAmount();
-
         }
 
         #endregion
@@ -89,7 +95,7 @@ namespace BusinessLogic.Transaction_Components
         #endregion
 
         #region Validate exchange exists for transaction date
-        public static void checkExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
+        public static void CheckExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
         {
             bool existsExchangeOnThatDate = false;
 

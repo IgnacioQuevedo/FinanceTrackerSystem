@@ -192,7 +192,7 @@ public class TransactionTests
         ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
         genericUser.AddExchangeHistory(exchangeHistory);
 
-        Transaction.checkExistence(transactionDate, genericUser.MyExchangesHistory);
+        Transaction.CheckExistence(transactionDate, genericUser.MyExchangesHistory);
     }
 
     [TestMethod]
@@ -200,7 +200,7 @@ public class TransactionTests
     public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
     {
         
-        Transaction.checkExistence(transactionDate, genericUser.MyExchangesHistory);
+        Transaction.CheckExistence(transactionDate, genericUser.MyExchangesHistory);
     }
 
     #endregion
