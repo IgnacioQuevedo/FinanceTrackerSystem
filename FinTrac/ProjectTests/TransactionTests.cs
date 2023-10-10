@@ -173,10 +173,13 @@ public class TransactionTests
     {
         string title = "Payment of Clothes";
         decimal amount = 200;
-        TypeEnum type = TypeEnum.Outcome;
-        CurrencyEnum currency = CurrencyEnum.USA;
+        TypeEnum transactionType = TypeEnum.Outcome;
+        CurrencyEnum currencyType = CurrencyEnum.USA;
         DateTime dateTime = DateTime.Now.Date;
-        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory);
+
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
     }
+
+
     #endregion
 }
