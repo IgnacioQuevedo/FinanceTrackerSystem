@@ -10,6 +10,10 @@ namespace BusinessLogic.Account_Components
 {
     public class MonetaryAccount : Account
     {
+        #region Attributes
+        private static decimal _initialAmount;
+        #endregion
+
         #region Properties
         public decimal Amount { get; set; }
 
@@ -21,6 +25,7 @@ namespace BusinessLogic.Account_Components
         public MonetaryAccount(string accountName, decimal amount, CurrencyEnum currencyType, DateTime creationDate) : base(accountName, currencyType, creationDate)
         {
             Amount = amount;
+            _initialAmount = amount;
             ValidateMonetaryAccount();
         }
 
@@ -99,7 +104,14 @@ namespace BusinessLogic.Account_Components
             return transactionToBeAdded.Type == TypeEnum.Outcome;
         }
 
+        #endregion
 
+        #region Method to Return Initial Amount
+
+        public decimal ReturnInitialAmount()
+        {
+            return _initialAmount;
+        }
 
         #endregion
     }

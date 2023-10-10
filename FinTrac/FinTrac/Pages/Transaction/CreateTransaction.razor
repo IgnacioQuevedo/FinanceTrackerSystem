@@ -40,8 +40,18 @@
     <div>
         <label for="title">Type</label>
         <select class="form-select" aria-label="Default select example" @bind="transactionType">
-            <option value="@TypeEnum.Income">@TypeEnum.Income</option>
-            <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+
+            @if(accountSelected is MonetaryAccount)
+            {
+                <option value="@TypeEnum.Income">@TypeEnum.Income</option>
+                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+            }
+
+            else
+            {
+                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+            }
+
         </select>
     </div>
 
@@ -67,16 +77,15 @@
 {
 
     private string title;
-    private DateTime creationDate;
     private decimal amount;
+    private DateTime creationDate;
     private CurrencyEnum currencyType;
     private TypeEnum transactionType;
     private int categoryId;
-    private Category category;
 
+    private Category category;
     private Account accountSelected;
     private List<Category> myCategories;
-
     private Transaction transactionToAdd;
 
     [Parameter]
@@ -89,10 +98,10 @@
     {
         currencyType = CurrencyEnum.UY;
         transactionType = TypeEnum.Outcome;
-        accountSelected = mainUser.MyAccounts[accountId];
         creationDate = DateTime.Now.Date;
+        accountSelected = mainUser.MyAccounts[accountId];
         myCategories = mainUser.GetCategories();
-        
+
     }
 
     private void SaveChanges()
