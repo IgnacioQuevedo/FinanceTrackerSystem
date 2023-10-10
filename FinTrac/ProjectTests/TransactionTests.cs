@@ -194,5 +194,12 @@ public class TransactionTests
         Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionValidateTransaction))]
+    public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
+    {
+        Transaction.checkExistence(dateTime, genericUser.MyExchangesHistory);
+    }
+
     #endregion
 }
