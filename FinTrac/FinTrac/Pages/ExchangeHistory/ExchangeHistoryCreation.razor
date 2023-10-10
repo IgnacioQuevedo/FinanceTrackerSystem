@@ -19,7 +19,7 @@
     <br />
 
     <label for="title">Currency To Select </label>
-    <select class="form-select" aria-label="multiple select example" @bind = "valueCurrency">
+    <select class="form-select" aria-label="multiple select example" @bind="valueCurrency">
 
         @foreach (CurrencyEnum currency in Enum.GetValues(typeof(CurrencyEnum)))
         {
@@ -37,7 +37,7 @@
 
 
 
-@code 
+@code
 {
     private decimal value;
     private CurrencyEnum valueCurrency;
@@ -48,7 +48,7 @@
 
     protected override void OnInitialized()
     {
-        valueCurrency = CurrencyEnum.UY;
+        valueCurrency = CurrencyEnum.USA;
         valueDate = DateTime.Now.Date;
     }
 
