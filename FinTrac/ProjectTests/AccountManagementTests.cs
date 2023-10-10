@@ -155,15 +155,14 @@ namespace BusinessLogicTests
       public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
+            int idAccount = genericMonetaryAccount.AccountId;
 
             MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 2000, CurrencyEnum.USA, DateTime.Now);
-            accountToUpdate.AccountId = genericMonetaryAccount.AccountId;
-
+            accountToUpdate.AccountId = idAccount;
             genericUser.ModifyMonetaryAccount(accountToUpdate);
-            MonetaryAccount accountUpdated= (MonetaryAccount)genericUser.MyAccounts[accountToUpdate.AccountId];
 
 
-
+            MonetaryAccount accountUpdated= (MonetaryAccount) genericUser.MyAccounts[idAccount];
             Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
         }
 
