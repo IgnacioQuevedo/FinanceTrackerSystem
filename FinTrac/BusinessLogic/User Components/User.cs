@@ -377,7 +377,9 @@ namespace BusinessLogic.User_Components
 
         private void UpdateValues(Account accountToUpdate, int index)
         {
+            accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
             MyAccounts[index] = accountToUpdate;
+
         }
         private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate, CreditCardAccount oneCreditCardAccount)
         {
