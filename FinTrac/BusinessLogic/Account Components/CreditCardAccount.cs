@@ -102,49 +102,25 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
-            if (IsIncome(transactionToBeAdded))
-            {
-                ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
-            }
-            if (IsOutcome(transactionToBeAdded))
-            {
-                ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
-            }
+
+            ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
+
         }
 
         private static bool IsOutcome(Transaction transactionToBeAdded)
         {
             return transactionToBeAdded.Type == Category_Components.TypeEnum.Outcome;
         }
-
-        private static bool IsIncome(Transaction transactionToBeAdded)
-        {
-            return transactionToBeAdded.Type == Category_Components.TypeEnum.Income;
-        }
-
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
-            AvailableCredit = AvailableCredit + oldAmountOfTransaction;
-            AvailableCredit = AvailableCredit - transactionToBeAdded.Amount;
-        }
-
-        private void ModifyIncomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
-        {
-            AvailableCredit = AvailableCredit - oldAmountOfTransaction;
-            AvailableCredit = AvailableCredit + transactionToBeAdded.Amount;
+            decimal resetCredit = AvailableCredit + oldAmountOfTransaction;
+            AvailableCredit = resetCredit - transactionToBeAdded.Amount;
         }
 
         public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
         {
-            if (IsIncome(transactionToBeDeleted))
-            {
-                AvailableCredit = AvailableCredit - transactionToBeDeleted.Amount;
-            }
-            if (IsOutcome(transactionToBeDeleted))
-            {
-                AvailableCredit = AvailableCredit + transactionToBeDeleted.Amount;
-            }
 
+            AvailableCredit = AvailableCredit + transactionToBeDeleted.Amount;
         }
         #endregion
 
