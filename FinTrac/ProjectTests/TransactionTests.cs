@@ -145,5 +145,26 @@ public class TransactionTests
     }
     #endregion
 
+    [TestMethod]
+
+    public void GivenCorrectValuesToCreateTransaction_ShouldBeCreated()
+    {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum type = TypeEnum.Outcome;
+        CurrencyEnum currency = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+        Transaction transacionExample = new Transaction(title, amount, dateTime, currency, type, genericCategory);
+
+
+        Assert.AreEqual(transacionExample.Title, title);
+        Assert.AreEqual(transacionExample.Amount, amount);
+        Assert.AreEqual(transacionExample.Type, type);
+        Assert.AreEqual(transacionExample.Currency, currency);
+        Assert.AreEqual(transacionExample.CreationDate, dateTime);
+        Assert.AreEqual(transacionExample.TransactionCategory, genericCategory);
+    }
+}
+
 
 }
