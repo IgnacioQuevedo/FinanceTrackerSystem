@@ -104,8 +104,6 @@ namespace BusinessLogic.Account_Components
             return transactionToBeAdded.Type == TypeEnum.Outcome;
         }
 
-
-
         #endregion
 
         #region Method to Return Initial Amount

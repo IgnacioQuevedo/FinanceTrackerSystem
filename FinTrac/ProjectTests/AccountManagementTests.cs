@@ -157,11 +157,14 @@ namespace BusinessLogicTests
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
 
             MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 2000, CurrencyEnum.USA, DateTime.Now);
-            genericMonetaryAccount.AccountId = accountToUpdate.AccountId;
+            accountToUpdate.AccountId = genericMonetaryAccount.AccountId;
 
             genericUser.ModifyMonetaryAccount(accountToUpdate);
+            MonetaryAccount accountUpdated= (MonetaryAccount)genericUser.MyAccounts[accountToUpdate.AccountId];
 
-            Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), genericUser.MyAccounts[accountToUpdate.AccountId].Amount);
+
+
+            Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
         }
 
         #endregion
