@@ -1,0 +1,58 @@
+﻿@page "/ExchangeHistories"
+
+@using BusinessLogic.ExchangeHistory_Components;
+
+
+<h3>ExchangeHistoryList</h3>
+
+<PageTitle>Exchange History List</PageTitle>
+
+
+<h1>
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/ExchangeHistory/ExchangeHistoryCreation"))" >Create + </a>
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Value</th>
+            <th>Currency</th>
+            <th>ValueDate</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var exchangeHistory in exchangeHistoryList)
+        {
+            <tr>
+                <td>@exchangeHistory.Value</td>
+                <td>@exchangeHistory.Currency</td>
+                <td>@exchangeHistory.ValueDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+    public List<ExchangeHistory> exchangeHistoryList;
+    
+    protected override void OnInitialized()
+    {
+        exchangeHistoryList = user.GetExchangesHistory();
+    }
+
+    private void DeleteCategory(int categoryId)
+    {
+        user.DeleteCategory(user.MyCategories[categoryId]);
+    }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
+}
