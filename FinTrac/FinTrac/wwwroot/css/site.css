@@ -113,3 +113,8 @@ canvas {
     font-size: large;
     padding: 10px 20px;
 }
+
+.custom-container {
+    max-width: 100%; /* Establecer el ancho máximo deseado */
+    margin: 0 auto; /* Centrar el contenedor horizontalmente */
+}
