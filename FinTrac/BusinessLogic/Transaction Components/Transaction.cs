@@ -95,7 +95,7 @@ namespace BusinessLogic.Transaction_Components
         #endregion
 
         #region Validate exchange exists for transaction date
-        public static void CheckExistence(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
+        public static void CheckExistenceOfExchange(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
         {
             bool existsExchangeOnThatDate = false;
 

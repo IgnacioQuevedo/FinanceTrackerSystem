@@ -1,9 +1,11 @@
 using BusinessLogic;
 using BusinessLogic.User_Components;
 using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1
 {
@@ -137,8 +139,24 @@ namespace TestProject1
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
 
+        public void GivenExchangeHistoryToUpdateThatIsAppliedOnATransaction_ShouldThrowException()
+        {
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
 
+            decimal newValue = 45.7M;
+            CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
+            ExchangeHistory exchangeThatWillBeApplied = new ExchangeHistory(currencyOfExchange, newValue, DateTime.Now);
+            exchangeThatWillBeApplied.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
+
+            Category genericCategory = new Category("Clothes", StatusEnum.Enabled, TypeEnum.Outcome);
+            Transaction transaction = new Transaction("Payment of food", 400, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
+            Transaction.CheckExistenceOfExchange(transaction.CreationDate, genericUser.GetExchangesHistory());
+
+            exchangeThatWillBeApplied.ValidateApplianceExchangeOnTransaction();
+        }
 
         #endregion
     }
