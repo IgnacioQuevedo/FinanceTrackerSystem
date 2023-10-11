@@ -3,6 +3,7 @@
 @using BusinessLogic.Account_Components;
 @using BusinessLogic.Transaction_Components;
 @using BusinessLogic.Category_Components;
+@using BusinessLogic.ExchangeHistory_Components;
 
 <h3>Transaction Creation</h3>
 
@@ -104,6 +105,10 @@
 
     private void SaveChanges()
     {
+        if(accountSelected.Currency == CurrencyEnum.USA) 
+        {
+            Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
+        }
         category = myCategories[categoryId];
         transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
         accountSelected.AddTransaction(transactionToAdd);
