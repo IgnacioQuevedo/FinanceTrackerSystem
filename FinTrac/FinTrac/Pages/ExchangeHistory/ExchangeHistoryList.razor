@@ -28,7 +28,7 @@
                 <td>@exchangeHistory.Currency</td>
                 <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
                 <td>
-                    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeHistory.ExchangeHistoryId}/Edit"))"> Edit </button>
+                    <button class="btn btn-success btn-sm" @onclick ="(() => ExchangeEdition(exchangeHistory.ExchangeHistoryId))"> Edit </button>
                     <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory.ExchangeHistoryId))"> Delete </button>
                 </td>
             </tr>
@@ -51,6 +51,13 @@
         exchangeHistoryList = user.GetExchangesHistory();
     }
 
+    private void ExchangeEdition(int exchangeId)
+    {
+        ExchangeHistory exchangeToEdit = user.MyExchangesHistory[exchangeId];
+        exchangeToEdit.ValidateApplianceExchangeOnTransaction();
+        NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeId}/Edit");
+    }
+
     private void DeleteExchange(int exchangeId)
     {
         user.DeleteExchangeHistory(user.MyExchangesHistory[exchangeId]);
@@ -60,6 +67,8 @@
     {
         return date.ToString("dd/MM/yyyy");
     }
+
+
 
 
 }
