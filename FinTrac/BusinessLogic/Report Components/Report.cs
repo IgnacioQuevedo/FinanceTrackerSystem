@@ -175,24 +175,21 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region Methods used by reports
-        public static decimal ConvertDolar(Transaction myTransaction, User loggedUser)
+        public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
             if (myTransaction.Currency == CurrencyEnum.USA)
             {
-                bool found = false;
-                decimal dolarValue = 0;
-                DateTime bestDate = DateTime.MinValue;
+                decimal dollarValue = 0;
                 foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
                 {
-                    if (!found && exchange.ValueDate > bestDate && exchange.ValueDate <= myTransaction.CreationDate)
+                    if (exchange.ValueDate == myTransaction.CreationDate)
                     {
-                        bestDate = exchange.ValueDate;
-                        dolarValue = exchange.Value;
-                        if (exchange.ValueDate == myTransaction.CreationDate) { found = true; }
+                        dollarValue = exchange.Value;
+                        break;
                     }
                 }
-                amountToReturn = myTransaction.Amount * dolarValue;
+                amountToReturn = myTransaction.Amount * dollarValue;
             }
             return amountToReturn;
         }
@@ -208,7 +205,7 @@ namespace BusinessLogic.Report_Components
                     if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
                         && transaction.TransactionCategory.Type == TypeEnum.Outcome)
                     {
-                        decimal amountToAdd = ConvertDolar(transaction, loggedUser);
+                        decimal amountToAdd = ConvertDollar(transaction, loggedUser);
                         LoadArray(spendings, transaction, amountToAdd);
                     }
                 }

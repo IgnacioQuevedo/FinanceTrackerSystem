@@ -52,6 +52,17 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="ExchangeHistories" Match="NavLinkMatch.All">
+                <span class="oi oi-badge" aria-hidden="true"></span> My Exchange Histories
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="Goals" Match="NavLinkMatch.All">
                 <span class="oi oi-badge" aria-hidden="true"></span> My Goals
             </NavLink>
@@ -68,6 +79,7 @@
         </div>
     </nav>
 </div>
+
 
 @code {
     private bool collapseNavMenu = true;

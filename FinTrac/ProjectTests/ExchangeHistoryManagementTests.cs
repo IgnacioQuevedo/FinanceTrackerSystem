@@ -1,9 +1,11 @@
 using BusinessLogic;
 using BusinessLogic.User_Components;
 using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Category_Components;
 
 namespace TestProject1
 {
@@ -32,7 +34,7 @@ namespace TestProject1
             address = "NW 2nd Ave";
             genericUser = new User(firstName, lastName, email, password, address);
 
-            date = new DateTime(2023 / 10 / 4);
+            date = DateTime.Now.Date;
             exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
         }
 
@@ -104,16 +106,18 @@ namespace TestProject1
         #region Modify Of Exchange
 
         [TestMethod]
-        public void GivenNewValues_ShouldBePossibleToUpdateThem()
+        public void GivenNewValues_ShouldBePossibleToUpdateThemBecauseIsNotUsedOnATransaction()
         {
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
             decimal newValue = 45.7M;
             CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
             DateTime valueDateOfExchange = exchangeHistoryExample.ValueDate;
-            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
-
-            genericUser.AddExchangeHistory(exchangeHistoryExample);
             int idUpdate = exchangeHistoryExample.ExchangeHistoryId;
-            exchangeUpdated.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
+
+            ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
+            exchangeUpdated.ExchangeHistoryId = idUpdate;
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
             genericUser.ModifyExchangeHistory(exchangeUpdated);
 
             Assert.AreEqual(newValue, genericUser.MyExchangesHistory[idUpdate].Value);
@@ -122,7 +126,7 @@ namespace TestProject1
         [TestMethod]
         [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
 
-        public void GivenNewValuesButWrongIdToUpdate_ShouldThrowException()
+        public void GivenNewValuesButWrongIdToUpdate_ShouldThrowExceptionCauseByMistakenValues()
         {
             decimal newValue = 45.7M;
             CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
@@ -130,8 +134,30 @@ namespace TestProject1
             ExchangeHistory exchangeUpdated = new ExchangeHistory(currencyOfExchange, newValue, valueDateOfExchange);
 
             genericUser.AddExchangeHistory(exchangeHistoryExample);
+
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
+
+        public void GivenExchangeHistoryToUpdateThatIsAppliedOnATransaction_ShouldThrowException()
+        {
+            genericUser.AddExchangeHistory(exchangeHistoryExample);
+
+            decimal newValue = 45.7M;
+            CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
+            ExchangeHistory exchangeThatWillBeApplied = new ExchangeHistory(currencyOfExchange, newValue, DateTime.Now.Date);
+            exchangeThatWillBeApplied.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
+
+            Category genericCategory = new Category("Clothes", StatusEnum.Enabled, TypeEnum.Outcome);
+            Transaction transaction = new Transaction("Payment of food", 400, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
+            Transaction.CheckExistenceOfExchange(transaction.CreationDate, genericUser.GetExchangesHistory());
+
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
+        }
+
         #endregion
     }
 }
