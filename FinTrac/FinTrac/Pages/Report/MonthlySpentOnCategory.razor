@@ -23,6 +23,13 @@
 
 <br />
 <br />
+<br />
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
+
+
 
 @if (ConfirmedMonth)
 {
@@ -48,14 +55,8 @@
     </table>
 }
 
-<div class="form-group">
-    <label for="title">Confirm Selection Of Month Report</label>
-    <button type="button" class="btn btn-outline-danger" @onclick="ShowGraphic"># Show Graphic # </button>
-</div>
 
-<td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-</td>
+
 
 
 @code
@@ -77,12 +78,8 @@
     private void GenerateReport()
     {
         reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
+
         ConfirmedMonth = true;
-    }
 
-    public void ShowGraphic()
-    {
-        NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
     }
-
 }
