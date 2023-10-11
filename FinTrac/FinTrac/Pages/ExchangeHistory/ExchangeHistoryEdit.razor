@@ -1,0 +1,41 @@
+﻿@page "/ExchangeHistories/{ExchangeId:int}/Edit"
+@using BusinessLogic.ExchangeHistory_Components;
+
+<h3>ExchangeHistoryEdit</h3>
+
+<div class="form-group">
+    <label for="title">Value of Exchange to Register</label>
+    <input type="number" class="form-control" id="Name" @bind="newValue" />
+</div>
+
+<button type="button" class="btn btn-primary" @onclick="UpdateExchange">Guardar cambios</button>
+<a href="/ExchangeHistories">Cancelar</a>
+
+
+@code
+{
+    [CascadingParameter]
+    public User user { get; set; }
+
+    [Parameter]
+    public int ExchangeId { get; set; }
+
+    private ExchangeHistory exchangeWithoutUpdate;
+    private ExchangeHistory exchangeUpdated;
+    private decimal newValue;
+
+    protected override void OnInitialized()
+    {
+        exchangeWithoutUpdate = user.MyExchangesHistory[ExchangeId];
+        newValue = exchangeWithoutUpdate.Value;
+    }
+
+    private void UpdateExchange()
+    {
+        exchangeUpdated = new ExchangeHistory(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate);
+        exchangeUpdated.ExchangeHistoryId = ExchangeId;
+
+        user.ModifyExchangeHistory(exchangeUpdated);
+        NavigationManager.NavigateTo("/ExchangeHistories");
+    }
+}
