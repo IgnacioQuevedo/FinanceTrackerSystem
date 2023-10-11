@@ -1,0 +1,98 @@
+﻿@page "/Report/SpendingsOfCreditCard"
+
+@using BusinessLogic.Report_Components;
+@using BusinessLogic.Account_Components;
+@using BusinessLogic.Transaction_Components;
+
+<h3>Spendings of Credit Card this Month</h3>
+
+<select class="form-select" aria-label="select example" @bind="creditCardId">
+
+    @foreach (var accountToReport in Accounts)
+    {
+        if (accountToReport is CreditCardAccount)
+        {
+            CreditCardAccount creditCardToReport = accountToReport as CreditCardAccount;
+            <option value="@creditCardToReport.AccountId">@creditCardToReport.IssuingBank, @creditCardToReport.Last4Digits</option>
+        }
+    }
+
+</select>
+
+<br />
+<br />
+
+<button type="button" class="btn btn-primary" @onclick="ShowSpendings">Show Spendings</button>
+
+<br />
+<br />
+<br />
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
+
+@if (showSpendings)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Creation Date</th>
+                <th>Amount</th>
+                <th>Currency</th>
+                <th>Type</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var transaction in transactionsOfCard)
+            {
+                <tr>
+                    <td>@transaction.Title</td>
+                    <td>@GetFormattedDate(@transaction.CreationDate)</td>
+                    <td>@transaction.Amount</td>
+                    <td>@transaction.Currency</td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.TransactionCategory.Name</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+}
+
+
+@code
+{
+    [CascadingParameter]
+    public User user { get; set; }
+
+    private List<Account> Accounts;
+    private List<Transaction> transactionsOfCard;
+
+    private bool showSpendings;
+    private int creditCardId;
+
+    protected override void OnInitialized()
+    {
+        Accounts = user.GetAccounts();
+        showSpendings = false;
+    }
+
+    private void ShowSpendings()
+    {
+        transactionsOfCard = Report.ReportOfSpendingsPerCard((CreditCardAccount)user.MyAccounts[creditCardId]);
+        showSpendings = true;
+    }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
+}
+

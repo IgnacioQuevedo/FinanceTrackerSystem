@@ -40,7 +40,7 @@ namespace BusinessLogic.Report_Components
         }
         #endregion
 
-        #region Report of all spendings per cateogry detailed
+        #region Report of all spendings per category detailed
 
         public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
         {
@@ -128,7 +128,7 @@ namespace BusinessLogic.Report_Components
 
         public static decimal GiveAccountBalance(MonetaryAccount account)
         {
-            decimal initialMoney = account.Amount;
+            decimal initialMoney = account.ReturnInitialAmount();
             decimal actualBalance = 0;
             decimal accountBalance = 0;
             actualBalance = SummationOfTransactions(account, actualBalance);

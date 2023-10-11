@@ -1,0 +1,85 @@
+﻿@page "/Report/MonthlySpentOnCategory"
+
+@using BusinessLogic.Report_Components;
+
+
+<h3>Montly Spent On Category</h3>
+
+
+<select class="form-select" aria-label="multiple select example" @bind="monthSelected">
+
+    @foreach (MonthsEnum month in Enum.GetValues(typeof(MonthsEnum)))
+    {
+        <option value="@month"> @month </option>
+    }
+
+</select>
+
+
+<div class="form-group">
+    <label for="title">Confirm Selection Of Month Report</label>
+    <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
+</div>
+
+<br />
+<br />
+<br />
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
+
+
+
+@if (ConfirmedMonth)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Amount Spent on Goal</th>
+                <th>Percentage Of Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var categoryReport in reportsOfEachCategory)
+            {
+                <tr>
+                    <td>@categoryReport.CategoryRelated.Name</td>
+                    <td>@categoryReport.TotalSpentInCategory</td>
+                    <td>@Math.Round(categoryReport.PercentajeOfTotal)%</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public User user { get; set; }
+
+    private List<ResumeOfSpendigsReport> reportsOfEachCategory;
+    private MonthsEnum monthSelected;
+    private bool ConfirmedMonth;
+
+    protected override void OnInitialized()
+    {
+        monthSelected = (MonthsEnum)DateTime.Now.Month;
+        reportsOfEachCategory = new List<ResumeOfSpendigsReport>();
+        ConfirmedMonth = false;
+    }
+
+    private void GenerateReport()
+    {
+        reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
+
+        ConfirmedMonth = true;
+
+    }
+}
