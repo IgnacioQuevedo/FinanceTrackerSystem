@@ -108,3 +108,8 @@ canvas {
     font-size:large;
     font-weight:bold;
 }
+
+.button {
+    font-size: large;
+    padding: 10px 20px;
+}
