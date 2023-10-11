@@ -1,0 +1,61 @@
+﻿@page "/ExchangeHistory/ExchangeHistoryCreation"
+@using BusinessLogic.ExchangeHistory_Components;
+@using BusinessLogic.Account_Components;
+
+<h3>Exchange History Creation</h3>
+
+<form>
+    <div class="form-group">
+        <label for="title">Value</label>
+        <input type="number" class="form-control" id="Name" @bind="value" />
+    </div>
+
+    <br />
+    <div class="form-group">
+        <label for="title">Value of Exchange to Register</label>
+        <input type="date" class="form-control" id="Name" @bind="valueDate" />
+    </div>
+
+    <br />
+
+    <label for="title">Currency To Select </label>
+    <select class="form-select" aria-label="multiple select example" @bind="valueCurrency">
+
+        @foreach (CurrencyEnum currency in Enum.GetValues(typeof(CurrencyEnum)))
+        {
+            if (!currency.Equals(CurrencyEnum.UY))
+            {
+                <option value="@currency">@currency</option>
+            }
+        }
+
+    </select>
+
+    <button type="button" class="btn btn-primary" @onclick="saveExchange">Guardar cambios</button>
+    <a href="/ExchangeHistories">Cancelar</a>
+</form>
+
+
+
+@code
+{
+    private decimal value;
+    private CurrencyEnum valueCurrency;
+    private DateTime valueDate;
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+    protected override void OnInitialized()
+    {
+        valueCurrency = CurrencyEnum.USA;
+        valueDate = DateTime.Now.Date;
+    }
+
+    private void saveExchange()
+    {
+        ExchangeHistory dollarValue = new ExchangeHistory(valueCurrency, value, valueDate);
+        user.AddExchangeHistory(dollarValue);
+        NavigationManager.NavigateTo("/ExchangeHistories");
+    }
+}

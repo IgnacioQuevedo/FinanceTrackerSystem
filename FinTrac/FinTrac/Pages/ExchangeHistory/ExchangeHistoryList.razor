@@ -1,0 +1,71 @@
+﻿@page "/ExchangeHistories"
+
+@using BusinessLogic.ExchangeHistory_Components;
+
+
+<h3>Exchange History List</h3>
+
+<h1>
+    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/ExchangeHistory/ExchangeHistoryCreation"))">Create + </a>
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Value</th>
+            <th>Currency</th>
+            <th>ValueDate</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var exchangeHistory in exchangeHistoryList)
+        {
+            <tr>
+                <td>@exchangeHistory.Value</td>
+                <td>@exchangeHistory.Currency</td>
+                <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
+                <td>
+                    <button class="btn btn-success btn-sm" @onclick ="(() => ExchangeEdition(exchangeHistory))"> Edit </button>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+@code {
+
+    [CascadingParameter]
+    public User user { get; set; }
+
+    public List<ExchangeHistory> exchangeHistoryList;
+
+    protected override void OnInitialized()
+    {
+        exchangeHistoryList = user.GetExchangesHistory();
+    }
+
+    private void ExchangeEdition(ExchangeHistory exchangeToEdit)
+    {
+        exchangeToEdit.ValidateApplianceExchangeOnTransaction();
+        NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeToEdit.ExchangeHistoryId}/Edit");
+    }
+
+    private void DeleteExchange(ExchangeHistory exchangeToEdit)
+    {
+        exchangeToEdit.ValidateApplianceExchangeOnTransaction();
+        user.DeleteExchangeHistory(user.MyExchangesHistory[exchangeToEdit.ExchangeHistoryId]);
+    }
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
+
+
+
+
+}
