@@ -510,6 +510,7 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionExchangeHistoryManagement("This exchange does not exist, impossible to modify");
             }
         }
+
         #endregion
 
 
