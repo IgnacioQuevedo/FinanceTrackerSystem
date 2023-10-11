@@ -126,7 +126,7 @@ namespace TestProject1
         [TestMethod]
         [ExpectedException(typeof(ExceptionExchangeHistoryManagement))]
 
-        public void GivenNewValuesButWrongIdToUpdate_ShouldThrowException()
+        public void GivenNewValuesButWrongIdToUpdate_ShouldThrowExceptionCauseByMistakenValues()
         {
             decimal newValue = 45.7M;
             CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;

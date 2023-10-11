@@ -75,6 +75,7 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
 
+        #region Checking if Exchange is applied on a Transaction
         public void SetAppliedExchangeIntoTrue()
         {
             _isAppliedInATransaction = true;
@@ -87,5 +88,6 @@ namespace BusinessLogic.ExchangeHistory_Components
                 throw new ExceptionExchangeHistoryManagement("Imposible to modify an exchange that is being used on a transaction.");
             }
         }
+        #endregion
     }
 }
