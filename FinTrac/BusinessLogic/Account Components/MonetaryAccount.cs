@@ -11,7 +11,7 @@ namespace BusinessLogic.Account_Components
     public class MonetaryAccount : Account
     {
         #region Attributes
-        private static decimal _initialAmount;
+        private decimal _initialAmount;
         #endregion
 
         #region Properties
