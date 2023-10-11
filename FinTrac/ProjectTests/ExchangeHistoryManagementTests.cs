@@ -34,7 +34,7 @@ namespace TestProject1
             address = "NW 2nd Ave";
             genericUser = new User(firstName, lastName, email, password, address);
 
-            date = new DateTime(2023 / 10 / 4);
+            date = DateTime.Now.Date;
             exchangeHistoryExample = new ExchangeHistory(CurrencyEnum.USA, 38.5M, date);
         }
 
@@ -148,14 +148,14 @@ namespace TestProject1
 
             decimal newValue = 45.7M;
             CurrencyEnum currencyOfExchange = exchangeHistoryExample.Currency;
-            ExchangeHistory exchangeThatWillBeApplied = new ExchangeHistory(currencyOfExchange, newValue, DateTime.Now);
+            ExchangeHistory exchangeThatWillBeApplied = new ExchangeHistory(currencyOfExchange, newValue, DateTime.Now.Date);
             exchangeThatWillBeApplied.ExchangeHistoryId = exchangeHistoryExample.ExchangeHistoryId;
 
             Category genericCategory = new Category("Clothes", StatusEnum.Enabled, TypeEnum.Outcome);
             Transaction transaction = new Transaction("Payment of food", 400, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
             Transaction.CheckExistenceOfExchange(transaction.CreationDate, genericUser.GetExchangesHistory());
 
-            exchangeThatWillBeApplied.ValidateApplianceExchangeOnTransaction();
+            exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
         }
 
         #endregion
