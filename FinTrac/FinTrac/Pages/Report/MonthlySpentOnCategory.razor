@@ -56,9 +56,6 @@
 }
 
 
-
-
-
 @code
 {
     [CascadingParameter]
@@ -80,6 +77,8 @@
         reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
 
         ConfirmedMonth = true;
+
+        NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
 
     }
 }
