@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Category_Components
+namespace BusinessLogic.Enums
 {
     public enum TypeEnum
     {

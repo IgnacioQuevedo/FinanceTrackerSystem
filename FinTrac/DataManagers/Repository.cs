@@ -7,6 +7,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Transaction_Components;
+using BusinessLogic.Enums;
 
 namespace DataManagers
 {

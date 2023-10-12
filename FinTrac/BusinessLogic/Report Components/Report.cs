@@ -9,6 +9,7 @@ using BusinessLogic.User_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Enums;
 
 namespace BusinessLogic.Report_Components
 {
