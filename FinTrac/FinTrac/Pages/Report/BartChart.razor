@@ -3,6 +3,7 @@
 @using BusinessLogic.User_Components
 @using BusinessLogic.Report_Components
 @using BusinessLogic.Enums;
+
 @inject IJSRuntime JSRuntime
 
 <main>
@@ -45,6 +46,11 @@
         }
     }
 }
+
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
+</td>
+
 
 <script>
 
@@ -104,18 +110,3 @@
     }
 
 </script>
-
-<style>
-    .chart-container {
-        width: 90%;
-        height: 80vh;
-        margin: auto;
-        position relative;
-    }
-
-    canvas {
-        position absolute;
-        width: 100%;
-        height: 100%;
-    }
-</style>
