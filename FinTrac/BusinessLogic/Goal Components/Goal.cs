@@ -42,7 +42,7 @@ namespace BusinessLogic.Goal_Components
 
         private void ValidateAmountOfCategories()
         {
-            if (CategoriesOfGoal.Count == 0)
+            if (CategoriesOfGoal== null || CategoriesOfGoal.Count == 0)
             {
                 throw new ExceptionValidateGoal("It is necessary to set at least one category");
             }

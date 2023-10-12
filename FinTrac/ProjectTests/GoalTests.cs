@@ -105,9 +105,9 @@ public class GoalTests
     public void GivenNullCategories_ShouldThrowExceptionWhenTryingToApplyToOneOfThem()
     {
         
-        List<Category> possibleCategoriesToUse = genericUser.GetCategories();
-        genericUser.DeleteCategory(possibleCategoriesToUse[0]);
+        List<Category> possibleCategoriesToUse = null;
 
+        Goal myGoal = new Goal("Less night",500,possibleCategoriesToUse);
         myGoal.ValidateGoal();
     }
 
