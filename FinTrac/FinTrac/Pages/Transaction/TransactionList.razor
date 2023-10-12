@@ -46,9 +46,9 @@
                 <td>@transaction.Type</td>
                 <td>@transaction.TransactionCategory.Name</td>
                 <td>
-                    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
+                    <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
+                    <button class="btn btn-danger" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
+                    <button class=" btn btn-warning" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
                 </td>
             </tr>
 
