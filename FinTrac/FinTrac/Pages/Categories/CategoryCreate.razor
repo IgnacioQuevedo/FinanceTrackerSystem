@@ -86,9 +86,14 @@
         name = "";
         status = StatusEnum.Enabled;
         type = TypeEnum.Income;
-        SuccesAlert.IsSucess = false;
-        ErrorAlert.isError = false;
         
-        StateHasChanged(); // Notify Blazor that status changes have been made
+        // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
+
 }
