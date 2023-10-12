@@ -77,7 +77,7 @@ namespace BusinessLogic.Account_Components
         {
             int lengthOfLastDigits = Last4Digits.Length;
 
-            if (string.IsNullOrEmpty(Last4Digits) || lengthOfLastDigits < 4 || !IsNumericChain())
+            if (string.IsNullOrEmpty(Last4Digits) || lengthOfLastDigits != 4 || !IsNumericChain())
             {
                 throw new ExceptionValidateAccount("ERROR ON LAST 4 DIGITS");
             }
