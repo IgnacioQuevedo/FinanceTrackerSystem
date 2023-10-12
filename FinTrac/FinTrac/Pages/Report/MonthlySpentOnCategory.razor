@@ -1,8 +1,8 @@
 ﻿@page "/Report/MonthlySpentOnCategory"
 
+
 @using BusinessLogic.Report_Components;
 @using BusinessLogic.Enums;
-
 
 <h3>Montly Spent On Category</h3>
 
@@ -24,17 +24,10 @@
 
 <br />
 <br />
-<br />
-<td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-</td>
-
-
-
 
 @if (ConfirmedMonth)
 {
-    <table class= "table table-striped table-bordered claseTabla">
+    <table class="table">
         <thead>
             <tr>
                 <th>Category Name</th>
@@ -56,6 +49,15 @@
     </table>
 }
 
+<div class="form-group">
+    <label for="title">Confirm Selection Of Month Report</label>
+    <button type="button" class="btn btn-outline-danger" @onclick="ShowGraphic"># Show Graphic # </button>
+</div>
+
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+</td>
+
 
 @code
 {
@@ -76,10 +78,12 @@
     private void GenerateReport()
     {
         reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
-
         ConfirmedMonth = true;
-
-        NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
-
     }
+
+    public void ShowGraphic()
+    {
+        NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
+    }
+
 }
