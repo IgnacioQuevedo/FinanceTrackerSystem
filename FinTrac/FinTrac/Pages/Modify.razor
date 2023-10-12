@@ -79,8 +79,6 @@
     private string password;
     private string address;
     private User userToModify;
-    private bool showSuccessAlert;
-    private bool showErrorAlert;
     public string errorTxt { get; set; }
 
     [CascadingParameter]
@@ -89,6 +87,8 @@
     protected override void OnInitialized()
     {
         presetValues();
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     private void presetValues()
@@ -97,8 +97,6 @@
         lastName = user.LastName;
         password = user.Password;
         address = user.Address;
-        showSuccessAlert = false;
-        showErrorAlert = false;
     }
 
     private void ModifyUser()
@@ -109,7 +107,7 @@
             UserManagement.ModifyUser(user, userToModify);
             SuccesAlert.ShowSucessAlert();
         }
-        catch (ExceptionValidateUser ExceptionUser)
+        catch (Exception ExceptionUser)
         {
             ErrorAlert.ShowErrorAlert(); 
             errorTxt = ExceptionUser.Message;
