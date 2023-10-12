@@ -39,6 +39,11 @@
     <a href="/Transactions">Cancelar</a>
 </form>
 
+<br />
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
 
 @code
 {
@@ -68,6 +73,8 @@
     [CascadingParameter]
     public User mainUser { get; set; }
 
+    public string errorTxt { get; set; }
+
     protected override void OnInitialized()
     {
         title = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Title;
@@ -79,17 +86,27 @@
         category = mainUser.MyAccounts[accountId].MyTransactions[transactionId].TransactionCategory;
         accountSelected = mainUser.MyAccounts[accountId];
         myCategories = mainUser.GetCategories();
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
 
     }
 
     private void SaveChanges()
     {
-        transactionUpdated = new Transaction(title, amount, creationDate, currencyType, type, category);
-        transactionUpdated.TransactionId = transactionId;
-        accountSelected.ModifyTransaction(transactionUpdated);
-        accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
-        NavigationManager.NavigateTo($"/Transactions/{accountId}");
+        try
+        {
+            transactionUpdated = new Transaction(title, amount, creationDate, currencyType, type, category);
+            transactionUpdated.TransactionId = transactionId;
+            accountSelected.ModifyTransaction(transactionUpdated);
+            accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
+            NavigationManager.NavigateTo($"/Transactions/{accountId}");
+        }
 
+        catch(Exception ExceptionTransaction)
+        {
+            errorTxt = ExceptionTransaction.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
 
     }
 
