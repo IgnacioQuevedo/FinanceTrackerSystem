@@ -66,6 +66,10 @@ namespace BusinessLogic.Report_Components
 
         private static decimal CalulatePercent(decimal[] spendingsPerCategory, decimal totalSpentPerCategory)
         {
+            if(spendingsPerCategory[spendingsPerCategory.Length - 1] == 0)
+            {
+                return 0;
+            }
             return (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
         }
 
@@ -199,7 +203,7 @@ namespace BusinessLogic.Report_Components
         {
             decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
 
-            foreach (var account in listOfAccounts)
+            foreach (var account in listOfAccounts.Where(t => t != null))
             {
                 foreach (var transaction in account.MyTransactions.Where(t => t != null))
                 {
