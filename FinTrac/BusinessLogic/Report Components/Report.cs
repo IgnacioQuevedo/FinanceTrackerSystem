@@ -9,6 +9,7 @@ using BusinessLogic.User_Components;
 using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Enums;
 
 namespace BusinessLogic.Report_Components
 {
@@ -50,7 +51,7 @@ namespace BusinessLogic.Report_Components
             Category categoryRelatedToSpending = new Category();
             List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
 
-            foreach (var category in loggedUser.MyCategories)
+            foreach (var category in loggedUser.MyCategories.Where(t => t != null))
             {
                 totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
@@ -100,7 +101,7 @@ namespace BusinessLogic.Report_Components
         {
             DateTime dateTimInit = GetDateTimInit(creditCard);
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
-            foreach (var transaction in creditCard.MyTransactions)
+            foreach (var transaction in creditCard.MyTransactions.Where(t => t != null))
             {
                 if (transaction.Type == TypeEnum.Outcome)
 
@@ -200,7 +201,7 @@ namespace BusinessLogic.Report_Components
 
             foreach (var account in listOfAccounts)
             {
-                foreach (var transaction in account.MyTransactions)
+                foreach (var transaction in account.MyTransactions.Where(t => t != null))
                 {
                     if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
                         && transaction.TransactionCategory.Type == TypeEnum.Outcome)

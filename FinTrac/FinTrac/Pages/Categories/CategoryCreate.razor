@@ -3,10 +3,18 @@
 
 <h3>Category Create</h3>
 @using BusinessLogic.Category_Components;
+@using BusinessLogic.Enums;
 
 
 <h1>Create Category</h1>
 <form>
+
+
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+
     <div class="form-group">
         <label for="title">Título</label>
         <input type="text" class="form-control" id="Name" @bind="name" />
@@ -33,6 +41,12 @@
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Category">Cancelar</a>
 </form>
+<br />
+
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="Category created successfully" />
+}
 
 @code {
     private string name;
@@ -42,17 +56,39 @@
     [CascadingParameter]
     public User mainUser { get; set; }
 
+    public string errorTxt { get; set; }
+
     protected override void OnInitialized()
     {
+        ResetValues();
+    }
+
+    private async void SaveChanges()
+    {
+        try
+        {
+            Category newCategory = new Category(name, status, type);
+            mainUser.AddCategory(newCategory);
+            SuccesAlert.ShowSucessAlert();
+
+            await Task.Delay(2000);
+            ResetValues();
+        }
+        catch (Exception ExceptionCategory)
+        {
+            errorTxt = ExceptionCategory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+    }
+
+    private void ResetValues()
+    {
+        name = "";
         status = StatusEnum.Enabled;
         type = TypeEnum.Income;
-    }
-
-    private void SaveChanges()
-    {
-        Category newCategory = new Category(name, status, type);
-        mainUser.AddCategory(newCategory);
-        NavigationManager.NavigateTo("/Category");
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
+        
+        StateHasChanged(); // Notify Blazor that status changes have been made
     }
 }
-

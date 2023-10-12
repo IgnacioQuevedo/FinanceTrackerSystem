@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.User_Components
 {
@@ -248,14 +249,15 @@ namespace BusinessLogic.User_Components
         {
             ValidateIfCategoryHasTransactions(categoryToDelete);
             MyCategories.Remove(categoryToDelete);
+            MyCategories.Insert(categoryToDelete.CategoryId, null);
         }
 
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
         {
             bool founded = false;
-            foreach (Account account in MyAccounts)
+            foreach (Account account in MyAccounts.Where(t => t != null))
             {
-                foreach (Transaction transaction in account.MyTransactions)
+                foreach (Transaction transaction in account.MyTransactions.Where(t => t != null))
                 {
                     if (transaction.TransactionCategory == categoryToDelete)
                     {
@@ -363,7 +365,7 @@ namespace BusinessLogic.User_Components
         {
             if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
             {
-                throw new ExceptionAccountManagement("Not possible to modify, name already registered.");
+                throw new ExceptionAccountManagement("ERROR - Name already registered.");
             }
         }
         private bool haveSameId(Account account1, Account account2)
@@ -406,6 +408,7 @@ namespace BusinessLogic.User_Components
             if (ThereIsNoTransactions(accountToDelete))
             {
                 MyAccounts.Remove(accountToDelete);
+                MyAccounts.Insert(accountToDelete.AccountId, null);
             }
             else
             {
@@ -415,7 +418,7 @@ namespace BusinessLogic.User_Components
 
         private static bool ThereIsNoTransactions(Account accountToDelete)
         {
-            return accountToDelete.MyTransactions.Count == 0;
+            return accountToDelete.MyTransactions.All(x => x==null);
         }
 
         #endregion
@@ -488,6 +491,7 @@ namespace BusinessLogic.User_Components
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
             MyExchangesHistory.Remove(exchangeHistoryToDelete);
+            MyExchangesHistory.Insert(exchangeHistoryToDelete.ExchangeHistoryId, null);
         }
         #endregion
 
@@ -515,5 +519,14 @@ namespace BusinessLogic.User_Components
 
 
         #endregion
+
+        public static void equalPasswords(string password1,string password2)
+        {
+            if (!password1.Equals(password2)) 
+            {
+                throw new ExceptionValidateUser("Passwords are not the same, try again.");
+            }
+        }
+    
     }
 }

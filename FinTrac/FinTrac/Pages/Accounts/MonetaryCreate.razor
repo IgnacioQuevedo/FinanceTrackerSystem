@@ -1,14 +1,20 @@
 ﻿@page "/Account/MonetaryCreation"
 
 @using BusinessLogic.Account_Components;
+@using BusinessLogic.Enums;
 
 <h3>Monetary Account Creation</h3>
 
 
 <form>
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+
     <div class="form-group">
         <label for="title">Título</label>
-        <input type="text" class="form-control" id="Name" @bind="name"/>
+        <input type="text" class="form-control" id="Name" @bind="name" />
     </div>
 
     <br />
@@ -19,6 +25,7 @@
     </div>
 
     <br />
+
     <div>
         <label for="title">Status</label>
         <select class="form-select" aria-label="Default select example" @bind="currencyType">
@@ -27,8 +34,24 @@
         </select>
     </div>
 
+    <br />
+
+    <div>
+        <label for="title">Creation Date</label>
+        <input type="date" class="form-control" id="initialDate" @bind="creationDate" />
+    </div>
+
+    <br />
+
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Accounts">Cancelar</a>
+
+    <br />
+
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Monetary account created successfully" />
+    }
 </form>
 
 
@@ -44,21 +67,46 @@
     private List<Account> accountList;
     private MonetaryAccount accountToAdd;
 
+
     [CascadingParameter]
     public User mainUser { get; set; }
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        currencyType = CurrencyEnum.UY;
-        accountList = mainUser.GetAccounts();
-        creationDate = DateTime.Now.Date;
+        ResetValues();
     }
 
-    private void SaveChanges()
+    private async void SaveChanges()
     {
-        accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
-        mainUser.AddMonetaryAccount(accountToAdd);
-        NavigationManager.NavigateTo("/Accounts");
+        try
+        {
+            accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
+            mainUser.AddMonetaryAccount(accountToAdd);
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            ResetValues();
+        }
+        catch (Exception ExceptionAccount)
+        {
+            errorTxt = ExceptionAccount.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
+    }
+
+    private void ResetValues()
+    {
+        name = "";
+        initialAmount = 0;
+        currencyType = CurrencyEnum.UY;
+        creationDate = DateTime.Now.Date;
+        accountList = mainUser.GetAccounts();
+
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
+
+        StateHasChanged(); // Notify Blazor that status changes have been made
     }
 
 }

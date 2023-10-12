@@ -1,5 +1,5 @@
-﻿using BusinessLogic.Account_Components;
-using BusinessLogic.Category_Components;
+﻿using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.ExchangeHistory_Components;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Transaction_Components
 {
@@ -81,10 +82,21 @@ namespace BusinessLogic.Transaction_Components
         #region Validate Category
         public void ValidateCategory()
         {
+            NotSelectedACategory();
+
             if (IsDisabledCategory() || TransactionCategory.Type != Type)
             {
                 throw new ExceptionValidateTransaction("Error: Seems like you have a disabled category or not available type");
             }
+        }
+
+        public void NotSelectedACategory()
+        {
+            if(TransactionCategory == null)
+            {
+                throw new ExceptionValidateTransaction("ERROR - must select a category");
+            }
+
         }
 
         private bool IsDisabledCategory()

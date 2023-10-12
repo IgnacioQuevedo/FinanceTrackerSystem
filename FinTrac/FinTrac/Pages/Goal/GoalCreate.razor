@@ -5,6 +5,11 @@
 
 <h3>Goal Creation</h3>
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
+
 <form>
     <div class="form-group">
         <label for="title">Title</label>
@@ -19,7 +24,7 @@
 
     <select class="form-select" aria-label="multiple select example" multiple @onchange="OnChangeCategories">
 
-        @foreach (var category in allCategoriesCreated)
+        @foreach (var category in allCategoriesCreated.Where(t => t != null))
         {
             <option value="@category.CategoryId">@category.Name</option>
         }
@@ -29,6 +34,11 @@
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Goals">Cancelar</a>
 </form>
+
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="User modified successfully" />
+}
 
 
 @code
@@ -45,18 +55,31 @@
 
     private Goal goalToCreate;
 
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
         allCategoriesCreated = user.GetCategories();
         categoriesAssignedToGoal = new List<Category>();
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     private void SaveChanges()
     {
-        goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
-        user.AddGoal(goalToCreate);
-        NavigationManager.NavigateTo("/Goals");
+        try
+        {
+            goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
+            user.AddGoal(goalToCreate);
+            SuccesAlert.ShowSucessAlert();
+            
+        }
+        catch (Exception ExceptionGoal)
+        {
+            errorTxt = ExceptionGoal.Message; 
+            ErrorAlert.ShowErrorAlert();
+        }
+
     }
 
     public void OnChangeCategories(ChangeEventArgs elementSelected)
