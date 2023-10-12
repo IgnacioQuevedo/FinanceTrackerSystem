@@ -13,7 +13,7 @@
 
     <div class="form-group">
         <label for="title">Título</label>
-        <input type="text" class="form-control" id="Name" @bind="name"/>
+        <input type="text" class="form-control" id="Name" @bind="name" />
     </div>
 
     <br />
@@ -32,7 +32,7 @@
             <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
         </select>
     </div>
-    
+
     <br />
 
     <div>
@@ -86,7 +86,7 @@
             await Task.Delay(2000);
             ResetValues();
         }
-        catch(Exception ExceptionAccount)
+        catch (Exception ExceptionAccount)
         {
             errorTxt = ExceptionAccount.Message;
             ErrorAlert.ShowErrorAlert();
@@ -101,7 +101,7 @@
         currencyType = CurrencyEnum.UY;
         creationDate = DateTime.Now.Date;
         accountList = mainUser.GetAccounts();
-   
+
         SuccesAlert.IsSucess = false;
         ErrorAlert.isError = false;
 

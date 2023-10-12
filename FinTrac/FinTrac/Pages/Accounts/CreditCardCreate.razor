@@ -93,6 +93,7 @@
 
     protected override void OnInitialized()
     {
+
         currencyType = CurrencyEnum.UY;
         creationDate = DateTime.Now.Date;
         closingDate = DateTime.Now.Date;
@@ -108,7 +109,7 @@
             mainUser.AddCreditAccount(accountToAdd);
             SuccesAlert.ShowSucessAlert();
         }
-        catch(Exception ExceptionAccount)
+        catch (Exception ExceptionAccount)
         {
             errorTxt = ExceptionAccount.Message;
             ErrorAlert.ShowErrorAlert();
