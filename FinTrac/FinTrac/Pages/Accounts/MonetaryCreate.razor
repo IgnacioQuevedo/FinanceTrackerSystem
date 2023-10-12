@@ -73,20 +73,18 @@
 
     protected override void OnInitialized()
     {
-        currencyType = CurrencyEnum.UY;
-        accountList = mainUser.GetAccounts();
-        creationDate = DateTime.Now.Date;
-        SuccesAlert.IsSucess = false;
-        ErrorAlert.isError = false;
+        ResetValues();
     }
 
-    private void SaveChanges()
+    private async void SaveChanges()
     {
         try
         {
             accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
             mainUser.AddMonetaryAccount(accountToAdd);
             SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            ResetValues();
         }
         catch(Exception ExceptionAccount)
         {
@@ -94,6 +92,20 @@
             ErrorAlert.ShowErrorAlert();
         }
 
+    }
+
+    private void ResetValues()
+    {
+        name = "";
+        initialAmount = 0;
+        currencyType = CurrencyEnum.UY;
+        creationDate = DateTime.Now.Date;
+        accountList = mainUser.GetAccounts();
+   
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
+
+        StateHasChanged(); // Notify Blazor that status changes have been made
     }
 
 }
