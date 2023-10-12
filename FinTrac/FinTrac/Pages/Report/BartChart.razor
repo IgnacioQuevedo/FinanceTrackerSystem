@@ -1,0 +1,107 @@
+﻿@page "/pie/{monthSelected:int}"
+@using BusinessLogic.User_Components
+@using BusinessLogic.Report_Components
+@using BusinessLogic.Enums;
+@inject IJSRuntime JSRuntime
+
+<main>
+    <html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    @code {
+        [Parameter]
+        public MonthsEnum monthSelected { get; set; }
+
+        [CascadingParameter]
+        public User user { get; set; }
+
+        private List<ResumeOfSpendigsReport> reportsOfEachCategory;
+
+        // Método asíncrono para obtener los datos antes de renderizar
+        protected override async Task OnInitializedAsync()
+        {
+            // Obtener los datos de manera asíncrona
+            reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
+            StateHasChanged(); // Informar a Blazor de que el estado ha cambiado
+        }
+
+        // Método para invocar el código JavaScript después de renderizar
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender && reportsOfEachCategory != null)
+            {
+                // Llamar a la función de inicialización con los datos disponibles
+                await JSRuntime.InvokeAsync<object>("initializeChart", reportsOfEachCategory);
+            }
+        }
+    }
+
+    <script>
+        // Add a variable to store the chart instance
+
+        function initializeChart(reportsOfEachCategory) {
+            var ctx = document.getElementById("myChart");
+
+            var totalSpentData = reportsOfEachCategory.map(function (item) {
+                return item.totalSpentInCategory;
+            });
+
+            var labels = reportsOfEachCategory.map(function (item) {
+                return item.categoryRelated.name + " " + Math.round(item.percentajeOfTotal).toString() + "%";
+            });
+
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Spent on each category per month",
+                            data: totalSpentData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
+                        }
+                    }
+                },
+            });
+        }
+
+    </script>
+
+
+</html>
+</main>
