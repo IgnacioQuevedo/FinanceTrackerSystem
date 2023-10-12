@@ -515,5 +515,13 @@ namespace BusinessLogic.User_Components
 
 
         #endregion
+
+        public static void equalPasswords(string password1,string password2)
+        {
+            if (!password1.Equals(password2)) 
+            {
+                throw new ExceptionValidateUser("Passwords are not the same, try again.");
+            }
+        }
     }
 }
