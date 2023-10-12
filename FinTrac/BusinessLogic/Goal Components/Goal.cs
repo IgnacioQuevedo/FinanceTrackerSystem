@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Goal_Components
 {
@@ -15,14 +16,14 @@ namespace BusinessLogic.Goal_Components
         public int MaxAmountToSpend { get; set; }
         public int GoalId { get; set; } = -1;
         public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
-        public List<Category> CategoriesOfGoal { get; set; } 
+        public List<Category> CategoriesOfGoal { get; set; }
 
         #endregion
 
         #region Constructor
         public Goal() { }
-   
-        public Goal(string title, int maxAmount,List<Category> categoriesAsignedToGoal)
+
+        public Goal(string title, int maxAmount, List<Category> categoriesAsignedToGoal)
         {
             Title = title;
             MaxAmountToSpend = maxAmount;
@@ -66,5 +67,5 @@ namespace BusinessLogic.Goal_Components
 
         #endregion
     }
- 
+
 }

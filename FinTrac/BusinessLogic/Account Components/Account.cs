@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.User_Components;
-
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Account_Components
 {

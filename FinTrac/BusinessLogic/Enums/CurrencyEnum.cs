@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Account_Components
+namespace BusinessLogic.Enums
 {
     public enum CurrencyEnum
     {

@@ -1,4 +1,5 @@
 using BusinessLogic;
+using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
@@ -6,6 +7,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using System.Security.Principal;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
 
 namespace TestProject1;
 [TestClass]

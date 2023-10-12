@@ -4,8 +4,9 @@ using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
-using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace TestProject1
 {

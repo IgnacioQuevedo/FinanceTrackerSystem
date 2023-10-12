@@ -8,7 +8,8 @@ using BusinessLogic.User_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
-
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace TestProject1;
 [TestClass]

@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
-using System.Net.NetworkInformation;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.User_Components
 {
