@@ -98,7 +98,7 @@ a, .btn-link {
 
 
 /* CSS OF GRAPH*/
-.chart-container {
+chart-container {
     width: 90%;
     height: 80vh;
     margin: auto;
