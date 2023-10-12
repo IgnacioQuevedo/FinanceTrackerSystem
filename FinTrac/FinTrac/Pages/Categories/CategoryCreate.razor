@@ -7,6 +7,13 @@
 
 <h1>Create Category</h1>
 <form>
+
+
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+
     <div class="form-group">
         <label for="title">Título</label>
         <input type="text" class="form-control" id="Name" @bind="name" />
@@ -34,6 +41,11 @@
     <a href="/Category">Cancelar</a>
 </form>
 
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="User modified successfully" />
+}
+
 @code {
     private string name;
     private StatusEnum status;
@@ -42,17 +54,31 @@
     [CascadingParameter]
     public User mainUser { get; set; }
 
+    public string errorTxt { get; set; }
+
     protected override void OnInitialized()
     {
         status = StatusEnum.Enabled;
         type = TypeEnum.Income;
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
     }
 
     private void SaveChanges()
     {
-        Category newCategory = new Category(name, status, type);
-        mainUser.AddCategory(newCategory);
-        NavigationManager.NavigateTo("/Category");
+        try
+        {
+            Category newCategory = new Category(name, status, type);
+            mainUser.AddCategory(newCategory);
+            SuccesAlert.ShowSucessAlert();
+
+            NavigationManager.NavigateTo("/Category");
+        }
+        catch (Exception ExceptionCategory)
+        {
+            errorTxt = ExceptionCategory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 }
 
