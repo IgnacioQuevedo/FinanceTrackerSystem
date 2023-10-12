@@ -114,7 +114,8 @@
         category = new Category();
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
-
+        if (myCategories.Count == 0) { categoryId = -1; }
+        else { categoryId = myCategories[0].CategoryId; }
     }
 
     private void SaveChanges()
@@ -125,7 +126,7 @@
             {
                 Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
             }
-            if(category.CategoryId == -1)
+            if(categoryId == -1)
             {
                 throw new ExceptionAccountManagement("ERROR - Must select a category");
             }
@@ -142,8 +143,6 @@
             errorTxt = ExceptionTransaction.Message;
             ErrorAlert.ShowErrorAlert();
         }
-
-
     }
 
     string GetFormattedDate(DateTime date)
