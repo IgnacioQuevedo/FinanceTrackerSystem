@@ -17,10 +17,9 @@
             <h3>Personal info</h3>
             <br />
 
-            @if (showErrorAlert)
+            @if (ErrorAlert.isError)
             {
                 <ErrorAlert errorTxt="@errorTxt" />
-                ShowErrorAlert();
             }
 
 
@@ -63,11 +62,9 @@
 
                     <br />
 
-                    @if (showSuccessAlert)
+                    @if (SuccesAlert.IsSucess)
                     {
                         <SuccesAlert errorTxt="User modified successfully" />
-
-                        ShowSuccessAlert();
                     }
                 </div>
             </form>
@@ -92,8 +89,6 @@
     protected override void OnInitialized()
     {
         presetValues();
-        showSuccessAlert = false;
-        showErrorAlert = false;
     }
 
     private void presetValues()
@@ -112,25 +107,12 @@
         {
             userToModify = new User(firstName, lastName, user.Email, password, address);
             UserManagement.ModifyUser(user, userToModify);
-            showSuccessAlert = true;
+            SuccesAlert.ShowSucessAlert();
         }
         catch (ExceptionValidateUser ExceptionUser)
         {
-            showErrorAlert = true;
+            ErrorAlert.ShowErrorAlert(); 
             errorTxt = ExceptionUser.Message;
         }
     }
-
-    private void ShowSuccessAlert()
-    {
-        showSuccessAlert = false;
-        showErrorAlert = false;
-    }
-
-    private void ShowErrorAlert()
-    {
-        showSuccessAlert = false;
-        showErrorAlert = false;
-    }
-
 }

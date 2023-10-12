@@ -17,5 +17,13 @@
 {
     [Parameter]
     public string errorTxt { get; set; }
+
+    public static bool isError { get; set; } = false;
+
+    public static void ShowErrorAlert()
+    {
+        isError = true;
+        SuccesAlert.IsSucess = false;
+    }
 }
 

@@ -28,6 +28,16 @@
 {
     [Parameter]
     public string errorTxt { get; set; }
+
+    public static bool IsSucess { get; set; } = false;
+
+
+    public static void ShowSucessAlert()
+    {
+        IsSucess = true;
+        ErrorAlert.isError = false;
+    }
+
 }
 
 
