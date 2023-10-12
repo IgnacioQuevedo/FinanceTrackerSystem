@@ -23,15 +23,14 @@
 
         private List<ResumeOfSpendigsReport> reportsOfEachCategory;
 
-        // Método asíncrono para obtener los datos antes de renderizar
         protected override async Task OnInitializedAsync()
         {
-            // Obtener los datos de manera asíncrona
+            // Asynchronous method to get the data before rendering
             reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
-            StateHasChanged(); // Informar a Blazor de que el estado ha cambiado
+            StateHasChanged(); // Inform Blazor that the state has changed
         }
 
-        // Método para invocar el código JavaScript después de renderizar
+        // Method to invoke JavaScript code after rendering
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender && reportsOfEachCategory != null)
@@ -102,11 +101,12 @@
 
     </script>
 
+
     <style>
         .chart-container {
-            width: 90%; /* Adjust the width percentage as needed */
-            height: 80vh; /* Adjust the initial height as needed */
-            margin: auto; 
+            width: 90%;
+            height: 80vh;
+            margin: auto;
             position relative;
         }
 
