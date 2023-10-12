@@ -51,7 +51,8 @@
                 <td>@category.Status</td>
                 <td>@category.Type</td>
                 <td>
-                    <button class="btn btn-success btn-sm button" href="/Category/@category.CategoryId/Edit">Edit</button>
+                    
+                    <button class="btn btn-success btn-sm button" onclick="@(() => NavigationManager.NavigateTo($"/Category/{@category.CategoryId}/Edit"))" >Edit</button>
                     <button class="btn btn-danger btn-sm button" @onclick="(() => DeleteCategory(category.CategoryId))">Delete</button>
                 </td>
             </tr>
