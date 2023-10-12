@@ -1,11 +1,10 @@
-﻿
-@page "/Category/{categoryId:int}/Edit"
+﻿@page "/Category/{categoryId:int}/Edit"
 @using BusinessLogic.Category_Components;
 @using BusinessLogic.Enums;
 
-
-<h3>CategoryEdit</h3>
-
+<head>
+    <h1>CategoryEdit</h1>
+</head>
 
 <form>
     <div class="form-group">
@@ -20,16 +19,30 @@
 
             <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
             <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
-         </select>
+        </select>
     </div>
+</form>
+<br>
+
+<div>
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Category">Cancelar</a>
-</form>
+
+</div>
+<br>
+<br />
+
+<div>
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+</div>
 
 
 
-@code 
+@code
 {
 
     [Parameter]
@@ -43,19 +56,33 @@
     private StatusEnum status;
     private Category categoryToEdit;
     private Category categoryUpdated;
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
         categoryToEdit = mainUser.MyCategories[categoryId];
         name = categoryToEdit.Name;
         status = categoryToEdit.Status;
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     public void SaveChanges()
     {
-        categoryUpdated = new Category(name,status,categoryToEdit.Type);
-        categoryUpdated.CategoryId = categoryToEdit.CategoryId;
+        try
+        {
 
-        mainUser.ModifyCategory(categoryUpdated);
+            categoryUpdated = new Category(name, status, categoryToEdit.Type);
+            categoryUpdated.CategoryId = categoryToEdit.CategoryId;
+            User.areTheSameObject(categoryToEdit, categoryUpdated);
+            mainUser.ModifyCategory(categoryUpdated);
+            NavigationManager.NavigateTo("/Category");
+        }
+        catch (Exception ExceptionCategory)
+        {
+            ErrorAlert.isError = true;
+            errorTxt = ExceptionCategory.Message;
+        }
+
     }
 }
