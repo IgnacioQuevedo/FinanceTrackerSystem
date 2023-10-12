@@ -4,36 +4,41 @@
 
 
 <h3>Exchange History List</h3>
+<br>
 
-<h1>
-    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/ExchangeHistory/ExchangeHistoryCreation"))">Create + </a>
-</h1>
-<table class= "table table-striped table-bordered claseTabla">
-    <thead>
-        <tr>
-            <th>Value</th>
-            <th>Currency</th>
-            <th>ValueDate</th>
-        </tr>
-    </thead>
-    <tbody>
+<div>
+    <a class="btn btn-success" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/ExchangeHistory/ExchangeHistoryCreation"))">Create + </a>
+</div>
+<br />
+<br />
 
-        @foreach (var exchangeHistory in exchangeHistoryList.Where(t => t != null))
-        {
+<main>
+    <table class="table table-striped table-bordered claseTabla">
+        <thead>
             <tr>
-                <td>@exchangeHistory.Value</td>
-                <td>@exchangeHistory.Currency</td>
-                <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
-                <td>
-                    <button class="btn btn-success btn-sm" @onclick ="(() => ExchangeEdition(exchangeHistory))"> Edit </button>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
-                </td>
+                <th>Value</th>
+                <th>Currency</th>
+                <th>ValueDate</th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
 
-</table>
+            @foreach (var exchangeHistory in exchangeHistoryList.Where(t => t != null))
+            {
+                <tr>
+                    <td>@exchangeHistory.Value</td>
+                    <td>@exchangeHistory.Currency</td>
+                    <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
+                    <td>
+                        <button class="btn btn-success btn-sm" @onclick="(() => ExchangeEdition(exchangeHistory))"> Edit </button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
+    </table>
+</main>
 
 
 @code {

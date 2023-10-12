@@ -3,7 +3,20 @@
 @using BusinessLogic.Account_Components;
 @using BusinessLogic.Enums;
 
-<h3>Exchange History Creation</h3>
+<head>
+    <h1>Exchange History Creation</h1>
+</head>
+
+<br />
+
+<div>
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+</div>
+
+<br />
 
 <form>
     <div class="form-group">
@@ -36,6 +49,15 @@
     <a href="/ExchangeHistories">Cancelar</a>
 </form>
 
+<br />
+
+<div>
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Exchange history created successfully" />
+    }
+
+</div>
 
 
 @code
@@ -47,16 +69,44 @@
     [CascadingParameter]
     public User user { get; set; }
 
+    public string errorTxt{ get; set; }
+
     protected override void OnInitialized()
+    {
+        ResetValues();
+    }
+
+    private async void saveExchange()
+    {
+        try
+        {
+            ExchangeHistory dollarValue = new ExchangeHistory(valueCurrency, value, valueDate);
+            user.AddExchangeHistory(dollarValue);
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            ResetValues();
+        
+        }
+        catch(Exception ExceptionExchangeHistory)
+        {
+            errorTxt = ExceptionExchangeHistory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
+    }
+
+    private void ResetValues()
     {
         valueCurrency = CurrencyEnum.USA;
         valueDate = DateTime.Now.Date;
+        value = 0;
+
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
-    private void saveExchange()
-    {
-        ExchangeHistory dollarValue = new ExchangeHistory(valueCurrency, value, valueDate);
-        user.AddExchangeHistory(dollarValue);
-        NavigationManager.NavigateTo("/ExchangeHistories");
-    }
 }

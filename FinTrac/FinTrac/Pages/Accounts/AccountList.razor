@@ -1,126 +1,129 @@
 ﻿@page "/Accounts";
 
 @using BusinessLogic.Account_Components;
-
 <PageTitle>Accounts</PageTitle>
-<h3>AccountList</h3>
 
-
-
-<h1>
-    Monetary List
-    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
-       onclick="@(() => NavigationManager.NavigateTo("/Account/MonetaryCreation"))">
-        Create Monetary Account +
-    </a>
-</h1>
-
+<head>
+    <h1>AccountList</h1>
+</head>
 
 <br />
 <br />
+<main>
+    <h3>
+        Monetary List
+        <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+           onclick="@(() => NavigationManager.NavigateTo("/Account/MonetaryCreation"))">
+            Create Monetary Account +
+        </a>
+    </h3>
 
-<table class= "table table-striped table-bordered claseTabla">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Initial Amount</th>
-            <th>Current Amount</th>
-            <th>Currency</th>
-            <th>Creation Date</th>
-            <th>Posible Operations</th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var account in accountList.Where(t => t != null))
-        {
-            if (account is MonetaryAccount)
+    <br />
+    <br />
+
+    <table class="table table-striped table-bordered claseTabla">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Initial Amount</th>
+                <th>Current Amount</th>
+                <th>Currency</th>
+                <th>Creation Date</th>
+                <th>Posible Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var account in accountList.Where(t => t != null))
             {
-                MonetaryAccount accounToList = account as MonetaryAccount;
-                <tr>
-                    <td>@accounToList.Name</td>
-                    <td>@accounToList.ReturnInitialAmount()</td>
-                    <td>@accounToList.Amount</td>
-                    <td>@accounToList.Currency</td>
-                    <td>@GetFormattedDate(accounToList.CreationDate)</td>
-                    <td>
-                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/ModifyMonetary"))"> Edit</button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
-                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
-                    </td>
-                </tr>
+                if (account is MonetaryAccount)
+                {
+                    MonetaryAccount accounToList = account as MonetaryAccount;
+                    <tr>
+                        <td>@accounToList.Name</td>
+                        <td>@accounToList.ReturnInitialAmount()</td>
+                        <td>@accounToList.Amount</td>
+                        <td>@accounToList.Currency</td>
+                        <td>@GetFormattedDate(accounToList.CreationDate)</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/ModifyMonetary"))"> Edit</button>
+                            <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                            <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+    <br />
+    <br />
+
+    <h3>
+        Credit Card List
+        <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+           onclick="@(() => NavigationManager.NavigateTo("/Account/CreditCardCreation"))">
+            Create Credit Card +
+        </a>
+    </h3>
+
+    <br />
+    <br />
+
+    <table class="table table-striped table-bordered claseTabla">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Issuing Bank</th>
+                <th>Last 4 Digits</th>
+                <th>Currency</th>
+                <th>Available Credit</th>
+                <th>Creation Date</th>
+                <th>Closing Date</th>
+                <th> Posible Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var account in accountList.Where(t => t != null))
+            {
+                if (account is CreditCardAccount)
+                {
+                    CreditCardAccount accounToList = account as CreditCardAccount;
+                    <tr>
+                        <td>@accounToList.Name</td>
+                        <td>@accounToList.IssuingBank</td>
+                        <td>@accounToList.Last4Digits</td>
+                        <td>@accounToList.Currency</td>
+                        <td>@accounToList.AvailableCredit</td>
+                        <td>@GetFormattedDate(accounToList.CreationDate)</td>
+                        <td>@GetFormattedDate(accounToList.ClosingDate)</td>
+
+                        <td>
+                            <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
+                            <button class="btn btn-danger" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
+                        </td>
+                    </tr>
+                }
+
+            }
+            @if (SuccesAlert.IsSucess)
+            {
+                <SuccesAlert errorTxt="Transaction deleted successfully" />
             }
 
-        }
-    </tbody>
-</table>
-
-<br />
-<br />
-
-<h1>
-    Credit Card List
-    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
-       onclick="@(() => NavigationManager.NavigateTo("/Account/CreditCardCreation"))">
-        Create Credit Card +
-    </a>
-</h1>
-
-<br />
-<br />
-
-<table class= "table table-striped table-bordered claseTabla">
-
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Issuing Bank</th>
-            <th>Last 4 Digits</th>
-            <th>Currency</th>
-            <th>Available Credit</th>
-            <th>Creation Date</th>
-            <th>Closing Date</th>
-            <th> Posible Operations</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var account in accountList.Where(t => t != null))
-        {
-            if (account is CreditCardAccount)
+            @if (ErrorAlert.isError)
             {
-                CreditCardAccount accounToList = account as CreditCardAccount;
-                <tr>
-                    <td>@accounToList.Name</td>
-                    <td>@accounToList.IssuingBank</td>
-                    <td>@accounToList.Last4Digits</td>
-                    <td>@accounToList.Currency</td>
-                    <td>@accounToList.AvailableCredit</td>
-                    <td>@GetFormattedDate(accounToList.CreationDate)</td>
-                    <td>@GetFormattedDate(accounToList.ClosingDate)</td>
-
-                    <td>
-                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
-                        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
-                    </td>
-                </tr>
+                <ErrorAlert errorTxt="@errorTxt" />
             }
-           
-        }
-        @if (SuccesAlert.IsSucess)
-        {
-            <SuccesAlert errorTxt="Transaction deleted successfully" />
-        }
 
-        @if (ErrorAlert.isError)
-        {
-            <ErrorAlert errorTxt="@errorTxt" />
-        }
-
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</main>
 
 
 @code {

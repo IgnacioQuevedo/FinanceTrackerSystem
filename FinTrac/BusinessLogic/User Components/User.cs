@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Exceptions;
+using System.Data;
 
 namespace BusinessLogic.User_Components
 {
@@ -418,7 +419,7 @@ namespace BusinessLogic.User_Components
 
         private static bool ThereIsNoTransactions(Account accountToDelete)
         {
-            return accountToDelete.MyTransactions.All(x => x==null);
+            return accountToDelete.MyTransactions.All(x => x == null);
         }
 
         #endregion
@@ -520,13 +521,48 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-        public static void equalPasswords(string password1,string password2)
+        public static void equalPasswords(string password1, string password2)
         {
-            if (!password1.Equals(password2)) 
+            if (!password1.Equals(password2))
             {
                 throw new ExceptionValidateUser("Passwords are not the same, try again.");
             }
         }
-    
+
+        public static void areTheSameObject<T>(T objeto1, T objeto2)
+        {
+            bool areEqual = true;
+
+            if (ReferenceEquals(objeto1, objeto2)) { areEqual = true; }
+
+            if (objeto1 is null || objeto2 is null) { areEqual = false; }
+                
+            foreach (var propiedad in typeof(T).GetProperties())
+            {
+                if (propiedad.PropertyType == typeof(DateTime))
+                {
+                    var fecha1 = (DateTime)propiedad.GetValue(objeto1);
+                    var fecha2 = (DateTime)propiedad.GetValue(objeto2);
+
+                    if (fecha1.Date != fecha2.Date)
+                        areEqual = false;
+                }
+                else
+                {
+                    var valor1 = propiedad.GetValue(objeto1);
+                    var valor2 = propiedad.GetValue(objeto2);
+
+                    if (!EqualityComparer<object>.Default.Equals(valor1, valor2))
+                        areEqual = false;
+                }
+            }
+
+            if (areEqual)
+            {
+                throw new ExceptionValidateUser("Change at least one value");
+            }
+
+        }
+
     }
 }

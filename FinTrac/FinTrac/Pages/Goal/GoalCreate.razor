@@ -37,8 +37,10 @@
 
 @if (SuccesAlert.IsSucess)
 {
-    <SuccesAlert errorTxt="User modified successfully" />
+    <SuccesAlert errorTxt="Goal created successfully" />
 }
+
+
 
 
 @code
@@ -59,24 +61,22 @@
 
     protected override void OnInitialized()
     {
-        allCategoriesCreated = user.GetCategories();
-        categoriesAssignedToGoal = new List<Category>();
-        ErrorAlert.isError = false;
-        SuccesAlert.IsSucess = false;
+        ResetValues();
     }
 
-    private void SaveChanges()
+    private async void SaveChanges()
     {
         try
         {
             goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
             user.AddGoal(goalToCreate);
             SuccesAlert.ShowSucessAlert();
-            
+            await Task.Delay(2000);
+            ResetValues();
         }
         catch (Exception ExceptionGoal)
         {
-            errorTxt = ExceptionGoal.Message; 
+            errorTxt = ExceptionGoal.Message;
             ErrorAlert.ShowErrorAlert();
         }
 
@@ -95,5 +95,20 @@
         categoriesAssignedToGoal = categoriesSelected;
     }
 
+    private void ResetValues()
+    {
+        title = "";
+        maxAmount = 0;
+        allCategoriesCreated = user.GetCategories();
+        categoriesAssignedToGoal = new List<Category>();
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
 
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
 }

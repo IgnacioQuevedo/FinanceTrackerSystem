@@ -1,52 +1,66 @@
 ﻿@page "/Category/Create/"
-<PageTitle>Create Category</PageTitle>
 
-<h3>Category Create</h3>
+
 @using BusinessLogic.Category_Components;
 @using BusinessLogic.Enums;
 
+<head>
 
-<h1>Create Category</h1>
-<form>
+    <h1>Creation of Category</h1>
+
+</head>
+
+<body>
 
 
     @if (ErrorAlert.isError)
     {
         <ErrorAlert errorTxt="@errorTxt" />
     }
+    <form>
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" class="form-control" id="Name" @bind="name" />
+        </div>
+        <br />
 
-    <div class="form-group">
-        <label for="title">Título</label>
-        <input type="text" class="form-control" id="Name" @bind="name" />
-    </div>
-    <br />
+        <div>
+            <label for="type">Type</label>
+            <select class="form-select" aria-label="Default select example" @bind="type">
+                <option value="@TypeEnum.Income">@TypeEnum.Income</option>
+                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+            </select>
+        </div>
+
+        <br />
+        <div>
+            <label for="status">Status</label>
+            <select class="form-select" aria-label="Default select example" @bind="status">
+                <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
+                <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
+            </select>
+        </div>
+    </form>
+
+    <br>
 
     <div>
-        <label for="title">Type</label>
-        <select class="form-select" aria-label="Default select example" @bind="type">
-            <option value="@TypeEnum.Income">@TypeEnum.Income</option>
-            <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
-        </select>
-    </div>
-
-    <br />
-    <div>
-        <label for="title">Status</label>
-        <select class="form-select" aria-label="Default select example" @bind="status">
-            <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
-            <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
-        </select>
-    </div>
-
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/Category">Cancelar</a>
-</form>
+        <a href="/Category">Cancelar</a>
+        <br />
+    </div>
+    <br />
+    <div>
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Category created successfully" />
+        }
+    </div>
+</body>
+
 <br />
 
-@if (SuccesAlert.IsSucess)
-{
-    <SuccesAlert errorTxt="Category created successfully" />
-}
+
 
 @code {
     private string name;
@@ -85,8 +99,7 @@
     {
         name = "";
         status = StatusEnum.Enabled;
-        type = TypeEnum.Income;
-        
+        type = TypeEnum.Income;        
         // Helps prevent threading-related issues and ensures that UI updates are done
         InvokeAsync(() =>
         {
