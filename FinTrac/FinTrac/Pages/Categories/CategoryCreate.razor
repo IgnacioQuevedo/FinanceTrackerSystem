@@ -40,6 +40,7 @@
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Category">Cancelar</a>
 </form>
+<br />
 
 @if (SuccesAlert.IsSucess)
 {
@@ -58,13 +59,10 @@
 
     protected override void OnInitialized()
     {
-        status = StatusEnum.Enabled;
-        type = TypeEnum.Income;
-        SuccesAlert.IsSucess = false;
-        ErrorAlert.isError = false;
+        ResetValues();
     }
 
-    private void SaveChanges()
+    private async void SaveChanges()
     {
         try
         {
@@ -72,7 +70,8 @@
             mainUser.AddCategory(newCategory);
             SuccesAlert.ShowSucessAlert();
 
-            NavigationManager.NavigateTo("/Category");
+            await Task.Delay(2000);
+            ResetValues();
         }
         catch (Exception ExceptionCategory)
         {
@@ -80,5 +79,15 @@
             ErrorAlert.ShowErrorAlert();
         }
     }
-}
 
+    private void ResetValues()
+    {
+        name = "";
+        status = StatusEnum.Enabled;
+        type = TypeEnum.Income;
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
+        
+        StateHasChanged(); // Notify Blazor that status changes have been made
+    }
+}
