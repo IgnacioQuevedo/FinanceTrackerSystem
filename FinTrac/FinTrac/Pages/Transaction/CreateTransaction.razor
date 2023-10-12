@@ -107,18 +107,31 @@
 
     protected override void OnInitialized()
     {
-        transactionType = TypeEnum.Outcome;
+        ResetValues();
+    }
+
+    private void ResetValues()
+    {
+        title = "";
+        amount = 0;
         creationDate = DateTime.Now.Date;
+        transactionType = TypeEnum.Outcome;
+        currencyType = CurrencyEnum.UY;
         accountSelected = mainUser.MyAccounts[accountId];
         myCategories = mainUser.GetCategories();
         category = new Category();
-        ErrorAlert.isError = false;
-        SuccesAlert.IsSucess = false;
         if (myCategories.Count == 0) { categoryId = -1; }
         else { categoryId = myCategories[0].CategoryId; }
+
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
+   
+
+        StateHasChanged(); // Notify Blazor that status changes have been made
     }
 
-    private void SaveChanges()
+
+    private async void SaveChanges()
     {
         try
         {
@@ -135,6 +148,8 @@
             accountSelected.AddTransaction(transactionToAdd);
             accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
             SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            ResetValues();
 
         }
 
@@ -149,5 +164,8 @@
     {
         return date.ToString("dd/MM/yyyy");
     }
+
+
+
 
 }
