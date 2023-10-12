@@ -7,9 +7,13 @@
 <h3>AccountList</h3>
 
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
 
 <h1>
-    Monetary List
+    Transaction
     <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
        onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/CreateTransaction"))">
         Create Transaction +
@@ -45,12 +49,19 @@
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete</button>
+                    
                     </td>
                 </tr>
 
         }
     </tbody>
 </table>
+
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="Transaction deleted successfully" />
+}
+
 
 <br />
 <br />
@@ -68,17 +79,31 @@
     [Parameter]
     public int accountId { get; set; }
 
+    public string errorTxt { get; set; }
+
     protected override void OnInitialized()
     {
         accountSelected = user.MyAccounts[accountId];
         transactionList = accountSelected.MyTransactions;
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     private void DeleteTransaction(int transactionId)
     {
-        transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
-        user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
-        accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
+        try
+        {
+            transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
+            user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
+            accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
+            SuccesAlert.ShowSucessAlert();
+        }
+        catch(Exception ExceptionTransaction)
+        {
+
+            errorTxt = ExceptionTransaction.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 
     string GetFormattedDate(DateTime date)

@@ -6,6 +6,10 @@
 
 <h3>Transaction Creation</h3>
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
 
 <form>
 
@@ -40,10 +44,7 @@
 </form>
 
 <br />
-@if (ErrorAlert.isError)
-{
-    <ErrorAlert errorTxt="@errorTxt" />
-}
+
 
 @code
 {
