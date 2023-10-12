@@ -108,8 +108,6 @@ public class GoalTests
         List<Category> possibleCategoriesToUse = genericUser.GetCategories();
         genericUser.DeleteCategory(possibleCategoriesToUse[0]);
 
-        myGoal.CategoriesOfGoal = possibleCategoriesToUse;
-
         myGoal.ValidateGoal();
     }
 

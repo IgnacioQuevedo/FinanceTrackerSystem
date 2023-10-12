@@ -257,7 +257,7 @@ namespace BusinessLogic.User_Components
             bool founded = false;
             foreach (Account account in MyAccounts)
             {
-                foreach (Transaction transaction in account.MyTransactions)
+                foreach (Transaction transaction in account.MyTransactions.Where(t => t != null))
                 {
                     if (transaction.TransactionCategory == categoryToDelete)
                     {
