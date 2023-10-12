@@ -363,7 +363,7 @@ namespace BusinessLogic.User_Components
         {
             if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
             {
-                throw new ExceptionAccountManagement("Not possible to modify, name already registered.");
+                throw new ExceptionAccountManagement("ERROR - Name already registered.");
             }
         }
         private bool haveSameId(Account account1, Account account2)

@@ -6,6 +6,11 @@
 
 
 <form>
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+
     <div class="form-group">
         <label for="title">Título</label>
         <input type="text" class="form-control" id="Name" @bind="name"/>
@@ -29,6 +34,13 @@
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Accounts">Cancelar</a>
+
+    <br />
+
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Account created successfully" />
+    }
 </form>
 
 
@@ -44,21 +56,34 @@
     private List<Account> accountList;
     private MonetaryAccount accountToAdd;
 
+
     [CascadingParameter]
     public User mainUser { get; set; }
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
         currencyType = CurrencyEnum.UY;
         accountList = mainUser.GetAccounts();
         creationDate = DateTime.Now.Date;
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
     }
 
     private void SaveChanges()
     {
-        accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
-        mainUser.AddMonetaryAccount(accountToAdd);
-        NavigationManager.NavigateTo("/Accounts");
+        try
+        {
+            accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
+            mainUser.AddMonetaryAccount(accountToAdd);
+            SuccesAlert.ShowSucessAlert();
+        }
+        catch(Exception ExceptionAccount)
+        {
+            errorTxt = ExceptionAccount.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
     }
 
 }
