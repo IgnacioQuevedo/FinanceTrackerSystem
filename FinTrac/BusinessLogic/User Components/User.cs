@@ -255,7 +255,7 @@ namespace BusinessLogic.User_Components
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
         {
             bool founded = false;
-            foreach (Account account in MyAccounts)
+            foreach (Account account in MyAccounts.Where(t => t != null))
             {
                 foreach (Transaction transaction in account.MyTransactions.Where(t => t != null))
                 {
@@ -418,7 +418,7 @@ namespace BusinessLogic.User_Components
 
         private static bool ThereIsNoTransactions(Account accountToDelete)
         {
-            return accountToDelete.MyTransactions.Count == 0;
+            return accountToDelete.MyTransactions.All(x => x==null);
         }
 
         #endregion
