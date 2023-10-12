@@ -132,16 +132,13 @@ public class TransactionManagementTests
     #region Delete Test
 
     [TestMethod]
-    public void GivenTransactionToDelete_ShouldDelete()
+    public void GivenTransactionToDelete_ShouldDeleteIt()
     {
         genericMonetaryAccount.AddTransaction(genericTransactionOutcome1);
-        int lengthBeforeDelete = genericMonetaryAccount.MyTransactions.Count;
+        int idOfMonetaryToDelete = genericTransactionOutcome1.TransactionId;
 
         genericMonetaryAccount.DeleteTransaction(genericTransactionOutcome1);
-        int lengthAfterDelete = lengthBeforeDelete - 1;
-
-        int actualLength = genericMonetaryAccount.MyTransactions.Count;
-        Assert.AreEqual(actualLength, lengthAfterDelete);
+        Assert.IsNull(genericMonetaryAccount.MyTransactions[idOfMonetaryToDelete]);
     }
 
     #endregion

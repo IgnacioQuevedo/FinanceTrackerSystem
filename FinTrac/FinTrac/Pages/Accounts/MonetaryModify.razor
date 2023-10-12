@@ -4,6 +4,11 @@
 
 <h3>Monetary Modification</h3>
 
+<br />
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
 
 <form>
     <div class="form-group">
@@ -17,7 +22,10 @@
     </div>
 </form>
 
-
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="Monetary account edited successfully" />
+}
 
 @code
 {
@@ -29,6 +37,7 @@
 
     [Parameter]
     public int accountId { get; set; }
+    public string errorTxt{ get; set; }
 
     private MonetaryAccount accountToUpdate;
     private MonetaryAccount accountUpdated;
@@ -37,15 +46,26 @@
     {
         accountToUpdate = mainUser.MyAccounts[accountId] as MonetaryAccount;
         name = accountToUpdate.Name;
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     private void SaveChanges()
     {
-        accountUpdated = new MonetaryAccount(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate);
-        accountUpdated.AccountId = accountId;
+        try
+        {
+            accountUpdated = new MonetaryAccount(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate);
+            accountUpdated.AccountId = accountId;
 
-        mainUser.ModifyMonetaryAccount(accountUpdated);
-        NavigationManager.NavigateTo("/Accounts");
+            mainUser.ModifyMonetaryAccount(accountUpdated);
+            NavigationManager.NavigateTo("/Accounts");
+        }
+        catch(Exception ExceptionAccount)
+        {
+            errorTxt = ExceptionAccount.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
     }
 
 

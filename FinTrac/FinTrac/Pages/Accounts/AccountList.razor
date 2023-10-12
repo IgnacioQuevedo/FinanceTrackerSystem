@@ -32,7 +32,7 @@
     </thead>
     <tbody>
 
-        @foreach (var account in accountList)
+        @foreach (var account in accountList.Where(t => t != null))
         {
             if (account is MonetaryAccount)
             {
@@ -50,7 +50,7 @@
                     </td>
                 </tr>
             }
-            
+
         }
     </tbody>
 </table>
@@ -70,6 +70,7 @@
 <br />
 
 <table class="table">
+
     <thead>
         <tr>
             <th>Name</th>
@@ -84,7 +85,7 @@
     </thead>
     <tbody>
 
-        @foreach (var account in accountList)
+        @foreach (var account in accountList.Where(t => t != null))
         {
             if (account is CreditCardAccount)
             {
@@ -100,12 +101,23 @@
 
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@account.AccountId}/CreditCardModification"))"> Edit</button>
-                        <button class="btn btn-danger btn-sm"@onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteAccount(account.AccountId))">Delete</button>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@account.AccountId}"))">View Transactions</button>
                     </td>
-            </tr>
+                </tr>
             }
+           
         }
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Transaction deleted successfully" />
+        }
+
+        @if (ErrorAlert.isError)
+        {
+            <ErrorAlert errorTxt="@errorTxt" />
+        }
+
     </tbody>
 </table>
 
@@ -116,23 +128,33 @@
 
     [CascadingParameter]
     public User user { get; set; }
+    public string errorTxt { get; set; }
 
-    
     protected override void OnInitialized()
     {
         accountList = user.GetAccounts();
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
     }
 
     private void DeleteAccount(int accountId)
     {
-        user.DeleteAccount(user.MyAccounts[accountId]);
+        try
+        {
+            user.DeleteAccount(user.MyAccounts[accountId]);
+            SuccesAlert.ShowSucessAlert();
+        }
+        catch (Exception ExceptionAccount)
+        {
+            errorTxt = ExceptionAccount.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 
     string GetFormattedDate(DateTime date)
     {
         return date.ToString("dd/MM/yyyy");
     }
-
 
 
 }

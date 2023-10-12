@@ -15,8 +15,14 @@
                             <h2 class="text-uppercase text-center mb-5">Create Your User!</h2>
 
                             <form>
+
+                                @if (ErrorAlert.isError)
+                                {
+                                    <ErrorAlert errorTxt="@errorTxt" />
+                                }
+
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind= "@firstName" />
+                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@firstName" />
                                     <label class="form-label" for="form3Example1cg">First name</label>
                                 </div>
 
@@ -47,7 +53,7 @@
 
                                 <div class="d-flex justify-content-center">
                                     <button type="button"
-                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" @onclick = "RegisterUser">
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" @onclick="RegisterUser">
                                         Register
                                     </button>
                                 </div>
@@ -69,31 +75,40 @@
 
 
 
-@code 
+@code
 {
-    private string email;
-    private string firstName;
-    private string lastName;
+    private string email = "";
+    private string firstName = "";
+    private string lastName = "";
     private string? address;
-    private string password;
-    private string passwordRepeated;
+    private string password = "";
+    private string passwordRepeated = "";
+    public string errorTxt { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
+    }
 
     public void RegisterUser()
     {
-
-        if (password.Equals(passwordRepeated))
+        try
         {
-            User userToAdd = new User(firstName, lastName, email, password, address);
-            //We need to implement a pop up that shows the user that it was registered.
+            User.equalPasswords(password, passwordRepeated);
 
+            User userToAdd = new User(firstName, lastName, email, password, address);
             UserManagement.AddUser(userToAdd);
             NavigationManager.NavigateTo("/");
+
         }
-        else
+        catch (Exception ExceptionUser)
         {
-            throw new Exception("Passwords does not match");
+            ErrorAlert.ShowErrorAlert();
+            errorTxt = ExceptionUser.Message;
         }
 
     }
-
 }
+
+

@@ -23,6 +23,12 @@
                                 </div>
 
                                 <form>
+
+                                    @if (ErrorAlert.isError)
+                                    {
+                                        <ErrorAlert errorTxt="@errorTxt" />
+                                    }
+
                                     <p>Please login into your Account</p>
 
                                     <div class="form-outline mb-4">
@@ -75,22 +81,33 @@
 {
 
     private User user = new User();
-
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
         user.Email = "nachitoquevedo@gmail.com";
         user.Password = "Nacho200304!";
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
+
     }
 
     public void LoginUser()
     {
-
-        if (UserManagement.Login(user))
+        try
         {
-            UserLogged.Id = UserManagement.FindUserId(user);
-
-            NavigationManager.NavigateTo("/Home");
+            if (UserManagement.Login(user))
+            {
+                UserLogged.Id = UserManagement.FindUserId(user);
+                NavigationManager.NavigateTo("/Home");
+            }
         }
+        catch(Exception ExceptionUser)
+        {
+            ErrorAlert.ShowErrorAlert();
+            errorTxt = ExceptionUser.Message;
+        }
+
     }
+
 }

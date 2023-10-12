@@ -82,10 +82,21 @@ namespace BusinessLogic.Transaction_Components
         #region Validate Category
         public void ValidateCategory()
         {
+            NotSelectedACategory();
+
             if (IsDisabledCategory() || TransactionCategory.Type != Type)
             {
                 throw new ExceptionValidateTransaction("Error: Seems like you have a disabled category or not available type");
             }
+        }
+
+        public void NotSelectedACategory()
+        {
+            if(TransactionCategory == null)
+            {
+                throw new ExceptionValidateTransaction("ERROR - must select a category");
+            }
+
         }
 
         private bool IsDisabledCategory()

@@ -114,6 +114,8 @@ namespace BusinessLogic.Account_Components
         public void DeleteTransaction(Transaction transactionToDelete)
         {
             MyTransactions.Remove(transactionToDelete);
+            MyTransactions.Insert(transactionToDelete.TransactionId,null);
+            
         }
 
         #endregion

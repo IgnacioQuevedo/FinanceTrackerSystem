@@ -5,8 +5,14 @@
 @using BusinessLogic.Category_Components;
 @using BusinessLogic.ExchangeHistory_Components;
 @using BusinessLogic.Enums;
+@using BusinessLogic.Exceptions;
 
 <h3>Transaction Creation</h3>
+
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
 
 
 <form>
@@ -71,13 +77,17 @@
     <br />
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/Transactions">Cancelar</a>
+    <a href="/Accounts">Cancelar</a>
 </form>
+
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="Transaction created successfully" />
+}
 
 
 @code
 {
-
     private string title;
     private decimal amount;
     private DateTime creationDate;
@@ -92,36 +102,72 @@
 
     [Parameter]
     public int accountId { get; set; }
+    public string errorTxt {get;set;}
 
     [CascadingParameter]
     public User mainUser { get; set; }
 
     protected override void OnInitialized()
     {
-        transactionType = TypeEnum.Outcome;
-        creationDate = DateTime.Now.Date;
-        accountSelected = mainUser.MyAccounts[accountId];
-        myCategories = mainUser.GetCategories();
-
+        ResetValues();
     }
 
-    private void SaveChanges()
+    private void ResetValues()
     {
-        if(accountSelected.Currency == CurrencyEnum.USA) 
-        {
-            Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
-        }
-        category = myCategories[categoryId];
-        transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
-        accountSelected.AddTransaction(transactionToAdd);
-        accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
-        NavigationManager.NavigateTo($"/Transactions/{accountId}");
+        title = "";
+        amount = 0;
+        creationDate = DateTime.Now.Date;
+        transactionType = TypeEnum.Outcome;
+        currencyType = CurrencyEnum.UY;
+        accountSelected = mainUser.MyAccounts[accountId];
+        myCategories = mainUser.GetCategories();
+        category = new Category();
+        if (myCategories.Count == 0) { categoryId = -1; }
+        else { categoryId = myCategories[0].CategoryId; }
 
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
+   
+
+        StateHasChanged(); // Notify Blazor that status changes have been made
+    }
+
+
+    private async void SaveChanges()
+    {
+        try
+        {
+            if (accountSelected.Currency == CurrencyEnum.USA)
+            {
+                Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
+            }
+            if(categoryId == -1)
+            {
+                throw new ExceptionAccountManagement("ERROR - Must select a category");
+            }
+            category = myCategories[categoryId];
+            transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
+            accountSelected.AddTransaction(transactionToAdd);
+            accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            ResetValues();
+
+        }
+
+        catch(Exception ExceptionTransaction)
+        {
+            errorTxt = ExceptionTransaction.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 
     string GetFormattedDate(DateTime date)
     {
         return date.ToString("dd/MM/yyyy");
     }
+
+
+
 
 }

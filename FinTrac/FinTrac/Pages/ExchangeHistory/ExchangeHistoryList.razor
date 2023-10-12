@@ -18,7 +18,7 @@
     </thead>
     <tbody>
 
-        @foreach (var exchangeHistory in exchangeHistoryList)
+        @foreach (var exchangeHistory in exchangeHistoryList.Where(t => t != null))
         {
             <tr>
                 <td>@exchangeHistory.Value</td>

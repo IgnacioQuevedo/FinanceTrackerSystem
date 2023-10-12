@@ -7,6 +7,13 @@
 
 
 <form>
+    <br />
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+    <br />
+
     <div class="form-group">
         <label for="title">Título</label>
         <input type="text" class="form-control" id="Name" @bind="name" />
@@ -60,6 +67,11 @@
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Accounts">Cancelar</a>
+    <br />
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Credit card created successfully" />
+    }
 </form>
 
 
@@ -75,22 +87,34 @@
     private DateTime closingDate;
 
     private CreditCardAccount accountToAdd;
+    public string errorTxt { get; set; }
 
     [CascadingParameter]
     public User mainUser { get; set; }
 
     protected override void OnInitialized()
     {
+
         currencyType = CurrencyEnum.UY;
         creationDate = DateTime.Now.Date;
         closingDate = DateTime.Now.Date;
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
     }
 
     private void SaveChanges()
     {
-        accountToAdd = new CreditCardAccount(name, currencyType,creationDate, issuingBank, last4Digits,availableCredit, closingDate);
-        mainUser.AddCreditAccount(accountToAdd);
-        NavigationManager.NavigateTo("/Accounts");
+        try
+        {
+            accountToAdd = new CreditCardAccount(name, currencyType, creationDate, issuingBank, last4Digits, availableCredit, closingDate);
+            mainUser.AddCreditAccount(accountToAdd);
+            SuccesAlert.ShowSucessAlert();
+        }
+        catch (Exception ExceptionAccount)
+        {
+            errorTxt = ExceptionAccount.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 
 }
