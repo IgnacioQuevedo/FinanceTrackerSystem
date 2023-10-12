@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
+using System.Net.NetworkInformation;
 
 namespace BusinessLogic.User_Components
 {
@@ -523,5 +524,6 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionValidateUser("Passwords are not the same, try again.");
             }
         }
+    
     }
 }

@@ -37,7 +37,7 @@
     </thead>
     <tbody>
 
-        @foreach (var transaction in transactionList)
+        @foreach (var transaction in transactionList.Where(t => t != null))
         {
                 <tr>
                 <td>@transaction.Title</td>
@@ -49,8 +49,8 @@
                     <td>
                         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete</button>
-                    
-                    </td>
+                        <button class="btn btn-danger btn-sm" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate</button>
+                </td>
                 </tr>
 
         }
@@ -111,7 +111,13 @@
         return date.ToString("dd/MM/yyyy");
     }
 
-
+    private void DuplicateTransaction(int transactionId)
+    {
+        Transaction transactionToDuplicate = transactionList[transactionId];
+        Transaction transaction = new Transaction(transactionToDuplicate.Title, transactionToDuplicate.Amount, transactionToDuplicate.CreationDate, 
+            transactionToDuplicate.Currency, transactionToDuplicate.Type,transactionToDuplicate.TransactionCategory);
+        accountSelected.AddTransaction(transaction);
+    }
 
 }
 
