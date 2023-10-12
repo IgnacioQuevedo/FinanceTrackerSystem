@@ -25,7 +25,7 @@
     </thead>
     <tbody>
 
-        @foreach (var goal in categoryGoal)
+        @foreach (var goal in categoryGoal.Where(t => t != null))
         {
             <tr>
                 <td>@goal.Title</td>

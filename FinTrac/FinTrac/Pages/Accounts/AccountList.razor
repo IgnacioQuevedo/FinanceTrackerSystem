@@ -32,7 +32,7 @@
     </thead>
     <tbody>
 
-        @foreach (var account in accountList)
+        @foreach (var account in accountList.Where(t => t != null))
         {
             if (account is MonetaryAccount)
             {
@@ -85,7 +85,7 @@
     </thead>
     <tbody>
 
-        @foreach (var account in accountList)
+        @foreach (var account in accountList.Where(t => t != null))
         {
             if (account is CreditCardAccount)
             {

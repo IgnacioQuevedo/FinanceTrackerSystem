@@ -28,7 +28,7 @@
     </thead>
     <tbody>
 
-        @foreach (var category in categoryList)
+        @foreach (var category in categoryList.Where(t => t != null))
         {
             <tr>
                 <td>@category.Name</td>

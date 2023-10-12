@@ -249,6 +249,7 @@ namespace BusinessLogic.User_Components
         {
             ValidateIfCategoryHasTransactions(categoryToDelete);
             MyCategories.Remove(categoryToDelete);
+            MyCategories.Insert(categoryToDelete.CategoryId, null);
         }
 
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
@@ -407,6 +408,7 @@ namespace BusinessLogic.User_Components
             if (ThereIsNoTransactions(accountToDelete))
             {
                 MyAccounts.Remove(accountToDelete);
+                MyAccounts.Insert(accountToDelete.AccountId, null);
             }
             else
             {
@@ -489,6 +491,7 @@ namespace BusinessLogic.User_Components
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
             MyExchangesHistory.Remove(exchangeHistoryToDelete);
+            MyExchangesHistory.Insert(exchangeHistoryToDelete.ExchangeHistoryId, null);
         }
         #endregion
 
