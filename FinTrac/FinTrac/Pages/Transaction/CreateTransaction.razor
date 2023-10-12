@@ -7,6 +7,11 @@
 
 <h3>Transaction Creation</h3>
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
+
 
 <form>
     <div class="form-group">
@@ -73,10 +78,14 @@
     <a href="/Transactions">Cancelar</a>
 </form>
 
+@if (SuccesAlert.IsSucess)
+{
+    <SuccesAlert errorTxt="Transaction created successfully" />
+}
+
 
 @code
 {
-
     private string title;
     private decimal amount;
     private DateTime creationDate;
@@ -91,6 +100,7 @@
 
     [Parameter]
     public int accountId { get; set; }
+    public string errorTxt {get;set;}
 
     [CascadingParameter]
     public User mainUser { get; set; }
@@ -101,20 +111,38 @@
         creationDate = DateTime.Now.Date;
         accountSelected = mainUser.MyAccounts[accountId];
         myCategories = mainUser.GetCategories();
+        category = new Category();
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
 
     }
 
     private void SaveChanges()
     {
-        if(accountSelected.Currency == CurrencyEnum.USA) 
+        try
         {
-            Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
+            if (accountSelected.Currency == CurrencyEnum.USA)
+            {
+                Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
+            }
+            if(category.CategoryId == -1)
+            {
+                throw new ExceptionAccountManagement("ERROR - Must select a category");
+            }
+            category = myCategories[categoryId];
+            transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
+            accountSelected.AddTransaction(transactionToAdd);
+            accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
+            SuccesAlert.ShowSucessAlert();
+
         }
-        category = myCategories[categoryId];
-        transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
-        accountSelected.AddTransaction(transactionToAdd);
-        accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
-        NavigationManager.NavigateTo($"/Transactions/{accountId}");
+
+        catch(Exception ExceptionTransaction)
+        {
+            errorTxt = ExceptionTransaction.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
 
     }
 
