@@ -24,6 +24,7 @@
     </div>
 
     <br />
+
     <div>
         <label for="title">Status</label>
         <select class="form-select" aria-label="Default select example" @bind="currencyType">
@@ -31,6 +32,15 @@
             <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
         </select>
     </div>
+    
+    <br />
+
+    <div>
+        <label for="title">Creation Date</label>
+        <input type="date" class="form-control" id="initialDate" @bind="creationDate" />
+    </div>
+
+    <br />
 
     <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
     <a href="/Accounts">Cancelar</a>
