@@ -3,6 +3,14 @@
 
 <h3>ExchangeHistoryEdit</h3>
 
+<div>
+    @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+</div>
+
+
 <div class="form-group">
     <label for="title">Value of Exchange to Register</label>
     <input type="number" class="form-control" id="Name" @bind="newValue" />
@@ -19,6 +27,7 @@
 
     [Parameter]
     public int ExchangeId { get; set; }
+    public string errorTxt { get; set; }
 
     private ExchangeHistory exchangeWithoutUpdate;
     private ExchangeHistory exchangeUpdated;
@@ -28,14 +37,25 @@
     {
         exchangeWithoutUpdate = user.MyExchangesHistory[ExchangeId];
         newValue = exchangeWithoutUpdate.Value;
+        ErrorAlert.isError = false;
+        SuccesAlert.IsSucess = false;
     }
 
     private void UpdateExchange()
     {
-        exchangeUpdated = new ExchangeHistory(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate);
-        exchangeUpdated.ExchangeHistoryId = ExchangeId;
+        try
+        {
+            exchangeUpdated = new ExchangeHistory(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate);
+            exchangeUpdated.ExchangeHistoryId = ExchangeId;
 
-        user.ModifyExchangeHistory(exchangeUpdated);
-        NavigationManager.NavigateTo("/ExchangeHistories");
+            user.ModifyExchangeHistory(exchangeUpdated);
+            NavigationManager.NavigateTo("/ExchangeHistories");
+        }
+        catch(Exception ExceptionExchangeHistory)
+        {
+            ErrorAlert.ShowErrorAlert();
+            errorTxt = ExceptionExchangeHistory.Message;
+        }
+
     }
 }
