@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogicTests
 {

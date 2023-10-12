@@ -7,6 +7,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
 using System.Security.Principal;
 using System.Collections.Generic;
+using BusinessLogic.Enums;
 
 namespace TestProject1;
 [TestClass]

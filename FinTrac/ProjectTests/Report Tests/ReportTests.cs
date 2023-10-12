@@ -8,8 +8,9 @@ using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
 using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
+using BusinessLogic.Enums;
 
-namespace TestProject1;
+namespace BusinessLogicTests;
 [TestClass]
 public class ReportTests
 {
@@ -100,7 +101,7 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldReturnAllSpendingsPerCategoryWithPercentajes()
     {
-        decimal percent = (100.0M / 7880.0M) * 100.0M;
+        decimal percent = 100.0M / 7880.0M * 100.0M;
         ResumeOfSpendigsReport resumeNeeded = new ResumeOfSpendigsReport(genericCategory, 100, percent);
         List<ResumeOfSpendigsReport> listObtained = Report.GiveAllSpendingsPerCategoryDetailed(loggedUser, (MonthsEnum)DateTime.Now.Month);
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.ExchangeHistory_Components
+namespace BusinessLogic.Exceptions
 {
     public class ExceptionExchangeHistory : Exception
     {

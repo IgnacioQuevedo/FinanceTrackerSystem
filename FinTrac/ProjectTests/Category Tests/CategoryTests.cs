@@ -6,6 +6,8 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using System.Net.Security;
 using BusinessLogic.User_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace TestProject1;
 
