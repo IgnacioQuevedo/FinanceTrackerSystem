@@ -11,6 +11,14 @@
 </h1>
 <table class="table">
     <thead>
+
+        @if (ErrorAlert.isError)
+        {
+            <ErrorAlert errorTxt="@errorTxt" />
+        }
+
+        <br />
+
         <tr>
             <th>Name</th>
             <th>Creation Date</th>
@@ -34,6 +42,14 @@
             </tr>
         }
     </tbody>
+    <br />
+
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Category delete with sucess" />
+    }
+
+
 </table>
 
 @code {
@@ -42,15 +58,28 @@
     [CascadingParameter]
     public User user { get; set; }
 
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
         categoryList = user.GetCategories();
+        SuccesAlert.IsSucess = true;
+        ErrorAlert.isError = false;
     }
 
     private void DeleteCategory(int categoryId)
     {
-        user.DeleteCategory(user.MyCategories[categoryId]);
+        try
+        {
+            user.DeleteCategory(user.MyCategories[categoryId]);
+            SuccesAlert.ShowSucessAlert();
+        }
+        catch(Exception ExceptionCategory)
+        {
+            errorTxt = ExceptionCategory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+
     }
 
     string GetFormattedDate(DateTime date)
