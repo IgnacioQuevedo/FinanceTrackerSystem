@@ -1,9 +1,11 @@
-﻿using BusinessLogic.Transaction_Components;
+﻿using BusinessLogic.Enums;
+using BusinessLogic.Transaction_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Account_Components
 {
@@ -109,7 +111,7 @@ namespace BusinessLogic.Account_Components
 
         private static bool IsOutcome(Transaction transactionToBeAdded)
         {
-            return transactionToBeAdded.Type == Category_Components.TypeEnum.Outcome;
+            return transactionToBeAdded.Type == TypeEnum.Outcome;
         }
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {

@@ -1,10 +1,11 @@
-﻿using BusinessLogic.Account_Components;
+﻿using BusinessLogic.Enums;
 using BusinessLogic.User_Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.ExchangeHistory_Components
 {
@@ -83,7 +84,7 @@ namespace BusinessLogic.ExchangeHistory_Components
 
         public void ValidateApplianceExchangeOnTransaction()
         {
-            if(_isAppliedInATransaction)
+            if (_isAppliedInATransaction)
             {
                 throw new ExceptionExchangeHistoryManagement("Imposible to modify an exchange that is being used on a transaction.");
             }

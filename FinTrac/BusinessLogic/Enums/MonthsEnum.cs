@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Report_Components
+namespace BusinessLogic.Enums
 {
     public enum MonthsEnum
     {

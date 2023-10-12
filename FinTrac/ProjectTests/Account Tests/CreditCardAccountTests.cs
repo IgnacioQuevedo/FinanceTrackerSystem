@@ -1,4 +1,5 @@
 using BusinessLogic;
+using BusinessLogic.Enums;
 using BusinessLogic.User_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
@@ -7,6 +8,7 @@ using BusinessLogic.Account_Components;
 using System.Security.Principal;
 using System.Security.Cryptography.X509Certificates;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Exceptions;
 
 namespace TestProject1;
 
