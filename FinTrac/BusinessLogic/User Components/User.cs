@@ -206,7 +206,7 @@ namespace BusinessLogic.User_Components
 
         private void ValidateRegisteredCategory(Category categoryToAdd)
         {
-            foreach (var category in MyCategories)
+            foreach (var category in MyCategories.Where(t => t != null))
             {
                 if (category.Name == categoryToAdd.Name)
                 {
@@ -232,7 +232,7 @@ namespace BusinessLogic.User_Components
             int lengthOfCategoryList = MyCategories.Count;
             bool flag = false;
 
-            for (int i = 0; i < lengthOfCategoryList && !flag; i++)
+            for (int i = 0; i < lengthOfCategoryList && !flag && MyCategories[i] != null; i++)
             {
                 if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
@@ -536,7 +536,7 @@ namespace BusinessLogic.User_Components
             if (ReferenceEquals(objeto1, objeto2)) { areEqual = true; }
 
             if (objeto1 is null || objeto2 is null) { areEqual = false; }
-                
+
             foreach (var propiedad in typeof(T).GetProperties())
             {
                 if (propiedad.PropertyType == typeof(DateTime))

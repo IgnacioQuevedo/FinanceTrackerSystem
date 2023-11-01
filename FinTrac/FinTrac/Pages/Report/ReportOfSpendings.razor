@@ -9,7 +9,7 @@
 <br />
 @if (showAlert)
 {
-    <ErrorAlert errorTxt="@Text"/>
+    <ErrorAlert errorTxt="@Text" />
 }
 
 <br />
@@ -20,7 +20,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th><input type="search" class="form-control" id="search" value="@search" @oninput=@(e=> OnSearch(e.Value.ToString())) placeholder="Search by category"/></th>
+            <th><input type="search" class="form-control" id="search" value="@search" @oninput=@(e=> OnSearch(e.Value.ToString())) placeholder="Search by category" /></th>
             <th>
                 <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
 
@@ -48,7 +48,7 @@
             <th>
                 <div>
 
-                    <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate"/>
+                    <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate" />
                 </div>
             </th>
             <th></th>
@@ -90,7 +90,7 @@
     private List<Transaction> listOfSpendings;
     private int accountId;
     private bool showAlert;
-    public string Text{get; set;}
+    public string Text { get; set; }
     private string _search = string.Empty;
     private string str;
 
@@ -114,6 +114,7 @@
 
     private void OnSearchInitDate(ChangeEventArgs elementSelected)
     {
+        filteredListOfSpending = listOfSpendings;
         string initialSelDate = elementSelected.Value.ToString();
         string[] nuevo = initialSelDate.Split('-');
         int year = int.Parse(nuevo[0]);
@@ -136,6 +137,7 @@
 
     private void OnSearchFinalDate(ChangeEventArgs elementSelected)
     {
+        filteredListOfSpending = listOfSpendings;
         string endSelDate = elementSelected.Value.ToString();
         string[] nuevo = endSelDate.Split('-');
         int year = int.Parse(nuevo[0]);
@@ -166,6 +168,7 @@
 
     private void OnSearch(string myString)
     {
+        filteredListOfSpending = listOfSpendings;
         str = myString;
         if (!String.IsNullOrEmpty(str))
         {
@@ -179,6 +182,7 @@
 
     public void OnChangeAccount(ChangeEventArgs elementSelected)
     {
+        filteredListOfSpending = listOfSpendings;
         if (elementSelected.Value is not null && int.TryParse(elementSelected.Value.ToString(), out int accountSelected))
         {
             if (!String.IsNullOrEmpty(str))
@@ -192,7 +196,7 @@
                 filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
             }
         }
-    
+
     }
 
 
