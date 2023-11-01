@@ -37,7 +37,8 @@ namespace TestProject1
             Assert.AreEqual(lastName,userDto.LastName);
         }
         #endregion
-        
+
+        #region Password
         [TestMethod]
         public void GivenPassword_ShouldBeSetted()
         {
@@ -45,6 +46,8 @@ namespace TestProject1
             UserDTO.Password = password;
             Assert.AreEqual(password,UserDTO.Password);
         }
+        #endregion
+       
        
         #region Email
         [TestMethod]
