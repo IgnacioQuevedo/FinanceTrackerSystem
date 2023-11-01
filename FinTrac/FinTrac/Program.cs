@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 using DataManagers;
 using DataManagers.UserManager;
 using FinTrac.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,14 +12,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-//Repository is a singleton, because we want it to be initialized only one time in all the proyect.
 builder.Services.AddSingleton<Repository>();
+builder.Services.AddSingleton<SqlContext>();
 builder.Services.AddSingleton<UserLogged>();
+
 
 builder.Services.AddScoped<UserManagement>();
 
+builder.Services.AddDbContext<SqlContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<SqlContext>();
+    context.Database.Migrate();
+}
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
