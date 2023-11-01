@@ -81,9 +81,10 @@ namespace TestProject1
             string firstName = "Gonzalo";
             string lastName = "Camejo";
             string email = "gonchi@gmail.com";
+            string password = "Pass.202304!"
             string address = "";
 
-            UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, address);
+            UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, password, address);
 
             Assert.AreEqual(firstName,genericUserDTO.FirstName);
             Assert.AreEqual(lastName,genericUserDTO.LastName);
