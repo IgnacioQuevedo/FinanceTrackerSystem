@@ -61,6 +61,24 @@ namespace TestProject1
 
         }
         #endregion
+        
+        public void GivenValues_ShouldBeToCreateAUserDTO()
+        {
+
+            string firstName = "Gonzalo";
+            string lastName = "Camejo";
+            string email = "gonchi@gmail.com";
+            string address = "";
+
+            UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, address);
+
+            Assert.AreEqual(firstName,genericUserDTO.FirstName);
+            Assert.AreEqual(lastName,genericUserDTO.LastName);
+            Assert.AreEqual(email,genericUserDTO.Email);
+            Assert.AreEqual(address,genericUserDTO.Address);
+
+
+        }
       
     }
 }
