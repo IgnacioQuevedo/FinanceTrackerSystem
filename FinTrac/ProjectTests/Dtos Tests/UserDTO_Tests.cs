@@ -61,7 +61,9 @@ namespace TestProject1
 
         }
         #endregion
-        
+
+        #region Constructor
+        [TestMethod]
         public void GivenValues_ShouldBeToCreateAUserDTO()
         {
 
@@ -76,9 +78,8 @@ namespace TestProject1
             Assert.AreEqual(lastName,genericUserDTO.LastName);
             Assert.AreEqual(email,genericUserDTO.Email);
             Assert.AreEqual(address,genericUserDTO.Address);
-
-
         }
+        #endregion
       
     }
 }
