@@ -1,14 +1,18 @@
-public class UserDTO_Tests
+using BusinessLogic.Dto_Components;
+
+namespace TestProject1
 {
-
-    [TestMethod]
-    public void GivenFirstName_ShouldBeSetted()
+    [TestClass]
+    public class UserDTO_Tests
     {
-        string firstName = "Ignacio";
-        UserDTO userDTO = new UserDTO();
-        userDTO.FirstName = firstName;
+        [TestMethod]
+        public void GivenFirstName_ShouldBeSetted()
+        {
+            string firstName = "Ignacio";
+            UserDTO userDTO = new UserDTO();
+            userDTO.FirstName = firstName;
 
-        Assert.AreEqual(firstName,userDTO.FirstName);
-        
+            Assert.AreEqual(firstName, userDTO.FirstName);
+        }
     }
 }
