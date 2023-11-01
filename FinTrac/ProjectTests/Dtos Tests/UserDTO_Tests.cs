@@ -38,6 +38,17 @@ namespace TestProject1
         }
         #endregion
        
-        
+        #region Email
+
+        [TestMethod]
+        public void GivenEmail_ShouldBeSetted()
+        {
+            string email = "nachitoquevedo@gmail.com";
+            UserDTO.Email = email;
+
+            Assert.AreEqual(email.UserDTO.Email);
+        }
+
+        #endregion
     }
 }
