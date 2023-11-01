@@ -18,11 +18,14 @@ namespace TestProject1
         }
         #endregion
         
+        [TestMethod]
         public void GivenLastName_ShouldBeSetted()
         {
             string lastName = "Quevedo";
             UserDTO userDto = new UserDTO();
-            userDto.Lastname = lastName;
+            userDto.LastName = lastName;
+            
+            Assert.AreEqual(lastName,userDto.LastName);
         }
         
     }
