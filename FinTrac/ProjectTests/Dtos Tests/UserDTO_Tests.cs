@@ -18,6 +18,12 @@ namespace TestProject1
         }
         #endregion
         
+        public void GivenLastName_ShouldBeSetted()
+        {
+            string lastName = "Quevedo";
+            UserDTO userDto = new UserDTO();
+            userDto.Lastname = lastName;
+        }
         
     }
 }
