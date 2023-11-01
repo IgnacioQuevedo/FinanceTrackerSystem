@@ -11,7 +11,15 @@ public class UserDTO
     public string Address { get; set; }
     public UserDTO()
     {
-        
+
+    }
+
+    public UserDTO(string firstName, string lastName, string email, string address)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Address = address;
     }
 
 }
