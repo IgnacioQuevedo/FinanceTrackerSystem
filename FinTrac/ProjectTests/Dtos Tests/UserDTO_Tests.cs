@@ -43,7 +43,7 @@ namespace TestProject1
         {
             string password = "Pass.Ignacio2023";
             UserDTO.Password = password;
-            Assert.AreEqual(password,UserDTO);
+            Assert.AreEqual(password,UserDTO.Password);
         }
        
         #region Email
