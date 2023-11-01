@@ -5,19 +5,28 @@ namespace TestProject1
     [TestClass]
     public class UserDTO_Tests
     {
+        #region Initialize
+        private UserDTO UserDTO;
 
+        [TestInitialize]
+        public void Initialize()
+        {
+            UserDTO = new UserDTO();
+        }
+        #endregion
+        
         #region FirstName
         [TestMethod]
         public void GivenFirstName_ShouldBeSetted()
         {
             string firstName = "Ignacio";
-            UserDTO userDTO = new UserDTO();
-            userDTO.FirstName = firstName;
+            UserDTO.FirstName = firstName;
 
-            Assert.AreEqual(firstName, userDTO.FirstName);
+            Assert.AreEqual(firstName, UserDTO.FirstName);
         }
         #endregion
-        
+
+        #region LastName
         [TestMethod]
         public void GivenLastName_ShouldBeSetted()
         {
@@ -27,6 +36,8 @@ namespace TestProject1
             
             Assert.AreEqual(lastName,userDto.LastName);
         }
+        #endregion
+       
         
     }
 }
