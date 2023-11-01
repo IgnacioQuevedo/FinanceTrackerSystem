@@ -11,8 +11,8 @@ namespace BusinessLogic.Account_Components
 {
     public class CreditCardAccount : Account
     {
-
         #region Properties
+
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
         public decimal AvailableCredit { get; set; }
@@ -21,8 +21,13 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Constructor
-        public CreditCardAccount() { }
-        public CreditCardAccount(string name, CurrencyEnum currency, DateTime creationDate, string issuingBank, string last4Digits, decimal availableCredit, DateTime closingDate) : base(name, currency, creationDate)
+
+        public CreditCardAccount()
+        {
+        }
+
+        public CreditCardAccount(string name, CurrencyEnum currency, DateTime creationDate, string issuingBank,
+            string last4Digits, decimal availableCredit, DateTime closingDate) : base(name, currency, creationDate)
         {
             IssuingBank = issuingBank;
             Last4Digits = last4Digits;
@@ -34,6 +39,7 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validations of Credit Card
+
         public void ValidateCreditCardAccount()
         {
             ValidateIssuingNameAccount();
@@ -43,6 +49,7 @@ namespace BusinessLogic.Account_Components
         }
 
         #region Validation Of Credit
+
         private void ValidateAvailableCredit()
         {
             if (AvailableCredit < 0)
@@ -54,6 +61,7 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validation Of ClosingDate
+
         private void ValidateClosingDate()
         {
             if (DateTime.Compare(CreationDate, ClosingDate) >= 0)
@@ -65,6 +73,7 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validation Of IssuingName
+
         private void ValidateIssuingNameAccount()
         {
             if (string.IsNullOrEmpty(IssuingBank))
@@ -72,9 +81,11 @@ namespace BusinessLogic.Account_Components
                 throw new ExceptionValidateAccount("ERROR ON ISSUING BANK NAME");
             }
         }
+
         #endregion
 
         #region Validation of Last 4 Digits
+
         private void ValidateLast4Digits()
         {
             int lengthOfLastDigits = Last4Digits.Length;
@@ -94,6 +105,7 @@ namespace BusinessLogic.Account_Components
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -104,15 +116,14 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
-
             ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
-
         }
 
         private static bool IsOutcome(Transaction transactionToBeAdded)
         {
             return transactionToBeAdded.Type == TypeEnum.Outcome;
         }
+
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
         {
             decimal resetCredit = AvailableCredit + oldAmountOfTransaction;
@@ -121,9 +132,9 @@ namespace BusinessLogic.Account_Components
 
         public override void UpdateAccountAfterDelete(Transaction transactionToBeDeleted)
         {
-
             AvailableCredit = AvailableCredit + transactionToBeDeleted.Amount;
         }
+
         #endregion
 
         #endregion
