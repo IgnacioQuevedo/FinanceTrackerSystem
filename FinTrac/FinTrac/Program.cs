@@ -13,7 +13,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<Repository>();
-builder.Services.AddSingleton<SqlContext>();
 builder.Services.AddSingleton<UserLogged>();
 
 

@@ -14,17 +14,20 @@ namespace BusinessLogic.Account_Components
     public abstract class Account
     {
         #region Properties
+
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
         public int AccountId { get; set; } = -1;
         public List<Transaction> MyTransactions { get; set; }
 
-
         #endregion
 
         #region Constructor
-        public Account() { }
+
+        public Account()
+        {
+        }
 
 
         public Account(string name, CurrencyEnum currency, DateTime creationDate)
@@ -37,12 +40,12 @@ namespace BusinessLogic.Account_Components
             {
                 MyTransactions = new List<Transaction>();
             }
-
         }
 
         #endregion
 
         #region Mandatory Methods
+
         public abstract void UpdateAccountMoneyAfterAdd(Transaction transactionToBeAdded);
 
         public abstract void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction);
@@ -51,19 +54,23 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validate Account
+
         public bool ValidateAccount()
         {
             if (string.IsNullOrEmpty(Name))
             {
                 throw new ExceptionValidateAccount("ERROR ON ACCOUNT NAME");
             }
+
             return true;
         }
+
         #endregion
 
         #region Transaction Management
 
         #region Add Transaction
+
         public void AddTransaction(Transaction transactionToBeAdded)
         {
             SetTransactionId(transactionToBeAdded);
@@ -114,14 +121,11 @@ namespace BusinessLogic.Account_Components
         public void DeleteTransaction(Transaction transactionToDelete)
         {
             MyTransactions.Remove(transactionToDelete);
-            MyTransactions.Insert(transactionToDelete.TransactionId,null);
-            
+            MyTransactions.Insert(transactionToDelete.TransactionId, null);
         }
 
         #endregion
 
-
         #endregion
-
     }
 }

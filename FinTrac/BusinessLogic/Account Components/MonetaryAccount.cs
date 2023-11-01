@@ -12,18 +12,25 @@ namespace BusinessLogic.Account_Components
     public class MonetaryAccount : Account
     {
         #region Attributes
+
         private decimal _initialAmount;
+
         #endregion
 
         #region Properties
+
         public decimal Amount { get; set; }
 
         #endregion
 
         #region Constructor
-        public MonetaryAccount() { }
 
-        public MonetaryAccount(string accountName, decimal amount, CurrencyEnum currencyType, DateTime creationDate) : base(accountName, currencyType, creationDate)
+        public MonetaryAccount()
+        {
+        }
+
+        public MonetaryAccount(string accountName, decimal amount, CurrencyEnum currencyType, DateTime creationDate) :
+            base(accountName, currencyType, creationDate)
         {
             Amount = amount;
             _initialAmount = amount;
@@ -33,6 +40,7 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validation of Monetary Account
+
         public void ValidateMonetaryAccount()
         {
             ValidateAmmount();
@@ -64,6 +72,7 @@ namespace BusinessLogic.Account_Components
             {
                 ModifyIncomeAmount(transactionToBeAdded, oldAmountOfTransaction);
             }
+
             if (IsOutcome(transactionToBeAdded))
             {
                 ModifyOutcomeAmount(transactionToBeAdded, oldAmountOfTransaction);
@@ -76,11 +85,11 @@ namespace BusinessLogic.Account_Components
             {
                 Amount = Amount - transactionToBeDeleted.Amount;
             }
+
             if (IsOutcome(transactionToBeDeleted))
             {
                 Amount = Amount + transactionToBeDeleted.Amount;
             }
-
         }
 
         private void ModifyOutcomeAmount(Transaction transactionToBeAdded, decimal oldAmountOfTransaction)
