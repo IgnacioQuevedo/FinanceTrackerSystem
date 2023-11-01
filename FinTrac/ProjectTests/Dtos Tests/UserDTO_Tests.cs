@@ -48,7 +48,8 @@ namespace TestProject1
             Assert.AreEqual(email,UserDTO.Email);
         }
         #endregion
-        
+
+        #region Adress
         [TestMethod]
         public void GivenAddress_ShouldBeSetted()
         {
@@ -59,5 +60,7 @@ namespace TestProject1
             Assert.AreEqual(address,UserDTO.Address);
 
         }
+        #endregion
+      
     }
 }
