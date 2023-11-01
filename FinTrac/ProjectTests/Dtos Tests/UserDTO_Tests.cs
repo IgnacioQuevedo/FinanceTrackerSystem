@@ -56,7 +56,7 @@ namespace TestProject1
 
             UserDTO.Address = address;
 
-            Assert.AreEqual(address,UserDTO);
+            Assert.AreEqual(address,UserDTO.Address);
 
         }
     }
