@@ -48,5 +48,16 @@ namespace TestProject1
             Assert.AreEqual(email,UserDTO.Email);
         }
         #endregion
+        
+        [TestMethod]
+        public void GivenAddress_ShouldBeSetted()
+        {
+            string address = "Av Brasil 1215";
+
+            UserDTO.Address = address;
+
+            Assert.AreEqual(address,UserDTO);
+
+        }
     }
 }
