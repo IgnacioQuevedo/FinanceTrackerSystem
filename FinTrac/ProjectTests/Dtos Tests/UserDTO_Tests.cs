@@ -47,8 +47,7 @@ namespace TestProject1
             Assert.AreEqual(password,UserDTO.Password);
         }
         #endregion
-       
-       
+        
         #region Email
         [TestMethod]
         public void GivenEmail_ShouldBeSetted()
@@ -75,13 +74,12 @@ namespace TestProject1
 
         #region Constructor
         [TestMethod]
-        public void GivenValues_ShouldBeToCreateAUserDTO()
+        public void GivenValues_ShouldBePossibleToCreateAUserDTO()
         {
-
             string firstName = "Gonzalo";
             string lastName = "Camejo";
             string email = "gonchi@gmail.com";
-            string password = "Pass.202304!"
+            string password = "Pass.202304!";
             string address = "";
 
             UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, password, address);
