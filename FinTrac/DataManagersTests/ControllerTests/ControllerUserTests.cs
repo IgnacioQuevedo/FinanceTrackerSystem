@@ -76,16 +76,18 @@ namespace DataManagersTests
         }
         #endregion
 
+        #region FindUser
+
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
-           UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-           _testDb.Add(_controller.ToUser(dtoToFound));
-           _testDb.SaveChanges();
+            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+            _testDb.Add(_controller.ToUser(dtoToFound));
+            _testDb.SaveChanges();
 
-           User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
+            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
            
-           Assert.AreEqual(userFound.Email, dtoToFound.Email);
+            Assert.AreEqual(userFound.Email, dtoToFound.Email);
         }
         
         [TestMethod]
@@ -99,6 +101,9 @@ namespace DataManagersTests
            
             Assert.IsNull(userFound);
         }
+
+        #endregion
+       
         
     }
 }
