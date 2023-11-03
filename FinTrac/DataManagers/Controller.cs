@@ -16,6 +16,10 @@ public class Controller
 
      public User toUser(UserDTO userDto)
      {
-          throw new NotImplementedException();
+          User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
+               userDto.Address);
+
+          return userConverted;
+
      }
 }
