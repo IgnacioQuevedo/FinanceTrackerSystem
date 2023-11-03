@@ -77,7 +77,7 @@ namespace DataManagersTests
         #endregion
 
         [TestMethod]
-        public void GivenUserDTO_ShouldBePossibleToFinUserRelatedInDb()
+        public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
            _testDb.Add(_controller.ToUser(dtoToFound));
@@ -87,5 +87,17 @@ namespace DataManagersTests
            
            Assert.AreEqual(userFound.Email, dtoToFound.Email);
         }
+        
+        [TestMethod]
+        public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
+        {
+            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+            _testDb.SaveChanges();
+
+            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
+           
+            Assert.AreEqual(userFound.Email, dtoToFound.Email);
+        }
+        
     }
 }
