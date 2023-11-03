@@ -30,7 +30,7 @@ public class UserRepositorySql
         }
     }
 
-    public bool userRegistered(User userToBeLogged)
+    public bool UserRegistered(User userToBeLogged)
     {
         foreach (var account in _database.Users)
         {
@@ -53,7 +53,5 @@ public class UserRepositorySql
         
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
         _database.SaveChanges();
-        
     }
-
 }
