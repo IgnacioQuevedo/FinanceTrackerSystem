@@ -120,7 +120,7 @@ namespace DataManagersTests
         [TestMethod]
         public void WhenUserIsCreated_AnIdMustBeAssigned()
         {
-            _userRepo.Create(_genericUser)
+            _userRepo.Create(_genericUser);
             Assert.AreEqual(1,_testDb.Users.First().UserId);
         }
         
