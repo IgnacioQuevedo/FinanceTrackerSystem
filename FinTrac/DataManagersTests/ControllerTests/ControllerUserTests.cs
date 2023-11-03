@@ -24,9 +24,6 @@ namespace DataManagersTests
         #endregion
 
         #region ToUser
-
-        
-
         
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
@@ -47,13 +44,17 @@ namespace DataManagersTests
         public void GivenUserDTOWithIncorrectData_ShoulThrowException()
         {
             UserDTO userDto = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
-
             User userConverted = _controller.ToUser(userDto);
         }
         
-        
-        
         #endregion
+
+        [TestMethod]
+        public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
+        {
+            User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+            UserDTO userDto = _controller.ToDtoUser(userReceived);
+        }
         
     }
 }
