@@ -7,11 +7,11 @@ namespace DataManagers;
 
 public class Controller : IUserController
 {
-     public UserRepositorySql UserRepo { get; set; }
+     private UserRepositorySql _userRepo { get; set; }
      
-     public Controller() 
+     public Controller(SqlContext database)
      {
-          
+          _userRepo = new UserRepositorySql(database);
      }
 
      #region ToUser

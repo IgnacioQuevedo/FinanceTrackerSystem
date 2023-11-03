@@ -12,13 +12,14 @@ namespace DataManagersTests
         #region Initialize
         
         private Controller _controller;
-    
+        private SqlContext _testDb;
+        private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        
         [TestInitialize]
-
         public void Initialize()
         {
-            _controller = new Controller();
-
+            _testDb = _contextFactory.CreateDbContext();
+            _controller = new Controller(_testDb);
         }
         
         #endregion
