@@ -8,7 +8,7 @@ namespace DataManagersTests
     public class UserRepositorySqlTests
     {
         #region Initialize
-        
+
         private UserRepositorySql _userRepo;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
@@ -22,34 +22,19 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
         [TestMethod]
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
             User userToAdd = new User("Kenny", "Dock", "kennies@gmail.com", "KennieDock222", "North Av");
             userToAdd.UserId = 1;
-            
+
             User userInDb = new User();
-            
+
             _userRepo.Create(userToAdd);
-            
+
             userInDb = _testDb.Users.First();
-            Assert.AreEqual(userToAdd,userInDb);
-
-
-
-
-
-
+            Assert.AreEqual(userToAdd, userInDb);
         }
-        
-        
-        
-        
-        
-        
-        
-
     }
-
 }

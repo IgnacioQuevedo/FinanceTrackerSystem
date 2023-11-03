@@ -18,4 +18,5 @@ public class UserRepositorySql
         _database.Users.Add(userToAdd);
         _database.SaveChanges();
     }
+    
 }

@@ -4,6 +4,7 @@ using BusinessLogic.Goal_Components;
 using BusinessLogic.Transaction_Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +21,9 @@ namespace BusinessLogic.User_Components
     public class User
     {
         #region Properties
-        public int UserId { get; set; } = -1;
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserId { get; set; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
