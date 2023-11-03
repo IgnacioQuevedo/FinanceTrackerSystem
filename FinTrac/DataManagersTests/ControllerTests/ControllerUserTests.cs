@@ -63,7 +63,6 @@ namespace DataManagersTests
             Assert.AreEqual(userDto.Password,userReceived.Password);
             Assert.AreEqual(userDto.Address,userReceived.Address);
         }
-
         #endregion
       
         

@@ -13,13 +13,15 @@ public class Controller : IUserController
      {
           
      }
-     
+
+     #region ToUser
      public User ToUser(UserDTO userDto)
      {
           try
           {
                User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
                     userDto.Address);
+               
                return userConverted;
           }
           catch (Exception GenericException)
@@ -29,6 +31,10 @@ public class Controller : IUserController
           
      }
 
+     #endregion
+
+     #region ToUserDTO
+
      public UserDTO ToDtoUser(User userToConvert)
      {
           UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
@@ -37,6 +43,9 @@ public class Controller : IUserController
           return dtoOfUser;
      }
 
+     #endregion
+
+     
      public void CreateUser(UserDTO userDtoToCreate)
      {
           throw new NotImplementedException();
