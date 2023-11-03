@@ -25,6 +25,11 @@ namespace DataManagersTests
 
         #endregion
 
+        #region Creation and Necessary Validations
+
+        
+
+        
         [TestMethod]
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
@@ -37,6 +42,15 @@ namespace DataManagersTests
             Assert.AreEqual(userToAdd, userInDb);
         }
 
+
+        [TestMethod]
+        public void GivenNotRegisteredEmail_ShouldBeAllGood()
+        {
+            User userToCheckEmail = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+
+            _userRepo.EmailUsed(userToCheckEmail.Email);
+        }
+        
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserRepository))]
         public void GivenAlreadyRegisteredEmail_ShouldReturnException()
@@ -64,5 +78,6 @@ namespace DataManagersTests
             Assert.IsFalse(_userRepo.userRegistered(userNotRegistered));
         }
         
+        #endregion
     }
 }
