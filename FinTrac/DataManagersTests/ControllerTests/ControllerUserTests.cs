@@ -24,6 +24,16 @@ namespace DataManagersTests
         
         #endregion
 
+        #region Cleanup
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _testDb.Database.EnsureDeleted();
+        }
+
+        #endregion
+        
         #region To User
         
         [TestMethod]
@@ -65,7 +75,18 @@ namespace DataManagersTests
             Assert.AreEqual(userDto.Address,userReceived.Address);
         }
         #endregion
-      
+
+        [TestMethod]
+        public void GivenUserDTO_ShouldBePossibleToFinUserRelatedInDb()
+        {
+           UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+           User userFound = _controller.ToUser(dtoToFound);
+           _testDb.Add(userFound);
+           _testDb.SaveChanges();
+           
+           _controller.Find(userFound);
+           Assert.AreEqual(userFound.Email, dtoToFound.Email);
+        }
         
     }
 }

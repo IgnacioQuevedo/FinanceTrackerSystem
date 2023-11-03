@@ -65,4 +65,9 @@ public class Controller : IUserController
      {
           throw new NotImplementedException();
      }
+
+     public void Find(object genericUser)
+     {
+          throw new NotImplementedException();
+     }
 }
