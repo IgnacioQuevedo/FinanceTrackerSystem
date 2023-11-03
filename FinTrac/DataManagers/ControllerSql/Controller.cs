@@ -14,12 +14,18 @@ public class Controller
      }
 
 
-     public User toUser(UserDTO userDto)
+     public User ToUser(UserDTO userDto)
      {
-          User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
-               userDto.Address);
-
-          return userConverted;
-
+          try
+          {
+               User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
+                    userDto.Address);
+               return userConverted;
+          }
+          catch (Exception GenericException)
+          {
+               throw new ExceptionController(GenericException.Message);
+          }
+          
      }
 }

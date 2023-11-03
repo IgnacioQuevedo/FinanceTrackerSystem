@@ -33,7 +33,7 @@ namespace DataManagersTests
         {
             UserDTO userDto = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
 
-            User userConverted = _controller.toUser(userDto);
+            User userConverted = _controller.ToUser(userDto);
             
             Assert.AreEqual(userDto.FirstName,userConverted.FirstName);
             Assert.AreEqual(userDto.LastName,userConverted.LastName);
@@ -48,9 +48,7 @@ namespace DataManagersTests
         {
             UserDTO userDto = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
 
-            User userConverted = _controller.toUser(userDto);
-            
-            
+            User userConverted = _controller.ToUser(userDto);
         }
         
         
