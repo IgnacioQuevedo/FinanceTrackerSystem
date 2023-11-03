@@ -104,6 +104,8 @@ namespace DataManagersTests
 
         #endregion
 
+        #region Create
+
         [TestMethod]
         public void CreateUserMethod_ShouldAddNewUserIntoDb()
         {
@@ -125,7 +127,7 @@ namespace DataManagersTests
             _controller.CreateUser(userToAdd);
             _controller.CreateUser(userToAdd);
         }
-
+        
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void CreatingUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
@@ -139,6 +141,8 @@ namespace DataManagersTests
             _controller.CreateUser(userWithSameEmail);
             
         }
+
+        #endregion
         
     }
 }
