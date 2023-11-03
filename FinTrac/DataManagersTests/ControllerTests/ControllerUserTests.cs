@@ -115,5 +115,16 @@ namespace DataManagersTests
             User userInDb = _controller.FindUser(userToAdd.Email);
             Assert.AreEqual(userToAdd.Email,userInDb.Email);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void CreateUserAlreadyRegistered_ShouldThrowException()
+        {
+            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.CreateUser(userToAdd);
+            _controller.CreateUser(userToAdd);
+    
+        }
     }
 }
