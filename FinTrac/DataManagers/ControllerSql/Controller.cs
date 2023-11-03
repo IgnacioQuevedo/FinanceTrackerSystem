@@ -56,7 +56,9 @@ public class Controller : IUserController
         try
         {
             User userToAdd = ToUser(userDtoToCreate);
+            FormatUserProperties(userToAdd);
             _userRepo.EmailUsed(userToAdd.Email);
+            
             _userRepo.Create(userToAdd);
         }
         catch (ExceptionUserRepository Exception)
@@ -64,6 +66,14 @@ public class Controller : IUserController
             throw new ExceptionController(Exception.Message);
         }
     }
+    
+    private void FormatUserProperties(User user)
+    {
+        user.Email = user.Email.ToLower();
+        user.FirstName = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
+        user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
+    }
+    
 
     public void UpdateUser(UserDTO userDto)
     {
