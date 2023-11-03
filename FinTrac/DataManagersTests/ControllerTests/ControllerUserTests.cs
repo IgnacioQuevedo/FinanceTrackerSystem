@@ -144,5 +144,18 @@ namespace DataManagersTests
 
         #endregion
         
+        [TestMethod]
+        public void GivenUserToUpdate_ShouldBeUpdatedInDb()
+        {
+            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            
+            _controller.CreateUser(userToAdd);
+            
+            UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
+                "Jhonix2003!!", "South Av");
+            _controller.UpdateUser(dtoWithUpdates);
+        }
+        
     }
 }
