@@ -129,14 +129,13 @@ namespace DataManagersTests
         #endregion
 
         [TestMethod]
-        public void GivenAnId_UserShouldBeFounded()
+        public void GivenAnId_UserShouldBeFound()
         {
             _userRepo.Create(_genericUser);
             
-            User userFounded = new User();
-            userFounded = _userRepo.Find(_genericUser.UserId);
+            User userFound = _userRepo.Find(_genericUser.UserId);
             
-            Assert.AreEqual(userFounded,_genericUser);
+            Assert.AreEqual(userFound,_genericUser);
         }
         
     }
