@@ -23,6 +23,10 @@ namespace DataManagersTests
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
         }
         
+        #endregion
+
+        #region Cleanup
+        
         [TestCleanup]
         public void CleanUp()
         {
@@ -30,7 +34,8 @@ namespace DataManagersTests
         }
         
         #endregion
-
+        
+        
         #region Creation and Necessary Validations
         [TestMethod]
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
@@ -43,6 +48,9 @@ namespace DataManagersTests
             userInDb = _testDb.Users.First();
             Assert.AreEqual(userToAdd, userInDb);
         }
+        #endregion
+
+        #region Email Mapping
         
         [TestMethod]
         public void GivenNotRegisteredEmail_ShouldBeAllGood()
@@ -64,6 +72,9 @@ namespace DataManagersTests
             _userRepo.EmailUsed(incorrectUser.Email);
         }
         
+        #endregion
+
+        #region Login
         [TestMethod]
         public void GivenUserThatWantsToLogin_ShouldBePossibleToCheckIfHisLoginDataIsCorrect()
         {
@@ -80,6 +91,8 @@ namespace DataManagersTests
         }
         
         #endregion
+
+        #region Modify
         
         [TestMethod]
         public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
@@ -98,5 +111,6 @@ namespace DataManagersTests
             Assert.AreEqual(userUpdated.Password, userInDb.Password);
             Assert.AreEqual(userUpdated.Address, userInDb.Address);
         }
+        #endregion
     }
 }

@@ -46,8 +46,7 @@ public class UserRepositorySql
 
         return false;
     }
-
-
+    
     public void Update(User updatedUser)
     {
         var existingUser = _database.Users.Find(updatedUser.UserId);
