@@ -50,7 +50,7 @@ namespace DataManagersTests
         }
         
         [TestMethod]
-        public void GivenUserCreated_ShouldBePossibleToRecognizeIt()
+        public void GivenUserThatWantsToLogin_ShouldBePossibleToCheckIfHisLoginDataIsCorrect()
         {
             _userRepo.Create(_genericUser);
             
