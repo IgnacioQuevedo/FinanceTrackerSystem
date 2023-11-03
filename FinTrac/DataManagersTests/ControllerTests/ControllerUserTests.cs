@@ -23,7 +23,7 @@ namespace DataManagersTests
         
         #endregion
 
-        #region ToUser
+        #region To User
         
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
@@ -49,17 +49,23 @@ namespace DataManagersTests
         
         #endregion
 
+        #region To UserDTO
+
         [TestMethod]
         public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
         {
             User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
             UserDTO userDto = _controller.ToDtoUser(userReceived);
+            
             Assert.AreEqual(userDto.FirstName,userReceived.FirstName);
             Assert.AreEqual(userDto.LastName,userReceived.LastName);
             Assert.AreEqual(userDto.Email,userReceived.Email);
             Assert.AreEqual(userDto.Password,userReceived.Password);
             Assert.AreEqual(userDto.Address,userReceived.Address);
         }
+
+        #endregion
+      
         
     }
 }
