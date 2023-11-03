@@ -80,11 +80,11 @@ namespace DataManagersTests
         public void GivenUserDTO_ShouldBePossibleToFinUserRelatedInDb()
         {
            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-           User userFound = _controller.ToUser(dtoToFound);
-           _testDb.Add(userFound);
+           _testDb.Add(_controller.ToUser(dtoToFound));
            _testDb.SaveChanges();
+
+           User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
            
-           _controller.FindUser(userFound.Email);
            Assert.AreEqual(userFound.Email, dtoToFound.Email);
         }
     }

@@ -45,11 +45,12 @@ public class Controller : IUserController
 
     #endregion
 
-    public void FindUser(string emailAK)
+    #region FindUser
+    public User FindUser(string emailAK)
     {
-        _userRepo.Find(emailAK);
+        return _userRepo.Find(emailAK);
     }
-    
+    #endregion
     public void CreateUser(UserDTO userDtoToCreate)
     {
         throw new NotImplementedException();
