@@ -48,8 +48,12 @@ public class UserRepositorySql
     }
 
 
-    public void Update(User userUpdated)
+    public void Update(User updatedUser)
     {
-        throw new NotImplementedException();
+        var existingUser = _database.Users.Find(updatedUser.UserId);
+        
+        _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
+        _database.SaveChanges();
+        
     }
 }

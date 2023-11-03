@@ -22,7 +22,13 @@ namespace DataManagersTests
             _userRepo = new UserRepositorySql(_testDb);
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
         }
-
+        
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _testDb.Database.EnsureDeleted();
+        }
+        
         #endregion
 
         #region Creation and Necessary Validations
@@ -78,19 +84,19 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
         {
-            string firstName = "Michael";
-            string lastName = "Santa";
-            string passwordModified = "MichaelSanta1234";
-            string address = "NW 2nd Ave";
-
+            _userRepo.Create(_genericUser);
+            
             User userUpdated = new User("Jhonnyx", "Sanz", "jhonny@gmail.com", "Jhooony12345", "NW 2nd Ave");
+            userUpdated.UserId = _genericUser.UserId;
             
             _userRepo.Update(userUpdated);
 
-            Assert.AreEqual(firstName, userUpdated.FirstName);
-            Assert.AreEqual(lastName, userUpdated.LastName);
-            Assert.AreEqual(passwordModified, userUpdated.Password);
-            Assert.AreEqual(address, userUpdated.Address);
+            User userInDb = _testDb.Users.First();
+
+            Assert.AreEqual(userUpdated.FirstName,userInDb.FirstName );
+            Assert.AreEqual(userUpdated.LastName, userInDb.LastName);
+            Assert.AreEqual(userUpdated.Password, userInDb.Password);
+            Assert.AreEqual(userUpdated.Address, userInDb.Address);
         }
     }
 }
