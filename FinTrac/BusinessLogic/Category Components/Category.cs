@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using BusinessLogic.User_Components;
+using BusinessLogic.Goal_Components;
 
 namespace BusinessLogic.Category_Components
 {
@@ -16,6 +18,11 @@ namespace BusinessLogic.Category_Components
         public DateTime CreationDate { get; } = DateTime.Now.Date;
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
+
+        public User CategoryUser { get; set; }
+        
+        public List<Goal> CategoryGoals { get; set; }
+
         #endregion
 
         #region Constructors
