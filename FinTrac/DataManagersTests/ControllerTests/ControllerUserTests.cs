@@ -125,5 +125,20 @@ namespace DataManagersTests
             _controller.CreateUser(userToAdd);
             _controller.CreateUser(userToAdd);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void CreatingUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
+        {
+            UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.CreateUser(userAdded);
+            
+            UserDTO userWithSameEmail = new UserDTO("Kenny", "Dock", "keNNieS@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.CreateUser(userWithSameEmail);
+            
+        }
+        
     }
 }
