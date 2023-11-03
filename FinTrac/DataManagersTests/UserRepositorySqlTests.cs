@@ -26,10 +26,6 @@ namespace DataManagersTests
         #endregion
 
         #region Creation and Necessary Validations
-
-        
-
-        
         [TestMethod]
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
@@ -41,8 +37,7 @@ namespace DataManagersTests
             userInDb = _testDb.Users.First();
             Assert.AreEqual(userToAdd, userInDb);
         }
-
-
+        
         [TestMethod]
         public void GivenNotRegisteredEmail_ShouldBeAllGood()
         {
@@ -79,5 +74,7 @@ namespace DataManagersTests
         }
         
         #endregion
+        
+        
     }
 }
