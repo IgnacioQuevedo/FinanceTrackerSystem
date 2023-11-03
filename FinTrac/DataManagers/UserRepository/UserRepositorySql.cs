@@ -56,8 +56,4 @@ public class UserRepositorySql
         
     }
 
-    public List<User> GetAll()
-    {
-        throw new NotImplementedException();
-    }
 }
