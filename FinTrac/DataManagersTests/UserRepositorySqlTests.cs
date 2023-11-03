@@ -75,6 +75,22 @@ namespace DataManagersTests
         
         #endregion
         
-        
+        [TestMethod]
+        public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
+        {
+            string firstName = "Michael";
+            string lastName = "Santa";
+            string passwordModified = "MichaelSanta1234";
+            string address = "NW 2nd Ave";
+
+            User userUpdated = new User("Jhonnyx", "Sanz", "jhonny@gmail.com", "Jhooony12345", "NW 2nd Ave");
+            
+            _userRepo.Update(userUpdated);
+
+            Assert.AreEqual(firstName, userUpdated.FirstName);
+            Assert.AreEqual(lastName, userUpdated.LastName);
+            Assert.AreEqual(passwordModified, userUpdated.Password);
+            Assert.AreEqual(address, userUpdated.Address);
+        }
     }
 }

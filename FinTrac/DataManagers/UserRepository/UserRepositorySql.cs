@@ -46,11 +46,10 @@ public class UserRepositorySql
 
         return false;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+    public void Update(User userUpdated)
+    {
+        throw new NotImplementedException();
+    }
 }
