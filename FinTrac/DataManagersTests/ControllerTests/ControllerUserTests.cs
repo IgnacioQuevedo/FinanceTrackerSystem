@@ -143,7 +143,9 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
+        #region Update
+
         [TestMethod]
         public void GivenUserToUpdate_ShouldBeUpdatedInDb()
         {
@@ -156,11 +158,14 @@ namespace DataManagersTests
             _controller.UpdateUser(dtoWithUpdates);
             User userInDb = _controller.FindUser(dtoToAdd.Email);
 
-           Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
-           Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
-           Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
-           Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
+            Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
+            Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
+            Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
+            Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
         }
+
+        #endregion
+        
         
     }
 }
