@@ -42,11 +42,9 @@ namespace DataManagersTests
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
             User userToAdd = new User("Kenny", "Dock", "kennies@gmail.com", "KennieDock222", "North Av");
-            User userInDb = new User();
-
             _userRepo.Create(userToAdd);
 
-            userInDb = _testDb.Users.First();
+            User userInDb = _testDb.Users.First();
             Assert.AreEqual(userToAdd, userInDb);
         }
 
@@ -128,6 +126,8 @@ namespace DataManagersTests
         
         #endregion
 
+        #region Find
+
         [TestMethod]
         public void GivenAnId_UserShouldBeFound()
         {
@@ -137,6 +137,9 @@ namespace DataManagersTests
             
             Assert.AreEqual(userFound,_genericUser);
         }
+
+        #endregion
+        
         
     }
 }
