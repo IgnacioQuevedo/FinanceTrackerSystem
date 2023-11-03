@@ -13,13 +13,7 @@ namespace DataManagers
     public class SqlContext : DbContext
     {
         public DbSet<User> Users{ get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<MonetaryAccount> MonetaryAccounts { get; set; }
-        public DbSet<CreditCardAccount> CreditCardAccounts { get; set; }
-        public DbSet<Goal> Goals { get; set; }
-        public DbSet<ExchangeHistory> ExchangeHistories { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
+
         public SqlContext(DbContextOptions<SqlContext> options) : base(options){}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

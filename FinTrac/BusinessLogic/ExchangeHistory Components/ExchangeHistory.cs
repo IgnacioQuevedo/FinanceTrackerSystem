@@ -20,6 +20,8 @@ namespace BusinessLogic.ExchangeHistory_Components
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
         public int ExchangeHistoryId { get; set; } = -1;
+        
+        public User ExchangeHistoryUser { get; set; }
 
         #endregion
 

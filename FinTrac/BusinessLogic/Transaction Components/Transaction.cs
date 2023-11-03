@@ -8,6 +8,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Account_Components;
 
 namespace BusinessLogic.Transaction_Components
 {
@@ -27,6 +28,8 @@ namespace BusinessLogic.Transaction_Components
         public Category TransactionCategory { get; set; }
         public int TransactionId { get; set; } = -1;
 
+        public Account TransactionAccount { get; set; }
+            
         #endregion
 
         #region Constructors
