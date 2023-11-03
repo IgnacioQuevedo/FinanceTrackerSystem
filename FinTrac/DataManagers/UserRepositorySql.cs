@@ -15,6 +15,7 @@ public class UserRepositorySql
 
     public void Create(User userToAdd)
     {
-        throw new NotImplementedException();
+        _database.Users.Add(userToAdd);
+        _database.SaveChanges();
     }
 }

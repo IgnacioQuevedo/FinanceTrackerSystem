@@ -22,18 +22,18 @@ namespace DataManagersTests
         }
 
         #endregion
-
-
+        
         [TestMethod]
-        public void CreateMethod_ShouldAddNewUser()
+        public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
             User userToAdd = new User("Kenny", "Dock", "kennies@gmail.com", "KennieDock222", "North Av");
-            User userInDb = new User();
-
-
-            _userRepo.Create(userToAdd);
-            userInDb = _testDb.Users.First();
+            userToAdd.UserId = 1;
             
+            User userInDb = new User();
+            
+            _userRepo.Create(userToAdd);
+            
+            userInDb = _testDb.Users.First();
             Assert.AreEqual(userToAdd,userInDb);
 
 
