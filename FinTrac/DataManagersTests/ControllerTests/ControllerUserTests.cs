@@ -41,6 +41,19 @@ namespace DataManagersTests
             Assert.AreEqual(userDto.Password,userConverted.Password);
             Assert.AreEqual(userDto.Address,userConverted.Address);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void GivenUserDTOWithIncorrectData_ShoulThrowException()
+        {
+            UserDTO userDto = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
+
+            User userConverted = _controller.toUser(userDto);
+            
+            
+        }
+        
+        
         
         #endregion
         
