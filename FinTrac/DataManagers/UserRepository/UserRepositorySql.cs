@@ -54,4 +54,9 @@ public class UserRepositorySql
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
         _database.SaveChanges();
     }
+
+    public User Find(int genericUserUserId)
+    {
+        throw new NotImplementedException();
+    }
 }

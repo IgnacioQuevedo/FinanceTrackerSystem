@@ -117,11 +117,27 @@ namespace DataManagersTests
 
         #endregion
 
+        #region Id settings
+        
         [TestMethod]
         public void WhenUserIsCreated_AnIdMustBeAssigned()
         {
             _userRepo.Create(_genericUser);
             Assert.AreEqual(1,_testDb.Users.First().UserId);
+        }
+        
+        #endregion
+
+        [TestMethod]
+        public void GivenAnId_UserShouldBeFounded()
+        {
+            
+            _userRepo.Create(_genericUser);
+            User userFounded = new User();
+            userFounded = _userRepo.Find(_genericUser.UserId);
+            Assert.AreEqual(userFounded,_genericUser);
+            
+            
         }
         
     }
