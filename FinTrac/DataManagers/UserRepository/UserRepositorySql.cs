@@ -29,5 +29,9 @@ public class UserRepositorySql
             }
         }
     }
-    
+
+    public bool userRegistered(User genericUser)
+    {
+        throw new NotImplementedException();
+    }
 }

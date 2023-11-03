@@ -12,6 +12,7 @@ namespace DataManagersTests
         private UserRepositorySql _userRepo;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        private User _genericUser;
 
 
         [TestInitialize]
@@ -19,6 +20,7 @@ namespace DataManagersTests
         {
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
+            _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
         }
 
         #endregion
@@ -27,8 +29,6 @@ namespace DataManagersTests
         public void CreateMethodWithCorrectValues_ShouldAddNewUser()
         {
             User userToAdd = new User("Kenny", "Dock", "kennies@gmail.com", "KennieDock222", "North Av");
-            userToAdd.UserId = 1;
-
             User userInDb = new User();
 
             _userRepo.Create(userToAdd);
@@ -48,5 +48,14 @@ namespace DataManagersTests
 
             _userRepo.EmailUsed(incorrectUser.Email);
         }
+        
+        [TestMethod]
+        public void GivenUserCreated_ShouldBePossibleToRecognizeIt()
+        {
+            _userRepo.Create(_genericUser);
+            
+            Assert.IsTrue(_userRepo.userRegistered(_genericUser));
+        }
+        
     }
 }
