@@ -103,6 +103,16 @@ namespace DataManagersTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void CreateUserMethod_ShouldAddNewUserIntoDb()
+        {
+            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+
+            _controller.CreateUser(userToAdd);
+            
+        }
        
         
     }
