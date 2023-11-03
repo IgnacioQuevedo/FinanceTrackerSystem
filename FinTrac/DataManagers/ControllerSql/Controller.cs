@@ -31,7 +31,10 @@ public class Controller : IUserController
 
      public UserDTO ToDtoUser(User userToConvert)
      {
-          throw new NotImplementedException();
+          UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
+               userToConvert.Email, userToConvert.Password,userToConvert.Address);
+          
+          return dtoOfUser;
      }
 
      public void CreateUser(UserDTO userDtoToCreate)
