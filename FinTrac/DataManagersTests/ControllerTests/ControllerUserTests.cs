@@ -26,10 +26,11 @@ namespace DataManagersTests
 
             User userConverted = _controller.toUser(userDto);
             
-            Assert.AreEqual(userDto,userConverted);
-            
-            
-            
+            Assert.AreEqual(userDto.FirstName,userConverted.FirstName);
+            Assert.AreEqual(userDto.LastName,userConverted.LastName);
+            Assert.AreEqual(userDto.Email,userConverted.Email);
+            Assert.AreEqual(userDto.Password,userConverted.Password);
+            Assert.AreEqual(userDto.Address,userConverted.Address);
         }
         
         
