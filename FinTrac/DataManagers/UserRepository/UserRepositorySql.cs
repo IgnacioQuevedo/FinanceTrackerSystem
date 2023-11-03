@@ -57,6 +57,6 @@ public class UserRepositorySql
 
     public User Find(int genericUserUserId)
     {
-        throw new NotImplementedException();
+        return _database.Users.FirstOrDefault(u => u.UserId == genericUserUserId);
     }
 }

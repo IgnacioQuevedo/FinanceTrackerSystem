@@ -131,13 +131,12 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenAnId_UserShouldBeFounded()
         {
-            
             _userRepo.Create(_genericUser);
+            
             User userFounded = new User();
             userFounded = _userRepo.Find(_genericUser.UserId);
+            
             Assert.AreEqual(userFounded,_genericUser);
-            
-            
         }
         
     }
