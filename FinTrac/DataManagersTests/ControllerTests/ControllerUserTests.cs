@@ -112,6 +112,13 @@ namespace DataManagersTests
 
             _controller.CreateUser(userToAdd);
             
+            User userConverted = _controller.ToUser(userToAdd);
+            User userInDb = _controller.FindUser(userToAdd.Email);
+            
+            userConverted.UserId = userInDb.UserId;
+            
+            Assert.AreEqual(userConverted.Email,userInDb.Email);
+
         }
        
         

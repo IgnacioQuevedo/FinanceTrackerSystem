@@ -53,7 +53,8 @@ public class Controller : IUserController
     #endregion
     public void CreateUser(UserDTO userDtoToCreate)
     {
-        throw new NotImplementedException();
+        User userToAdd = ToUser(userDtoToCreate);
+        _userRepo.Create(userToAdd);
     }
 
     public void UpdateUser(UserDTO userDto)
