@@ -34,7 +34,7 @@ public class UserRepositorySql
     {
         foreach (var account in _database.Users)
         {
-            if (account.Email.Equals(account.Email))
+            if (account.Email.Equals(userToBeLogged.Email))
 
             {
                 if (account.Password.Equals(account.Password))

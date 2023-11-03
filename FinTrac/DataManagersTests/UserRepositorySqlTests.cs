@@ -56,11 +56,12 @@ namespace DataManagersTests
             
             Assert.IsTrue(_userRepo.userRegistered(_genericUser));
         }
-
+        
         [TestMethod]
         public void GivenUserThatWantsToLoginButIsNotRegistered_ShouldReturnFalse()
         {
-            Assert.IsFalse(_userRepo.userRegistered(_genericUser));
+            User userNotRegistered = new User("Jhon", "Camaleon", "jhonnya@gmail.com","LittleJhonny123", "");
+            Assert.IsFalse(_userRepo.userRegistered(userNotRegistered));
         }
         
     }
