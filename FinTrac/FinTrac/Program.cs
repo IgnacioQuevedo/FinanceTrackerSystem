@@ -14,9 +14,8 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<Repository>();
 builder.Services.AddSingleton<UserLogged>();
-
-
 builder.Services.AddScoped<UserManagement>();
+
 
 builder.Services.AddDbContext<SqlContext>(options =>
 {

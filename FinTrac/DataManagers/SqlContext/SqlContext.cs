@@ -13,7 +13,6 @@ namespace DataManagers
     public class SqlContext : DbContext
     {
         public DbSet<User> Users{ get; set; }
-
         public SqlContext(DbContextOptions<SqlContext> options) : base(options){}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

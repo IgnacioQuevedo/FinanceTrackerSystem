@@ -93,22 +93,18 @@ namespace DataManagers.UserManager
 
         public void ModifyUser(User userNotUpdated, User userUpdated)
         {
-
             foreach (var user in _memoryDatabase.Users)
             {
-
                 if (user.UserId.Equals(userNotUpdated.UserId))
                 {
-
+                    User.areTheSameObject(userNotUpdated,userUpdated);
                     userNotUpdated.FirstName = userUpdated.FirstName;
                     userNotUpdated.LastName = userUpdated.LastName;
                     userNotUpdated.Password = userUpdated.Password;
                     userNotUpdated.Address = userUpdated.Address;
 
                 }
-
             }
-
         }
 
         #endregion

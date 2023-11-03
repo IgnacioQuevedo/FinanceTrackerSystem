@@ -106,6 +106,12 @@
         try
         {
             userToModify = new User(firstName, lastName, user.Email, password, address);
+            userToModify.MyCategories = user.MyCategories;
+            userToModify.MyAccounts = user.MyAccounts;
+            userToModify.MyGoals = user.MyGoals;
+            userToModify.MyExchangesHistory = user.MyExchangesHistory;
+            
+            
             UserManagement.ModifyUser(user, userToModify);
             SuccesAlert.ShowSucessAlert();
         }

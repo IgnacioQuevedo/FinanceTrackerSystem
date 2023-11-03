@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogic.Transaction_Components;
-using BusinessLogic.ExchangeHistory_Components;
+﻿using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
