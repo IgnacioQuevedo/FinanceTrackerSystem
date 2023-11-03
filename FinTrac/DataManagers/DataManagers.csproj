@@ -20,8 +20,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ControllerTests\" />
-  </ItemGroup>
-
 </Project>

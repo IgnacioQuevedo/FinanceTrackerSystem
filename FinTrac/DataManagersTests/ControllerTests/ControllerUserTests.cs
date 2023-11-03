@@ -9,6 +9,8 @@ namespace DataManagersTests
     public class ControllerUserTests
     {
 
+        #region Initialize
+        
         private Controller _controller;
     
         [TestInitialize]
@@ -18,7 +20,14 @@ namespace DataManagersTests
             _controller = new Controller();
 
         }
+        
+        #endregion
 
+        #region ToUser
+
+        
+
+        
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
         {
@@ -33,7 +42,7 @@ namespace DataManagersTests
             Assert.AreEqual(userDto.Address,userConverted.Address);
         }
         
-        
+        #endregion
         
     }
 }
