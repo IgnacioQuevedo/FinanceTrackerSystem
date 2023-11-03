@@ -1,6 +1,6 @@
 using BusinessLogic.User_Components;
 using DataManagers;
-using DataManagers.UserManager;
+
 
 namespace DataManagersTests
 {
@@ -92,7 +92,7 @@ namespace DataManagersTests
         
         #endregion
 
-        #region Modify
+        #region Update
         
         [TestMethod]
         public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
@@ -112,5 +112,7 @@ namespace DataManagersTests
             Assert.AreEqual(userUpdated.Address, userInDb.Address);
         }
         #endregion
+
+
     }
 }

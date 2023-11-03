@@ -55,4 +55,9 @@ public class UserRepositorySql
         _database.SaveChanges();
         
     }
+
+    public List<User> GetAll()
+    {
+        throw new NotImplementedException();
+    }
 }
