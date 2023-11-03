@@ -112,7 +112,5 @@ namespace DataManagersTests
             Assert.AreEqual(userUpdated.Address, userInDb.Address);
         }
         #endregion
-
-
     }
 }
