@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogic.Transaction_Components;
-using BusinessLogic.ExchangeHistory_Components;
+﻿using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
@@ -20,6 +14,8 @@ namespace BusinessLogic.Account_Components
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
         public int AccountId { get; set; } = -1;
         public List<Transaction> MyTransactions { get; set; }
+        
+        public User AccountUser { get; set; }
 
         #endregion
 
