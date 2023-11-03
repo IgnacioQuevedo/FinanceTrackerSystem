@@ -36,5 +36,17 @@ namespace DataManagersTests
             userInDb = _testDb.Users.First();
             Assert.AreEqual(userToAdd, userInDb);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserRepository))]
+        public void GivenAlreadyRegisteredEmail_ShouldReturnException()
+        {
+            User userToAdd = new User("Mich", "Santa", "michsanta@gmail.com", "Mich123456789", "North Av 23");
+            _userRepo.Create(userToAdd);
+
+            User incorrectUser = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+
+            _userRepo.EmailUsed(incorrectUser.Email);
+        }
     }
 }

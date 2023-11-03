@@ -19,4 +19,15 @@ public class UserRepositorySql
         _database.SaveChanges();
     }
     
+    public void EmailUsed(string UserEmail)
+    {
+        foreach (var someUser in _database.Users)
+        {
+            if (someUser.Email.Equals(UserEmail.ToLower()))
+            {
+                throw new ExceptionUserRepository("Email already registered, impossible to create another account.");
+            }
+        }
+    }
+    
 }
