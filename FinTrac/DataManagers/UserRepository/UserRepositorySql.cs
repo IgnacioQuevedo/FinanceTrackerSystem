@@ -55,8 +55,8 @@ public class UserRepositorySql
         _database.SaveChanges();
     }
 
-    public User Find(int genericUserUserId)
+    public User Find(string emailAK)
     {
-        return _database.Users.FirstOrDefault(u => u.UserId == genericUserUserId);
+        return _database.Users.FirstOrDefault(u => u.Email == emailAK);
     }
 }

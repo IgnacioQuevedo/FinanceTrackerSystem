@@ -133,7 +133,7 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
             
-            User userFound = _userRepo.Find(_genericUser.UserId);
+            User userFound = _userRepo.Find(_genericUser.Email);
             
             Assert.AreEqual(userFound,_genericUser);
         }

@@ -7,67 +7,68 @@ namespace DataManagers;
 
 public class Controller : IUserController
 {
-     private UserRepositorySql _userRepo { get; set; }
-     
-     public Controller(SqlContext database)
-     {
-          _userRepo = new UserRepositorySql(database);
-     }
+    private UserRepositorySql _userRepo { get; set; }
 
-     #region ToUser
-     public User ToUser(UserDTO userDto)
-     {
-          try
-          {
-               User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
-                    userDto.Address);
-               
-               return userConverted;
-          }
-          catch (Exception GenericException)
-          {
-               throw new ExceptionController(GenericException.Message);
-          }
-          
-     }
+    public Controller(SqlContext database)
+    {
+        _userRepo = new UserRepositorySql(database);
+    }
 
-     #endregion
+    #region ToUser
 
-     #region ToUserDTO
+    public User ToUser(UserDTO userDto)
+    {
+        try
+        {
+            User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
+                userDto.Address);
 
-     public UserDTO ToDtoUser(User userToConvert)
-     {
-          UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
-               userToConvert.Email, userToConvert.Password,userToConvert.Address);
-          
-          return dtoOfUser;
-     }
+            return userConverted;
+        }
+        catch (Exception GenericException)
+        {
+            throw new ExceptionController(GenericException.Message);
+        }
+    }
 
-     #endregion
+    #endregion
 
-     
-     public void CreateUser(UserDTO userDtoToCreate)
-     {
-          throw new NotImplementedException();
-     }
-     
-     public void UpdateUser(UserDTO userDto)
-     {
-          throw new NotImplementedException();
-     }
+    #region ToUserDTO
 
-     public void Login(UserDTO userToLog)
-     {
-          throw new NotImplementedException();
-     }
+    public UserDTO ToDtoUser(User userToConvert)
+    {
+        UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
+            userToConvert.Email, userToConvert.Password, userToConvert.Address);
 
-     public void Register(UserDTO userToRegister)
-     {
-          throw new NotImplementedException();
-     }
+        return dtoOfUser;
+    }
 
-     public void Find(object genericUser)
-     {
-          throw new NotImplementedException();
-     }
+    #endregion
+
+    public void FindUser(string emailAK)
+    {
+        _userRepo.Find(emailAK);
+    }
+    
+    public void CreateUser(UserDTO userDtoToCreate)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateUser(UserDTO userDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void LoginUser(UserDTO userToLog)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RegisterUser(UserDTO userToRegister)
+    {
+        throw new NotImplementedException();
+    }
+
+   
 }

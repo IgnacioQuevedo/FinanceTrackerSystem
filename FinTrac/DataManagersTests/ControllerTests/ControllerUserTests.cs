@@ -84,9 +84,8 @@ namespace DataManagersTests
            _testDb.Add(userFound);
            _testDb.SaveChanges();
            
-           _controller.Find(userFound);
+           _controller.FindUser(userFound.Email);
            Assert.AreEqual(userFound.Email, dtoToFound.Email);
         }
-        
     }
 }
