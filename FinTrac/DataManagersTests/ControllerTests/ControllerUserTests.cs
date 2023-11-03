@@ -147,14 +147,19 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserToUpdate_ShouldBeUpdatedInDb()
         {
-            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+            UserDTO dtoToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-            
-            _controller.CreateUser(userToAdd);
-            
             UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
                 "Jhonix2003!!", "South Av");
+            
+            _controller.CreateUser(dtoToAdd);
             _controller.UpdateUser(dtoWithUpdates);
+            User userInDb = _controller.FindUser(dtoToAdd.Email);
+
+           Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
+           Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
+           Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
+           Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
         }
         
     }

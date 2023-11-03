@@ -21,7 +21,7 @@ public class UserRepositorySql
 
     public void EmailUsed(string UserEmail)
     {
-        if (Find(UserEmail) != null)
+        if (FindUserInDb(UserEmail) != null)
         {
             throw new ExceptionUserRepository("Email already registered, impossible to create another account.");
         }
@@ -44,13 +44,14 @@ public bool UserRegistered(User userToBeLogged)
 }
 public void Update(User updatedUser)
 {
-    var existingUser = _database.Users.Find(updatedUser.UserId);
+    var existingUser = FindUserInDb(updatedUser.Email);
+    updatedUser.UserId = existingUser.UserId;
 
     _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
     _database.SaveChanges();
 }
 
-public User Find(string emailAK)
+public User FindUserInDb(string emailAK)
 {
     return _database.Users.FirstOrDefault(u => u.Email == emailAK);
 }

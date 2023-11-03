@@ -22,6 +22,7 @@ public class Controller : IUserController
         {
             User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
                 userDto.Address);
+            FormatUserProperties(userConverted);
 
             return userConverted;
         }
@@ -48,7 +49,7 @@ public class Controller : IUserController
     #region FindUser
     public User FindUser(string emailAK)
     {
-        return _userRepo.Find(emailAK);
+        return _userRepo.FindUserInDb(emailAK);
     }
     #endregion
     public void CreateUser(UserDTO userDtoToCreate)
@@ -56,7 +57,6 @@ public class Controller : IUserController
         try
         {
             User userToAdd = ToUser(userDtoToCreate);
-            FormatUserProperties(userToAdd);
             _userRepo.EmailUsed(userToAdd.Email);
             
             _userRepo.Create(userToAdd);
@@ -77,7 +77,7 @@ public class Controller : IUserController
 
     public void UpdateUser(UserDTO userDto)
     {
-        throw new NotImplementedException();
+        _userRepo.Update(ToUser(userDto));
     }
 
     public void LoginUser(UserDTO userToLog)

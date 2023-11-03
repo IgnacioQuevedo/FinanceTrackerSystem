@@ -96,7 +96,7 @@ namespace DataManagersTests
         #region Update
 
         [TestMethod]
-        public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
+        public void GivenAspectsOfUserToUpdate_ShouldBeUpdated()
         {
             _userRepo.Create(_genericUser);
 
@@ -133,7 +133,7 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
             
-            User userFound = _userRepo.Find(_genericUser.Email);
+            User userFound = _userRepo.FindUserInDb(_genericUser.Email);
             
             Assert.AreEqual(userFound,_genericUser);
         }
