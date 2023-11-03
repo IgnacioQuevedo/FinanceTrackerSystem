@@ -92,11 +92,12 @@ namespace DataManagersTests
         public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
         {
             UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+            _testDb.Add(_controller.ToUser(dtoToFound));
             _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
+            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Password);
            
-            Assert.AreEqual(userFound.Email, dtoToFound.Email);
+            Assert.IsNull(userFound);
         }
         
     }
