@@ -8,20 +8,19 @@ namespace DataManagersTests
     [TestClass]
     public class ControllerUserTests
     {
-
         #region Initialize
-        
+
         private Controller _controller;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
-        
+
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _controller = new Controller(_testDb);
         }
-        
+
         #endregion
 
         #region Cleanup
@@ -33,21 +32,21 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
         #region To User
-        
+
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
         {
             UserDTO userDto = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
 
             User userConverted = _controller.ToUser(userDto);
-            
-            Assert.AreEqual(userDto.FirstName,userConverted.FirstName);
-            Assert.AreEqual(userDto.LastName,userConverted.LastName);
-            Assert.AreEqual(userDto.Email,userConverted.Email);
-            Assert.AreEqual(userDto.Password,userConverted.Password);
-            Assert.AreEqual(userDto.Address,userConverted.Address);
+
+            Assert.AreEqual(userDto.FirstName, userConverted.FirstName);
+            Assert.AreEqual(userDto.LastName, userConverted.LastName);
+            Assert.AreEqual(userDto.Email, userConverted.Email);
+            Assert.AreEqual(userDto.Password, userConverted.Password);
+            Assert.AreEqual(userDto.Address, userConverted.Address);
         }
 
         [TestMethod]
@@ -57,7 +56,7 @@ namespace DataManagersTests
             UserDTO userDto = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
             User userConverted = _controller.ToUser(userDto);
         }
-        
+
         #endregion
 
         #region To UserDTO
@@ -67,13 +66,14 @@ namespace DataManagersTests
         {
             User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
             UserDTO userDto = _controller.ToDtoUser(userReceived);
-            
-            Assert.AreEqual(userDto.FirstName,userReceived.FirstName);
-            Assert.AreEqual(userDto.LastName,userReceived.LastName);
-            Assert.AreEqual(userDto.Email,userReceived.Email);
-            Assert.AreEqual(userDto.Password,userReceived.Password);
-            Assert.AreEqual(userDto.Address,userReceived.Address);
+
+            Assert.AreEqual(userDto.FirstName, userReceived.FirstName);
+            Assert.AreEqual(userDto.LastName, userReceived.LastName);
+            Assert.AreEqual(userDto.Email, userReceived.Email);
+            Assert.AreEqual(userDto.Password, userReceived.Password);
+            Assert.AreEqual(userDto.Address, userReceived.Address);
         }
+
         #endregion
 
         #region FindUser
@@ -86,10 +86,10 @@ namespace DataManagersTests
             _testDb.SaveChanges();
 
             User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
-           
+
             Assert.AreEqual(userFound.Email, dtoToFound.Email);
         }
-        
+
         [TestMethod]
         public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
         {
@@ -98,7 +98,7 @@ namespace DataManagersTests
             _testDb.SaveChanges();
 
             User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Password);
-           
+
             Assert.IsNull(userFound);
         }
 
@@ -111,11 +111,11 @@ namespace DataManagersTests
                 "KennieDock222", "North Av");
 
             _controller.CreateUser(userToAdd);
-            
+
             User userInDb = _controller.FindUser(userToAdd.Email);
-            Assert.AreEqual(userToAdd.Email,userInDb.Email);
+            Assert.AreEqual(userToAdd.Email, userInDb.Email);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void CreateUserAlreadyRegistered_ShouldThrowException()
@@ -124,7 +124,6 @@ namespace DataManagersTests
                 "KennieDock222", "North Av");
             _controller.CreateUser(userToAdd);
             _controller.CreateUser(userToAdd);
-    
         }
     }
 }

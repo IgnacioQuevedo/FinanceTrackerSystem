@@ -51,7 +51,8 @@ namespace DataManagers.UserManager
             {
                 if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
-                    throw new ExceptionUserManagement("Email already registered, impossible to create another account.");
+                    throw new ExceptionUserManagement(
+                        "Email already registered, impossible to create another account.");
                 }
             }
         }

@@ -46,11 +46,11 @@ public class UserRepositorySql
 
         return false;
     }
-    
+
     public void Update(User updatedUser)
     {
         var existingUser = _database.Users.Find(updatedUser.UserId);
-        
+
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
         _database.SaveChanges();
     }

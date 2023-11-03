@@ -62,7 +62,7 @@ namespace DataManagersTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserRepository))]
-        public void GivenAlreadyRegisteredEmail_ShouldReturnException()
+        public void GivenAlreadyRegisteredEmail_ShouldThrowException()
         {
             User userToAdd = new User("Mich", "Santa", "michsanta@gmail.com", "Mich123456789", "North Av 23");
             _userRepo.Create(userToAdd);

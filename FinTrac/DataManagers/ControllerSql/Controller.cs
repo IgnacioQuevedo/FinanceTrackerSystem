@@ -53,8 +53,16 @@ public class Controller : IUserController
     #endregion
     public void CreateUser(UserDTO userDtoToCreate)
     {
-        User userToAdd = ToUser(userDtoToCreate);
-        _userRepo.Create(userToAdd);
+        try
+        {
+            User userToAdd = ToUser(userDtoToCreate);
+            _userRepo.EmailUsed(userToAdd.Email);
+            _userRepo.Create(userToAdd);
+        }
+        catch (ExceptionUserRepository Exception)
+        {
+            throw new ExceptionController(Exception.Message);
+        }
     }
 
     public void UpdateUser(UserDTO userDto)
