@@ -164,6 +164,19 @@ namespace DataManagersTests
             Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
+        {
+            UserDTO dtoToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            UserDTO newDtoWithoutAnyChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            
+            _controller.CreateUser(dtoToAdd);
+            _controller.UpdateUser(dtoToAdd);
+        }
+
         #endregion
         
         
