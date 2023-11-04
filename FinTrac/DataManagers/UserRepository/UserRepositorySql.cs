@@ -27,34 +27,55 @@ public class UserRepositorySql
             throw new ExceptionUserRepository("Email already registered, impossible to create another account.");
         }
     }
-    
-public bool UserRegistered(User userToBeLogged)
-{
-    foreach (var account in _database.Users)
-    {
-        if (account.Email.Equals(userToBeLogged.Email))
 
+    public bool UserRegistered(User userToBeLogged)
+    {
+        foreach (var account in _database.Users)
         {
-            if (account.Password.Equals(account.Password))
+            if (account.Email.Equals(userToBeLogged.Email))
+
             {
-                return true;
+                if (account.Password.Equals(account.Password))
+                {
+                    return true;
+                }
             }
         }
+
+        return false;
     }
-    return false;
-}
-public void Update(User updatedUser)
-{
-    var existingUser = FindUserInDb(updatedUser.Email);
-    
+
+    public void Update(User updatedUser)
+    {
+        var existingUser = FindUserInDb(updatedUser.Email);
+
         updatedUser.UserId = existingUser.UserId;
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
         _database.SaveChanges();
-}
+    }
 
-public User FindUserInDb(string emailAK)
-{
-    return _database.Users.FirstOrDefault(u => u.Email == emailAK);
-}
+    public User FindUserInDb(string emailAK)
+    {
+        return _database.Users.FirstOrDefault(u => u.Email == emailAK);
+    }
+    public bool Login(User userToBeLogged)
+    {
+        bool existsUser = false;
+        string userEmail = userToBeLogged.Email.ToLower();
+        string userPassword = userToBeLogged.Password;
 
+        foreach (var account in _database.Users)
+
+        {
+            if (userEmail.Equals(account.Email))
+
+            {
+                if (userPassword.Equals(account.Password))
+                {
+                    existsUser = true;
+                }
+            }
+        }
+        return existsUser;
+    }
 }

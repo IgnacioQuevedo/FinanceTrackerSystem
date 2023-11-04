@@ -93,7 +93,7 @@ public class Controller : IUserController
 
     public bool LoginUser(UserDTO userToLog)
     {
-        throw new NotImplementedException();
+        return _userRepo.Login(ToUser(userToLog));
     }
 
     public void RegisterUser(UserDTO userToRegister)
