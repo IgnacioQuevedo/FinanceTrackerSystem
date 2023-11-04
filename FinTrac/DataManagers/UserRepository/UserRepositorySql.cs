@@ -27,24 +27,7 @@ public class UserRepositorySql
             throw new ExceptionUserRepository("Email already registered, impossible to create another account.");
         }
     }
-
-    public bool UserRegistered(User userToBeLogged)
-    {
-        foreach (var account in _database.Users)
-        {
-            if (account.Email.Equals(userToBeLogged.Email))
-
-            {
-                if (account.Password.Equals(account.Password))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
+    
     public void Update(User updatedUser)
     {
         var existingUser = FindUserInDb(updatedUser.Email);
