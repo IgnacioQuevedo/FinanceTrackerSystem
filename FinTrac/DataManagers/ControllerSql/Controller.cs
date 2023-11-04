@@ -99,11 +99,8 @@ public class Controller : IUserController
         {
             throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
         }
-        else
-        {
-            return logged;
-        }
-         
+
+        return true;
     }
 
     public void RegisterUser(UserDTO userToRegister)
