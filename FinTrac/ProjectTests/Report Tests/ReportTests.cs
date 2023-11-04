@@ -161,8 +161,10 @@ public class ReportTests
 
     #endregion
 
+    #region  Filtering Lists of spendings Tests
+    
     [TestMethod]
-    public void GivenListOfSpendingsToBeFilteredAndInitialDate_ShouldReturnListFiltered()
+    public void GivenListOfSpendingsToBeFilteredAndInitialDate_ShouldReturnListFilteredCorrectly()
     { 
         Transaction transactionOnRange1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
@@ -186,11 +188,12 @@ public class ReportTests
         DateTime finalSelectedDate = new DateTime(2023, 12, 31);
         DateTime initialDate = new DateTime(2023, 05,01);
         
-        listOfSpendings = Report.FilterListOfSpendingsPerInitialDate(listOfSpendings, initialDate, finalSelectedDate);
+        listOfSpendings = Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings, initialDate, finalSelectedDate);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
     }
+    #endregion
 
     #region Methods Used By Reports
 
