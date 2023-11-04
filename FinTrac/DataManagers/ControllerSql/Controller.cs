@@ -91,7 +91,7 @@ public class Controller : IUserController
         _userRepo.Update(userWithUpdates);
     }
 
-    public void LoginUser(UserDTO userToLog)
+    public bool LoginUser(UserDTO userToLog)
     {
         throw new NotImplementedException();
     }

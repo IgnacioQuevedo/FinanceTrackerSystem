@@ -176,6 +176,15 @@ namespace DataManagersTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenUserInDb_ShouldBePossibleToLogin()
+        {
+            _controller.CreateUser(userDto);
+            
+            Assert.IsTrue(_controller.LoginUser(userDto));
+                
+        }
         
         
     }
