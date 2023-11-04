@@ -208,6 +208,44 @@ public class ReportTests
         
         Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings,rangeOfDates);
     }
+    
+        [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredByNameOfCategory_ShouldReturnListFilteredCorrectly()
+    {
+        string nameOfWantedCateogry = "Games";
+        Category wantedCategory = genericCategory;
+        Category unWantedCategory = new Category(nameOfWantedCateogry, StatusEnum.Enabled, TypeEnum.Outcome);
+            
+        Transaction transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
+        Transaction transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
+        Transaction transactionWanted3 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 04, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
+        Transaction transactionUnWanted1 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, unWantedCategory);
+        
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionWanted3);
+        listOfSpendings.Add(transactionUnWanted1);
+            
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
+        expectedList.Add(transactionWanted3);
+        
+        DateTime finalSelectedDate = new DateTime(2023, 12, 31);
+        DateTime initialDate = new DateTime(2023, 05,01);
+
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, rangeOfDates, nameOfWantedCateogry);
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
+        Assert.AreEqual(listOfSpendings[2], expectedList[2]);
+    }
 
     #endregion
 

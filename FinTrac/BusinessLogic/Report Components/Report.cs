@@ -147,6 +147,12 @@ namespace BusinessLogic.Report_Components
             
             return filteredListOfSpending;
         }
+        
+        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates, string nameOfCategory)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
 
