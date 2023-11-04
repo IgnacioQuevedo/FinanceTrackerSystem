@@ -60,22 +60,12 @@ public class UserRepositorySql
     }
     public bool Login(User userToBeLogged)
     {
-        bool existsUser = false;
-        string userEmail = userToBeLogged.Email.ToLower();
-        string userPassword = userToBeLogged.Password;
-
-        foreach (var account in _database.Users)
-
+        User userFound = FindUserInDb(userToBeLogged.Email);
+        if(userFound != null && userToBeLogged.Password.Equals(userFound.Password))
         {
-            if (userEmail.Equals(account.Email))
-
-            {
-                if (userPassword.Equals(account.Password))
-                {
-                    existsUser = true;
-                }
-            }
+            return true;
         }
-        return existsUser;
+
+        return false;
     }
 }

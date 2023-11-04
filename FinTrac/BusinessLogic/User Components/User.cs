@@ -550,6 +550,5 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionValidateUser("Passwords are not the same, try again.");
             }
         }
-        //Sunlight? What is that?
     }
 }
