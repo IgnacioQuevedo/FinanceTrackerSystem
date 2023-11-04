@@ -93,7 +93,17 @@ public class Controller : IUserController
 
     public bool LoginUser(UserDTO userToLog)
     {
-        return _userRepo.Login(ToUser(userToLog));
+        bool logged =_userRepo.Login(ToUser(userToLog));
+        
+        if (!logged)
+        {
+            throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
+        }
+        else
+        {
+            return logged;
+        }
+         
     }
 
     public void RegisterUser(UserDTO userToRegister)

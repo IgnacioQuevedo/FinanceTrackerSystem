@@ -58,10 +58,12 @@ public class UserRepositorySql
     {
         return _database.Users.FirstOrDefault(u => u.Email == emailAK);
     }
+
     public bool Login(User userToBeLogged)
     {
         User userFound = FindUserInDb(userToBeLogged.Email);
-        if(userFound != null && userToBeLogged.Password.Equals(userFound.Password))
+
+        if (userFound != null && userToBeLogged.Password.Equals(userFound.Password))
         {
             return true;
         }
