@@ -9,6 +9,7 @@ using System.Runtime.ExceptionServices;
 using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogicTests;
 [TestClass]
@@ -194,12 +195,23 @@ public class ReportTests
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
     }
+
     [TestMethod]
-    public void 
-    
-    
-    
-    
+    [ExpectedException(typeof(ExceptionReport))]
+    public void GivenInitialDateBiggerThanFinalDate_ShouldThrowException()
+    {
+        DateTime finalSelectedDate = new DateTime(2021, 12, 31);
+        DateTime initialDate = new DateTime(2023, 05,01);
+        
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        
+        Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings,rangeOfDates);
+    }
+
+
+
+
     #endregion
 
     #region Methods Used By Reports
