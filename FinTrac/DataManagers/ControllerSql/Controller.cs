@@ -81,15 +81,11 @@ public class Controller : IUserController
         User userWithUpdates = ToUser(userDtoUpdated);
         User userToUpdate = FindUser(userWithUpdates.Email);
         userWithUpdates.UserId = userToUpdate.UserId;
-        try
-        {
-            Helper.AreTheSameObject(userWithUpdates, userToUpdate);
-        }
-        catch (ExceptionHelper Exception)
-        {
-            throw new ExceptionController(Exception.Message);
-        }
 
+        if (!Helper.AreTheSameObject(userWithUpdates, userToUpdate))
+        {
+            throw new ExceptionController("You need to change at least one value.");
+        }
         _userRepo.Update(userWithUpdates);
     }
 
@@ -123,6 +119,10 @@ public class Controller : IUserController
     #endregion
 
     #endregion
-    
-   
+
+
+    public bool PasswordMatch(string userDtoPassword, string passwordRepeated)
+    {
+        throw new NotImplementedException();
+    }
 }

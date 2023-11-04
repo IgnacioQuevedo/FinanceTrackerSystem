@@ -139,18 +139,6 @@ namespace DataManagersTests
             _controller.RegisterUser(userWithSameEmail);
         }
 
-        [TestMethod]
-
-        public void GivenUserToCreate_PasswordsMustMatch()
-        {
-            string passwordRepeated = userDto.Password;
-            
-            
-            
-            
-
-        }
-
         #endregion
 
         #region Update

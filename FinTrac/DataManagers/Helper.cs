@@ -7,7 +7,7 @@ namespace DataManagers
     public static class Helper
     {
         #region Are the same object
-        public static void AreTheSameObject<T>(T object1, T object2)
+        public static bool AreTheSameObject<T>(T object1, T object2)
         {
             bool areDifferent = false;
 
@@ -35,10 +35,7 @@ namespace DataManagers
                 areDifferent = true;
             }
 
-            if (!areDifferent)
-            {
-                throw new Exception("Objects are identical. Please change at least one value.");
-            }
+            return areDifferent;
         }
 
         private static bool IsDateTimeOrList(Type type)
