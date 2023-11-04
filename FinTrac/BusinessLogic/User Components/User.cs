@@ -2,20 +2,10 @@
 using BusinessLogic.Account_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Transaction_Components;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Exceptions;
-using System.Data;
 
 namespace BusinessLogic.User_Components
 {
@@ -25,7 +15,6 @@ namespace BusinessLogic.User_Components
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
@@ -554,74 +543,13 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-        public static void equalPasswords(string password1, string password2)
+        public static void EqualPasswords(string password1, string password2)
         {
             if (!password1.Equals(password2))
             {
                 throw new ExceptionValidateUser("Passwords are not the same, try again.");
             }
         }
-
-        public static void AreTheSameObject<T>(T objeto1, T objeto2)
-        {
-            bool areEqual = true;
-
-            if (ReferenceEquals(objeto1, objeto2))
-            {
-                areEqual = true;
-            }
-
-            if (objeto1 is null || objeto2 is null)
-            {
-                areEqual = false;
-            }
-
-            foreach (var propiedad in typeof(T).GetProperties())
-            {
-                if (propiedad.PropertyType == typeof(DateTime))
-                {
-                    var fecha1 = (DateTime)propiedad.GetValue(objeto1);
-                    var fecha2 = (DateTime)propiedad.GetValue(objeto2);
-
-                    if (fecha1.Date != fecha2.Date)
-                        areEqual = false;
-                }
-                else if (propiedad.PropertyType.IsGenericType && propiedad.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
-                {
-                    var lista1 = propiedad.GetValue(objeto1) as IList;
-                    var lista2 = propiedad.GetValue(objeto2) as IList;
-
-                    if (lista1 == null || lista2 == null || lista1.Count != lista2.Count)
-                    {
-                        areEqual = false;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < lista1.Count; i++)
-                        {
-                            if (!EqualityComparer<object>.Default.Equals(lista1[i], lista2[i]))
-                            {
-                                areEqual = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    var valor1 = propiedad.GetValue(objeto1);
-                    var valor2 = propiedad.GetValue(objeto2);
-
-                    if (!EqualityComparer<object>.Default.Equals(valor1, valor2))
-                        areEqual = false;
-                }
-            }
-            if (areEqual)
-            {
-                throw new ExceptionValidateUser("Los objetos son iguales en todas sus propiedades, incluyendo listas.");
-            }
-        }
-
-        
+        //Sunlight? What is that?
     }
 }

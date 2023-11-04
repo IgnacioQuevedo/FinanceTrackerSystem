@@ -88,7 +88,7 @@
     {
         try
         {
-            User.equalPasswords(password, passwordRepeated);
+            User.EqualPasswords(password, passwordRepeated);
 
             User userToAdd = new User(firstName, lastName, email, password, address);
             UserManagement.AddUser(userToAdd);

@@ -74,7 +74,7 @@
 
             categoryUpdated = new Category(name, status, categoryToEdit.Type);
             categoryUpdated.CategoryId = categoryToEdit.CategoryId;
-            User.areTheSameObject(categoryToEdit, categoryUpdated);
+            Helper.AreTheSameObject(categoryToEdit, categoryUpdated);
             mainUser.ModifyCategory(categoryUpdated);
             NavigationManager.NavigateTo("/Category");
         }

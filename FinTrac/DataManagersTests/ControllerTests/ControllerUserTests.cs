@@ -13,12 +13,14 @@ namespace DataManagersTests
         private Controller _controller;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        private UserDTO userDto;
 
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _controller = new Controller(_testDb);
+            userDto = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
         }
 
         #endregion
@@ -38,8 +40,6 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
         {
-            UserDTO userDto = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-
             User userConverted = _controller.ToUser(userDto);
 
             Assert.AreEqual(userDto.FirstName, userConverted.FirstName);
@@ -53,8 +53,8 @@ namespace DataManagersTests
         [ExpectedException(typeof(ExceptionController))]
         public void GivenUserDTOWithIncorrectData_ShoulThrowException()
         {
-            UserDTO userDto = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
-            User userConverted = _controller.ToUser(userDto);
+            UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
+            User userConverted = _controller.ToUser(DtoWithBadValues);
         }
 
         #endregion
@@ -81,23 +81,21 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
-            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-            _testDb.Add(_controller.ToUser(dtoToFound));
+            _testDb.Add(_controller.ToUser(userDto));
             _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Email);
+            User userFound = _controller.FindUser(_controller.ToUser(userDto).Email);
 
-            Assert.AreEqual(userFound.Email, dtoToFound.Email);
+            Assert.AreEqual(userFound.Email, userDto.Email);
         }
 
         [TestMethod]
         public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
         {
-            UserDTO dtoToFound = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-            _testDb.Add(_controller.ToUser(dtoToFound));
+            _testDb.Add(_controller.ToUser(userDto));
             _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(dtoToFound).Password);
+            User userFound = _controller.FindUser(_controller.ToUser(userDto).Password);
 
             Assert.IsNull(userFound);
         }
@@ -170,11 +168,11 @@ namespace DataManagersTests
         {
             UserDTO dtoToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-            UserDTO newDtoWithoutAnyChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+            UserDTO newDtoWithoutChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
             
             _controller.CreateUser(dtoToAdd);
-            _controller.UpdateUser(dtoToAdd);
+            _controller.UpdateUser(newDtoWithoutChanges);
         }
 
         #endregion

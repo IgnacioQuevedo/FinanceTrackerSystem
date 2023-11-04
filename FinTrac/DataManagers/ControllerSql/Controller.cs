@@ -74,10 +74,21 @@ public class Controller : IUserController
         user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
     }
     
-
-    public void UpdateUser(UserDTO userDto)
+    public void UpdateUser(UserDTO userDtoUpdated)
     {
-        _userRepo.Update(ToUser(userDto));
+        User userWithUpdates = ToUser(userDtoUpdated);
+        User userToUpdate = FindUser(userWithUpdates.Email);
+        userWithUpdates.UserId = userToUpdate.UserId;
+        try
+        {
+            Helper.AreTheSameObject(userWithUpdates, userToUpdate);
+        }
+        catch (ExceptionHelper Exception)
+        {
+            throw new ExceptionController(Exception.Message);               
+        }
+        
+        _userRepo.Update(userWithUpdates);
     }
 
     public void LoginUser(UserDTO userToLog)
