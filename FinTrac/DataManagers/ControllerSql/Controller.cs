@@ -121,8 +121,8 @@ public class Controller : IUserController
     #endregion
 
 
-    public bool PasswordMatch(string userDtoPassword, string passwordRepeated)
+    public bool PasswordMatch(string password, string passwordRepeated)
     {
-        throw new NotImplementedException();
+        return password.Equals(passwordRepeated);
     }
 }
