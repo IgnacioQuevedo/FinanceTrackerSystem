@@ -153,7 +153,7 @@ namespace DataManagersTests
         public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
         {
             string passwordIncorrect = "passwordIncorrect";
-            bool passwordMatch = _controller.PasswordMatch(userDto.Password, passwordIncorrect);
+            _controller.PasswordMatch(userDto.Password, passwordIncorrect);
 
         }
         
