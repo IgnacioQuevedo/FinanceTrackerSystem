@@ -187,12 +187,19 @@ public class ReportTests
         
         DateTime finalSelectedDate = new DateTime(2023, 12, 31);
         DateTime initialDate = new DateTime(2023, 05,01);
-        
-        listOfSpendings = Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings, initialDate, finalSelectedDate);
+
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        listOfSpendings = Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings, rangeOfDates);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
     }
+    [TestMethod]
+    public void 
+    
+    
+    
+    
     #endregion
 
     #region Methods Used By Reports

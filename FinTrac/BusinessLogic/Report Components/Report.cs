@@ -130,10 +130,10 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region  Filtering Lists of spendings
-        public static List<Transaction> FilterListOfSpendingsPerRangeOfDate(List<Transaction> listOfSpendings, DateTime initialSelectedDate, DateTime finalSelectedDate)
+        public static List<Transaction> FilterListOfSpendingsPerRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
+            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= rangeOfDates.InitialDate && x.CreationDate <= rangeOfDates.FinalDate).ToList();
             
             return filteredListOfSpending;
         }
@@ -285,6 +285,20 @@ namespace BusinessLogic.Report_Components
         }
 
     }
+
+    public class RangeOfDates
+    {
+        public DateTime InitialDate { get; set; }
+        public DateTime FinalDate { get; set; }
+
+        public RangeOfDates(DateTime initialDate, DateTime finalDate)
+        {
+            InitialDate = initialDate;
+            FinalDate = finalDate;
+        }
+
+    }
+
     #endregion
 }
 
