@@ -246,6 +246,35 @@ public class ReportTests
         Assert.AreEqual(listOfSpendings[2], expectedList[2]);
     }
 
+    [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
+    {
+        Transaction transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction transactionUnWanted1 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionUnWanted1);
+        
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
+        
+        loggedUser.AddMonetaryAccount(myMonetaryAccount);
+        loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
+        loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
+        
+        listOfSpendings = Report.FilterListOfSpendingsByAccount(listOfSpendings, myMonetaryAccount, loggedUser);
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
+    }
+
     #endregion
 
     #region Methods Used By Reports

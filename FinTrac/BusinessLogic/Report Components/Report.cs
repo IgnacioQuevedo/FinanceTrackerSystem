@@ -160,6 +160,12 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
+        public static List<Transaction> FilterListOfSpendingsByAccount(List<Transaction> listOfSpendings,
+            Account accountSelected, User userLogged)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Report Of Balance For Monetary Account
