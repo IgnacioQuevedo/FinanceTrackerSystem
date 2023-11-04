@@ -82,7 +82,7 @@ public class Controller : IUserController
         User userToUpdate = FindUser(userWithUpdates.Email);
         userWithUpdates.UserId = userToUpdate.UserId;
 
-        if (!Helper.AreTheSameObject(userWithUpdates, userToUpdate))
+        if (Helper.AreTheSameObject(userWithUpdates, userToUpdate))
         {
             throw new ExceptionController("You need to change at least one value.");
         }
@@ -123,6 +123,13 @@ public class Controller : IUserController
 
     public bool PasswordMatch(string password, string passwordRepeated)
     {
-        return Helper.AreTheSameObject(password, passwordRepeated);
+        if (Helper.AreTheSameObject(password, passwordRepeated))
+        {
+            return true;
+        }
+        else
+        {
+            throw new ExceptionController("Passwords are not the same, try again.");
+        }
     }
 }

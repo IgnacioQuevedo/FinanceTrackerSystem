@@ -9,33 +9,33 @@ namespace DataManagers
         #region Are the same object
         public static bool AreTheSameObject<T>(T object1, T object2)
         {
-            bool areDifferent = false;
+            bool areTheSame = true;
 
-            if (object1 != null && object2 != null && !ReferenceEquals(object1, object2))
+            if (object1 != null && object2 != null)
             {
                 foreach (var property in typeof(T).GetProperties())
                 {
                     if (IsDateTimeOrList(property.PropertyType))
                     {
-                        if (!AreEqualProperties(object1, object2, property.Name))
+                        if (!AreSameProperties(object1, object2, property.Name))
                         {
-                            areDifferent = true;
+                            areTheSame = false;
                             break;
                         }
                     }
-                    else if (!AreEqualSimpleProperty(object1, object2, property.Name))
+                    else if (!AreSameSimpleProperty(object1, object2, property.Name))
                     {
-                        areDifferent = true;
+                        areTheSame = false;
                         break;
                     }
                 }
             }
             else
             {
-                areDifferent = true;
+                areTheSame = false;
             }
 
-            return areDifferent;
+            return areTheSame;
         }
 
         private static bool IsDateTimeOrList(Type type)
@@ -44,14 +44,14 @@ namespace DataManagers
                    (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>));
         }
 
-        private static bool AreEqualProperties<T>(T object1, T object2, string propertyName)
+        private static bool AreSameProperties<T>(T object1, T object2, string propertyName)
         {
             var property1 = typeof(T).GetProperty(propertyName)?.GetValue(object1);
             var property2 = typeof(T).GetProperty(propertyName)?.GetValue(object2);
 
             if (property1 is DateTime && property2 is DateTime)
             {
-                return ((DateTime)property1).Date != ((DateTime)property2).Date;
+                return ((DateTime)property1).Date == ((DateTime)property2).Date;
             }
             else if (property1 is IList && property2 is IList)
             {
@@ -73,7 +73,7 @@ namespace DataManagers
             return true;
         }
 
-        private static bool AreEqualSimpleProperty<T>(T object1, T object2, string propertyName)
+        private static bool AreSameSimpleProperty<T>(T object1, T object2, string propertyName)
         {
             if (typeof(T).IsPrimitive || typeof(T) == typeof(string))
             {
@@ -82,15 +82,13 @@ namespace DataManagers
 
             var property1 = typeof(T).GetProperty(propertyName)?.GetValue(object1);
             var property2 = typeof(T).GetProperty(propertyName)?.GetValue(object2);
-            
+
             if (property1 != null && property2 != null)
             {
                 return property1.Equals(property2);
             }
             return property1 == null && property2 == null;
         }
-
-
         #endregion
     }
 }

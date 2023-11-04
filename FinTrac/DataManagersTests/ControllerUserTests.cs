@@ -154,8 +154,7 @@ namespace DataManagersTests
         {
             string passwordIncorrect = "passwordIncorrect";
             bool passwordMatch = _controller.PasswordMatch(userDto.Password, passwordIncorrect);
-                
-            Assert.IsTrue(passwordMatch);
+
         }
         
 
