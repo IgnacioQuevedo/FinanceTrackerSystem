@@ -58,7 +58,6 @@ public class Controller : IUserController
     #endregion
 
     #region Register
-
     public void RegisterUser(UserDTO userDtoToCreate)
     {
         try
@@ -88,7 +87,6 @@ public class Controller : IUserController
     #endregion
 
     #region UpdateUser
-
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         User userWithUpdates = ToUser(userDtoUpdated);

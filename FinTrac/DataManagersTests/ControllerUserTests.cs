@@ -156,8 +156,6 @@ namespace DataManagersTests
             _controller.PasswordMatch(userDto.Password, passwordIncorrect);
 
         }
-        
-
         #endregion
 
         #region Update
