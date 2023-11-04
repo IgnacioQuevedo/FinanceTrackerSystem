@@ -7,7 +7,7 @@ namespace DataManagers;
 
 public class Controller : IUserController
 {
-    private UserRepositorySql _userRepo { get; set; }
+    private UserRepositorySql _userRepo { get; }
 
     public Controller(SqlContext database)
     {
