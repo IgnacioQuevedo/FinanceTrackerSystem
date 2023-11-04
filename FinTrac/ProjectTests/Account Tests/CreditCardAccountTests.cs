@@ -73,7 +73,9 @@ public class CreditCardAccountTests
     public void DateOfCreditCard_ShouldBeActualDate()
     {
         DateTime actualDate = DateTime.Now.Date;
-        Assert.AreEqual(actualDate, myCreditCard.CreationDate);
+        DateTime closingDate = new DateTime(5000, 12, 9).Date;
+        CreditCardAccount creditCardExample = new CreditCardAccount("Itau volar",CurrencyEnum.UY,actualDate,"Itau","1234",30000,closingDate);
+        Assert.AreEqual(actualDate, creditCardExample.CreationDate);
 
     }
     #endregion
