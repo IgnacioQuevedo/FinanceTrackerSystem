@@ -129,6 +129,11 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
+        public static void FilterListOfSpendingsPerInitialDate(List<Transaction> listOfSpendings, DateTime initialDate)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Report Of Balance For Monetary Account
 
         public static decimal GiveAccountBalance(MonetaryAccount account)

@@ -161,6 +161,15 @@ public class ReportTests
 
     #endregion
 
+    [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredAndInitialDate_ShouldReturnListFiltered()
+    {
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        
+        DateTime initialDate = new DateTime(2023, 05,01);
+        Report.FilterListOfSpendingsPerInitialDate(listOfSpendings, initialDate);
+    }
+
     #region Methods Used By Reports
 
     [TestMethod]
