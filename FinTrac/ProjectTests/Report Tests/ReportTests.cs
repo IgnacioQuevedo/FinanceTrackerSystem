@@ -212,15 +212,14 @@ public class ReportTests
         [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByNameOfCategory_ShouldReturnListFilteredCorrectly()
     {
-        string nameOfWantedCateogry = "Games";
         Category wantedCategory = genericCategory;
-        Category unWantedCategory = new Category(nameOfWantedCateogry, StatusEnum.Enabled, TypeEnum.Outcome);
+        Category unWantedCategory = new Category("Games", StatusEnum.Enabled, TypeEnum.Outcome);
             
         Transaction transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
         Transaction transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
-        Transaction transactionWanted3 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 04, 01),
+        Transaction transactionWanted3 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 07, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
         Transaction transactionUnWanted1 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, unWantedCategory);
@@ -240,7 +239,7 @@ public class ReportTests
         DateTime initialDate = new DateTime(2023, 05,01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, rangeOfDates, nameOfWantedCateogry);
+        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, rangeOfDates, wantedCategory.Name);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);

@@ -150,7 +150,14 @@ namespace BusinessLogic.Report_Components
         
         public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates, string nameOfCategory)
         {
-            throw new NotImplementedException();
+            List<Transaction> filteredListOfSpending = listOfSpendings;
+            
+            if (!String.IsNullOrEmpty(nameOfCategory))
+            {
+                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= rangeOfDates.InitialDate && x.CreationDate <= rangeOfDates.FinalDate && x.TransactionCategory.Name.StartsWith(nameOfCategory, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return filteredListOfSpending;
         }
 
 
