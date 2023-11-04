@@ -58,6 +58,7 @@ public class Controller : IUserController
     #endregion
 
     #region Register
+
     public void RegisterUser(UserDTO userDtoToCreate)
     {
         try
@@ -72,21 +73,23 @@ public class Controller : IUserController
             throw new ExceptionController(Exception.Message);
         }
     }
-    
+
     public bool PasswordMatch(string password, string passwordRepeated)
     {
         bool passwordMatch = Helper.AreTheSameObject(password, passwordRepeated);
-            
-        if(!passwordMatch)
+
+        if (!passwordMatch)
         {
             throw new ExceptionController("Passwords are not the same, try again.");
         }
+
         return passwordMatch;
     }
-    
+
     #endregion
 
     #region UpdateUser
+
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         User userWithUpdates = ToUser(userDtoUpdated);
@@ -131,7 +134,4 @@ public class Controller : IUserController
     #endregion
 
     #endregion
-
-
-
 }

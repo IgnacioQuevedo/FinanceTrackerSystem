@@ -10,12 +10,12 @@ using BusinessLogic.Category_Components;
 using BusinessLogic.Enums;
 
 namespace TestProject1;
+
 [TestClass]
-
-
 public class MonetaryAccountTests
 {
     #region Init
+
     private Account myAccount;
     private MonetaryAccount myMonetaryAccount;
     private Transaction genericTransaction;
@@ -47,14 +47,15 @@ public class MonetaryAccountTests
 
         genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
 
-        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome,
+            genericCategory);
     }
 
     #endregion
 
     #region Name
-    [TestMethod]
 
+    [TestMethod]
     public void GivenCorrectMonetaryAccountName_ShouldItBeSet()
     {
         string name = "Santander Saving Bank";
@@ -85,22 +86,20 @@ public class MonetaryAccountTests
         myMonetaryAccount.Amount = initialAmmount;
 
         Assert.AreEqual(myMonetaryAccount.Amount, initialAmmount);
-
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-
     public void GivenInitialNegativeAmmount_ShouldThrowException()
     {
         myMonetaryAccount.Amount = -1;
         myMonetaryAccount.ValidateMonetaryAccount();
-
     }
 
     #endregion
 
     #region Creation Date
+
     [TestMethod]
     public void MadeAnAccount_DateShouldBeActualDate()
     {
@@ -109,12 +108,14 @@ public class MonetaryAccountTests
 
         Assert.AreEqual(newAccount.CreationDate, actualDate);
     }
+
     #endregion
 
     [TestMethod]
     public void GivenTransactionAndMonetaryAccount_ShouldReturnAmountOfAccountAfterModifyCorrect()
     {
-        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome,
+            genericCategory);
         myMonetaryAccount.Amount = 1000;
         genericUser.AddMonetaryAccount(myMonetaryAccount);
         decimal oldAmount = myMonetaryAccount.Amount;
@@ -134,21 +135,22 @@ public class MonetaryAccountTests
     {
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myMonetaryAccount.Currency);
         Assert.IsTrue(belongToEnum);
-
     }
+
     #endregion
 
     #region Constructor
+
     [TestMethod]
     public void CreationOfMonetaryAccount_ShouldBeValidated()
     {
-
         string nameToBeSetted = "Itau Saving Bank";
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
         DateTime creationDate = DateTime.Now.Date;
 
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
+        MonetaryAccount monetaryAccountExample =
+            new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
         Assert.AreEqual(nameToBeSetted, monetaryAccountExample.Name);
         Assert.AreEqual(ammountToBeSetted, monetaryAccountExample.Amount);
@@ -172,7 +174,6 @@ public class MonetaryAccountTests
         myMonetaryAccount.UpdateAccountAfterDelete(genericTransaction);
 
         Assert.AreEqual(1000, myMonetaryAccount.Amount);
-
     }
 
     [TestMethod]
@@ -183,8 +184,8 @@ public class MonetaryAccountTests
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
 
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
-
+        MonetaryAccount monetaryAccountExample =
+            new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
     }
 
     [TestMethod]
@@ -195,7 +196,8 @@ public class MonetaryAccountTests
         int ammountToBeSetted = 100;
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
 
-        MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
+        MonetaryAccount monetaryAccountExample =
+            new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
         Assert.AreEqual(initialAmount, monetaryAccountExample.ReturnInitialAmount());
     }

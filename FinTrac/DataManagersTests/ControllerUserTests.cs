@@ -144,18 +144,18 @@ namespace DataManagersTests
         {
             string passwordRepeated = userDto.Password;
             bool passwordMatch = _controller.PasswordMatch(userDto.Password, passwordRepeated);
-                
+
             Assert.IsTrue(passwordMatch);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
         {
             string passwordIncorrect = "passwordIncorrect";
             _controller.PasswordMatch(userDto.Password, passwordIncorrect);
-
         }
+
         #endregion
 
         #region Update
@@ -194,7 +194,7 @@ namespace DataManagersTests
         #endregion
 
         #region Login
-        
+
         [TestMethod]
         public void GivenUserInDb_ShouldBePossibleToLogin()
         {
@@ -208,8 +208,7 @@ namespace DataManagersTests
         {
             _controller.LoginUser(userDto);
         }
-        
+
         #endregion
-        
     }
 }

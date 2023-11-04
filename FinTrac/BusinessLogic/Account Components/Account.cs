@@ -14,7 +14,7 @@ namespace BusinessLogic.Account_Components
         public DateTime CreationDate { get; set; }
         public int AccountId { get; set; } = -1;
         public List<Transaction> MyTransactions { get; set; }
-        
+
         public User AccountUser { get; set; }
 
         #endregion

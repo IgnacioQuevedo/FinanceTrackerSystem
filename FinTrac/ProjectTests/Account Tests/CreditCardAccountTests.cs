@@ -15,7 +15,6 @@ namespace TestProject1;
 [TestClass]
 public class CreditCardAccountTests
 {
-
     #region Init
 
     private Account myCreditCard;
@@ -30,24 +29,29 @@ public class CreditCardAccountTests
     public void TestInitialized()
     {
         genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, new DateTime(2024, 10, 05, 7, 0, 0));
+        genericTransaction = new Transaction("Payment of food", 200, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome,
+            genericCategory);
+        myCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000,
+            new DateTime(2024, 10, 05, 7, 0, 0));
 
         genericUser = new User("Michael", "Santa", "michSanta@gmail.com", "AustinF2003", "NW 2nd Ave");
-        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionUpdated = new Transaction("Payment of food", 300, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome,
+            genericCategory);
 
         myCreditCard = new CreditCardAccount();
         myCreditCardAccount = new CreditCardAccount();
 
-
+        myCreditCardAccount.ClosingDate = DateTime.MaxValue;
         myCreditCardAccount.Name = "GenericName";
         myCreditCardAccount.IssuingBank = "GenericBank";
         myCreditCardAccount.Currency = CurrencyEnum.UY;
         myCreditCardAccount.Last4Digits = "5380";
     }
+
     #endregion
 
     #region Card Name
+
     [TestMethod]
     public void GivenCorrectAccountName_ShouldBeSetted()
     {
@@ -65,22 +69,25 @@ public class CreditCardAccountTests
 
         myCreditCard.ValidateAccount();
     }
+
     #endregion
 
     #region CreationDate
-    [TestMethod]
 
+    [TestMethod]
     public void DateOfCreditCard_ShouldBeActualDate()
     {
         DateTime actualDate = DateTime.Now.Date;
         DateTime closingDate = new DateTime(5000, 12, 9).Date;
-        CreditCardAccount creditCardExample = new CreditCardAccount("Itau volar",CurrencyEnum.UY,actualDate,"Itau","1234",30000,closingDate);
+        CreditCardAccount creditCardExample = new CreditCardAccount("Itau volar", CurrencyEnum.UY, actualDate, "Itau",
+            "1234", 30000, closingDate);
         Assert.AreEqual(actualDate, creditCardExample.CreationDate);
-
     }
+
     #endregion
 
     #region Currency
+
     [TestMethod]
     public void GivenCurrency_ShouldBelongToCurrencyEnum()
     {
@@ -88,11 +95,12 @@ public class CreditCardAccountTests
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myCreditCard.Currency);
 
         Assert.IsTrue(belongToEnum);
-
     }
+
     #endregion
 
     #region IssuingBank
+
     [TestMethod]
     public void GivenIssuingBank_ShouldBeAssignedToCreditCard()
     {
@@ -104,7 +112,6 @@ public class CreditCardAccountTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-
     public void GivenEmptyIssuingBank_ShouldThrowException()
     {
         string issuingBank = string.Empty;
@@ -112,24 +119,23 @@ public class CreditCardAccountTests
 
         myCreditCardAccount.ValidateCreditCardAccount();
     }
+
     #endregion
 
     #region Last4Digits
-    [TestMethod]
 
+    [TestMethod]
     public void GivenLast4Digits_ShouldBeAssigned()
     {
         string last4Digits = "2354";
         myCreditCardAccount.Last4Digits = last4Digits;
 
         Assert.AreEqual(myCreditCardAccount.Last4Digits, last4Digits);
-
     }
 
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-
     public void GivenEmpty4LastDigits_ShouldThrowException()
     {
         myCreditCardAccount.Last4Digits = "";
@@ -139,25 +145,21 @@ public class CreditCardAccountTests
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-
     public void GivenLessThan4Digits_ShouldThrowException()
     {
         myCreditCardAccount.Last4Digits = "123";
         myCreditCardAccount.ValidateCreditCardAccount();
-
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateAccount))]
-
     public void GivenIncorrectFormatOfLast4Digits_ShouldThrowException()
     {
-
         myCreditCardAccount.Last4Digits = "123A";
         myCreditCardAccount.ValidateCreditCardAccount();
-
     }
-    #endregion 
+
+    #endregion
 
     #region AvailableCredit
 
@@ -174,7 +176,6 @@ public class CreditCardAccountTests
     [ExpectedException(typeof(ExceptionValidateAccount))]
     public void GivenAvailableCreditLessThan0_ShouldReturnException()
     {
-
         myCreditCardAccount.AvailableCredit = -1;
 
         myCreditCardAccount.ValidateCreditCardAccount();
@@ -218,7 +219,6 @@ public class CreditCardAccountTests
     [TestMethod]
     public void CreatedAnAccount_ClosingDateMustBeSetted()
     {
-
         //We make it string so it can have an estandar format and is the same format that CreationDate.
         DateTime closingDate = new DateTime(2023, 11, 1);
         myCreditCardAccount.ClosingDate = closingDate;
@@ -230,21 +230,19 @@ public class CreditCardAccountTests
     [ExpectedException(typeof(ExceptionValidateAccount))]
     public void SelectedClosingDateThatIsBeforeCreationDate_ShouldThrowException()
     {
-
+        myCreditCardAccount.CreationDate = DateTime.Now;
         myCreditCardAccount.ClosingDate = new DateTime(2023, 7, 1);
 
         myCreditCardAccount.ValidateCreditCardAccount();
-
-
     }
 
     #endregion
 
     #region Constructor
+
     [TestMethod]
     public void CreationOfCreditCardAccount_ShouldBeValidated()
     {
-
         string nameToBeSetted = "Prex";
         CurrencyEnum currencyToBeSetted = CurrencyEnum.UY;
         string issuingBankToBeSetted = "Santander";
@@ -252,7 +250,9 @@ public class CreditCardAccountTests
         int availableCreditToBeSetted = 20000;
         DateTime closingDateToBeSetted = new DateTime(2024, 9, 30);
 
-        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted,
+            DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted,
+            closingDateToBeSetted);
 
         Assert.AreEqual(nameToBeSetted, CreditCardAccountExample.Name);
         Assert.AreEqual(currencyToBeSetted, CreditCardAccountExample.Currency);
@@ -260,7 +260,6 @@ public class CreditCardAccountTests
         Assert.AreEqual(last4DigitsToBeSetted, CreditCardAccountExample.Last4Digits);
         Assert.AreEqual(availableCreditToBeSetted, CreditCardAccountExample.AvailableCredit);
         Assert.AreEqual(closingDateToBeSetted, CreditCardAccountExample.ClosingDate);
-
     }
 
 
@@ -275,10 +274,10 @@ public class CreditCardAccountTests
         int availableCreditToBeSetted = 20000;
         DateTime closingDateToBeSetted = new DateTime(2022, 9, 30);
 
-        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
+        CreditCardAccount CreditCardAccountExample = new CreditCardAccount(nameToBeSetted, currencyToBeSetted,
+            DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted,
+            closingDateToBeSetted);
     }
 
-
     #endregion
-
 }
