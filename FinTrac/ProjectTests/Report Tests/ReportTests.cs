@@ -239,7 +239,7 @@ public class ReportTests
         DateTime initialDate = new DateTime(2023, 05,01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, rangeOfDates, wantedCategory.Name);
+        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, wantedCategory.Name);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
