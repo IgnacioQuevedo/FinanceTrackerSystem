@@ -105,8 +105,9 @@ public class MonetaryAccountTests
     public void MadeAnAccount_DateShouldBeActualDate()
     {
         DateTime actualDate = DateTime.Now.Date;
+        MonetaryAccount newAccount = new MonetaryAccount("Brou", 1000, CurrencyEnum.UY, actualDate);
 
-        Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
+        Assert.AreEqual(newAccount.CreationDate, actualDate);
     }
     #endregion
 
