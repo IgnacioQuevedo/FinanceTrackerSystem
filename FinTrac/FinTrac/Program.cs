@@ -5,6 +5,7 @@ using DataManagers.UserManager;
 using FinTrac.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Controller = Microsoft.AspNetCore.Mvc.Controller;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddSingleton<Repository>();
 builder.Services.AddSingleton<UserLogged>();
-builder.Services.AddScoped<UserManagement>();
+builder.Services.AddSingleton<Controller>();
 
 
 builder.Services.AddDbContext<SqlContext>(options =>

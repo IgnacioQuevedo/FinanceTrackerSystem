@@ -1,6 +1,7 @@
 ﻿@page "/Modify"
 
 @using BusinessLogic.Exceptions;
+@using BusinessLogic.Dto_Components
 
 <div class="container">
     <h1>Edit Profile</h1>
@@ -80,7 +81,7 @@
     private string lastName;
     private string password;
     private string address;
-    private User userToModify;
+    private UserDTO userToModifyDTO;
     public string errorTxt { get; set; }
 
     [CascadingParameter]
@@ -105,14 +106,14 @@
     {
         try
         {
-            userToModify = new User(firstName, lastName, user.Email, password, address);
-            userToModify.MyCategories = user.MyCategories;
-            userToModify.MyAccounts = user.MyAccounts;
-            userToModify.MyGoals = user.MyGoals;
-            userToModify.MyExchangesHistory = user.MyExchangesHistory;
+            userToModifyDTO = new UserDTO(firstName, lastName, user.Email, password, address);
+            userToModifyDTO.MyCategories = user.MyCategories;
+            userToModifyDTO.MyAccounts = user.MyAccounts;
+            userToModifyDTO.MyGoals = user.MyGoals;
+            userToModifyDTO.MyExchangesHistory = user.MyExchangesHistory;
             
             
-            UserManagement.ModifyUser(user, userToModify);
+            IControllerUser.Update(UserDTO);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionUser)

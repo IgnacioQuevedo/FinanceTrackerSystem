@@ -90,8 +90,8 @@
         {
             User.equalPasswords(password, passwordRepeated);
 
-            User userToAdd = new User(firstName, lastName, email, password, address);
-            UserManagement.AddUser(userToAdd);
+            UserDTO userToAdd = new UserDTO(firstName, lastName, email, password, address);
+            IControllerUser.Create(userToAdd);
             NavigationManager.NavigateTo("/");
 
         }

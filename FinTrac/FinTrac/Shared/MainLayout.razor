@@ -5,7 +5,6 @@
 @using Data;
 
 @inject UserLogged UserLogged;
-@inject Repository MemoryDataBase;
 
 <PageTitle>FinTrac</PageTitle>
 
@@ -39,6 +38,6 @@
 
     protected override void OnInitialized()
     {     
-        mainUser = MemoryDataBase.Users[UserLogged.Id];
+        // mainUser = MemoryDataBase.Users[UserLogged.Id];
     }
 }

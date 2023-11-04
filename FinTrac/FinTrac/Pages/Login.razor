@@ -2,6 +2,7 @@
 @layout LayoutForGuest;
 
 @using Data;
+@using BusinessLogic.Dto_Components
 @inject UserLogged UserLogged;
 
 
@@ -79,13 +80,13 @@
 @code
 {
 
-    private User user = new User();
+    private UserDTO userDTO = new UserDTO();
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        user.Email = "nachitoquevedo@gmail.com";
-        user.Password = "Nacho200304!";
+        userDTO.Email = "nachitoquevedo@gmail.com";
+        userDTO.Password = "Nacho200304!";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
 
@@ -95,9 +96,9 @@
     {
         try
         {
-            if (UserManagement.Login(user))
+            if (IControllerUser.Login(userDTO))
             {
-                UserLogged.Id = UserManagement.FindUserId(user);
+                UserLogged.Id = IControllerUser.UserRegistered(userDTO);
                 NavigationManager.NavigateTo("/Home");
             }
         }
