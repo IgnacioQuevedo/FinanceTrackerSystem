@@ -98,7 +98,7 @@ namespace DataManagers.UserManager
             {
                 if (user.UserId.Equals(userNotUpdated.UserId))
                 {
-                    User.areTheSameObject(userNotUpdated,userUpdated);
+                    User.AreTheSameObject(userNotUpdated,userUpdated);
                     userNotUpdated.FirstName = userUpdated.FirstName;
                     userNotUpdated.LastName = userUpdated.LastName;
                     userNotUpdated.Password = userUpdated.Password;

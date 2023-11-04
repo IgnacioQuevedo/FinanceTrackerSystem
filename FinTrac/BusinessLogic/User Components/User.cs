@@ -3,6 +3,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Transaction_Components;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -561,7 +562,7 @@ namespace BusinessLogic.User_Components
             }
         }
 
-        public static void areTheSameObject<T>(T objeto1, T objeto2)
+        public static void AreTheSameObject<T>(T objeto1, T objeto2)
         {
             bool areEqual = true;
 
@@ -585,6 +586,27 @@ namespace BusinessLogic.User_Components
                     if (fecha1.Date != fecha2.Date)
                         areEqual = false;
                 }
+                else if (propiedad.PropertyType.IsGenericType && propiedad.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var lista1 = propiedad.GetValue(objeto1) as IList;
+                    var lista2 = propiedad.GetValue(objeto2) as IList;
+
+                    if (lista1 == null || lista2 == null || lista1.Count != lista2.Count)
+                    {
+                        areEqual = false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < lista1.Count; i++)
+                        {
+                            if (!EqualityComparer<object>.Default.Equals(lista1[i], lista2[i]))
+                            {
+                                areEqual = false;
+                                break;
+                            }
+                        }
+                    }
+                }
                 else
                 {
                     var valor1 = propiedad.GetValue(objeto1);
@@ -594,11 +616,12 @@ namespace BusinessLogic.User_Components
                         areEqual = false;
                 }
             }
-
             if (areEqual)
             {
-                throw new ExceptionValidateUser("Change at least one value");
+                throw new ExceptionValidateUser("Los objetos son iguales en todas sus propiedades, incluyendo listas.");
             }
         }
+
+        
     }
 }

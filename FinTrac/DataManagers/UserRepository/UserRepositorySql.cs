@@ -1,5 +1,7 @@
+using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using DataManagers;
+using DataManagers.UserManager;
 
 namespace DataManagers;
 
@@ -45,10 +47,18 @@ public bool UserRegistered(User userToBeLogged)
 public void Update(User updatedUser)
 {
     var existingUser = FindUserInDb(updatedUser.Email);
-    updatedUser.UserId = existingUser.UserId;
+    try
+    {
+        updatedUser.UserId = existingUser.UserId;
+        User.AreTheSameObject(updatedUser,existingUser);
+        _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
+        _database.SaveChanges();
+    }
+    catch (ExceptionValidateUser Exception)
+    {
+        throw new ExceptionController(Exception.Message);
+    }
 
-    _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
-    _database.SaveChanges();
 }
 
 public User FindUserInDb(string emailAK)
