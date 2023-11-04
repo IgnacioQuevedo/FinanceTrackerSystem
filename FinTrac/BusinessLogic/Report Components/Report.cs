@@ -163,13 +163,19 @@ namespace BusinessLogic.Report_Components
         public static List<Transaction> FilterListOfSpendingsByAccount(List<Transaction> listOfSpendings,
             Account accountSelected, User userLogged)
         {
-            List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
-                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)
-                .ToList();
+            List<Transaction> accountSpendings = AccountSpendings(accountSelected, userLogged);
             List<Transaction> filteredListOfSpending = listOfSpendings;
             filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
             
             return filteredListOfSpending;
+        }
+
+        private static List<Transaction> AccountSpendings(Account accountSelected, User userLogged)
+        {
+            List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
+                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)
+                .ToList();
+            return accountSpendings;
         }
 
         #endregion
