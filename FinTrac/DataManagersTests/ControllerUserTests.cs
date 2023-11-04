@@ -110,7 +110,7 @@ namespace DataManagersTests
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
 
-            _controller.CreateUser(userToAdd);
+            _controller.RegisterUser(userToAdd);
 
             User userInDb = _controller.FindUser(userToAdd.Email);
             Assert.AreEqual(userToAdd.Email, userInDb.Email);
@@ -122,8 +122,8 @@ namespace DataManagersTests
         {
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-            _controller.CreateUser(userToAdd);
-            _controller.CreateUser(userToAdd);
+            _controller.RegisterUser(userToAdd);
+            _controller.RegisterUser(userToAdd);
         }
 
         [TestMethod]
@@ -132,11 +132,23 @@ namespace DataManagersTests
         {
             UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-            _controller.CreateUser(userAdded);
+            _controller.RegisterUser(userAdded);
 
             UserDTO userWithSameEmail = new UserDTO("Kenny", "Dock", "keNNieS@gmail.com",
                 "KennieDock222", "North Av");
-            _controller.CreateUser(userWithSameEmail);
+            _controller.RegisterUser(userWithSameEmail);
+        }
+
+        [TestMethod]
+
+        public void GivenUserToCreate_PasswordsMustMatch()
+        {
+            string passwordRepeated = userDto.Password;
+            
+            
+            
+            
+
         }
 
         #endregion
@@ -151,7 +163,7 @@ namespace DataManagersTests
             UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
                 "Jhonix2003!!", "South Av");
 
-            _controller.CreateUser(dtoToAdd);
+            _controller.RegisterUser(dtoToAdd);
             _controller.UpdateUser(dtoWithUpdates);
             User userInDb = _controller.FindUser(dtoToAdd.Email);
 
@@ -170,7 +182,7 @@ namespace DataManagersTests
             UserDTO newDtoWithoutChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
 
-            _controller.CreateUser(dtoToAdd);
+            _controller.RegisterUser(dtoToAdd);
             _controller.UpdateUser(newDtoWithoutChanges);
         }
 
@@ -181,7 +193,7 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserInDb_ShouldBePossibleToLogin()
         {
-            _controller.CreateUser(userDto);
+            _controller.RegisterUser(userDto);
             Assert.IsTrue(_controller.LoginUser(userDto));
         }
 

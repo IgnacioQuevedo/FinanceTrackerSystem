@@ -14,7 +14,9 @@ public class Controller : IUserController
         _userRepo = new UserRepositorySql(database);
     }
 
-    #region ToUser
+    #region User Repo
+
+     #region ToUser
 
     public User ToUser(UserDTO userDto)
     {
@@ -47,18 +49,22 @@ public class Controller : IUserController
     #endregion
 
     #region FindUser
+
     public User FindUser(string emailAK)
     {
         return _userRepo.FindUserInDb(emailAK);
     }
+
     #endregion
-    public void CreateUser(UserDTO userDtoToCreate)
+
+    #region Register
+    public void RegisterUser(UserDTO userDtoToCreate)
     {
         try
         {
             User userToAdd = ToUser(userDtoToCreate);
             _userRepo.EmailUsed(userToAdd.Email);
-            
+
             _userRepo.Create(userToAdd);
         }
         catch (ExceptionUserRepository Exception)
@@ -67,13 +73,9 @@ public class Controller : IUserController
         }
     }
     
-    private void FormatUserProperties(User user)
-    {
-        user.Email = user.Email.ToLower();
-        user.FirstName = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
-        user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
-    }
+    #endregion
     
+    #region UpdateUser
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         User userWithUpdates = ToUser(userDtoUpdated);
@@ -85,16 +87,20 @@ public class Controller : IUserController
         }
         catch (ExceptionHelper Exception)
         {
-            throw new ExceptionController(Exception.Message);               
+            throw new ExceptionController(Exception.Message);
         }
-        
+
         _userRepo.Update(userWithUpdates);
     }
 
+    #endregion
+
+    #region LoginUser
+
     public bool LoginUser(UserDTO userToLog)
     {
-        bool logged =_userRepo.Login(ToUser(userToLog));
-        
+        bool logged = _userRepo.Login(ToUser(userToLog));
+
         if (!logged)
         {
             throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
@@ -103,10 +109,20 @@ public class Controller : IUserController
         return true;
     }
 
-    public void RegisterUser(UserDTO userToRegister)
+    #endregion
+
+    #region AuxiliaryMethods
+
+    private void FormatUserProperties(User user)
     {
-        throw new NotImplementedException();
+        user.Email = user.Email.ToLower();
+        user.FirstName = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
+        user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
     }
 
+    #endregion
+
+    #endregion
+    
    
 }

@@ -7,13 +7,13 @@ public interface IUserController
 {
      public User ToUser(UserDTO userDto);
      public UserDTO ToDtoUser(User userToConvert);
-     public void CreateUser(UserDTO userDtoToCreate);
-     public void UpdateUser(UserDTO userDto);
+     public void RegisterUser(UserDTO userDtoToCreate);
      public bool LoginUser(UserDTO userToLog);
-     public void RegisterUser(UserDTO userToRegister);
-     
-    
-     
+     public void UpdateUser(UserDTO userDto);
+     public User FindUser(string emailAK);
+
+
+
 
 }
 

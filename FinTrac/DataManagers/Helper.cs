@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
-namespace DataManagers;
-
-public abstract class Helper
+namespace DataManagers
 {
-    public static void AreTheSameObject<T>(T object1, T object2)
+    public static class Helper
+    {
+        #region Are the same object
+        public static void AreTheSameObject<T>(T object1, T object2)
         {
             bool areDifferent = false;
 
@@ -34,7 +37,7 @@ public abstract class Helper
 
             if (!areDifferent)
             {
-                throw new ExceptionHelper("Objects are identical. Please change at least one value.");
+                throw new Exception("Objects are identical. Please change at least one value.");
             }
         }
 
@@ -75,9 +78,22 @@ public abstract class Helper
 
         private static bool AreEqualSimpleProperty<T>(T object1, T object2, string propertyName)
         {
+            if (typeof(T).IsPrimitive || typeof(T) == typeof(string))
+            {
+                return object1.Equals(object2);
+            }
+
             var property1 = typeof(T).GetProperty(propertyName)?.GetValue(object1);
             var property2 = typeof(T).GetProperty(propertyName)?.GetValue(object2);
-
-            return EqualityComparer<object>.Default.Equals(property1, property2);
+            
+            if (property1 != null && property2 != null)
+            {
+                return property1.Equals(property2);
+            }
+            return property1 == null && property2 == null;
         }
+
+
+        #endregion
     }
+}

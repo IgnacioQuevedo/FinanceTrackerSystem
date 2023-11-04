@@ -543,7 +543,7 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-        public static void EqualPasswords(string password1, string password2)
+        public static void EqualPasswords(object password1, object password2)
         {
             if (!password1.Equals(password2))
             {
