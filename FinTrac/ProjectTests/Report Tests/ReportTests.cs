@@ -29,6 +29,10 @@ public class ReportTests
     private Goal goalFood;
     private Goal goalParty;
     private MonetaryAccount myMonetaryAccount;
+    private Transaction transactionWanted1;
+    private Transaction transactionWanted2;
+    private Transaction transactionUnWanted1;
+    private Transaction transactionUnWanted2;
 
     [TestInitialize]
     public void Initialize()
@@ -76,6 +80,15 @@ public class ReportTests
 
         loggedUser.AddGoal(goalFood);
         loggedUser.AddGoal(goalParty);
+        
+        transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionUnWanted1 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 02, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+        transactionUnWanted2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
     }
 
@@ -165,32 +178,23 @@ public class ReportTests
     #region  Filtering Lists of spendings Tests
     
     [TestMethod]
-    public void GivenListOfSpendingsToBeFilteredAndInitialDate_ShouldReturnListFilteredCorrectly()
+    public void GivenListOfSpendingsToBeFilteredByRangeOfDates_ShouldReturnListFilteredCorrectly()
     { 
-        Transaction transactionOnRange1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        Transaction transactionOnRange2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        Transaction transactionOutOfRange1 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 04, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        Transaction transactionOutOfRange2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        
         List<Transaction> listOfSpendings = new List<Transaction>();
-        listOfSpendings.Add(transactionOnRange1);
-        listOfSpendings.Add(transactionOnRange2);
-        listOfSpendings.Add(transactionOutOfRange1);
-        listOfSpendings.Add(transactionOutOfRange2);
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionUnWanted1);
+        listOfSpendings.Add(transactionUnWanted2);
             
         List<Transaction> expectedList = new List<Transaction>();
-        expectedList.Add(transactionOnRange1);
-        expectedList.Add(transactionOnRange2);
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
         
         DateTime finalSelectedDate = new DateTime(2023, 12, 31);
         DateTime initialDate = new DateTime(2023, 05,01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings, rangeOfDates);
+        listOfSpendings = Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings, rangeOfDates);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
@@ -206,56 +210,35 @@ public class ReportTests
         List<Transaction> listOfSpendings = new List<Transaction>();
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
         
-        Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings,rangeOfDates);
+        Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings,rangeOfDates);
     }
     
         [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByNameOfCategory_ShouldReturnListFilteredCorrectly()
     {
-        Category wantedCategory = genericCategory;
-        Category unWantedCategory = new Category("Games", StatusEnum.Enabled, TypeEnum.Outcome);
-            
-        Transaction transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
-        Transaction transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
-        Transaction transactionWanted3 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 07, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, wantedCategory);
-        Transaction transactionUnWanted1 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, unWantedCategory);
-        
         List<Transaction> listOfSpendings = new List<Transaction>();
         listOfSpendings.Add(transactionWanted1);
         listOfSpendings.Add(transactionWanted2);
-        listOfSpendings.Add(transactionWanted3);
         listOfSpendings.Add(transactionUnWanted1);
+        listOfSpendings.Add(transactionUnWanted2);
             
         List<Transaction> expectedList = new List<Transaction>();
         expectedList.Add(transactionWanted1);
         expectedList.Add(transactionWanted2);
-        expectedList.Add(transactionWanted3);
         
         DateTime finalSelectedDate = new DateTime(2023, 12, 31);
         DateTime initialDate = new DateTime(2023, 05,01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, wantedCategory.Name);
+        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, "Food");
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
-        Assert.AreEqual(listOfSpendings[2], expectedList[2]);
     }
 
     [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
     {
-        Transaction transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        Transaction transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        Transaction transactionUnWanted1 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-        
         List<Transaction> listOfSpendings = new List<Transaction>();
         listOfSpendings.Add(transactionWanted1);
         listOfSpendings.Add(transactionWanted2);

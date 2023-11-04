@@ -131,7 +131,8 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region  Filtering Lists of spendings
-        public static List<Transaction> FilterListOfSpendingsPerRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        
+        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
             
