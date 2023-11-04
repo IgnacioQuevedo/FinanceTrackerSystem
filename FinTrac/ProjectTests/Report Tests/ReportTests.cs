@@ -209,9 +209,6 @@ public class ReportTests
         Report.FilterListOfSpendingsPerRangeOfDate(listOfSpendings,rangeOfDates);
     }
 
-
-
-
     #endregion
 
     #region Methods Used By Reports

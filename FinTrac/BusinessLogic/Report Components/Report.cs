@@ -144,7 +144,7 @@ namespace BusinessLogic.Report_Components
             {
                 throw new ExceptionReport("Error: Initial date is bigger than final date");
             }
-
+            
             return filteredListOfSpending;
         }
 
