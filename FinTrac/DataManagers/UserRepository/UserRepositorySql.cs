@@ -65,7 +65,6 @@ public class UserRepositorySql
         {
             return true;
         }
-
         return false;
     }
 }

@@ -125,7 +125,7 @@ namespace DataManagersTests
             _controller.CreateUser(userToAdd);
             _controller.CreateUser(userToAdd);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void CreatingUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
@@ -133,11 +133,10 @@ namespace DataManagersTests
             UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
             _controller.CreateUser(userAdded);
-            
+
             UserDTO userWithSameEmail = new UserDTO("Kenny", "Dock", "keNNieS@gmail.com",
                 "KennieDock222", "North Av");
             _controller.CreateUser(userWithSameEmail);
-            
         }
 
         #endregion
@@ -151,7 +150,7 @@ namespace DataManagersTests
                 "KennieDock222", "North Av");
             UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
                 "Jhonix2003!!", "South Av");
-            
+
             _controller.CreateUser(dtoToAdd);
             _controller.UpdateUser(dtoWithUpdates);
             User userInDb = _controller.FindUser(dtoToAdd.Email);
@@ -170,7 +169,7 @@ namespace DataManagersTests
                 "KennieDock222", "North Av");
             UserDTO newDtoWithoutChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-            
+
             _controller.CreateUser(dtoToAdd);
             _controller.UpdateUser(newDtoWithoutChanges);
         }
@@ -181,11 +180,14 @@ namespace DataManagersTests
         public void GivenUserInDb_ShouldBePossibleToLogin()
         {
             _controller.CreateUser(userDto);
-            
             Assert.IsTrue(_controller.LoginUser(userDto));
-                
         }
-        
-        
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
+        {
+            _controller.LoginUser(userDto);
+        }
     }
 }
