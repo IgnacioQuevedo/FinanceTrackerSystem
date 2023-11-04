@@ -269,7 +269,7 @@ public class ReportTests
         loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
         loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
         
-        listOfSpendings = Report.FilterListOfSpendingsByAccount(listOfSpendings, myMonetaryAccount, loggedUser);
+        listOfSpendings = Report.FilterListOfSpendingsByAccount(listOfSpendings, loggedUser.MyAccounts[0], loggedUser);
         
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
