@@ -123,6 +123,6 @@ public class Controller : IUserController
 
     public bool PasswordMatch(string password, string passwordRepeated)
     {
-        return password.Equals(passwordRepeated);
+        return Helper.AreTheSameObject(password, passwordRepeated);
     }
 }
