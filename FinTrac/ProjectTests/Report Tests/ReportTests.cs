@@ -136,7 +136,7 @@ public class ReportTests
         Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
         loggedUser.AddCreditAccount(credit);
-
+        
         loggedUser.MyAccounts[1].AddTransaction(myTransaction);
         loggedUser.MyAccounts[1].AddTransaction(myTransaction2);
 
@@ -163,11 +163,33 @@ public class ReportTests
 
     [TestMethod]
     public void GivenListOfSpendingsToBeFilteredAndInitialDate_ShouldReturnListFiltered()
-    {
-        List<Transaction> listOfSpendings = new List<Transaction>();
+    { 
+        Transaction transactionOnRange1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction transactionOnRange2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction transactionOutOfRange1 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 04, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction transactionOutOfRange2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
         
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionOnRange1);
+        listOfSpendings.Add(transactionOnRange2);
+        listOfSpendings.Add(transactionOutOfRange1);
+        listOfSpendings.Add(transactionOutOfRange2);
+            
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionOnRange1);
+        expectedList.Add(transactionOnRange2);
+        
+        DateTime finalSelectedDate = new DateTime(2023, 12, 31);
         DateTime initialDate = new DateTime(2023, 05,01);
-        Report.FilterListOfSpendingsPerInitialDate(listOfSpendings, initialDate);
+        
+        listOfSpendings = Report.FilterListOfSpendingsPerInitialDate(listOfSpendings, initialDate, finalSelectedDate);
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
     }
 
     #region Methods Used By Reports

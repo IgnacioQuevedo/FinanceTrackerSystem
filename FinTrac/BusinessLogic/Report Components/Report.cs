@@ -129,9 +129,17 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
-        public static void FilterListOfSpendingsPerInitialDate(List<Transaction> listOfSpendings, DateTime initialDate)
+        public static List<Transaction> FilterListOfSpendingsPerInitialDate(List<Transaction> listOfSpendings, DateTime initialSelectedDate, DateTime finalSelectedDate)
         {
-            throw new NotImplementedException();
+            List<Transaction> filteredListOfSpending = listOfSpendings;
+            
+            if (initialSelectedDate <= finalSelectedDate)
+            {
+                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
+            }
+            
+            return filteredListOfSpending;
+
         }
 
         #region Report Of Balance For Monetary Account
