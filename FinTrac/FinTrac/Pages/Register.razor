@@ -88,8 +88,8 @@
     {
         try
         {
-            User.equalPasswords(password, passwordRepeated);
-
+            
+            //Here we need to put Controller.PasswordMatch method, to validate that both password are the same.
             User userToAdd = new User(firstName, lastName, email, password, address);
             UserManagement.AddUser(userToAdd);
             NavigationManager.NavigateTo("/");

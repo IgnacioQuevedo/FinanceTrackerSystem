@@ -8,6 +8,8 @@ namespace DataManagers.UserManager
 {
     public class ExceptionUserManagement : Exception
     {
-        public ExceptionUserManagement(string message) : base(message) { }
+        public ExceptionUserManagement(string message) : base(message)
+        {
+        }
     }
 }
