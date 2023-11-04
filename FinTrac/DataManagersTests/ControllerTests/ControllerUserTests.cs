@@ -176,6 +176,8 @@ namespace DataManagersTests
 
         #endregion
 
+        #region Login
+        
         [TestMethod]
         public void GivenUserInDb_ShouldBePossibleToLogin()
         {
@@ -189,5 +191,8 @@ namespace DataManagersTests
         {
             _controller.LoginUser(userDto);
         }
+        
+        #endregion
+        
     }
 }
