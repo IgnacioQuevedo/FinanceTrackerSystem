@@ -10,6 +10,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Report_Components
 {
@@ -133,15 +134,20 @@ namespace BusinessLogic.Report_Components
         public static List<Transaction> FilterListOfSpendingsPerRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= rangeOfDates.InitialDate && x.CreationDate <= rangeOfDates.FinalDate).ToList();
             
+            if (rangeOfDates.InitialDate <= rangeOfDates.FinalDate)
+            {
+                filteredListOfSpending = filteredListOfSpending.Where(x =>
+                    x.CreationDate >= rangeOfDates.InitialDate && x.CreationDate <= rangeOfDates.FinalDate).ToList();
+            }
+            else
+            {
+                throw new ExceptionReport("Error: Initial date is bigger than final date");
+            }
+
             return filteredListOfSpending;
         }
-        
-        
-        
-        
-        
+
         #endregion
 
         #region Report Of Balance For Monetary Account
