@@ -147,6 +147,17 @@ namespace DataManagersTests
                 
             Assert.IsTrue(passwordMatch);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionController))]
+        public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
+        {
+            string passwordIncorrect = "passwordIncorrect";
+            bool passwordMatch = _controller.PasswordMatch(userDto.Password, passwordIncorrect);
+                
+            Assert.IsTrue(passwordMatch);
+        }
+        
 
         #endregion
 
