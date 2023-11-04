@@ -102,10 +102,10 @@ namespace DataManagersTests
 
         #endregion
 
-        #region Create
+        #region Register
 
         [TestMethod]
-        public void CreateUserMethod_ShouldAddNewUserIntoDb()
+        public void RegisterMethod_ShouldAddNewUserIntoDb()
         {
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
@@ -118,7 +118,7 @@ namespace DataManagersTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
-        public void CreateUserAlreadyRegistered_ShouldThrowException()
+        public void RegisterUserAlreadyRegistered_ShouldThrowException()
         {
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
@@ -128,7 +128,7 @@ namespace DataManagersTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
-        public void CreatingUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
+        public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
         {
             UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
