@@ -8,7 +8,7 @@ public interface IUserController
      public User ToUser(UserDTO userDto);
      public UserDTO ToDtoUser(User userToConvert);
      public void RegisterUser(UserDTO userDtoToCreate);
-     public bool LoginUser(UserDTO userToLog);
+     public bool LoginUser(string email, string password);
      public void UpdateUser(UserDTO userDto);
      public User FindUser(string emailAK);
 

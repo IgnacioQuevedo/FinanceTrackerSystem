@@ -34,8 +34,7 @@ namespace DataManagersTests
         }
 
         #endregion
-
-
+        
         #region Creation and Necessary Validations
 
         [TestMethod]

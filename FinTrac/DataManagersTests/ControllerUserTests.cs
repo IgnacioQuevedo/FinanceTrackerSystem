@@ -199,14 +199,14 @@ namespace DataManagersTests
         public void GivenUserInDb_ShouldBePossibleToLogin()
         {
             _controller.RegisterUser(userDto);
-            Assert.IsTrue(_controller.LoginUser(userDto));
+            Assert.IsTrue(_controller.LoginUser(userDto.Email, userDto.Password));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
         {
-            _controller.LoginUser(userDto);
+            _controller.LoginUser(userDto.Email, userDto.Password);
         }
         
         #endregion
