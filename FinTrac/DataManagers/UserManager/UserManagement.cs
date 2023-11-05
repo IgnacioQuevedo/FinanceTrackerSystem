@@ -51,7 +51,8 @@ namespace DataManagers.UserManager
             {
                 if (someUser.Email.Equals(UserEmail.ToLower()))
                 {
-                    throw new ExceptionUserManagement("Email already registered, impossible to create another account.");
+                    throw new ExceptionUserManagement(
+                        "Email already registered, impossible to create another account.");
                 }
             }
         }
@@ -97,7 +98,8 @@ namespace DataManagers.UserManager
             {
                 if (user.UserId.Equals(userNotUpdated.UserId))
                 {
-                    User.areTheSameObject(userNotUpdated,userUpdated);
+                    
+                    Helper.AreTheSameObject(userNotUpdated,userUpdated);
                     userNotUpdated.FirstName = userUpdated.FirstName;
                     userNotUpdated.LastName = userUpdated.LastName;
                     userNotUpdated.Password = userUpdated.Password;

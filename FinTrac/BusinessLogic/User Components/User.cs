@@ -2,26 +2,17 @@
 using BusinessLogic.Account_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Transaction_Components;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Exceptions;
-using System.Data;
 
 namespace BusinessLogic.User_Components
 {
     public class User
     {
         #region Properties
-        
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string FirstName { get; set; } = "";
@@ -56,9 +47,8 @@ namespace BusinessLogic.User_Components
                 MyGoals = new List<Goal>();
                 MyExchangesHistory = new List<ExchangeHistory>();
             }
-
-
         }
+
         #endregion
 
         #region User Management
@@ -91,7 +81,6 @@ namespace BusinessLogic.User_Components
             }
 
             return true;
-
         }
 
         public string RemoveAllUnsenseSpaces(string stringToCorrect)
@@ -119,7 +108,6 @@ namespace BusinessLogic.User_Components
             return true;
         }
 
-
         #endregion
 
         #region ValidateEmail
@@ -141,12 +129,14 @@ namespace BusinessLogic.User_Components
             {
                 throw new ExceptionValidateUser("ERROR ON EMAIL");
             }
+
             return true;
         }
 
         #endregion
 
         #region ValidatePassword
+
         public bool ValidatePassword(string posiblePassword)
         {
             ValidatePasswordHasCorrectLength(posiblePassword);
@@ -159,7 +149,6 @@ namespace BusinessLogic.User_Components
         {
             const int minLength = 10;
             const int maxLength = 30;
-
 
 
             if (posiblePassword.Length < minLength || posiblePassword.Length > maxLength)
@@ -187,6 +176,7 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
         }
+
         #endregion
 
         #endregion
@@ -213,7 +203,8 @@ namespace BusinessLogic.User_Components
             {
                 if (category.Name == categoryToAdd.Name)
                 {
-                    throw new ExceptionCategoryManagement("Category name already registered, impossible to create another Category.");
+                    throw new ExceptionCategoryManagement(
+                        "Category name already registered, impossible to create another Category.");
                 }
             }
         }
@@ -221,11 +212,13 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region Get Categories
+
         public List<Category> GetCategories()
         {
             List<Category> listOfCategories = MyCategories;
             return listOfCategories;
         }
+
         #endregion
 
         #region Modify Category
@@ -270,9 +263,11 @@ namespace BusinessLogic.User_Components
                     }
                 }
             }
+
             if (founded)
             {
-                throw new ExceptionCategoryManagement("Error: You can't delete this category because is being used in a transaction");
+                throw new ExceptionCategoryManagement(
+                    "Error: You can't delete this category because is being used in a transaction");
             }
         }
 
@@ -293,9 +288,11 @@ namespace BusinessLogic.User_Components
                     ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
                 }
             }
+
             SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
+
         public void AddCreditAccount(CreditCardAccount accountToAdd)
         {
             for (int i = 0; i < MyAccounts.Count; i++)
@@ -305,6 +302,7 @@ namespace BusinessLogic.User_Components
                     ValidateIssuingBankAnd4LastDigits(accountToAdd, (CreditCardAccount)MyAccounts[i]);
                 }
             }
+
             SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
@@ -322,6 +320,7 @@ namespace BusinessLogic.User_Components
         {
             return MyAccounts;
         }
+
         #endregion
 
         #region Modify Account
@@ -337,11 +336,13 @@ namespace BusinessLogic.User_Components
                 {
                     ValidateNameIsNotRegistered(accountToUpdate, MyAccounts[i]);
                 }
+
                 if (haveSameId(accountToUpdate, MyAccounts[i]))
                 {
                     indexOfUpdate = i;
                 }
             }
+
             UpdateValues(accountToUpdate, indexOfUpdate);
         }
 
@@ -356,15 +357,18 @@ namespace BusinessLogic.User_Components
                 {
                     ValidateIssuingBankAnd4LastDigits(accountToUpdate, (CreditCardAccount)MyAccounts[i]);
                 }
+
                 if (haveSameId(accountToUpdate, MyAccounts[i]))
                 {
                     indexOfUpdate = i;
                 }
             }
+
             UpdateValues(accountToUpdate, indexOfUpdate);
         }
 
         #region Auxiliary Methods for Modify
+
         private void ValidateNameIsNotRegistered(MonetaryAccount accountToUpdate, Account accountToCompare)
         {
             if (accountToCompare.Name.Equals(accountToUpdate.Name) && !haveSameId(accountToCompare, accountToUpdate))
@@ -372,12 +376,14 @@ namespace BusinessLogic.User_Components
                 throw new ExceptionAccountManagement("ERROR - Name already registered.");
             }
         }
+
         private bool haveSameId(Account account1, Account account2)
         {
             if (account1.AccountId == account2.AccountId)
             {
                 return true;
             }
+
             return false;
         }
 
@@ -385,9 +391,10 @@ namespace BusinessLogic.User_Components
         {
             accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
             MyAccounts[index] = accountToUpdate;
-
         }
-        private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate, CreditCardAccount oneCreditCardAccount)
+
+        private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate,
+            CreditCardAccount oneCreditCardAccount)
         {
             if (UsedIssuingNameAndLastDigits(accountToUpdate, oneCreditCardAccount)
                 && !haveSameId(accountToUpdate, oneCreditCardAccount))
@@ -396,11 +403,13 @@ namespace BusinessLogic.User_Components
             }
         }
 
-        private bool UsedIssuingNameAndLastDigits(CreditCardAccount creditCardAccountToUpdate, CreditCardAccount oneCreditCardAccount)
+        private bool UsedIssuingNameAndLastDigits(CreditCardAccount creditCardAccountToUpdate,
+            CreditCardAccount oneCreditCardAccount)
         {
             return oneCreditCardAccount.IssuingBank.Equals(creditCardAccountToUpdate.IssuingBank)
                    && oneCreditCardAccount.Last4Digits.Equals(creditCardAccountToUpdate.Last4Digits);
         }
+
         #endregion
 
         #endregion
@@ -416,7 +425,8 @@ namespace BusinessLogic.User_Components
             }
             else
             {
-                throw new ExceptionAccountManagement("Error: You can't delete your account because it has transactions");
+                throw new ExceptionAccountManagement(
+                    "Error: You can't delete your account because it has transactions");
             }
         }
 
@@ -432,6 +442,7 @@ namespace BusinessLogic.User_Components
         #region Goal Management
 
         #region AddGoal
+
         public void AddGoal(Goal goalToAdd)
         {
             SettingGoalId(goalToAdd);
@@ -446,10 +457,12 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region Return of Goals
+
         public List<Goal> GetGoals()
         {
             return MyGoals;
         }
+
         #endregion
 
         #endregion
@@ -457,6 +470,7 @@ namespace BusinessLogic.User_Components
         #region Exchange History Management
 
         #region Add Exchange History
+
         public void AddExchangeHistory(ExchangeHistory exchangeHistoryToAdd)
         {
             ChecksIfDateIsUsed(exchangeHistoryToAdd);
@@ -477,7 +491,7 @@ namespace BusinessLogic.User_Components
                 if (DateTime.Compare(oneExchange.ValueDate, exchangeHistoryToAdd.ValueDate) == 0)
                 {
                     throw new ExceptionExchangeHistoryManagement("There already exists a exchange history " +
-                        "for this date, modify it instead.");
+                                                                 "for this date, modify it instead.");
                 }
             }
         }
@@ -485,21 +499,26 @@ namespace BusinessLogic.User_Components
         #endregion
 
         #region Get Exchanges History
+
         public List<ExchangeHistory> GetExchangesHistory()
         {
             return MyExchangesHistory;
         }
+
         #endregion
 
         #region Delete Exchange
+
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
             MyExchangesHistory.Remove(exchangeHistoryToDelete);
             MyExchangesHistory.Insert(exchangeHistoryToDelete.ExchangeHistoryId, null);
         }
+
         #endregion
 
         #region Modify Exchange
+
         public void ModifyExchangeHistory(ExchangeHistory exchangeHistoryToUpdate)
         {
             int idToUpdate = exchangeHistoryToUpdate.ExchangeHistoryId;
@@ -513,6 +532,7 @@ namespace BusinessLogic.User_Components
                     updated = true;
                 }
             }
+
             if (!updated)
             {
                 throw new ExceptionExchangeHistoryManagement("This exchange does not exist, impossible to modify");
@@ -521,51 +541,14 @@ namespace BusinessLogic.User_Components
 
         #endregion
 
-
         #endregion
 
-        public static void equalPasswords(string password1, string password2)
+        public static void EqualPasswords(object password1, object password2)
         {
             if (!password1.Equals(password2))
             {
                 throw new ExceptionValidateUser("Passwords are not the same, try again.");
             }
         }
-
-        public static void areTheSameObject<T>(T objeto1, T objeto2)
-        {
-            bool areEqual = true;
-
-            if (ReferenceEquals(objeto1, objeto2)) { areEqual = true; }
-
-            if (objeto1 is null || objeto2 is null) { areEqual = false; }
-
-            foreach (var propiedad in typeof(T).GetProperties())
-            {
-                if (propiedad.PropertyType == typeof(DateTime))
-                {
-                    var fecha1 = (DateTime)propiedad.GetValue(objeto1);
-                    var fecha2 = (DateTime)propiedad.GetValue(objeto2);
-
-                    if (fecha1.Date != fecha2.Date)
-                        areEqual = false;
-                }
-                else
-                {
-                    var valor1 = propiedad.GetValue(objeto1);
-                    var valor2 = propiedad.GetValue(objeto2);
-
-                    if (!EqualityComparer<object>.Default.Equals(valor1, valor2))
-                        areEqual = false;
-                }
-            }
-
-            if (areEqual)
-            {
-                throw new ExceptionValidateUser("Change at least one value");
-            }
-
-        }
-
     }
 }

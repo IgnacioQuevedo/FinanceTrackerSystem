@@ -20,7 +20,6 @@ namespace BusinessLogic.Category_Components
         public TypeEnum Type { get; set; }
 
         public User CategoryUser { get; set; }
-        
         public List<Goal> CategoryGoals { get; set; }
 
         #endregion
