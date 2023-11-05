@@ -70,7 +70,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             List<Category> myListOfCategories = new List<Category>();
             _goalDTO.CategoriesOfGoal = myListOfCategories;
-            Assert.AreEqual(new List<Category>(), _goalDTO.CategoriesOfGoal);
+            Assert.AreEqual(myListOfCategories, _goalDTO.CategoriesOfGoal);
         }
 
 
