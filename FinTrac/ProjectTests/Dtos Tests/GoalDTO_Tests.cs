@@ -55,7 +55,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO.CurrencyOfAmount = CurrencyEnum.USA;
             bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
-            Assert.IsTrue(false);
+            Assert.IsTrue(belongToEnum);
         }
 
 
