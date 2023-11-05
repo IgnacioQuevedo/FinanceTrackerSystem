@@ -18,12 +18,13 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO = new GoalDTO();
         }
+
         [TestMethod]
         public void GivenTitle_ShouldBeSetted()
         {
             string goalDTOTitle = "Less Party";
             _goalDTO.Title = goalDTOTitle;
-            Assert.AreEqual(goalDTOTitle, );
+            Assert.AreEqual(goalDTOTitle, _goalDTO.Title);
         }
     }
 }
