@@ -1,4 +1,5 @@
 using BusinessLogic.Dto_Components;
+using BusinessLogic.Enums;
 
 namespace TestProject1
 {
@@ -31,6 +32,16 @@ namespace TestProject1
         }
 
         #endregion
+
+        public void GivenStatus_BothShouldBeSetted()
+        {
+            StatusEnum categoryStatus1 = StatusEnum.Enabled;
+            StatusEnum categoryStatus2 = StatusEnum.Disabled;
+            
+            Assert.AreEqual(_categoryDto.Status,categoryStatus1);
+            Assert.AreEqual(_categoryDto.Status,categoryStatus2);
+
+        }
       
     }
 }
