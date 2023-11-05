@@ -11,5 +11,6 @@ namespace BusinessLogic.Dtos_Components
     {
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
+        public DateTime ValueDate { get; set; }
     }
 }

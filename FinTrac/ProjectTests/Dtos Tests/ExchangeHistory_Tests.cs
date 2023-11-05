@@ -47,5 +47,15 @@ namespace BusinessLogicTests.Dtos_Tests
         }
 
         #endregion
+
+
+        [TestMethod]
+        public void GivenDate_ShouldBeSetted()
+        {
+            DateTime dateOfExchange = new DateTime(2023, 05, 01);
+            _genericExchangeHistoryDTO.ValueDate = dateOfExchange;
+            Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, 0);
+        }
+
     }
 }
