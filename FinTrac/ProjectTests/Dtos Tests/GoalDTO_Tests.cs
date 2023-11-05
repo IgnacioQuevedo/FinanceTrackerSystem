@@ -94,7 +94,7 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(goalDTOTitle, myGoalDTO.Title);
             Assert.AreEqual(maxAmountToSpendForDTO, myGoalDTO.MaxAmountToSpend);
             Assert.AreEqual(currencyForGoalDTO, myGoalDTO.CurrencyOfAmount);
-            Assert.AreEqual(new List<Category>(), myGoalDTO.CategoriesOfGoalDTO);
+            Assert.AreEqual(myListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
 
 
 
