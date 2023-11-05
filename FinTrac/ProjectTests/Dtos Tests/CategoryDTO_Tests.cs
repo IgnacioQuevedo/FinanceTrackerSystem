@@ -75,9 +75,9 @@ namespace TestProject1
 
             CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
 
-            Assert.AreEqual(categoryName,genericCategoryDTO.categoryName);
-            Assert.AreEqual(categoryStatus,genericCategoryDTO.categoryStatus);
-            Assert.AreEqual(categoryType,genericCategoryDTO.categoryType);
+            Assert.AreEqual(categoryName,genericCategoryDTO.Name);
+            Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
+            Assert.AreEqual(categoryType,genericCategoryDTO.Type);
         }
       
     }
