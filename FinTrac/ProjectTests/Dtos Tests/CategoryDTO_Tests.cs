@@ -17,6 +17,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Name
+
         [TestMethod]
         public void GivenName_ShouldBeSetted()
         {
@@ -27,5 +29,8 @@ namespace TestProject1
 
             Assert.AreEqual(categoryName, _categoryDto.Name);
         }
+
+        #endregion
+      
     }
 }
