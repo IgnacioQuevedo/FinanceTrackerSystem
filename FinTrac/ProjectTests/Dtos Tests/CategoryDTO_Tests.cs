@@ -32,13 +32,17 @@ namespace TestProject1
         }
 
         #endregion
-
+        
+        [TestMethod]
         public void GivenStatus_BothShouldBeSetted()
         {
             StatusEnum categoryStatus1 = StatusEnum.Enabled;
             StatusEnum categoryStatus2 = StatusEnum.Disabled;
             
+            _categoryDto.Status = categoryStatus1;
             Assert.AreEqual(_categoryDto.Status,categoryStatus1);
+            
+            _categoryDto.Status = categoryStatus2;
             Assert.AreEqual(_categoryDto.Status,categoryStatus2);
 
         }
