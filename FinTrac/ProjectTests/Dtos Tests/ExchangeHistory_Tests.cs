@@ -13,6 +13,7 @@ namespace BusinessLogicTests.Dtos_Tests
     {
         private ExchangeHistoryDTO _genericExchangeHistoryDTO;
         private CurrencyEnum _genericCurrencyDTO;
+        private decimal genericValueDTO;
 
         #region Initialize
 
@@ -34,11 +35,15 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(_genericExchangeHistoryDTO.Currency, _genericCurrencyDTO);
         }
 
+        #endregion
+
+        #region Value of exchange
+
         [TestMethod]
         public void GivenValue_ShouldBeSetted()
         {
-            _genericExchangeHistoryDTO.Value = 41;
-            Assert.AreEqual(_genericExchangeHistoryDTO.Value, 41);
+            _genericExchangeHistoryDTO.Value = genericValueDTO;
+            Assert.AreEqual(_genericExchangeHistoryDTO.Value, genericValueDTO);
         }
 
         #endregion
