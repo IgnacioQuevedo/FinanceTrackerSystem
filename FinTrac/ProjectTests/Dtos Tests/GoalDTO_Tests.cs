@@ -16,6 +16,10 @@ namespace BusinessLogicTests.Dtos_Tests
     {
         private GoalDTO _goalDTO;
         private Category genericCategory;
+        private List<Category> genericListOfCategories;
+        private CurrencyEnum genericCurrencyEnum;
+        private int genericMaxAmountOfGoal;
+        private string genericTitleGoalDTO;
 
         #region Initialize
 
@@ -23,7 +27,17 @@ namespace BusinessLogicTests.Dtos_Tests
         public void Initialize()
         {
             _goalDTO = new GoalDTO();
+
             genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            List<Category> myListOfCategories = new List<Category>();
+            myListOfCategories.Add(genericCategory);
+
+            genericCurrencyEnum = CurrencyEnum.USA;
+
+            genericMaxAmountOfGoal = 100;
+
+            genericTitleGoalDTO = "Less Party";
         }
 
         #endregion
@@ -33,10 +47,9 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenTitle_ShouldBeSetted()
         {
-            string goalDTOTitle = "Less Party";
-            _goalDTO.Title = goalDTOTitle;
+            _goalDTO.Title = genericTitleGoalDTO;
 
-            Assert.AreEqual(goalDTOTitle, _goalDTO.Title);
+            Assert.AreEqual(genericTitleGoalDTO, _goalDTO.Title);
         }
 
         #endregion
@@ -45,10 +58,9 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenMaxAmountToSpend_ShouldBeSetted()
         {
-            int maxAmountToSpendForDTO = 100;
-            _goalDTO.MaxAmountToSpend = maxAmountToSpendForDTO;
+            _goalDTO.MaxAmountToSpend = genericMaxAmountOfGoal;
 
-            Assert.AreEqual(maxAmountToSpendForDTO, _goalDTO.MaxAmountToSpend);
+            Assert.AreEqual(genericMaxAmountOfGoal, _goalDTO.MaxAmountToSpend);
         }
 
         #endregion
@@ -58,8 +70,7 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenCurrencyOfAmount_ShoulBeSetted()
         {
-            CurrencyEnum currencyForGoalDTO = CurrencyEnum.USA;
-            _goalDTO.CurrencyOfAmount = currencyForGoalDTO;
+            _goalDTO.CurrencyOfAmount = genericCurrencyEnum;
 
             bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
             Assert.IsTrue(belongToEnum);
@@ -72,12 +83,9 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenListOfCategories_ShoulBeSetted()
         {
-            List<Category> myListOfCategories = new List<Category>();
-            myListOfCategories.Add(genericCategory);
+            _goalDTO.CategoriesOfGoalDTO = genericListOfCategories;
 
-            _goalDTO.CategoriesOfGoalDTO = myListOfCategories;
-
-            Assert.AreEqual(myListOfCategories, _goalDTO.CategoriesOfGoalDTO);
+            Assert.AreEqual(genericListOfCategories, _goalDTO.CategoriesOfGoalDTO);
         }
 
         #endregion
@@ -85,20 +93,12 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateAGoalDTO()
         {
-            List<Category> myListOfCategories = new List<Category>();
-            myListOfCategories.Add(genericCategory);
-            CurrencyEnum currencyForGoalDTO = CurrencyEnum.USA;
-            int maxAmountToSpendForDTO = 100;
-            string goalDTOTitle = "Less Party";
-            GoalDTO myGoalDTO = new GoalDTO(goalDTOTitle, maxAmountToSpendForDTO, currencyForGoalDTO, myListOfCategories);
-            Assert.AreEqual(goalDTOTitle, myGoalDTO.Title);
-            Assert.AreEqual(maxAmountToSpendForDTO, myGoalDTO.MaxAmountToSpend);
-            Assert.AreEqual(currencyForGoalDTO, myGoalDTO.CurrencyOfAmount);
-            Assert.AreEqual(myListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
+            GoalDTO myGoalDTO = new GoalDTO(genericTitleGoalDTO, genericMaxAmountOfGoal, genericCurrencyEnum, genericListOfCategories);
 
-
-
-
+            Assert.AreEqual(genericTitleGoalDTO, myGoalDTO.Title);
+            Assert.AreEqual(genericMaxAmountOfGoal, myGoalDTO.MaxAmountToSpend);
+            Assert.AreEqual(genericCurrencyEnum, myGoalDTO.CurrencyOfAmount);
+            Assert.AreEqual(genericListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
         }
 
 
