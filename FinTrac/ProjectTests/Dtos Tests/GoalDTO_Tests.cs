@@ -36,13 +36,17 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region Max amount to spend
         [TestMethod]
-
         public void GivenMaxAmountToSpend_ShouldBeSetted()
         {
-            _goalDTO.MaxAmountToSpend = 100;
-            Assert.AreEqual(100, _goalDTO.MaxAmountToSpend);
+            int maxAmountToSpendForDTO = 100;
+            _goalDTO.MaxAmountToSpend = maxAmountToSpendForDTO;
+
+            Assert.AreEqual(maxAmountToSpendForDTO, _goalDTO.MaxAmountToSpend);
         }
+
+        #endregion
 
 
     }
