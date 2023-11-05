@@ -50,13 +50,19 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region Currency of amount
+
         [TestMethod]
         public void GivenCurrencyOfAmount_ShoulBeSetted()
         {
-            _goalDTO.CurrencyOfAmount = CurrencyEnum.USA;
+            CurrencyEnum currencyForGoalDTO = CurrencyEnum.USA;
+            _goalDTO.CurrencyOfAmount = currencyForGoalDTO;
+
             bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
             Assert.IsTrue(belongToEnum);
         }
+
+        #endregion
 
 
 
