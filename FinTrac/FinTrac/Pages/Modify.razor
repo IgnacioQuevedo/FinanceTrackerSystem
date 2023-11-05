@@ -2,6 +2,7 @@
 
 @using BusinessLogic.Exceptions;
 @using BusinessLogic.Dto_Components
+@inject IUserController UserController
 
 <div class="container">
     <h1>Edit Profile</h1>
@@ -107,13 +108,7 @@
         try
         {
             userToModifyDTO = new UserDTO(firstName, lastName, user.Email, password, address);
-            userToModifyDTO.MyCategories = user.MyCategories;
-            userToModifyDTO.MyAccounts = user.MyAccounts;
-            userToModifyDTO.MyGoals = user.MyGoals;
-            userToModifyDTO.MyExchangesHistory = user.MyExchangesHistory;
-            
-            
-            IControllerUser.Update(UserDTO);
+            UserController.UpdateUser(userToModifyDTO);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionUser)

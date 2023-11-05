@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using DataManagers;
-using DataManagers.UserManager;
+using DataManagers.IControllers;
 using FinTrac.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +14,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<UserLogged>();
-builder.Services.AddSingleton<Controller>();
-
 
 builder.Services.AddDbContext<SqlContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<UserRepositorySql>();
+builder.Services.AddScoped<GenericController>();
+builder.Services.AddScoped<IUserController, GenericController>();
 
 var app = builder.Build();
 
@@ -29,10 +31,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<SqlContext>();
     context.Database.Migrate();
 }
-
-
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

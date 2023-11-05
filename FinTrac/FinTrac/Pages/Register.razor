@@ -1,5 +1,6 @@
 ﻿@page "/Register";
 @layout LayoutForGuest
+@inject IUserController UserController
 
 <section class="vh-100 gradient-custom-2">
     <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -88,10 +89,10 @@
     {
         try
         {
-            User.equalPasswords(password, passwordRepeated);
+            GenericController.PasswordMatch(password, passwordRepeated);
 
             UserDTO userToAdd = new UserDTO(firstName, lastName, email, password, address);
-            IControllerUser.Create(userToAdd);
+            UserController.RegisterUser(userToAdd);
             NavigationManager.NavigateTo("/");
 
         }

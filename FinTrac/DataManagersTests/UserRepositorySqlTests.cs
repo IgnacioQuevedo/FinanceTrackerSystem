@@ -62,7 +62,7 @@ namespace DataManagersTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserRepository))]
-        public void GivenAlreadyRegisteredEmail_ShouldReturnException()
+        public void GivenAlreadyRegisteredEmail_ShouldThrowException()
         {
             User userToAdd = new User("Mich", "Santa", "michsanta@gmail.com", "Mich123456789", "North Av 23");
             _userRepo.Create(userToAdd);
@@ -81,14 +81,14 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
 
-            Assert.IsTrue(_userRepo.UserRegistered(_genericUser));
+            Assert.IsTrue(_userRepo.Login(_genericUser));
         }
 
         [TestMethod]
         public void GivenUserThatWantsToLoginButIsNotRegistered_ShouldReturnFalse()
         {
             User userNotRegistered = new User("Jhon", "Camaleon", "jhonnya@gmail.com", "LittleJhonny123", "");
-            Assert.IsFalse(_userRepo.UserRegistered(userNotRegistered));
+            Assert.IsFalse(_userRepo.Login(userNotRegistered));
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace DataManagersTests
         #region Update
 
         [TestMethod]
-        public void GivenAspectsOfUserToUpdate_ShouldBeUpdate()
+        public void GivenAspectsOfUserToUpdate_ShouldBeUpdated()
         {
             _userRepo.Create(_genericUser);
 
@@ -133,7 +133,7 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
             
-            User userFound = _userRepo.Find(_genericUser.UserId);
+            User userFound = _userRepo.FindUserInDb(_genericUser.Email);
             
             Assert.AreEqual(userFound,_genericUser);
         }
