@@ -65,8 +65,10 @@ namespace TestProject1
         }
 
         #endregion
-      
-        [TestMethod]
+
+        #region Constructor
+
+        [TestMethod] 
         public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
         {
             string categoryName = "Food";
@@ -79,6 +81,9 @@ namespace TestProject1
             Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
             Assert.AreEqual(categoryType,genericCategoryDTO.Type);
         }
+
+        #endregion
+      
       
     }
 }
