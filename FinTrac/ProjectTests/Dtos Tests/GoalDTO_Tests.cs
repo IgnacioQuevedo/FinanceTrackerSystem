@@ -34,7 +34,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenTitle_ShouldBeSetted()
         {
             string goalDTOTitle = "Less Party";
-            _goalDTO.Title = "Less Party";
+            _goalDTO.Title = goalDTOTitle;
 
             Assert.AreEqual(goalDTOTitle, _goalDTO.Title);
         }
@@ -75,14 +75,31 @@ namespace BusinessLogicTests.Dtos_Tests
             List<Category> myListOfCategories = new List<Category>();
             myListOfCategories.Add(genericCategory);
 
-            _goalDTO.CategoriesOfGoal = myListOfCategories;
+            _goalDTO.CategoriesOfGoalDTO = myListOfCategories;
 
-            Assert.AreEqual(myListOfCategories, _goalDTO.CategoriesOfGoal);
+            Assert.AreEqual(myListOfCategories, _goalDTO.CategoriesOfGoalDTO);
         }
 
         #endregion
 
+        [TestMethod]
+        public void GivenValues_ShouldBePossibleToCreateAGoalDTO()
+        {
+            List<Category> myListOfCategories = new List<Category>();
+            myListOfCategories.Add(genericCategory);
+            CurrencyEnum currencyForGoalDTO = CurrencyEnum.USA;
+            int maxAmountToSpendForDTO = 100;
+            string goalDTOTitle = "Less Party";
+            GoalDTO myGoalDTO = new GoalDTO(goalDTOTitle, maxAmountToSpendForDTO, currencyForGoalDTO, myListOfCategories);
+            Assert.AreEqual(goalDTOTitle, myGoalDTO.Title);
+            Assert.AreEqual(maxAmountToSpendForDTO, myGoalDTO.MaxAmountToSpend);
+            Assert.AreEqual(currencyForGoalDTO, myGoalDTO.CurrencyOfAmount);
+            Assert.AreEqual(new List<Category>(), myGoalDTO.CategoriesOfGoalDTO);
 
+
+
+
+        }
 
 
 
