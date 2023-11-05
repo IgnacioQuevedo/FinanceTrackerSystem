@@ -48,15 +48,24 @@ namespace TestProject1
         }
 
         #endregion
-        
+
+        #region Type
+
         [TestMethod]
-        public void GivenType_ShouldBeSetted()
+        public void GivenType_BothShouldBeSetted()
         {
             TypeEnum typeEnum = TypeEnum.Income;
-            _categoryDto.Type = typeEnum;
+            TypeEnum typeEnum2 = TypeEnum.Outcome;
             
+            _categoryDto.Type = typeEnum;
             Assert.AreEqual(_categoryDto.Type,typeEnum);
+            
+            _categoryDto.Type = typeEnum2;
+            Assert.AreEqual(_categoryDto.Type,typeEnum2);
         }
+
+        #endregion
+      
       
     }
 }
