@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Dto_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Category_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Goal_Components;
 
@@ -63,6 +64,15 @@ namespace BusinessLogicTests.Dtos_Tests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenListOfCategories_ShoulBeSetted()
+        {
+            List<Category> myListOfCategories = new List<Category>();
+            _goalDTO.CategoriesOfGoal = myListOfCategories;
+            Assert.AreEqual(new List<Category>(), _goalDTO.CategoriesOfGoal);
+        }
+
 
 
 
