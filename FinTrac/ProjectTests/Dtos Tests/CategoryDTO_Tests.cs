@@ -50,7 +50,7 @@ namespace TestProject1
         #endregion
         
         [TestMethod]
-        public void GivenType_BothShouldBeSetted()
+        public void GivenType_ShouldBeSetted()
         {
             TypeEnum typeEnum = TypeEnum.Income;
             _categoryDto.Type = typeEnum;
