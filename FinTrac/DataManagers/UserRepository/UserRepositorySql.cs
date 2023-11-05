@@ -42,11 +42,11 @@ public class UserRepositorySql
         return _database.Users.FirstOrDefault(u => u.Email == emailAK);
     }
 
-    public bool Login(User userToBeLogged)
+    public bool Login(string email, string password)
     {
-        User userFound = FindUserInDb(userToBeLogged.Email);
+        User userFound = FindUserInDb(email);
 
-        if (userFound != null && userToBeLogged.Password.Equals(userFound.Password))
+        if (userFound != null && password.Equals(userFound.Password))
         {
             return true;
         }

@@ -105,9 +105,11 @@ public class GenericController : IUserController
 
     #region LoginUser
 
-    public bool LoginUser(UserDTO userToLog)
+    public bool LoginUser(string email, string password)
     {
-        bool logged = _userRepo.Login(ToUser(userToLog));
+        email = email.ToLower();
+        UserDTO myUserDTO = new UserDTO();
+        bool logged = _userRepo.Login(email,password);
 
         if (!logged)
         {

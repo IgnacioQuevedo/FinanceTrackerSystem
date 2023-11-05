@@ -10,6 +10,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogic.Report_Components
 {
@@ -125,6 +126,57 @@ namespace BusinessLogic.Report_Components
         private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit, Transaction transaction)
         {
             return transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0;
+        }
+
+        #endregion
+
+        #region  Filtering Lists of spendings
+        
+        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        {
+            List<Transaction> filteredListOfSpending = listOfSpendings;
+            
+            if (rangeOfDates.InitialDate <= rangeOfDates.FinalDate)
+            {
+                filteredListOfSpending = filteredListOfSpending.Where(x =>
+                    x.CreationDate >= rangeOfDates.InitialDate && x.CreationDate <= rangeOfDates.FinalDate).ToList();
+            }
+            else
+            {
+                throw new ExceptionReport("Error: Initial date is bigger than final date");
+            }
+            
+            return filteredListOfSpending;
+        }
+        
+        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
+        {
+            List<Transaction> filteredListOfSpending = listOfSpendings;
+            
+            if (!String.IsNullOrEmpty(nameOfCategory))
+            {
+                filteredListOfSpending = filteredListOfSpending.Where(x => x.TransactionCategory.Name.StartsWith(nameOfCategory, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return filteredListOfSpending;
+        }
+
+        public static List<Transaction> FilterListOfSpendingsByAccount(List<Transaction> listOfSpendings,
+            Account accountSelected, User userLogged)
+        {
+            List<Transaction> accountSpendings = AccountSpendings(accountSelected, userLogged);
+            List<Transaction> filteredListOfSpending = listOfSpendings;
+            filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
+            
+            return filteredListOfSpending;
+        }
+
+        private static List<Transaction> AccountSpendings(Account accountSelected, User userLogged)
+        {
+            List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
+                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)
+                .ToList();
+            return accountSpendings;
         }
 
         #endregion
@@ -273,6 +325,20 @@ namespace BusinessLogic.Report_Components
         }
 
     }
+
+    public class RangeOfDates
+    {
+        public DateTime InitialDate { get; set; }
+        public DateTime FinalDate { get; set; }
+
+        public RangeOfDates(DateTime initialDate, DateTime finalDate)
+        {
+            InitialDate = initialDate;
+            FinalDate = finalDate;
+        }
+
+    }
+
     #endregion
 }
 

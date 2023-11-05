@@ -86,8 +86,8 @@
 
     protected override void OnInitialized()
     {
-        userDTO.Email = "nachitoquevedo@gmail.com";
-        userDTO.Password = "Nacho200304!";
+        userDTO.Email = "gonzalocamejo859@gmail.com";
+        userDTO.Password = "MARIOCAMEJO2003!";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
 
@@ -97,7 +97,7 @@
     {
         try
         {
-            if (UserController.LoginUser(userDTO))
+            if (UserController.LoginUser(userDTO.Email, userDTO.Password))
             {
                 UserLogged.Id = UserController.FindUser(userDTO.Email).UserId;
                 NavigationManager.NavigateTo("/Home");

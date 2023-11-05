@@ -34,8 +34,7 @@ namespace DataManagersTests
         }
 
         #endregion
-
-
+        
         #region Creation and Necessary Validations
 
         [TestMethod]
@@ -81,14 +80,14 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
 
-            Assert.IsTrue(_userRepo.Login(_genericUser));
+            Assert.IsTrue(_userRepo.Login(_genericUser.Email, _genericUser.Password));
         }
 
         [TestMethod]
         public void GivenUserThatWantsToLoginButIsNotRegistered_ShouldReturnFalse()
         {
             User userNotRegistered = new User("Jhon", "Camaleon", "jhonnya@gmail.com", "LittleJhonny123", "");
-            Assert.IsFalse(_userRepo.Login(userNotRegistered));
+            Assert.IsFalse(_userRepo.Login(userNotRegistered.Email, userNotRegistered.Password));
         }
 
         #endregion
