@@ -9,6 +9,7 @@ using System.Runtime.ExceptionServices;
 using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.Exceptions;
 
 namespace BusinessLogicTests;
 [TestClass]
@@ -28,6 +29,10 @@ public class ReportTests
     private Goal goalFood;
     private Goal goalParty;
     private MonetaryAccount myMonetaryAccount;
+    private Transaction transactionWanted1;
+    private Transaction transactionWanted2;
+    private Transaction transactionUnWanted1;
+    private Transaction transactionUnWanted2;
 
     [TestInitialize]
     public void Initialize()
@@ -75,6 +80,15 @@ public class ReportTests
 
         loggedUser.AddGoal(goalFood);
         loggedUser.AddGoal(goalParty);
+        
+        transactionWanted1 = new Transaction("Payment for Party", 400, new DateTime(2023, 06, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionWanted2 = new Transaction("Payment for Party", 200, new DateTime(2023, 07, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        transactionUnWanted1 = new Transaction("Payment for Snacks", 300, new DateTime(2023, 02, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+        transactionUnWanted2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
+            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
     }
 
@@ -136,7 +150,7 @@ public class ReportTests
         Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
         loggedUser.AddCreditAccount(credit);
-
+        
         loggedUser.MyAccounts[1].AddTransaction(myTransaction);
         loggedUser.MyAccounts[1].AddTransaction(myTransaction2);
 
@@ -157,6 +171,91 @@ public class ReportTests
         decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount);
 
         Assert.AreEqual(balanceNeeded, balanceObtained);
+    }
+
+    #endregion
+
+    #region  Filtering Lists of spendings Tests
+    
+    [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredByRangeOfDates_ShouldReturnListFilteredCorrectly()
+    { 
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionUnWanted1);
+        listOfSpendings.Add(transactionUnWanted2);
+            
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
+        
+        DateTime finalSelectedDate = new DateTime(2023, 12, 31);
+        DateTime initialDate = new DateTime(2023, 05,01);
+
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        listOfSpendings = Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings, rangeOfDates);
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionReport))]
+    public void GivenInitialDateBiggerThanFinalDate_ShouldThrowException()
+    {
+        DateTime finalSelectedDate = new DateTime(2021, 12, 31);
+        DateTime initialDate = new DateTime(2023, 05,01);
+        
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        
+        Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings,rangeOfDates);
+    }
+    
+        [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredByNameOfCategory_ShouldReturnListFilteredCorrectly()
+    {
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionUnWanted1);
+        listOfSpendings.Add(transactionUnWanted2);
+            
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
+        
+        DateTime finalSelectedDate = new DateTime(2023, 12, 31);
+        DateTime initialDate = new DateTime(2023, 05,01);
+
+        RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
+        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, "Food");
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
+    }
+
+    [TestMethod]
+    public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
+    {
+        List<Transaction> listOfSpendings = new List<Transaction>();
+        listOfSpendings.Add(transactionWanted1);
+        listOfSpendings.Add(transactionWanted2);
+        listOfSpendings.Add(transactionUnWanted1);
+        
+        List<Transaction> expectedList = new List<Transaction>();
+        expectedList.Add(transactionWanted1);
+        expectedList.Add(transactionWanted2);
+        
+        loggedUser.AddMonetaryAccount(myMonetaryAccount);
+        loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
+        loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
+        
+        listOfSpendings = Report.FilterListOfSpendingsByAccount(listOfSpendings, loggedUser.MyAccounts[0], loggedUser);
+        
+        Assert.AreEqual(listOfSpendings[0], expectedList[0]);
+        Assert.AreEqual(listOfSpendings[1], expectedList[1]);
     }
 
     #endregion
