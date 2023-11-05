@@ -11,5 +11,6 @@ namespace BusinessLogic.Dtos_Components
     public class GoalDTO
     {
         public string Title { get; set; }
+        public int MaxAmountToSpend { get; set; }
     }
 }

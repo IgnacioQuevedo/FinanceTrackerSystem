@@ -36,6 +36,14 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        [TestMethod]
+
+        public void GivenMaxAmountToSpend_ShouldBeSetted()
+        {
+            _goalDTO.MaxAmountToSpend = 100;
+            Assert.AreEqual(0, _goalDTO.MaxAmountToSpend);
+        }
+
 
     }
 }
