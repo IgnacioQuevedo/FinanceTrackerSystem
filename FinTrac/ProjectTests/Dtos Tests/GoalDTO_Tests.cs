@@ -41,7 +41,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenMaxAmountToSpend_ShouldBeSetted()
         {
             _goalDTO.MaxAmountToSpend = 100;
-            Assert.AreEqual(0, _goalDTO.MaxAmountToSpend);
+            Assert.AreEqual(100, _goalDTO.MaxAmountToSpend);
         }
 
 
