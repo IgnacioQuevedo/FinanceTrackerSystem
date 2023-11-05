@@ -15,7 +15,22 @@ namespace TestProject1
             _categoryDto = new CategoryDTO();
         }
         #endregion
-        
+
+        [TestMethod]
+
+        public void GivenName_ShouldBeSetted()
+        {
+            string categoryName = "Food";
+
+            CategoryDTO categoryDTO = new CategoryDTO();
+            _categoryDto.Name = categoryName;
+            
+            Assert.AreEqual(categoryName,_categoryDto.Name);
+        }
+
+
+
+        }
 
       
     }
