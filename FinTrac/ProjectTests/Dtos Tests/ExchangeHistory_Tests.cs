@@ -23,7 +23,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenCurrency_ShouldBeSetted()
         {
             _exchangeHistoryDTO.Currency = CurrencyEnum.USA;
-            Assert.AreEqual(false, CurrencyEnum.USA);
+            Assert.AreEqual(_exchangeHistoryDTO.Currency, CurrencyEnum.USA);
         }
     }
 }
