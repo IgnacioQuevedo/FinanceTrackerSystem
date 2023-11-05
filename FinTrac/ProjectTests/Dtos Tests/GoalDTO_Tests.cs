@@ -15,6 +15,7 @@ namespace BusinessLogicTests.Dtos_Tests
     public class GoalDTO_Tests
     {
         private GoalDTO _goalDTO;
+        private Category genericCategory;
 
         #region Initialize
 
@@ -22,6 +23,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void Initialize()
         {
             _goalDTO = new GoalDTO();
+            genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
         }
 
         #endregion
@@ -65,13 +67,20 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region List Of Categories
+
         [TestMethod]
         public void GivenListOfCategories_ShoulBeSetted()
         {
             List<Category> myListOfCategories = new List<Category>();
+            myListOfCategories.Add(genericCategory);
+
             _goalDTO.CategoriesOfGoal = myListOfCategories;
+
             Assert.AreEqual(myListOfCategories, _goalDTO.CategoriesOfGoal);
         }
+
+        #endregion
 
 
 
