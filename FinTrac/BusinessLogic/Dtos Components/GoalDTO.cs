@@ -12,5 +12,6 @@ namespace BusinessLogic.Dtos_Components
     {
         public string Title { get; set; }
         public int MaxAmountToSpend { get; set; }
+        public CurrencyEnum CurrencyOfAmount { get; set; }
     }
 }

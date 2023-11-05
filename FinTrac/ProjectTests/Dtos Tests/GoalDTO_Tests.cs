@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Dto_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Goal_Components;
 
 namespace BusinessLogicTests.Dtos_Tests
 {
@@ -47,6 +49,16 @@ namespace BusinessLogicTests.Dtos_Tests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenCurrencyOfAmount_ShoulBeSetted()
+        {
+            _goalDTO.CurrencyOfAmount = CurrencyEnum.USA;
+            bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
+            Assert.IsTrue(false);
+        }
+
+
 
 
     }
