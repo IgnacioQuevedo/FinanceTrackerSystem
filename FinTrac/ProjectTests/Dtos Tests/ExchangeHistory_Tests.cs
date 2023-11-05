@@ -11,19 +11,29 @@ namespace BusinessLogicTests.Dtos_Tests
     [TestClass]
     public class ExchangeHistory_Tests
     {
-        private ExchangeHistoryDTO _exchangeHistoryDTO;
+        private ExchangeHistoryDTO _genericExchangeHistoryDTO;
+        private CurrencyEnum _genericCurrencyDTO;
+
+        #region Initialize
 
         [TestInitialize]
         public void Initialize()
         {
-            _exchangeHistoryDTO = new ExchangeHistoryDTO();
+            _genericExchangeHistoryDTO = new ExchangeHistoryDTO();
+            _genericCurrencyDTO = CurrencyEnum.USA;
         }
+
+        #endregion
+
+        #region Currency
 
         [TestMethod]
         public void GivenCurrency_ShouldBeSetted()
         {
-            _exchangeHistoryDTO.Currency = CurrencyEnum.USA;
-            Assert.AreEqual(_exchangeHistoryDTO.Currency, CurrencyEnum.USA);
+            _genericExchangeHistoryDTO.Currency = _genericCurrencyDTO;
+            Assert.AreEqual(_genericExchangeHistoryDTO.Currency, _genericCurrencyDTO);
         }
+
+        #endregion
     }
 }
