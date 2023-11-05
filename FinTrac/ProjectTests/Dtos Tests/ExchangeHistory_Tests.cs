@@ -54,7 +54,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             DateTime dateOfExchange = new DateTime(2023, 05, 01);
             _genericExchangeHistoryDTO.ValueDate = dateOfExchange;
-            Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, 0);
+            Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, dateOfExchange);
         }
 
     }
