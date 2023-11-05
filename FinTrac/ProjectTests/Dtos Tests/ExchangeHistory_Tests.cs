@@ -34,6 +34,13 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(_genericExchangeHistoryDTO.Currency, _genericCurrencyDTO);
         }
 
+        [TestMethod]
+        public void GivenValue_ShouldBeSetted()
+        {
+            _genericExchangeHistoryDTO.Value = 41;
+            Assert.AreEqual(_genericExchangeHistoryDTO.Value, 0);
+        }
+
         #endregion
     }
 }

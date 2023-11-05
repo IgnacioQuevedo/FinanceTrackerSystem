@@ -10,5 +10,6 @@ namespace BusinessLogic.Dtos_Components
     public class ExchangeHistoryDTO
     {
         public CurrencyEnum Currency { get; set; }
+        public decimal Value { get; set; }
     }
 }
