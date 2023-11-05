@@ -38,7 +38,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenValue_ShouldBeSetted()
         {
             _genericExchangeHistoryDTO.Value = 41;
-            Assert.AreEqual(_genericExchangeHistoryDTO.Value, 0);
+            Assert.AreEqual(_genericExchangeHistoryDTO.Value, 41);
         }
 
         #endregion
