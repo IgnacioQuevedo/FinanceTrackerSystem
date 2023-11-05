@@ -3,6 +3,8 @@
 
 @using Data;
 @inject UserLogged UserLogged;
+@inject IUserController UserController
+@using DataManagers.IControllers
 
 
 <PageTitle>Login</PageTitle>
@@ -33,12 +35,12 @@
 
                                     <div class="form-outline mb-4">
                                         <input type="email" id="form2Example11" class="form-control"
-                                               placeholder="Email address" @bind-value="user.Email" />
+                                               placeholder="Email address" @bind-value="userDTO.Email" />
                                         <label class="form-label" for="form2Example11">Email address</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example22" class="form-control" @bind-value="user.Password" />
+                                        <input type="password" id="form2Example22" class="form-control" @bind-value="userDTO.Password" />
                                         <label class="form-label" for="form2Example22">Password</label>
                                     </div>
 
@@ -62,9 +64,9 @@
                             <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                                 <h4 class="mb-4">We are more than just a company</h4>
                                 <p class="small mb-0">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Gonnak is created to make your life easier, is our mision to make our
+                                    customers enjoy our website helping them to have a total control of 
+                                    their own finances.
                                 </p>
                             </div>
                         </div>
@@ -79,13 +81,13 @@
 @code
 {
 
-    private User user = new User();
+    private UserDTO userDTO = new UserDTO();
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        user.Email = "nachitoquevedo@gmail.com";
-        user.Password = "Nacho200304!";
+        userDTO.Email = "gonzalocamejo859@gmail.com";
+        userDTO.Password = "MARIOCAMEJO2003!";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
 
@@ -95,9 +97,9 @@
     {
         try
         {
-            if (UserManagement.Login(user))
+            if (UserController.LoginUser(userDTO.Email, userDTO.Password))
             {
-                UserLogged.Id = UserManagement.FindUserId(user);
+                UserLogged.Email = UserController.FindUser(userDTO.Email).Email;
                 NavigationManager.NavigateTo("/Home");
             }
         }

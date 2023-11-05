@@ -5,11 +5,11 @@ using DataManagers.IControllers;
 
 namespace DataManagers;
 
-public class Controller : IUserController
+public class GenericController : IUserController
 {
     private UserRepositorySql _userRepo { get; }
 
-    public Controller(SqlContext database)
+    public GenericController(SqlContext database)
     {
         _userRepo = new UserRepositorySql(database);
     }
