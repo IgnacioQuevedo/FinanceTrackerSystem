@@ -66,6 +66,19 @@ namespace TestProject1
 
         #endregion
       
+        [TestMethod]
+        public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
+        {
+            string categoryName = "Food";
+            StatusEnum categoryStatus = StatusEnum.Enabled;
+            TypeEnum categoryType = TypeEnum.Income;
+
+            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
+
+            Assert.AreEqual(categoryName,genericCategoryDTO.categoryName);
+            Assert.AreEqual(categoryStatus,genericCategoryDTO.categoryStatus);
+            Assert.AreEqual(categoryType,genericCategoryDTO.categoryType);
+        }
       
     }
 }
