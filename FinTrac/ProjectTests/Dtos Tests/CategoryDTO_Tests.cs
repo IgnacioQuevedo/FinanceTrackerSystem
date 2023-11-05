@@ -32,7 +32,8 @@ namespace TestProject1
         }
 
         #endregion
-        
+
+        #region Status
         [TestMethod]
         public void GivenStatus_BothShouldBeSetted()
         {
@@ -44,8 +45,10 @@ namespace TestProject1
             
             _categoryDto.Status = categoryStatus2;
             Assert.AreEqual(_categoryDto.Status,categoryStatus2);
-
         }
-      
+
+        #endregion
+        
+        
     }
 }
