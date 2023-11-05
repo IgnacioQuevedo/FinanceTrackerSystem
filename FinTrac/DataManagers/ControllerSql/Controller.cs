@@ -109,7 +109,7 @@ public class Controller : IUserController
     {
         email = email.ToLower();
         UserDTO myUserDTO = new UserDTO();
-        bool logged = _userRepo.Login(ToUser(myUserDTO));
+        bool logged = _userRepo.Login(email,password);
 
         if (!logged)
         {
