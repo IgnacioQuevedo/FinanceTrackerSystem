@@ -16,14 +16,12 @@ public class GenericController : IUserController
     }
     
     
-    public bool SetUserConnected(UserDTO userToConnect)
+    public void SetUserConnected(UserDTO userToConnect)
     {
         if (userToConnect != null)
         {
             _userConnected = ToUser(userToConnect);
-            return true;
         }
-        return false;
     }
     
     #region User Repo

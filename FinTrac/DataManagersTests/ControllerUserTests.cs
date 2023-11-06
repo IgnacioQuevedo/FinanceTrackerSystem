@@ -217,8 +217,8 @@ namespace DataManagersTests
             UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo", 
                 "nachitoquevedo@gmail.com", "Nacho200304!", "");
 
-            Assert.IsTrue(_controller.SetUserConnected(userToConnect));
-
+            _controller.SetUserConnected(userToConnect);
+            
 
         }
         
