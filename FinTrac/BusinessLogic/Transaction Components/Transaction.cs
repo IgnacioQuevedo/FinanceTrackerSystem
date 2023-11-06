@@ -19,15 +19,13 @@ namespace BusinessLogic.Transaction_Components
 
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
 
-        public decimal Amount { get; set; }
-
-        public CurrencyEnum Currency { get; set; }
-
-        public TypeEnum Type { get; set; }
-
-        public Category TransactionCategory { get; set; }
         public int TransactionId { get; set; } = -1;
-
+        public decimal Amount { get; set; }
+        public CurrencyEnum Currency { get; set; }
+        public TypeEnum Type { get; set; }
+        public int? CategoryId { get; set; }
+        public Category TransactionCategory { get; set; }
+        public int? AccountId { get; set; }
         public Account TransactionAccount { get; set; }
             
         #endregion

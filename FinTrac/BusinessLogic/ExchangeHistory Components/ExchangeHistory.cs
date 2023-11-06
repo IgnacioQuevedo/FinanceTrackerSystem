@@ -16,11 +16,12 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
         #region Properties
+        public int ExchangeHistoryId { get; set; } = -1;
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
-        public int ExchangeHistoryId { get; set; } = -1;
         
+        public int? UserId{get; set; }
         public User ExchangeHistoryUser { get; set; }
 
         #endregion
