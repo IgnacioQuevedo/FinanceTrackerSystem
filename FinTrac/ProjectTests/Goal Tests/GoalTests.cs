@@ -37,7 +37,6 @@ public class GoalTests
         genericUser.AddCategory(Food);
 
         categoriesAsignedToGoal = new List<Category>();
-        
 
     }
 
@@ -104,10 +103,10 @@ public class GoalTests
 
     public void GivenNullCategories_ShouldThrowExceptionWhenTryingToApplyToOneOfThem()
     {
-        
+
         List<Category> possibleCategoriesToUse = null;
 
-        Goal myGoal = new Goal("Less night",500,possibleCategoriesToUse);
+        Goal myGoal = new Goal("Less night", 500, possibleCategoriesToUse);
         myGoal.ValidateGoal();
     }
 
@@ -132,8 +131,8 @@ public class GoalTests
         int maxAmmount = 1000;
         categoriesAsignedToGoal.Add(Food);
 
-        Goal goalExample = new Goal(title,maxAmmount,categoriesAsignedToGoal);
-        
+        Goal goalExample = new Goal(title, maxAmmount, categoriesAsignedToGoal);
+
 
         Assert.AreEqual(goalExample.Title, title);
         Assert.AreEqual(goalExample.MaxAmountToSpend, maxAmmount);
@@ -149,7 +148,7 @@ public class GoalTests
         int maxAmmount = -5;
         categoriesAsignedToGoal.Add(Food);
 
-        Goal goalExample = new Goal(title,maxAmmount,categoriesAsignedToGoal);
+        Goal goalExample = new Goal(title, maxAmmount, categoriesAsignedToGoal);
 
     }
 
