@@ -8,6 +8,7 @@ namespace DataManagers;
 public class GenericController : IUserController
 {
     private UserRepositorySql _userRepo { get; }
+    private User _userConnected { get; set; }
 
     public GenericController(SqlContext database)
     {
@@ -15,9 +16,14 @@ public class GenericController : IUserController
     }
     
     
-    public void SetUserConnected(UserDTO userToConnect)
+    public bool SetUserConnected(UserDTO userToConnect)
     {
-        throw new NotImplementedException();
+        if (userToConnect != null)
+        {
+            _userConnected = ToUser(userToConnect);
+            return true;
+        }
+        return false;
     }
     
     #region User Repo

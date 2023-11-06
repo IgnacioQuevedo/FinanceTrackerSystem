@@ -22,7 +22,7 @@
         </div>
 
         <article class="content px-4">
-            <CascadingValue Value="mainUser">
+            <CascadingValue Value="userConnected">
                 @Body
             </CascadingValue>
 
@@ -35,12 +35,13 @@
 @code{
 
 
-    public User mainUser { get; set; }
-
+    public UserDTO userConnected { get; set; }
+    
 
     protected override void OnInitialized()
     {
-        mainUser = UserController.FindUser(UserLogged.Email);
+        userConnected = UserController.ToDtoUser(UserController.FindUser(UserLogged.Email));
+        GenericController.SetUserConnected(userConnected);
     }
 
 }
