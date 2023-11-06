@@ -14,6 +14,7 @@ namespace BusinessLogicTests.Dtos_Tests
         private ExchangeHistoryDTO _genericExchangeHistoryDTO;
         private CurrencyEnum _genericCurrencyDTO;
         private decimal genericValueDTO;
+        private DateTime _dateOfExchangeDTO;
 
         #region Initialize
 
@@ -22,6 +23,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _genericExchangeHistoryDTO = new ExchangeHistoryDTO();
             _genericCurrencyDTO = CurrencyEnum.USA;
+            _dateOfExchangeDTO = new DateTime(2023, 05, 01);
         }
 
         #endregion
@@ -52,9 +54,8 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenDate_ShouldBeSetted()
         {
-            DateTime dateOfExchange = new DateTime(2023, 05, 01);
-            _genericExchangeHistoryDTO.ValueDate = dateOfExchange;
-            Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, dateOfExchange);
+            _genericExchangeHistoryDTO.ValueDate = _dateOfExchangeDTO;
+            Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, _dateOfExchangeDTO);
         }
 
     }
