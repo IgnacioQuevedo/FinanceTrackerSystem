@@ -63,11 +63,12 @@ namespace BusinessLogicTests.Dtos_Tests
 
 
         [TestMethod]
-        public void GivenValues_ShouldBePossibleToCreateExchangeHistoryDTO() 
-        { 
+        public void GivenValues_ShouldBePossibleToCreateExchangeHistoryDTO()
+        {
             ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO);
-
-            Assert.AreEqual(false, exchangeHistoryDTO);
+            Assert.AreEqual(_genericCurrencyDTO, exchangeHistoryDTO.Currency);
+            Assert.AreEqual(genericValueDTO, exchangeHistoryDTO.Value);
+            Assert.AreEqual(_dateOfExchangeDTO, exchangeHistoryDTO.ValueDate);
         }
 
     }
