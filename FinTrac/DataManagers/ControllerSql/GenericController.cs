@@ -13,7 +13,13 @@ public class GenericController : IUserController
     {
         _userRepo = new UserRepositorySql(database);
     }
-
+    
+    
+    public void SetUserConnected(UserDTO userToConnect)
+    {
+        throw new NotImplementedException();
+    }
+    
     #region User Repo
 
     #region ToUser
@@ -115,7 +121,6 @@ public class GenericController : IUserController
         {
             throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
         }
-
         return true;
     }
 
@@ -133,7 +138,6 @@ public class GenericController : IUserController
     #endregion
 
     #endregion
-
 
 
 }

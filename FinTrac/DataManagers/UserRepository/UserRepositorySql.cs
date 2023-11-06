@@ -7,6 +7,7 @@ namespace DataManagers;
 public class UserRepositorySql
 {
     private SqlContext _database;
+    
 
     public UserRepositorySql(SqlContext database)
     {
@@ -14,6 +15,7 @@ public class UserRepositorySql
     }
 
 
+    
     public void Create(User userToAdd)
     {
         _database.Users.Add(userToAdd);
@@ -50,6 +52,7 @@ public class UserRepositorySql
         {
             return true;
         }
+        
         return false;
     }
 }

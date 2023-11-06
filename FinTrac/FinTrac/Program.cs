@@ -13,14 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddSingleton<UserLogged>();
+
 
 builder.Services.AddDbContext<SqlContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped<UserRepositorySql>();
+//builder.Services.AddScoped<UserRepositorySql>();
+builder.Services.AddSingleton<UserLogged>();
 builder.Services.AddScoped<GenericController>();
 builder.Services.AddScoped<IUserController, GenericController>();
 

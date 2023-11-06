@@ -99,7 +99,6 @@
         {
             if (UserController.LoginUser(userDTO.Email, userDTO.Password))
             {
-                UserLogged.Email = UserController.FindUser(userDTO.Email).Email;
                 NavigationManager.NavigateTo("/Home");
             }
         }
