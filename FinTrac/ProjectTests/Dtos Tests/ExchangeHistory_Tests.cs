@@ -50,12 +50,24 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region Date
 
         [TestMethod]
         public void GivenDate_ShouldBeSetted()
         {
             _genericExchangeHistoryDTO.ValueDate = _dateOfExchangeDTO;
             Assert.AreEqual(_genericExchangeHistoryDTO.ValueDate, _dateOfExchangeDTO);
+        }
+
+        #endregion
+
+
+        [TestMethod]
+        public void GivenValues_ShouldBePossibleToCreateExchangeHistoryDTO() 
+        { 
+            ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO);
+
+            Assert.AreEqual(false, exchangeHistoryDTO);
         }
 
     }
