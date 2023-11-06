@@ -1,3 +1,4 @@
+using BusinessLogic.Account_Components;
 using BusinessLogic.User_Components;
 using DataManagers;
 
@@ -138,7 +139,34 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
+        [TestMethod]
+        public void GivenUserConnected_ShouldInstanceUserLists()
+        {
+            bool allListsCorrect = true;
+            List<Account> accounts = _genericUser.MyAccounts;
+            _userRepo.InstanceLists(_genericUser);
+            Assert.AreEqual(0,_genericUser.MyCategories.Count);
+            Assert.AreEqual(0,_genericUser.MyAccounts.Count);
+            Assert.AreEqual(0,_genericUser.MyGoals.Count);
+            Assert.AreEqual(0,_genericUser.MyExchangesHistory.Count);
+            Assert.AreEqual(0,_genericUser.MyExchangesHistory.Count);
+
+            foreach (var account in accounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if (transaction == null)
+                    {
+                        allListsCorrect = false;
+                    }
+                }
+            }
+            
+            Assert.IsTrue(allListsCorrect);
+            
+            
+        }
         
     }
 }
