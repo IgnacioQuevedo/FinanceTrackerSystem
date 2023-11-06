@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataManagers.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20231101180213_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231106150756_InitializeDB")]
+    partial class InitializeDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace DataManagers.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Account");
 
                     b.UseTptMappingStrategy();
                 });
@@ -62,9 +62,6 @@ namespace DataManagers.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
-
-                    b.Property<int?>("GoalId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -81,11 +78,9 @@ namespace DataManagers.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.HasIndex("GoalId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("BusinessLogic.ExchangeHistory_Components.ExchangeHistory", b =>
@@ -112,7 +107,7 @@ namespace DataManagers.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ExchangeHistories");
+                    b.ToTable("ExchangeHistory");
                 });
 
             modelBuilder.Entity("BusinessLogic.Goal_Components.Goal", b =>
@@ -140,7 +135,7 @@ namespace DataManagers.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goal");
                 });
 
             modelBuilder.Entity("BusinessLogic.Transaction_Components.Transaction", b =>
@@ -157,6 +152,9 @@ namespace DataManagers.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -167,9 +165,6 @@ namespace DataManagers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransactionCategoryCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -177,9 +172,9 @@ namespace DataManagers.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("TransactionCategoryCategoryId");
+                    b.HasIndex("CategoryId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("BusinessLogic.User_Components.User", b =>
@@ -212,6 +207,21 @@ namespace DataManagers.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CategoryGoal", b =>
+                {
+                    b.Property<int>("CategoriesOfGoalCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryGoalsGoalId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesOfGoalCategoryId", "CategoryGoalsGoalId");
+
+                    b.HasIndex("CategoryGoalsGoalId");
+
+                    b.ToTable("CategoryGoal");
                 });
 
             modelBuilder.Entity("BusinessLogic.Account_Components.CreditCardAccount", b =>
@@ -247,49 +257,68 @@ namespace DataManagers.Migrations
 
             modelBuilder.Entity("BusinessLogic.Account_Components.Account", b =>
                 {
-                    b.HasOne("BusinessLogic.User_Components.User", null)
+                    b.HasOne("BusinessLogic.User_Components.User", "AccountUser")
                         .WithMany("MyAccounts")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("AccountUser");
                 });
 
             modelBuilder.Entity("BusinessLogic.Category_Components.Category", b =>
                 {
-                    b.HasOne("BusinessLogic.Goal_Components.Goal", null)
-                        .WithMany("CategoriesOfGoal")
-                        .HasForeignKey("GoalId");
-
-                    b.HasOne("BusinessLogic.User_Components.User", null)
+                    b.HasOne("BusinessLogic.User_Components.User", "CategoryUser")
                         .WithMany("MyCategories")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("CategoryUser");
                 });
 
             modelBuilder.Entity("BusinessLogic.ExchangeHistory_Components.ExchangeHistory", b =>
                 {
-                    b.HasOne("BusinessLogic.User_Components.User", null)
+                    b.HasOne("BusinessLogic.User_Components.User", "ExchangeHistoryUser")
                         .WithMany("MyExchangesHistory")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("ExchangeHistoryUser");
                 });
 
             modelBuilder.Entity("BusinessLogic.Goal_Components.Goal", b =>
                 {
-                    b.HasOne("BusinessLogic.User_Components.User", null)
+                    b.HasOne("BusinessLogic.User_Components.User", "GoalUser")
                         .WithMany("MyGoals")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("GoalUser");
                 });
 
             modelBuilder.Entity("BusinessLogic.Transaction_Components.Transaction", b =>
                 {
-                    b.HasOne("BusinessLogic.Account_Components.Account", null)
+                    b.HasOne("BusinessLogic.Account_Components.Account", "TransactionAccount")
                         .WithMany("MyTransactions")
                         .HasForeignKey("AccountId");
 
                     b.HasOne("BusinessLogic.Category_Components.Category", "TransactionCategory")
                         .WithMany()
-                        .HasForeignKey("TransactionCategoryCategoryId")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("TransactionAccount");
+
+                    b.Navigation("TransactionCategory");
+                });
+
+            modelBuilder.Entity("CategoryGoal", b =>
+                {
+                    b.HasOne("BusinessLogic.Category_Components.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesOfGoalCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TransactionCategory");
+                    b.HasOne("BusinessLogic.Goal_Components.Goal", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryGoalsGoalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BusinessLogic.Account_Components.CreditCardAccount", b =>
@@ -313,11 +342,6 @@ namespace DataManagers.Migrations
             modelBuilder.Entity("BusinessLogic.Account_Components.Account", b =>
                 {
                     b.Navigation("MyTransactions");
-                });
-
-            modelBuilder.Entity("BusinessLogic.Goal_Components.Goal", b =>
-                {
-                    b.Navigation("CategoriesOfGoal");
                 });
 
             modelBuilder.Entity("BusinessLogic.User_Components.User", b =>
