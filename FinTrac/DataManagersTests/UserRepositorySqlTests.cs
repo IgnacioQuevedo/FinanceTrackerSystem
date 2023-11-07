@@ -1,5 +1,6 @@
 using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Dto_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
@@ -17,6 +18,7 @@ namespace DataManagersTests
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
         private User _genericUser;
+        private UserDTO _genericUserDTO;
 
 
         [TestInitialize]
@@ -25,6 +27,7 @@ namespace DataManagersTests
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+            _genericUserDTO =  new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
         }
 
         #endregion
@@ -83,15 +86,16 @@ namespace DataManagersTests
         public void GivenUserThatWantsToLogin_ShouldBePossibleToCheckIfHisLoginDataIsCorrect()
         {
             _userRepo.Create(_genericUser);
+            
 
-            Assert.IsTrue(_userRepo.Login(_genericUser.Email, _genericUser.Password));
+            Assert.IsTrue(_userRepo.Login(_genericUserDTO));
         }
 
         [TestMethod]
         public void GivenUserThatWantsToLoginButIsNotRegistered_ShouldReturnFalse()
         {
             User userNotRegistered = new User("Jhon", "Camaleon", "jhonnya@gmail.com", "LittleJhonny123", "");
-            Assert.IsFalse(_userRepo.Login(userNotRegistered.Email, userNotRegistered.Password));
+            Assert.IsFalse(_userRepo.Login(_genericUserDTO));
         }
 
         #endregion

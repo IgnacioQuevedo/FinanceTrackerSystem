@@ -1,3 +1,4 @@
+using BusinessLogic.Dto_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Microsoft.EntityFrameworkCore;
@@ -57,15 +58,14 @@ public class UserRepositorySql
         return _database.Users.FirstOrDefault(u => u.Email == emailAK);
     }
 
-    public bool Login(string email, string password)
+    public bool Login(UserDTO userLogin)
     {
-        User userFound = FindUserInDb(email);
+        User userFound = FindUserInDb(userLogin.Email);
 
-        if (userFound != null && password.Equals(userFound.Password))
+        if (userFound != null && userLogin.Password.Equals(userFound.Password))
         {
             return true;
         }
-        
         return false;
     }
 }

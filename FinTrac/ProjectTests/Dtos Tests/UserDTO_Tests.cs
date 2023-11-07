@@ -71,7 +71,9 @@ namespace TestProject1
 
         }
         #endregion
-
+        
+        #region Setting an Id
+        
         [TestMethod]
         public void GivenId_ShouldBeSetted()
         {
@@ -80,7 +82,8 @@ namespace TestProject1
             
             Assert.AreEqual(givenId, UserDTO.UserId);
         }
-
+        #endregion
+        
         #region Constructor
         [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateAUserDTO()

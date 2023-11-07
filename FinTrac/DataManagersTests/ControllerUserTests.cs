@@ -13,14 +13,14 @@ namespace DataManagersTests
         private GenericController _controller;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
-        private UserDTO userDto;
+        private UserDTO _userDTO;
 
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _controller = new GenericController(_testDb);
-            userDto = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+            _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
         }
 
         #endregion
@@ -40,13 +40,13 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
         {
-            User userConverted = _controller.ToUser(userDto);
+            User userConverted = _controller.ToUser(_userDTO);
 
-            Assert.AreEqual(userDto.FirstName, userConverted.FirstName);
-            Assert.AreEqual(userDto.LastName, userConverted.LastName);
-            Assert.AreEqual(userDto.Email, userConverted.Email);
-            Assert.AreEqual(userDto.Password, userConverted.Password);
-            Assert.AreEqual(userDto.Address, userConverted.Address);
+            Assert.AreEqual(_userDTO.FirstName, userConverted.FirstName);
+            Assert.AreEqual(_userDTO.LastName, userConverted.LastName);
+            Assert.AreEqual(_userDTO.Email, userConverted.Email);
+            Assert.AreEqual(_userDTO.Password, userConverted.Password);
+            Assert.AreEqual(_userDTO.Address, userConverted.Address);
         }
 
         [TestMethod]
@@ -81,21 +81,21 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
-            _testDb.Add(_controller.ToUser(userDto));
+            _testDb.Add(_controller.ToUser(_userDTO));
             _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(userDto).Email);
+            User userFound = _controller.FindUser(_controller.ToUser(_userDTO).Email);
 
-            Assert.AreEqual(userFound.Email, userDto.Email);
+            Assert.AreEqual(userFound.Email, _userDTO.Email);
         }
 
         [TestMethod]
         public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
         {
-            _testDb.Add(_controller.ToUser(userDto));
+            _testDb.Add(_controller.ToUser(_userDTO));
             _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(userDto).Password);
+            User userFound = _controller.FindUser(_controller.ToUser(_userDTO).Password);
 
             Assert.IsNull(userFound);
         }
@@ -142,8 +142,8 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserToCreate_PasswordsMustMatch()
         {
-            string passwordRepeated = userDto.Password;
-            bool passwordMatch = _controller.PasswordMatch(userDto.Password, passwordRepeated);
+            string passwordRepeated = _userDTO.Password;
+            bool passwordMatch = _controller.PasswordMatch(_userDTO.Password, passwordRepeated);
                 
             Assert.IsTrue(passwordMatch);
         }
@@ -153,7 +153,7 @@ namespace DataManagersTests
         public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
         {
             string passwordIncorrect = "passwordIncorrect";
-            _controller.PasswordMatch(userDto.Password, passwordIncorrect);
+            _controller.PasswordMatch(_userDTO.Password, passwordIncorrect);
 
         }
         #endregion
@@ -196,17 +196,21 @@ namespace DataManagersTests
         #region Login
         
         [TestMethod]
-        public void GivenUserInDb_ShouldBePossibleToLogin()
+        public void GivenUserDTO_ShouldBePossibleToLogin()
         {
-            _controller.RegisterUser(userDto);
-            Assert.IsTrue(_controller.LoginUser(userDto.Email, userDto.Password));
+            UserDTO possibleLogin = new UserDTO();
+            possibleLogin.Email = "jhonnie@gmail.com";
+            possibleLogin.Password = "Jhoooniee123";
+            
+            _controller.RegisterUser(_userDTO);
+            Assert.IsTrue(_controller.LoginUser(possibleLogin));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
         {
-            _controller.LoginUser(userDto.Email, userDto.Password);
+            _controller.LoginUser(_userDTO);
         }
         
         #endregion
