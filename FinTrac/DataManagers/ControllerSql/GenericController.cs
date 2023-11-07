@@ -21,6 +21,7 @@ public class GenericController : IUserController
         if (userToConnect != null)
         {
             _userConnected = ToUser(userToConnect);
+            _userRepo.InstanceLists(_userConnected);
         }
     }
     

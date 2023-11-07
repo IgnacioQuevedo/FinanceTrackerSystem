@@ -146,40 +146,25 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserConnected_ShouldInstanceUserLists()
         {
-            bool allListsCorrect = true;
             _userRepo.Create(_genericUser);
-            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
-            Transaction transactionExample = new Transaction("Gonnak Restaurant", 100, DateTime.Now, CurrencyEnum.UY, TypeEnum.Income, category);
-            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou", 4000, CurrencyEnum.UY, DateTime.Now);
-
             User userFromDb = _userRepo.FindUserInDb(_genericUser.Email);
             userFromDb = _userRepo.InstanceLists(userFromDb);
-
+            
+            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            Transaction transactionExample = new Transaction("Gonnak Restaurant", 100, DateTime.Now, CurrencyEnum.UY,TypeEnum.Income, category);
+            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou", 4000, CurrencyEnum.UY, DateTime.Now);
+            
             userFromDb.AddCategory(category);
             userFromDb.AddMonetaryAccount(monetaryAccount);
             userFromDb.MyAccounts[0].AddTransaction(transactionExample);
             _userRepo.Update(userFromDb);
 
-            User userFromDbUpdated = _userRepo.FindUserInDb(_genericUser.Email);
-
-            userFromDbUpdated = _userRepo.InstanceLists(userFromDb);
-            Assert.AreEqual(1, userFromDbUpdated.MyCategories.Count);
-            Assert.AreEqual(1, userFromDbUpdated.MyAccounts.Count);
-            Assert.AreEqual(0, userFromDbUpdated.MyGoals.Count);
-            Assert.AreEqual(0, userFromDbUpdated.MyExchangesHistory.Count);
-            List<Account> accounts = userFromDbUpdated.MyAccounts;
-
-            foreach (var account in accounts)
-            {
-                foreach (var transaction in account.MyTransactions)
-                {
-                    if (transaction == null)
-                    {
-                        allListsCorrect = false;
-                    }
-                }
-            }
-            Assert.IsTrue(allListsCorrect);
+            userFromDb = _userRepo.InstanceLists(userFromDb);
+            Assert.AreEqual(1, userFromDb.MyCategories.Count);
+            Assert.AreEqual(1, userFromDb.MyAccounts.Count);
+            Assert.AreEqual(0, userFromDb.MyGoals.Count);
+            Assert.AreEqual(0, userFromDb.MyExchangesHistory.Count);
+            Assert.AreEqual(1, userFromDb.MyAccounts[0].MyTransactions.Count);
         }
     }
 }
