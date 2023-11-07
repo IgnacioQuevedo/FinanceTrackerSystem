@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using DataManagers;
 using DataManagers.IControllers;
-using FinTrac.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Controller = Microsoft.AspNetCore.Mvc.Controller;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +17,6 @@ builder.Services.AddDbContext<SqlContext>(options =>
 });
 
 //builder.Services.AddScoped<UserRepositorySql>();
-builder.Services.AddSingleton<UserLogged>();
 builder.Services.AddScoped<GenericController>();
 builder.Services.AddScoped<IUserController, GenericController>();
 

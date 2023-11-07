@@ -2,11 +2,8 @@
 
 
 @using DataManagers;
-@using Data;
 @inject IUserController UserController
 @using DataManagers.IControllers
-
-@inject UserLogged UserLogged;
 
 <PageTitle>FinTrac</PageTitle>
 
@@ -22,26 +19,9 @@
         </div>
 
         <article class="content px-4">
-            <CascadingValue Value="userConnected">
-                @Body
-            </CascadingValue>
-
+            
         </article>
 
 
     </main>
 </div>
-
-@code{
-
-
-    public UserDTO userConnected { get; set; }
-    
-
-    protected override void OnInitialized()
-    {
-        userConnected = UserController.ToDtoUser(UserController.FindUser(UserLogged.Email));
-        userConnected.UserId = UserLogged.UserId;
-    }
-
-}
