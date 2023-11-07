@@ -41,8 +41,7 @@
     protected override void OnInitialized()
     {
         userConnected = UserController.ToDtoUser(UserController.FindUser(UserLogged.Email));
-        UserLogged.UserId = userConnected.UserId;
-        GenericController.SetUserConnected(userConnected);
+        userConnected.UserId = UserLogged.UserId;
     }
 
 }

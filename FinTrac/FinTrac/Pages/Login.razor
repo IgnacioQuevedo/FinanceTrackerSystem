@@ -97,9 +97,10 @@
     {
         try
         {
-            if (UserController.LoginUser(userDTO.Email, userDTO.Password))
+            if (UserController.LoginUser(userDTO))
             {
                 UserLogged.Email = userDTO.Email;
+                
                 NavigationManager.NavigateTo("/Home");
             }
         }
