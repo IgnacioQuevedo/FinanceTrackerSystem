@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataManagers.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitializeDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,7 +29,7 @@ namespace DataManagers.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Accounts",
+                name: "Account",
                 columns: table => new
                 {
                     AccountId = table.Column<int>(type: "int", nullable: false)
@@ -41,16 +41,37 @@ namespace DataManagers.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.AccountId);
+                    table.PrimaryKey("PK_Account", x => x.AccountId);
                     table.ForeignKey(
-                        name: "FK_Accounts_Users_UserId",
+                        name: "FK_Account_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExchangeHistories",
+                name: "Category",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                    table.ForeignKey(
+                        name: "FK_Category_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExchangeHistory",
                 columns: table => new
                 {
                     ExchangeHistoryId = table.Column<int>(type: "int", nullable: false)
@@ -62,16 +83,16 @@ namespace DataManagers.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExchangeHistories", x => x.ExchangeHistoryId);
+                    table.PrimaryKey("PK_ExchangeHistory", x => x.ExchangeHistoryId);
                     table.ForeignKey(
-                        name: "FK_ExchangeHistories_Users_UserId",
+                        name: "FK_ExchangeHistory_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Goals",
+                name: "Goal",
                 columns: table => new
                 {
                     GoalId = table.Column<int>(type: "int", nullable: false)
@@ -83,9 +104,9 @@ namespace DataManagers.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Goals", x => x.GoalId);
+                    table.PrimaryKey("PK_Goal", x => x.GoalId);
                     table.ForeignKey(
-                        name: "FK_Goals_Users_UserId",
+                        name: "FK_Goal_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
@@ -105,9 +126,9 @@ namespace DataManagers.Migrations
                 {
                     table.PrimaryKey("PK_CreditCardAccounts", x => x.AccountId);
                     table.ForeignKey(
-                        name: "FK_CreditCardAccounts_Accounts_AccountId",
+                        name: "FK_CreditCardAccounts_Account_AccountId",
                         column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        principalTable: "Account",
                         principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -123,42 +144,15 @@ namespace DataManagers.Migrations
                 {
                     table.PrimaryKey("PK_MonetaryAccounts", x => x.AccountId);
                     table.ForeignKey(
-                        name: "FK_MonetaryAccounts_Accounts_AccountId",
+                        name: "FK_MonetaryAccounts_Account_AccountId",
                         column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        principalTable: "Account",
                         principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    GoalId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                    table.ForeignKey(
-                        name: "FK_Categories_Goals_GoalId",
-                        column: x => x.GoalId,
-                        principalTable: "Goals",
-                        principalColumn: "GoalId");
-                    table.ForeignKey(
-                        name: "FK_Categories_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "Transaction",
                 columns: table => new
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
@@ -168,84 +162,110 @@ namespace DataManagers.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Currency = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    TransactionCategoryCategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     AccountId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.TransactionId);
+                    table.PrimaryKey("PK_Transaction", x => x.TransactionId);
                     table.ForeignKey(
-                        name: "FK_Transactions_Accounts_AccountId",
+                        name: "FK_Transaction_Account_AccountId",
                         column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        principalTable: "Account",
                         principalColumn: "AccountId");
                     table.ForeignKey(
-                        name: "FK_Transactions_Categories_TransactionCategoryCategoryId",
-                        column: x => x.TransactionCategoryCategoryId,
-                        principalTable: "Categories",
+                        name: "FK_Transaction_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "CategoryId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryGoal",
+                columns: table => new
+                {
+                    CategoriesOfGoalCategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryGoalsGoalId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryGoal", x => new { x.CategoriesOfGoalCategoryId, x.CategoryGoalsGoalId });
+                    table.ForeignKey(
+                        name: "FK_CategoryGoal_Category_CategoriesOfGoalCategoryId",
+                        column: x => x.CategoriesOfGoalCategoryId,
+                        principalTable: "Category",
                         principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CategoryGoal_Goal_CategoryGoalsGoalId",
+                        column: x => x.CategoryGoalsGoalId,
+                        principalTable: "Goal",
+                        principalColumn: "GoalId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_UserId",
-                table: "Accounts",
+                name: "IX_Account_UserId",
+                table: "Account",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_GoalId",
-                table: "Categories",
-                column: "GoalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_UserId",
-                table: "Categories",
+                name: "IX_Category_UserId",
+                table: "Category",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExchangeHistories_UserId",
-                table: "ExchangeHistories",
+                name: "IX_CategoryGoal_CategoryGoalsGoalId",
+                table: "CategoryGoal",
+                column: "CategoryGoalsGoalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExchangeHistory_UserId",
+                table: "ExchangeHistory",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goals_UserId",
-                table: "Goals",
+                name: "IX_Goal_UserId",
+                table: "Goal",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AccountId",
-                table: "Transactions",
+                name: "IX_Transaction_AccountId",
+                table: "Transaction",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_TransactionCategoryCategoryId",
-                table: "Transactions",
-                column: "TransactionCategoryCategoryId");
+                name: "IX_Transaction_CategoryId",
+                table: "Transaction",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CategoryGoal");
+
+            migrationBuilder.DropTable(
                 name: "CreditCardAccounts");
 
             migrationBuilder.DropTable(
-                name: "ExchangeHistories");
+                name: "ExchangeHistory");
 
             migrationBuilder.DropTable(
                 name: "MonetaryAccounts");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "Transaction");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Goal");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Account");
 
             migrationBuilder.DropTable(
-                name: "Goals");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Users");

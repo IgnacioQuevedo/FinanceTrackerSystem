@@ -33,6 +33,12 @@ namespace BusinessLogic.User_Components
         {
         }
 
+        public User(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
+        
         public User(string firstName, string lastName, string email, string password, string? address)
         {
             FirstName = firstName;

@@ -9,13 +9,14 @@ namespace BusinessLogic.Account_Components
     {
         #region Properties
 
+        public int AccountId { get; set; } = -1;
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
-        public int AccountId { get; set; } = -1;
-        public List<Transaction> MyTransactions { get; set; }
         
+        public int? UserId { get; set; }
         public User AccountUser { get; set; }
+        public List<Transaction> MyTransactions { get; set; }
 
         #endregion
 

@@ -1,3 +1,7 @@
+using BusinessLogic.Account_Components;
+using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using DataManagers;
 
@@ -34,7 +38,7 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
         #region Creation and Necessary Validations
 
         [TestMethod]
@@ -115,14 +119,14 @@ namespace DataManagersTests
         #endregion
 
         #region Id settings
-        
+
         [TestMethod]
         public void WhenUserIsCreated_AnIdMustBeAssigned()
         {
             _userRepo.Create(_genericUser);
-            Assert.AreEqual(1,_testDb.Users.First().UserId);
+            Assert.AreEqual(1, _testDb.Users.First().UserId);
         }
-        
+
         #endregion
 
         #region Find
@@ -131,14 +135,36 @@ namespace DataManagersTests
         public void GivenAnId_UserShouldBeFound()
         {
             _userRepo.Create(_genericUser);
-            
+
             User userFound = _userRepo.FindUserInDb(_genericUser.Email);
-            
-            Assert.AreEqual(userFound,_genericUser);
+
+            Assert.AreEqual(userFound, _genericUser);
         }
 
         #endregion
-        
-        
+
+        [TestMethod]
+        public void GivenUserConnected_ShouldInstanceUserLists()
+        {
+            _userRepo.Create(_genericUser);
+            User userFromDb = _userRepo.FindUserInDb(_genericUser.Email);
+            userFromDb = _userRepo.InstanceLists(userFromDb);
+            
+            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            Transaction transactionExample = new Transaction("Gonnak Restaurant", 100, DateTime.Now, CurrencyEnum.UY,TypeEnum.Income, category);
+            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou", 4000, CurrencyEnum.UY, DateTime.Now);
+            
+            userFromDb.AddCategory(category);
+            userFromDb.AddMonetaryAccount(monetaryAccount);
+            userFromDb.MyAccounts[0].AddTransaction(transactionExample);
+            _userRepo.Update(userFromDb);
+
+            userFromDb = _userRepo.InstanceLists(userFromDb);
+            Assert.AreEqual(1, userFromDb.MyCategories.Count);
+            Assert.AreEqual(1, userFromDb.MyAccounts.Count);
+            Assert.AreEqual(0, userFromDb.MyGoals.Count);
+            Assert.AreEqual(0, userFromDb.MyExchangesHistory.Count);
+            Assert.AreEqual(1, userFromDb.MyAccounts[0].MyTransactions.Count);
+        }
     }
 }

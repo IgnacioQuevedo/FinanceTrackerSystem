@@ -30,9 +30,6 @@ namespace DataManagers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
-                    b.Property<int>("AccountUserUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -43,9 +40,12 @@ namespace DataManagers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("AccountId");
 
-                    b.HasIndex("AccountUserUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Account");
 
@@ -60,9 +60,6 @@ namespace DataManagers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
-                    b.Property<int>("CategoryUserUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -73,9 +70,12 @@ namespace DataManagers.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("CategoryId");
 
-                    b.HasIndex("CategoryUserUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Category");
                 });
@@ -91,7 +91,7 @@ namespace DataManagers.Migrations
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExchangeHistoryUserUserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Value")
@@ -102,7 +102,7 @@ namespace DataManagers.Migrations
 
                     b.HasKey("ExchangeHistoryId");
 
-                    b.HasIndex("ExchangeHistoryUserUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ExchangeHistory");
                 });
@@ -118,9 +118,6 @@ namespace DataManagers.Migrations
                     b.Property<int>("CurrencyOfAmount")
                         .HasColumnType("int");
 
-                    b.Property<int>("GoalUserUserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MaxAmountToSpend")
                         .HasColumnType("int");
 
@@ -128,9 +125,12 @@ namespace DataManagers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("GoalId");
 
-                    b.HasIndex("GoalUserUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Goal");
                 });
@@ -143,8 +143,14 @@ namespace DataManagers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
 
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -156,20 +162,14 @@ namespace DataManagers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransactionAccountAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionCategoryCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("TransactionAccountAccountId");
+                    b.HasIndex("AccountId");
 
-                    b.HasIndex("TransactionCategoryCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Transaction");
                 });
@@ -256,9 +256,7 @@ namespace DataManagers.Migrations
                 {
                     b.HasOne("BusinessLogic.User_Components.User", "AccountUser")
                         .WithMany("MyAccounts")
-                        .HasForeignKey("AccountUserUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("AccountUser");
                 });
@@ -267,9 +265,7 @@ namespace DataManagers.Migrations
                 {
                     b.HasOne("BusinessLogic.User_Components.User", "CategoryUser")
                         .WithMany("MyCategories")
-                        .HasForeignKey("CategoryUserUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CategoryUser");
                 });
@@ -278,9 +274,7 @@ namespace DataManagers.Migrations
                 {
                     b.HasOne("BusinessLogic.User_Components.User", "ExchangeHistoryUser")
                         .WithMany("MyExchangesHistory")
-                        .HasForeignKey("ExchangeHistoryUserUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("ExchangeHistoryUser");
                 });
@@ -289,9 +283,7 @@ namespace DataManagers.Migrations
                 {
                     b.HasOne("BusinessLogic.User_Components.User", "GoalUser")
                         .WithMany("MyGoals")
-                        .HasForeignKey("GoalUserUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("GoalUser");
                 });
@@ -300,15 +292,11 @@ namespace DataManagers.Migrations
                 {
                     b.HasOne("BusinessLogic.Account_Components.Account", "TransactionAccount")
                         .WithMany("MyTransactions")
-                        .HasForeignKey("TransactionAccountAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("BusinessLogic.Category_Components.Category", "TransactionCategory")
                         .WithMany()
-                        .HasForeignKey("TransactionCategoryCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("TransactionAccount");
 

@@ -1,19 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace DataManagers;
-
-public interface IAppContextFactory
+namespace DataManagers
 {
-    SqlContext CreateDbContext();
-}
-
-public class InMemoryAppContextFactory : IAppContextFactory
-{
-    public SqlContext CreateDbContext()
+    public interface IAppContextFactory
     {
-        var optionsBuilder = new DbContextOptionsBuilder<SqlContext>();
-        optionsBuilder.UseInMemoryDatabase("TestDB");
+        SqlContext CreateDbContext();
+    }
 
-        return new SqlContext(optionsBuilder.Options);
+    public class InMemoryAppContextFactory : IAppContextFactory
+    {
+        public SqlContext CreateDbContext()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<SqlContext>();
+            optionsBuilder.UseInMemoryDatabase("TestDB");
+            
+            return new SqlContext(optionsBuilder.Options);
+        }
     }
 }
