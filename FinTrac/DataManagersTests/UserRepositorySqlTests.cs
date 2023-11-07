@@ -1,4 +1,7 @@
 using BusinessLogic.Account_Components;
+using BusinessLogic.Category_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using DataManagers;
 
@@ -35,7 +38,7 @@ namespace DataManagersTests
         }
 
         #endregion
-        
+
         #region Creation and Necessary Validations
 
         [TestMethod]
@@ -116,14 +119,14 @@ namespace DataManagersTests
         #endregion
 
         #region Id settings
-        
+
         [TestMethod]
         public void WhenUserIsCreated_AnIdMustBeAssigned()
         {
             _userRepo.Create(_genericUser);
-            Assert.AreEqual(1,_testDb.Users.First().UserId);
+            Assert.AreEqual(1, _testDb.Users.First().UserId);
         }
-        
+
         #endregion
 
         #region Find
@@ -132,10 +135,10 @@ namespace DataManagersTests
         public void GivenAnId_UserShouldBeFound()
         {
             _userRepo.Create(_genericUser);
-            
+
             User userFound = _userRepo.FindUserInDb(_genericUser.Email);
-            
-            Assert.AreEqual(userFound,_genericUser);
+
+            Assert.AreEqual(userFound, _genericUser);
         }
 
         #endregion
@@ -144,13 +147,27 @@ namespace DataManagersTests
         public void GivenUserConnected_ShouldInstanceUserLists()
         {
             bool allListsCorrect = true;
-            List<Account> accounts = _genericUser.MyAccounts;
-            _userRepo.InstanceLists(_genericUser);
-            Assert.AreEqual(0,_genericUser.MyCategories.Count);
-            Assert.AreEqual(0,_genericUser.MyAccounts.Count);
-            Assert.AreEqual(0,_genericUser.MyGoals.Count);
-            Assert.AreEqual(0,_genericUser.MyExchangesHistory.Count);
-            Assert.AreEqual(0,_genericUser.MyExchangesHistory.Count);
+            _userRepo.Create(_genericUser);
+            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            Transaction transactionExample = new Transaction("Gonnak Restaurant", 100, DateTime.Now, CurrencyEnum.UY, TypeEnum.Income, category);
+            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou", 4000, CurrencyEnum.UY, DateTime.Now);
+
+            User userFromDb = _userRepo.FindUserInDb(_genericUser.Email);
+            userFromDb = _userRepo.InstanceLists(userFromDb);
+
+            userFromDb.AddCategory(category);
+            userFromDb.AddMonetaryAccount(monetaryAccount);
+            userFromDb.MyAccounts[0].AddTransaction(transactionExample);
+            _userRepo.Update(userFromDb);
+
+            User userFromDbUpdated = _userRepo.FindUserInDb(_genericUser.Email);
+
+            userFromDbUpdated = _userRepo.InstanceLists(userFromDb);
+            Assert.AreEqual(1, userFromDbUpdated.MyCategories.Count);
+            Assert.AreEqual(1, userFromDbUpdated.MyAccounts.Count);
+            Assert.AreEqual(0, userFromDbUpdated.MyGoals.Count);
+            Assert.AreEqual(0, userFromDbUpdated.MyExchangesHistory.Count);
+            List<Account> accounts = userFromDbUpdated.MyAccounts;
 
             foreach (var account in accounts)
             {
@@ -162,11 +179,7 @@ namespace DataManagersTests
                     }
                 }
             }
-            
             Assert.IsTrue(allListsCorrect);
-            
-            
         }
-        
     }
 }

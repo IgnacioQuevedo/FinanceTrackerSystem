@@ -218,8 +218,6 @@ namespace DataManagersTests
                 "nachitoquevedo@gmail.com", "Nacho200304!", "");
 
             _controller.SetUserConnected(userToConnect);
-            
-
         }
         
     }
