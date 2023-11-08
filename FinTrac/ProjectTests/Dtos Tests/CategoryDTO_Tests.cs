@@ -18,6 +18,16 @@ namespace TestProject1
 
         #endregion
 
+        #region Setting category Id
+        [TestMethod]
+        public void GivenId_ShouldBeSetted()
+        {
+            _categoryDto.Id = 1;
+            Assert.AreEqual(1,_categoryDto.Id);
+        }
+
+        #endregion
+        
         #region Name
 
         [TestMethod]
