@@ -66,7 +66,7 @@ namespace ControllerTests
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income);
             categoryDTO_ToConvert.Id = 1;
 
-            Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
+            MapperCategory.ToCategory(categoryDTO_ToConvert);
         }
         
         
