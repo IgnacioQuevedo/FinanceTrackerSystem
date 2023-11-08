@@ -49,7 +49,7 @@ namespace BusinessLogicTests.Dto_Components
             string password = "12233242ADADSAsd";
             UserLoginDTO = new UserLoginDTO(email, password);
             Assert.AreEqual(email, UserLoginDTO.Email);
-            Assert.AreEqual("A", UserLoginDTO.Password);
+            Assert.AreEqual(password, UserLoginDTO.Password);
         }
 
 
