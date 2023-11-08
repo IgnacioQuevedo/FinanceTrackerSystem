@@ -7,20 +7,26 @@ namespace BusinessLogicTests.Dto_Components
     {
         #region Initialize
         private UserLoginDTO UserLoginDTO;
+        private string genericEmail;
 
         [TestInitialize]
         public void Initialize()
         {
             UserLoginDTO = new UserLoginDTO();
+            genericEmail = "someone@example.com";
         }
         #endregion
+
+        #region Email
 
         [TestMethod]
         public void GivenEmail_ShouldBeSetted()
         {
-            UserLoginDTO.Email = "someone@example.com";
-            Assert.AreEqual("someone@example.com", UserLoginDTO.Email);
+            UserLoginDTO.Email = genericEmail;
+            Assert.AreEqual(genericEmail, UserLoginDTO.Email);
         }
+
+        #endregion
 
     }
 }
