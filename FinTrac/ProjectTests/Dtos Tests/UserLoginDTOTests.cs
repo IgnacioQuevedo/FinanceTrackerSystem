@@ -19,6 +19,13 @@ namespace BusinessLogicTests.Dto_Components
         }
         #endregion
 
+        [TestMethod]
+        public void GivenId_ShouldBeSetted()
+        {
+            UserLoginDTO.UserId = 1;
+            Assert.AreEqual(2, UserLoginDTO.UserId);
+        }
+
         #region Email
 
         [TestMethod]
