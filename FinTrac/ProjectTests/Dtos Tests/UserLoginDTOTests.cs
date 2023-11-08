@@ -8,12 +8,14 @@ namespace BusinessLogicTests.Dto_Components
         #region Initialize
         private UserLoginDTO UserLoginDTO;
         private string genericEmail;
+        private string genericPassword;
 
         [TestInitialize]
         public void Initialize()
         {
             UserLoginDTO = new UserLoginDTO();
             genericEmail = "someone@example.com";
+            genericPassword = "ABCDE12345678";
         }
         #endregion
 
@@ -28,14 +30,16 @@ namespace BusinessLogicTests.Dto_Components
 
         #endregion
 
+        #region Password
+
         [TestMethod]
         public void GivenPassword_ShouldBeSetted()
         {
-            string password = "ABCDE12345678";
-            UserLoginDTO.Password = password;
-            Assert.AreEqual(password, UserLoginDTO.Password);
+            UserLoginDTO.Password = genericPassword;
+            Assert.AreEqual(genericPassword, UserLoginDTO.Password);
         }
 
+        #endregion
 
 
     }
