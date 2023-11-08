@@ -5,7 +5,7 @@ using Mappers;
 
 namespace Controller.Mappers;
 
-public abstract class MapperCategory
+public static class MapperCategory
 {
     public static CategoryDTO ToCategoryDTO(Category categoryToConvert)
     {
@@ -30,7 +30,6 @@ public abstract class MapperCategory
         catch (ExceptionValidateCategory Exception)
         {
             throw new ExceptionMapper(Exception.Message);
-
         }
     }
 }
