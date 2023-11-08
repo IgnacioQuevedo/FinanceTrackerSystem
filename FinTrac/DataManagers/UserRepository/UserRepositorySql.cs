@@ -1,4 +1,4 @@
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +47,7 @@ public class UserRepositorySql
     public void Update(User updatedUser)
     {
         var existingUser = FindUserInDb(updatedUser.UserId);
-        
+
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
         _database.SaveChanges();
     }
@@ -56,16 +56,16 @@ public class UserRepositorySql
     {
         return _database.Users.FirstOrDefault(u => u.UserId == userId);
     }
-    
-    public bool Login(UserDTO userLogin)
+
+    public bool Login(UserLoginDTO userLogin)
     {
-        var userInDb = GetUserViaEmail(userLogin.Email); 
-        
+        var userInDb = GetUserViaEmail(userLogin.Email);
+        userLogin.UserId = userInDb.UserId;
         if (userInDb != null && userLogin.Password.Equals(userInDb.Password))
         {
             return true;
         }
-        
+
         return false;
     }
 
@@ -74,5 +74,5 @@ public class UserRepositorySql
         User userInDb = _database.Users.FirstOrDefault(u => u.Email == emailUser);
         return userInDb;
     }
-    
+
 }

@@ -9,6 +9,7 @@ namespace BusinessLogic.Dtos_Components
 {
     public class UserLoginDTO
     {
+        public int UserId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 

@@ -54,7 +54,5 @@ namespace BusinessLogicTests.Dto_Components
 
         #endregion
 
-
-
     }
 }

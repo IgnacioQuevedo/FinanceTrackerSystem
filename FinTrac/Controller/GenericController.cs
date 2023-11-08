@@ -1,10 +1,11 @@
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Controller.Mappers;
 using DataManagers.IControllers;
 using DataManagers;
 using Mappers;
+using BusinessLogic.Dtos_Components;
 
 namespace Controller;
 
@@ -88,14 +89,14 @@ public class GenericController : IUserController
         try
         {
             User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
-            
+
             if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
             {
                 throw new Exception("You need to change at least one value.");
             }
 
             _userRepo.Update(userWithUpdates);
-            
+
         }
         catch (ExceptionMapper Exception)
         {
@@ -107,7 +108,7 @@ public class GenericController : IUserController
 
     #region LoginUser
 
-    public bool LoginUser(UserDTO userToLogin)
+    public bool LoginUser(UserLoginDTO userToLogin)
     {
         userToLogin.Email = userToLogin.Email.ToLower();
         bool logged = _userRepo.Login(userToLogin);
