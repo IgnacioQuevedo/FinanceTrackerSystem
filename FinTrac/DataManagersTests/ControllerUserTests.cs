@@ -21,9 +21,12 @@ namespace DataManagersTests
         {
             _testDb = _contextFactory.CreateDbContext();
             _controller = new GenericController(_testDb);
+            
             _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
             _userConnected.UserId = 1;
+            _userDTO.UserId = _userConnected.UserId;
+            
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected);
         }
@@ -86,8 +89,6 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
-            _userDTO.UserId = _userConnected.UserId;
-
             UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
             Assert.AreEqual(userFound.Email, _userDTO.Email);

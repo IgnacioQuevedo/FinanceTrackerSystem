@@ -74,9 +74,5 @@ public class UserRepositorySql
         User userInDb = _database.Users.FirstOrDefault(u => u.Email == userLogin.Email);
         return userInDb;
     }
-
-    private bool EmailFounded(UserDTO userLogin)
-    {
-        return _database.Users.FirstOrDefault(u => u.Email == userLogin.Email) != null;
-    }
+    
 }

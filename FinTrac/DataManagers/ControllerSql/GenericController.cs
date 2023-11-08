@@ -14,18 +14,17 @@ public class GenericController : IUserController
     {
         _userRepo = new UserRepositorySql(database);
     }
-    
-    
+
+
     public void SetUserConnected(UserDTO userToConnect)
     {
         if (userToConnect != null)
         {
             _userConnected = ToUser(userToConnect);
-            _userConnected.UserId = userToConnect.UserId;
             _userRepo.InstanceLists(_userConnected);
         }
     }
-    
+
     #region User Repo
 
     #region ToUser
@@ -36,6 +35,7 @@ public class GenericController : IUserController
         {
             User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
                 userDto.Address);
+            userConverted.UserId = userDto.UserId;
             FormatUserProperties(userConverted);
 
             return userConverted;
@@ -54,6 +54,7 @@ public class GenericController : IUserController
     {
         UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
             userToConvert.Email, userToConvert.Password, userToConvert.Address);
+        dtoOfUser.UserId = userToConvert.UserId;
 
         return dtoOfUser;
     }
@@ -74,20 +75,19 @@ public class GenericController : IUserController
         {
             throw new ExceptionController("User not found.");
         }
-        
-        
     }
 
     #endregion
 
     #region Register
+
     public void RegisterUser(UserDTO userDtoToCreate)
     {
         try
         {
             _userRepo.EmailUsed(userDtoToCreate);
             User userToAdd = ToUser(userDtoToCreate);
-            
+
             _userRepo.Create(userToAdd);
         }
         catch (ExceptionUserRepository Exception)
@@ -95,25 +95,26 @@ public class GenericController : IUserController
             throw new ExceptionController(Exception.Message);
         }
     }
-    
+
     public bool PasswordMatch(string password, string passwordRepeated)
     {
         bool passwordMatch = Helper.AreTheSameObject(password, passwordRepeated);
-            
-        if(!passwordMatch)
+
+        if (!passwordMatch)
         {
             throw new ExceptionController("Passwords are not the same, try again.");
         }
+
         return passwordMatch;
     }
-    
+
     #endregion
 
     #region UpdateUser
+
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         User userWithUpdates = ToUser(userDtoUpdated);
-        userWithUpdates.UserId = userDtoUpdated.UserId;
         
         if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
         {
@@ -136,6 +137,7 @@ public class GenericController : IUserController
         {
             throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
         }
+
         return true;
     }
 
@@ -153,6 +155,4 @@ public class GenericController : IUserController
     #endregion
 
     #endregion
-
-
 }
