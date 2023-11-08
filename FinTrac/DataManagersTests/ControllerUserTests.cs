@@ -73,7 +73,7 @@ namespace DataManagersTests
         public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
         {
             User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-            UserDTO userDto = _controller.ToDtoUser(userReceived);
+            UserDTO userDto = _controller.ToUserDTO(userReceived);
 
             Assert.AreEqual(userDto.FirstName, userReceived.FirstName);
             Assert.AreEqual(userDto.LastName, userReceived.LastName);

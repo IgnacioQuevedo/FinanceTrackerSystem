@@ -35,9 +35,9 @@ public class UserRepositorySql
         _database.SaveChanges();
     }
 
-    public void EmailUsed(UserDTO userWithEmailToCheck)
+    public void EmailUsed(string userWithEmailToCheck)
     {
-        userWithEmailToCheck.Email = userWithEmailToCheck.Email.ToLower();
+        userWithEmailToCheck = userWithEmailToCheck.ToLower();
         if (GetUserViaEmail(userWithEmailToCheck) != null)
         {
             throw new ExceptionUserRepository("Email already registered, impossible to create another account.");
@@ -59,7 +59,7 @@ public class UserRepositorySql
     
     public bool Login(UserDTO userLogin)
     {
-        var userInDb = GetUserViaEmail(userLogin); 
+        var userInDb = GetUserViaEmail(userLogin.Email); 
         
         if (userInDb != null && userLogin.Password.Equals(userInDb.Password))
         {
@@ -69,9 +69,9 @@ public class UserRepositorySql
         return false;
     }
 
-    private User? GetUserViaEmail(UserDTO userLogin)
+    private User? GetUserViaEmail(string emailUser)
     {
-        User userInDb = _database.Users.FirstOrDefault(u => u.Email == userLogin.Email);
+        User userInDb = _database.Users.FirstOrDefault(u => u.Email == emailUser);
         return userInDb;
     }
     

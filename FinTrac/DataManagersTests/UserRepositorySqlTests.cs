@@ -63,7 +63,7 @@ namespace DataManagersTests
         {
             UserDTO userToCheckEmail = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
         
-            _userRepo.EmailUsed(userToCheckEmail);
+            _userRepo.EmailUsed(userToCheckEmail.Email);
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace DataManagersTests
 
             UserDTO incorrectUser = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
 
-            _userRepo.EmailUsed(incorrectUser);
+            _userRepo.EmailUsed(incorrectUser.Email);
         }
 
         #endregion

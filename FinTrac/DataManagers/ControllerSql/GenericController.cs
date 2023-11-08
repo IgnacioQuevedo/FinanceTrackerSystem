@@ -50,7 +50,7 @@ public class GenericController : IUserController
 
     #region ToUserDTO
 
-    public UserDTO ToDtoUser(User userToConvert)
+    public UserDTO ToUserDTO(User userToConvert)
     {
         UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
             userToConvert.Email, userToConvert.Password, userToConvert.Address);
@@ -69,7 +69,7 @@ public class GenericController : IUserController
 
         if (userFound != null)
         {
-            return ToDtoUser(userFound);
+            return ToUserDTO(userFound);
         }
         else
         {
@@ -85,7 +85,7 @@ public class GenericController : IUserController
     {
         try
         {
-            _userRepo.EmailUsed(userDtoToCreate);
+            _userRepo.EmailUsed(userDtoToCreate.Email);
             User userToAdd = ToUser(userDtoToCreate);
 
             _userRepo.Create(userToAdd);
