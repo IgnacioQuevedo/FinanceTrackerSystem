@@ -113,6 +113,8 @@ public class GenericController : IUserController
 
     public void UpdateUser(UserDTO userDtoUpdated)
     {
+        SetUserConnected(userDtoUpdated);
+        
         User userWithUpdates = ToUser(userDtoUpdated);
         
         if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
