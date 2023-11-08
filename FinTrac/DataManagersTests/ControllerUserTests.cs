@@ -14,6 +14,7 @@ namespace DataManagersTests
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
         private UserDTO _userDTO;
+        private UserDTO _userConnected;
 
         [TestInitialize]
         public void Initialize()
@@ -21,6 +22,10 @@ namespace DataManagersTests
             _testDb = _contextFactory.CreateDbContext();
             _controller = new GenericController(_testDb);
             _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+            _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            _userConnected.UserId = 1;
+            _controller.RegisterUser(_userConnected);
+            _controller.SetUserConnected(_userConnected);
         }
 
         #endregion
@@ -81,21 +86,20 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
         {
-            _testDb.Add(_controller.ToUser(_userDTO));
-            _testDb.SaveChanges();
+            _userDTO.UserId = _userConnected.UserId;
 
-            User userFound = _controller.FindUser(_controller.ToUser(_userDTO).Email);
+            UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
             Assert.AreEqual(userFound.Email, _userDTO.Email);
         }
 
         [TestMethod]
-        public void GivenUserDTOThatUserIsNotRegitered_ShouldReturnNULL()
+        [ExpectedException(typeof(ExceptionController))]
+        public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
         {
-            _testDb.Add(_controller.ToUser(_userDTO));
-            _testDb.SaveChanges();
 
-            User userFound = _controller.FindUser(_controller.ToUser(_userDTO).Password);
+            _userDTO.UserId = 1000000;
+            UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
             Assert.IsNull(userFound);
         }
@@ -109,10 +113,12 @@ namespace DataManagersTests
         {
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
-
+            userToAdd.UserId = 2;
+            
             _controller.RegisterUser(userToAdd);
-
-            User userInDb = _controller.FindUser(userToAdd.Email);
+        
+            
+            UserDTO userInDb = _controller.FindUser(userToAdd.UserId);
             Assert.AreEqual(userToAdd.Email, userInDb.Email);
         }
 
@@ -128,7 +134,7 @@ namespace DataManagersTests
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
-        public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldReturnException()
+        public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldThrowException()
         {
             UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
                 "KennieDock222", "North Av");
@@ -163,31 +169,27 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenUserToUpdate_ShouldBeUpdatedInDb()
         {
-            UserDTO dtoToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-                "KennieDock222", "North Av");
             UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
                 "Jhonix2003!!", "South Av");
-
-            _controller.RegisterUser(dtoToAdd);
+            dtoWithUpdates.UserId = _userConnected.UserId;
+            
             _controller.UpdateUser(dtoWithUpdates);
-            User userInDb = _controller.FindUser(dtoToAdd.Email);
 
+            UserDTO userInDb = _controller.FindUser(dtoWithUpdates.UserId);
             Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
             Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
             Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
             Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
+            Assert.AreEqual(userInDb.Email,dtoWithUpdates.Email);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionController))]
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
-            UserDTO dtoToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-                "KennieDock222", "North Av");
-            UserDTO newDtoWithoutChanges = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-                "KennieDock222", "North Av");
+            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");;
+            newDtoWithoutChanges.UserId = _userConnected.UserId;
 
-            _controller.RegisterUser(dtoToAdd);
             _controller.UpdateUser(newDtoWithoutChanges);
         }
 
@@ -200,9 +202,8 @@ namespace DataManagersTests
         {
             UserDTO possibleLogin = new UserDTO();
             possibleLogin.Email = "jhonnie@gmail.com";
-            possibleLogin.Password = "Jhoooniee123";
+            possibleLogin.Password = "Jhoooniee123!";
             
-            _controller.RegisterUser(_userDTO);
             Assert.IsTrue(_controller.LoginUser(possibleLogin));
         }
 

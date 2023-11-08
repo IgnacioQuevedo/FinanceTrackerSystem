@@ -10,7 +10,8 @@ public interface IUserController
      public void RegisterUser(UserDTO userDtoToCreate);
      public bool LoginUser(UserDTO userToLogin);
      public void UpdateUser(UserDTO userDto);
-     public User FindUser(string emailAK);
+     public UserDTO FindUser(int userId);
+     
 
 
 

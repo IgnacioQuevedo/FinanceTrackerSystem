@@ -61,9 +61,9 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenNotRegisteredEmail_ShouldBeAllGood()
         {
-            User userToCheckEmail = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
-
-            _userRepo.EmailUsed(userToCheckEmail.Email);
+            UserDTO userToCheckEmail = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+        
+            _userRepo.EmailUsed(userToCheckEmail);
         }
 
         [TestMethod]
@@ -73,9 +73,9 @@ namespace DataManagersTests
             User userToAdd = new User("Mich", "Santa", "michsanta@gmail.com", "Mich123456789", "North Av 23");
             _userRepo.Create(userToAdd);
 
-            User incorrectUser = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+            UserDTO incorrectUser = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
 
-            _userRepo.EmailUsed(incorrectUser.Email);
+            _userRepo.EmailUsed(incorrectUser);
         }
 
         #endregion
@@ -140,7 +140,7 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
 
-            User userFound = _userRepo.FindUserInDb(_genericUser.Email);
+            User userFound = _userRepo.FindUserInDb(_genericUser.UserId);
 
             Assert.AreEqual(userFound, _genericUser);
         }
@@ -151,7 +151,7 @@ namespace DataManagersTests
         public void GivenUserConnected_ShouldInstanceUserLists()
         {
             _userRepo.Create(_genericUser);
-            User userFromDb = _userRepo.FindUserInDb(_genericUser.Email);
+            User userFromDb = _userRepo.FindUserInDb(_genericUser.UserId);
             userFromDb = _userRepo.InstanceLists(userFromDb);
             
             Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);

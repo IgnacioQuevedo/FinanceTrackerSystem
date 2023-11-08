@@ -1,5 +1,6 @@
 ﻿@page "/Home/{userId:int}";
 @layout MainLayout;
+@inject IUserController UserController
 @inject IJSRuntime JSRuntime
 
 <CascadingValue Value="userConnected">
@@ -44,4 +45,10 @@
 		object[] args = { carouselName };
 		await JSRuntime.InvokeVoidAsync("startCarousel", args); // NOTE: call JavaScript function with the ID of the carousel
 	}
+
+	protected override void OnInitialized()
+	{
+		userConnected = UserController.FindUser(userId);
+	}
+
 }

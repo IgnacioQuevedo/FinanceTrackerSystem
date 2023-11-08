@@ -21,6 +21,7 @@ public class GenericController : IUserController
         if (userToConnect != null)
         {
             _userConnected = ToUser(userToConnect);
+            _userConnected.UserId = userToConnect.UserId;
             _userRepo.InstanceLists(_userConnected);
         }
     }
@@ -61,9 +62,20 @@ public class GenericController : IUserController
 
     #region FindUser
 
-    public User FindUser(string emailAK)
+    public UserDTO FindUser(int userId)
     {
-        return _userRepo.FindUserInDb(emailAK);
+        User userFound = _userRepo.FindUserInDb(userId);
+
+        if (userFound != null)
+        {
+            return ToDtoUser(userFound);
+        }
+        else
+        {
+            throw new ExceptionController("User not found.");
+        }
+        
+        
     }
 
     #endregion
@@ -73,9 +85,9 @@ public class GenericController : IUserController
     {
         try
         {
+            _userRepo.EmailUsed(userDtoToCreate);
             User userToAdd = ToUser(userDtoToCreate);
-            _userRepo.EmailUsed(userToAdd.Email);
-
+            
             _userRepo.Create(userToAdd);
         }
         catch (ExceptionUserRepository Exception)
@@ -101,10 +113,9 @@ public class GenericController : IUserController
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         User userWithUpdates = ToUser(userDtoUpdated);
-        User userToUpdate = FindUser(userWithUpdates.Email);
-        userWithUpdates.UserId = userToUpdate.UserId;
-
-        if (Helper.AreTheSameObject(userWithUpdates, userToUpdate))
+        userWithUpdates.UserId = userDtoUpdated.UserId;
+        
+        if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
         {
             throw new ExceptionController("You need to change at least one value.");
         }
