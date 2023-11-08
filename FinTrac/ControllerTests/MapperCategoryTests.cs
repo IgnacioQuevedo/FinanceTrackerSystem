@@ -58,6 +58,18 @@ namespace ControllerTests
             Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
         }
         
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionMapper))]
+        
+        public void GivenCategoryDTOWithInCorrectData_ShouldThrowException()
+        {
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income);
+            categoryDTO_ToConvert.Id = 1;
+
+            Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
+        }
+        
+        
         #endregion
 
         #region ToCategoryDTO
