@@ -1,9 +1,9 @@
-using Azure.Identity;
 using BusinessLogic.Dto_Components;
 using BusinessLogic.User_Components;
 using DataManagers.IControllers;
+using DataManagers;
 
-namespace DataManagers;
+namespace Controller;
 
 public class GenericController : IUserController
 {
@@ -14,8 +14,7 @@ public class GenericController : IUserController
     {
         _userRepo = new UserRepositorySql(database);
     }
-
-
+    
     public void SetUserConnected(UserDTO userToConnect)
     {
         if (userToConnect != null)

@@ -1,9 +1,9 @@
 using BusinessLogic.Dto_Components;
 using BusinessLogic.User_Components;
+using Controller;
 using DataManagers;
 
-
-namespace DataManagersTests
+namespace ControllerTests
 {
     [TestClass]
     public class ControllerUserTests

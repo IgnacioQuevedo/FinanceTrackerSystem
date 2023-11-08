@@ -1,4 +1,4 @@
-namespace DataManagers;
+namespace Controller;
 
 public class ExceptionController : Exception
 {
