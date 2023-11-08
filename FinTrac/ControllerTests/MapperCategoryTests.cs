@@ -60,7 +60,7 @@ namespace ControllerTests
         
         [TestMethod]
         [ExpectedException(typeof(ExceptionMapper))]
-        public void GivenCategoryDTOWithInCorrectData_ShouldThrowException()
+        public void GivenCategoryDTOWithIncorrectData_ShouldThrowException()
         {
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income);
             categoryDTO_ToConvert.Id = 1;
