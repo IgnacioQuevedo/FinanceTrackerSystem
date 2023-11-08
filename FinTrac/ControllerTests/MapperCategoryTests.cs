@@ -17,7 +17,7 @@ namespace ControllerTests
         private GenericController _controller;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
-        
+
         private UserRepositorySql _userRepo;
 
 
@@ -41,21 +41,7 @@ namespace ControllerTests
 
         #endregion
 
-
-        [TestMethod]
-        public void GivenCategory_ShouldBePossibleToConvertToCategoryDTO()
-        {
-            Category categoryToConvert = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
-            categoryToConvert.CategoryId = 1;
-            
-            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(categoryToConvert);
-            
-            Assert.IsInstanceOfType(categoryDTO,typeof(CategoryDTO));
-            Assert.AreEqual(categoryToConvert.CategoryId,categoryDTO.Id);
-            Assert.AreEqual(categoryToConvert.Name,categoryDTO.Name);
-            Assert.AreEqual(categoryToConvert.Status,categoryDTO.Status);
-            Assert.AreEqual(categoryToConvert.Type,categoryDTO.Type);
-        }
+        #region ToCategory
 
         [TestMethod]
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
@@ -64,10 +50,33 @@ namespace ControllerTests
             categoryDTO_ToConvert.Id = 1;
 
             Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
-            
-            Assert.IsInstanceOfType(generatedCategory,typeof(Category));
-            
 
+            Assert.IsInstanceOfType(generatedCategory, typeof(Category));
+            Assert.AreEqual(categoryDTO_ToConvert.Id, generatedCategory.CategoryId);
+            Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
+            Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
+            Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
         }
+        
+        #endregion
+
+        #region ToCategoryDTO
+
+        [TestMethod]
+        public void GivenCategory_ShouldBePossibleToConvertToCategoryDTO()
+        {
+            Category categoryToConvert = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            categoryToConvert.CategoryId = 1;
+
+            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(categoryToConvert);
+
+            Assert.IsInstanceOfType(categoryDTO, typeof(CategoryDTO));
+            Assert.AreEqual(categoryToConvert.CategoryId, categoryDTO.Id);
+            Assert.AreEqual(categoryToConvert.Name, categoryDTO.Name);
+            Assert.AreEqual(categoryToConvert.Status, categoryDTO.Status);
+            Assert.AreEqual(categoryToConvert.Type, categoryDTO.Type);
+        }
+
+        #endregion
     }
 }
