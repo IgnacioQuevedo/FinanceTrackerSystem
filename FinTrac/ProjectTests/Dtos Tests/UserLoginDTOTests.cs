@@ -9,6 +9,7 @@ namespace BusinessLogicTests.Dto_Components
         private UserLoginDTO UserLoginDTO;
         private string genericEmail;
         private string genericPassword;
+        private int genericId;
 
         [TestInitialize]
         public void Initialize()
@@ -16,15 +17,20 @@ namespace BusinessLogicTests.Dto_Components
             UserLoginDTO = new UserLoginDTO();
             genericEmail = "someone@example.com";
             genericPassword = "ABCDE12345678";
+            genericId = 1;
         }
         #endregion
+
+        #region Id
 
         [TestMethod]
         public void GivenId_ShouldBeSetted()
         {
-            UserLoginDTO.UserId = 1;
-            Assert.AreEqual(1, UserLoginDTO.UserId);
+            UserLoginDTO.UserId = genericId;
+            Assert.AreEqual(genericId, UserLoginDTO.UserId);
         }
+
+        #endregion
 
         #region Email
 
