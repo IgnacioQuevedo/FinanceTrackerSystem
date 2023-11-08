@@ -60,10 +60,10 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
         {
-            CategoryDTO categoryToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income);
-            categoryToConvert.Id = 1;
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income);
+            categoryDTO_ToConvert.Id = 1;
 
-            Category generatedCategory = MapperCategory.ToCategory(categoryToConvert);
+            Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
             
             Assert.IsInstanceOfType(generatedCategory,typeof(Category));
             

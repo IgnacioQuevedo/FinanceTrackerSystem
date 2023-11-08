@@ -14,6 +14,19 @@ public abstract class MapperCategory
         
         return categoryDTO;
     }
+
+    public static Category ToCategory(CategoryDTO categoryDTO_ToConvert)
+    {
+
+        Category categoryConverted =
+            new Category(categoryDTO_ToConvert.Name, categoryDTO_ToConvert.Status, categoryDTO_ToConvert.Type);
+
+        categoryConverted.CategoryId = categoryDTO_ToConvert.Id;
+
+        return categoryConverted;
+
+
+    }
     
     
     
