@@ -1,4 +1,6 @@
+using BusinessLogic.Category_Components;
 using BusinessLogic.Dto_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.User_Components;
 using Controller;
 using DataManagers;
@@ -39,8 +41,16 @@ namespace ControllerTests
 
         #endregion
 
-        
-        
+
+        [TestMethod]
+        public void GivenCategory_ShouldBePossibleToConvertToCategoryDTO()
+        {
+            Category categoryToConvert = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+
+            CategoryDTO categoryDTOs = MapperCategory.ToCategory(categoryToConvert);
+            
+            Assert.IsInstanceOfType(categoryDTOs,typeof(CategoryDTO));
+        }
 
 
         
