@@ -29,7 +29,7 @@ namespace DataManagersTests
             _userRepo = new UserRepositorySql(_testDb);
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
             _genericUserDTO = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-            _genericUserLoginDTO = new UserLoginDTO("someone@example.com", "ABCDE1000211");
+            _genericUserLoginDTO = new UserLoginDTO("jhonny@gmail.com", "Jhooony12345");
         }
 
         #endregion
@@ -88,7 +88,6 @@ namespace DataManagersTests
         public void GivenUserThatWantsToLogin_ShouldBePossibleToCheckIfHisLoginDataIsCorrect()
         {
             _userRepo.Create(_genericUser);
-
 
             Assert.IsTrue(_userRepo.Login(_genericUserLoginDTO));
         }

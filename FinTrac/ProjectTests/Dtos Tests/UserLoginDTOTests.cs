@@ -23,7 +23,7 @@ namespace BusinessLogicTests.Dto_Components
         public void GivenId_ShouldBeSetted()
         {
             UserLoginDTO.UserId = 1;
-            Assert.AreEqual(2, UserLoginDTO.UserId);
+            Assert.AreEqual(3, UserLoginDTO.UserId);
         }
 
         #region Email
