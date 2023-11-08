@@ -7,12 +7,12 @@ namespace Controller;
 
 public class GenericController : IUserController
 {
-    private UserRepositorySql _userRepo { get; }
+    private UserRepositorySql _userRepo;
     private User _userConnected { get; set; }
 
-    public GenericController(SqlContext database)
+    public GenericController(UserRepositorySql userRepo)
     {
-        _userRepo = new UserRepositorySql(database);
+        _userRepo = userRepo;
     }
     
     public void SetUserConnected(UserDTO userToConnect)

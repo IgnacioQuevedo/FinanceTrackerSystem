@@ -13,6 +13,8 @@ namespace ControllerTests
         private GenericController _controller;
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        
+        private UserRepositorySql _userRepo;
         private UserDTO _userDTO;
         private UserDTO _userConnected;
 
@@ -20,7 +22,8 @@ namespace ControllerTests
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
-            _controller = new GenericController(_testDb);
+            _userRepo = new UserRepositorySql(_testDb);
+            _controller = new GenericController(_userRepo);
             
             _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
