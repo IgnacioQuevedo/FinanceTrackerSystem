@@ -56,5 +56,18 @@ namespace ControllerTests
             Assert.AreEqual(categoryToConvert.Status,categoryDTO.Status);
             Assert.AreEqual(categoryToConvert.Type,categoryDTO.Type);
         }
+
+        [TestMethod]
+        public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
+        {
+            CategoryDTO categoryToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income);
+            categoryToConvert.Id = 1;
+
+            Category generatedCategory = MapperCategory.ToCategory(categoryToConvert);
+            
+            Assert.IsInstanceOfType(generatedCategory,typeof(Category));
+            
+
+        }
     }
 }

@@ -17,10 +17,11 @@ namespace BusinessLogic.Goal_Components
         public int MaxAmountToSpend { get; set; }
         public int GoalId { get; set; } = -1;
         public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
+        public List<Category> CategoriesOfGoal { get; set; }
         
         public int? UserId{get; set; }
         public User GoalUser { get; set; }
-        public List<Category> CategoriesOfGoal { get; set; }
+       
 
         #endregion
 
