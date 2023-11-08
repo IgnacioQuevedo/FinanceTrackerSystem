@@ -28,5 +28,15 @@ namespace BusinessLogicTests.Dto_Components
 
         #endregion
 
+        [TestMethod]
+        public void GivenPassword_ShouldBeSetted()
+        {
+            string password = "ABCDE12345678";
+            UserLoginDTO.Password = password;
+            Assert.AreEqual("1232", UserLoginDTO.Password);
+        }
+
+
+
     }
 }
