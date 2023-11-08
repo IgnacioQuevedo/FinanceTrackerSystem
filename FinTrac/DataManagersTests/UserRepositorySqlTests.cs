@@ -1,5 +1,6 @@
 using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Dto_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
@@ -17,6 +18,7 @@ namespace DataManagersTests
         private SqlContext _testDb;
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
         private User _genericUser;
+        private UserDTO _genericUserDTO;
 
 
         [TestInitialize]
@@ -25,6 +27,7 @@ namespace DataManagersTests
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
+            _genericUserDTO =  new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
         }
 
         #endregion
@@ -58,8 +61,8 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenNotRegisteredEmail_ShouldBeAllGood()
         {
-            User userToCheckEmail = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
-
+            UserDTO userToCheckEmail = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+        
             _userRepo.EmailUsed(userToCheckEmail.Email);
         }
 
@@ -70,7 +73,7 @@ namespace DataManagersTests
             User userToAdd = new User("Mich", "Santa", "michsanta@gmail.com", "Mich123456789", "North Av 23");
             _userRepo.Create(userToAdd);
 
-            User incorrectUser = new User("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
+            UserDTO incorrectUser = new UserDTO("Kent", "Beck", "michsanta@gmail.com", "JohnBeck1961", "NW 3rd Ave");
 
             _userRepo.EmailUsed(incorrectUser.Email);
         }
@@ -83,15 +86,16 @@ namespace DataManagersTests
         public void GivenUserThatWantsToLogin_ShouldBePossibleToCheckIfHisLoginDataIsCorrect()
         {
             _userRepo.Create(_genericUser);
+            
 
-            Assert.IsTrue(_userRepo.Login(_genericUser.Email, _genericUser.Password));
+            Assert.IsTrue(_userRepo.Login(_genericUserDTO));
         }
 
         [TestMethod]
         public void GivenUserThatWantsToLoginButIsNotRegistered_ShouldReturnFalse()
         {
             User userNotRegistered = new User("Jhon", "Camaleon", "jhonnya@gmail.com", "LittleJhonny123", "");
-            Assert.IsFalse(_userRepo.Login(userNotRegistered.Email, userNotRegistered.Password));
+            Assert.IsFalse(_userRepo.Login(_genericUserDTO));
         }
 
         #endregion
@@ -136,7 +140,7 @@ namespace DataManagersTests
         {
             _userRepo.Create(_genericUser);
 
-            User userFound = _userRepo.FindUserInDb(_genericUser.Email);
+            User userFound = _userRepo.FindUserInDb(_genericUser.UserId);
 
             Assert.AreEqual(userFound, _genericUser);
         }
@@ -147,7 +151,7 @@ namespace DataManagersTests
         public void GivenUserConnected_ShouldInstanceUserLists()
         {
             _userRepo.Create(_genericUser);
-            User userFromDb = _userRepo.FindUserInDb(_genericUser.Email);
+            User userFromDb = _userRepo.FindUserInDb(_genericUser.UserId);
             userFromDb = _userRepo.InstanceLists(userFromDb);
             
             Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);

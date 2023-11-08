@@ -5,15 +5,11 @@ namespace DataManagers.IControllers;
 
 public interface IUserController
 {
-     public User ToUser(UserDTO userDto);
-     public UserDTO ToDtoUser(User userToConvert);
      public void RegisterUser(UserDTO userDtoToCreate);
-     public bool LoginUser(string email, string password);
+     public bool LoginUser(UserDTO userToLogin);
      public void UpdateUser(UserDTO userDto);
-     public User FindUser(string emailAK);
-
-
-
+     public UserDTO FindUser(int userId);
+     public void PasswordMatch(string password, string passwordRepeated);
 
 }
 

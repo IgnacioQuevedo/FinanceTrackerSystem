@@ -1,10 +1,7 @@
 ﻿@page "/";
 @layout LayoutForGuest;
-
-@using Data;
-@inject UserLogged UserLogged;
 @inject IUserController UserController
-@using DataManagers.IControllers
+
 
 
 <PageTitle>Login</PageTitle>
@@ -97,10 +94,9 @@
     {
         try
         {
-            if (UserController.LoginUser(userDTO.Email, userDTO.Password))
+            if (UserController.LoginUser(userDTO))
             {
-                UserLogged.Email = userDTO.Email;
-                NavigationManager.NavigateTo("/Home");
+                NavigationManager.NavigateTo($"/Home/{userDTO.UserId}");
             }
         }
         catch(Exception ExceptionUser)
