@@ -57,7 +57,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
         {
 
@@ -86,7 +86,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void RegisterUserAlreadyRegistered_ShouldThrowException()
         {
             UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
@@ -96,7 +96,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldThrowException()
         {
             UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
@@ -118,7 +118,7 @@ namespace ControllerTests
         }
         
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
         {
             string passwordIncorrect = "passwordIncorrect";
@@ -147,7 +147,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
             UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");;
@@ -171,7 +171,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
         {
             _controller.LoginUser(_userDTO);

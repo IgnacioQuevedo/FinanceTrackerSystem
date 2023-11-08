@@ -1,4 +1,5 @@
 using BusinessLogic.Dto_Components;
+using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Controller.Mappers;
 using DataManagers.IControllers;
@@ -39,7 +40,7 @@ public class GenericController : IUserController
         }
         else
         {
-            throw new ExceptionController("User not found.");
+            throw new Exception("User not found.");
         }
     }
 
@@ -56,9 +57,12 @@ public class GenericController : IUserController
 
             _userRepo.Create(userToAdd);
         }
-        catch (ExceptionUserRepository Exception)
+        catch (Exception ExceptionType) when (
+            ExceptionType is ExceptionUserRepository ||
+            ExceptionType is ExceptionValidateUser
+        )
         {
-            throw new ExceptionController(Exception.Message);
+            throw new Exception(ExceptionType.Message);
         }
     }
 
@@ -68,7 +72,7 @@ public class GenericController : IUserController
 
         if (!passwordMatch)
         {
-            throw new ExceptionController("Passwords are not the same, try again.");
+            throw new Exception("Passwords are not the same, try again.");
         }
 
         return passwordMatch;
@@ -86,7 +90,7 @@ public class GenericController : IUserController
 
         if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
         {
-            throw new ExceptionController("You need to change at least one value.");
+            throw new Exception("You need to change at least one value.");
         }
 
         _userRepo.Update(userWithUpdates);
@@ -103,7 +107,7 @@ public class GenericController : IUserController
 
         if (!logged)
         {
-            throw new ExceptionController("User not exists, maybe you have an error on the email or password?");
+            throw new Exception("User not exists, maybe you have an error on the email or password?");
         }
 
         return true;

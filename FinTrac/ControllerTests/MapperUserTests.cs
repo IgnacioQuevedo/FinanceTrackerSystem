@@ -62,7 +62,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
+        [ExpectedException(typeof(Exception))]
         public void GivenUserDTOWithIncorrectData_ShoulThrowException()
         {
             UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
