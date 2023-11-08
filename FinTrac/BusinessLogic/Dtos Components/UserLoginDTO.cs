@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessLogic.Dtos_Components
+{
+    public class UserLoginDTO
+    {
+        public string Email { get; set; }
+
+    }
+}
