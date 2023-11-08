@@ -15,36 +15,36 @@
 
                                 @if (ErrorAlert.isError)
                                 {
-                                    <ErrorAlert errorTxt="@errorTxt" />
+                                    <ErrorAlert errorTxt="@errorTxt"/>
                                 }
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@firstName" />
+                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@firstName"/>
                                     <label class="form-label" for="form3Example1cg">First name</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@lastName" />
+                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@lastName"/>
                                     <label class="form-label" for="form3Example1cg">Last name</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg" @bind="@email" />
+                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg" @bind="@email"/>
                                     <label class="form-label" for="form3Example3cg">Email</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4cg" class="form-control form-control-lg" @bind="@password" />
+                                    <input type="password" id="form3Example4cg" class="form-control form-control-lg" @bind="@password"/>
                                     <label class="form-label" for="form3Example4cg">Password</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg" @bind="@passwordRepeated" />
+                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg" @bind="@passwordRepeated"/>
                                     <label class="form-label" for="form3Example4cdg">Repeat your password</label>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@address" />
+                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" @bind="@address"/>
                                     <label class="form-label" for="form3Example1cg">Adress</label>
                                 </div>
 
@@ -53,8 +53,11 @@
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">
-                                    Have already an account? <a href="#!"
-                                                                class="fw-bold text-body"><u>Login here</u></a>
+                                    Have already an account?
+                                    <a href="#!"
+                                       class="fw-bold text-body">
+                                        <u>Login here</u>
+                                    </a>
                                 </p>
 
                             </form>
@@ -66,7 +69,6 @@
         </div>
     </div>
 </section>
-
 
 
 @code
@@ -94,15 +96,11 @@
             UserDTO userToAdd = new UserDTO(firstName, lastName, email, password, address);
             UserController.RegisterUser(userToAdd);
             NavigationManager.NavigateTo("/");
-
         }
         catch (Exception ExceptionUser)
         {
             ErrorAlert.ShowErrorAlert();
             errorTxt = ExceptionUser.Message;
         }
-
     }
 }
-
-

@@ -112,9 +112,7 @@ namespace ControllerTests
         public void GivenUserToCreate_PasswordsMustMatch()
         {
             string passwordRepeated = _userDTO.Password;
-            bool passwordMatch = _controller.PasswordMatch(_userDTO.Password, passwordRepeated);
-                
-            Assert.IsTrue(passwordMatch);
+            _controller.PasswordMatch(_userDTO.Password, passwordRepeated);
         }
         
         [TestMethod]

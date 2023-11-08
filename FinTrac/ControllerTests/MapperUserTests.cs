@@ -3,6 +3,7 @@ using BusinessLogic.User_Components;
 using Controller;
 using DataManagers;
 using Controller.Mappers;
+using Mappers;
 
 namespace ControllerTests
 {
@@ -62,7 +63,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(ExceptionMapper))]
         public void GivenUserDTOWithIncorrectData_ShoulThrowException()
         {
             UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");

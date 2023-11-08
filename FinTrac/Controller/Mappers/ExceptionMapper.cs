@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Exceptions
+namespace Mappers
 {
-    public class ExceptionExchangeHistoryManagement : Exception
+    public class ExceptionMapper : Exception
     {
-        public ExceptionExchangeHistoryManagement(string message) : base(message) { }
+        public ExceptionMapper(string message) : base(message) { }
     }
 }

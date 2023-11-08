@@ -4,6 +4,7 @@ using BusinessLogic.User_Components;
 using Controller.Mappers;
 using DataManagers.IControllers;
 using DataManagers;
+using Mappers;
 
 namespace Controller;
 
@@ -59,14 +60,14 @@ public class GenericController : IUserController
         }
         catch (Exception ExceptionType) when (
             ExceptionType is ExceptionUserRepository ||
-            ExceptionType is ExceptionValidateUser
+            ExceptionType is ExceptionMapper
         )
         {
             throw new Exception(ExceptionType.Message);
         }
     }
 
-    public bool PasswordMatch(string password, string passwordRepeated)
+    public void PasswordMatch(string password, string passwordRepeated)
     {
         bool passwordMatch = Helper.AreTheSameObject(password, passwordRepeated);
 
@@ -74,8 +75,6 @@ public class GenericController : IUserController
         {
             throw new Exception("Passwords are not the same, try again.");
         }
-
-        return passwordMatch;
     }
 
     #endregion
@@ -86,14 +85,22 @@ public class GenericController : IUserController
     {
         SetUserConnected(userDtoUpdated.UserId);
 
-        User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
-
-        if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
+        try
         {
-            throw new Exception("You need to change at least one value.");
-        }
+            User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
+            
+            if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
+            {
+                throw new Exception("You need to change at least one value.");
+            }
 
-        _userRepo.Update(userWithUpdates);
+            _userRepo.Update(userWithUpdates);
+            
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
     }
 
     #endregion

@@ -9,8 +9,7 @@ public interface IUserController
      public bool LoginUser(UserDTO userToLogin);
      public void UpdateUser(UserDTO userDto);
      public UserDTO FindUser(int userId);
-
-     public bool PasswordMatch(string password, string passwordRepeated);
+     public void PasswordMatch(string password, string passwordRepeated);
 
 }
 

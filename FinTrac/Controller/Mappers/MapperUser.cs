@@ -1,6 +1,7 @@
 using BusinessLogic.User_Components;
 using BusinessLogic.Dto_Components;
 using BusinessLogic.Exceptions;
+using Mappers;
 
 namespace Controller.Mappers;
 
@@ -10,12 +11,19 @@ public abstract class MapperUser
 
     public static User ToUser(UserDTO userDto)
     {
-        User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
-            userDto.Address);
-        userConverted.UserId = userDto.UserId;
-        FormatUserProperties(userConverted);
-
-        return userConverted;
+        try
+        {
+            User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
+                userDto.Address);
+            
+            userConverted.UserId = userDto.UserId;
+            FormatUserProperties(userConverted);
+            return userConverted;
+        }
+        catch (ExceptionValidateUser Exception)
+        {
+            throw new ExceptionMapper(Exception.Message);
+        }
     }
 
     #endregion
