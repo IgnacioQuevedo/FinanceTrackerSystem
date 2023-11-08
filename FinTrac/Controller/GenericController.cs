@@ -15,18 +15,18 @@ public class GenericController : IUserController
     {
         _userRepo = userRepo;
     }
-    
-    public void SetUserConnected(UserDTO userToConnect)
+
+    public void SetUserConnected(int userIdToConnect)
     {
-        if (userToConnect != null)
+        if (_userConnected == null)
         {
-            _userConnected = MapperUser.ToUser(userToConnect);
+            _userConnected = _userRepo.FindUserInDb(userIdToConnect);
             _userRepo.InstanceLists(_userConnected);
         }
     }
 
     #region User Repo
-    
+
     #region FindUser
 
     public UserDTO FindUser(int userId)
@@ -77,12 +77,13 @@ public class GenericController : IUserController
     #endregion
 
     #region UpdateUser
+
     public void UpdateUser(UserDTO userDtoUpdated)
     {
-        SetUserConnected(userDtoUpdated);
-        
+        SetUserConnected(userDtoUpdated.UserId);
+
         User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
-        
+
         if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
         {
             throw new ExceptionController("You need to change at least one value.");
@@ -109,7 +110,6 @@ public class GenericController : IUserController
     }
 
     #endregion
-
 
     #endregion
 }

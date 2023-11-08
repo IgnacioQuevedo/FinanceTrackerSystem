@@ -32,7 +32,7 @@ namespace ControllerTests
             _userDTO.UserId = _userConnected.UserId;
             
             _controller.RegisterUser(_userConnected);
-            _controller.SetUserConnected(_userConnected);
+            _controller.SetUserConnected(_userConnected.UserId);
         }
 
         #endregion

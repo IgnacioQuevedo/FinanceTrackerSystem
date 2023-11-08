@@ -31,7 +31,7 @@ namespace ControllerTests
             _userDTO.UserId = _userConnected.UserId;
             
             _controller.RegisterUser(_userConnected);
-            _controller.SetUserConnected(_userConnected);
+            _controller.SetUserConnected(_userConnected.UserId);
         }
 
         #endregion
@@ -185,7 +185,7 @@ namespace ControllerTests
             UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo", 
                 "nachitoquevedo@gmail.com", "Nacho200304!", "");
 
-            _controller.SetUserConnected(userToConnect);
+            _controller.SetUserConnected(userToConnect.UserId);
         }
         
     }
