@@ -10,7 +10,8 @@ public abstract class MapperCategory
     {
         CategoryDTO categoryDTO =
             new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type);
-
+        categoryDTO.Id = categoryToConvert.CategoryId;
+        
         return categoryDTO;
     }
     
