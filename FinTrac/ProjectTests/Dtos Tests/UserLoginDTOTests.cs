@@ -41,16 +41,18 @@ namespace BusinessLogicTests.Dto_Components
 
         #endregion
 
+        #region Constructor
 
         [TestMethod]
         public void GivenValues_ShouldCreateUserLoginDTO()
         {
-            string email = "someone@example.com";
-            string password = "12233242ADADSAsd";
-            UserLoginDTO = new UserLoginDTO(email, password);
-            Assert.AreEqual(email, UserLoginDTO.Email);
-            Assert.AreEqual(password, UserLoginDTO.Password);
+            UserLoginDTO = new UserLoginDTO(genericEmail, genericPassword);
+
+            Assert.AreEqual(genericEmail, UserLoginDTO.Email);
+            Assert.AreEqual(genericPassword, UserLoginDTO.Password);
         }
+
+        #endregion
 
 
 
