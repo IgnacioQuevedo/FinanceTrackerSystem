@@ -45,48 +45,7 @@ namespace ControllerTests
         }
 
         #endregion
-
-        #region To User
-
-        [TestMethod]
-        public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
-        {
-            User userConverted = _controller.ToUser(_userDTO);
-
-            Assert.AreEqual(_userDTO.FirstName, userConverted.FirstName);
-            Assert.AreEqual(_userDTO.LastName, userConverted.LastName);
-            Assert.AreEqual(_userDTO.Email, userConverted.Email);
-            Assert.AreEqual(_userDTO.Password, userConverted.Password);
-            Assert.AreEqual(_userDTO.Address, userConverted.Address);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionController))]
-        public void GivenUserDTOWithIncorrectData_ShoulThrowException()
-        {
-            UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
-            User userConverted = _controller.ToUser(DtoWithBadValues);
-        }
-
-        #endregion
-
-        #region To UserDTO
-
-        [TestMethod]
-        public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
-        {
-            User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-            UserDTO userDto = _controller.ToUserDTO(userReceived);
-
-            Assert.AreEqual(userDto.FirstName, userReceived.FirstName);
-            Assert.AreEqual(userDto.LastName, userReceived.LastName);
-            Assert.AreEqual(userDto.Email, userReceived.Email);
-            Assert.AreEqual(userDto.Password, userReceived.Password);
-            Assert.AreEqual(userDto.Address, userReceived.Address);
-        }
-
-        #endregion
-
+        
         #region FindUser
 
         [TestMethod]

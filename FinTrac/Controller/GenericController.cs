@@ -1,5 +1,6 @@
 using BusinessLogic.Dto_Components;
 using BusinessLogic.User_Components;
+using Controller.Mappers;
 using DataManagers.IControllers;
 using DataManagers;
 
@@ -19,47 +20,13 @@ public class GenericController : IUserController
     {
         if (userToConnect != null)
         {
-            _userConnected = ToUser(userToConnect);
+            _userConnected = MapperUser.ToUser(userToConnect);
             _userRepo.InstanceLists(_userConnected);
         }
     }
 
     #region User Repo
-
-    #region ToUser
-
-    public User ToUser(UserDTO userDto)
-    {
-        try
-        {
-            User userConverted = new User(userDto.FirstName, userDto.LastName, userDto.Email, userDto.Password,
-                userDto.Address);
-            userConverted.UserId = userDto.UserId;
-            FormatUserProperties(userConverted);
-
-            return userConverted;
-        }
-        catch (Exception GenericException)
-        {
-            throw new ExceptionController(GenericException.Message);
-        }
-    }
-
-    #endregion
-
-    #region ToUserDTO
-
-    public UserDTO ToUserDTO(User userToConvert)
-    {
-        UserDTO dtoOfUser = new UserDTO(userToConvert.FirstName, userToConvert.LastName,
-            userToConvert.Email, userToConvert.Password, userToConvert.Address);
-        dtoOfUser.UserId = userToConvert.UserId;
-
-        return dtoOfUser;
-    }
-
-    #endregion
-
+    
     #region FindUser
 
     public UserDTO FindUser(int userId)
@@ -68,7 +35,7 @@ public class GenericController : IUserController
 
         if (userFound != null)
         {
-            return ToUserDTO(userFound);
+            return MapperUser.ToUserDTO(userFound);
         }
         else
         {
@@ -85,7 +52,7 @@ public class GenericController : IUserController
         try
         {
             _userRepo.EmailUsed(userDtoToCreate.Email);
-            User userToAdd = ToUser(userDtoToCreate);
+            User userToAdd = MapperUser.ToUser(userDtoToCreate);
 
             _userRepo.Create(userToAdd);
         }
@@ -110,12 +77,11 @@ public class GenericController : IUserController
     #endregion
 
     #region UpdateUser
-
     public void UpdateUser(UserDTO userDtoUpdated)
     {
         SetUserConnected(userDtoUpdated);
         
-        User userWithUpdates = ToUser(userDtoUpdated);
+        User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
         
         if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
         {
@@ -144,16 +110,6 @@ public class GenericController : IUserController
 
     #endregion
 
-    #region AuxiliaryMethods
-
-    private void FormatUserProperties(User user)
-    {
-        user.Email = user.Email.ToLower();
-        user.FirstName = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1).ToLower();
-        user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1).ToLower();
-    }
-
-    #endregion
 
     #endregion
 }
