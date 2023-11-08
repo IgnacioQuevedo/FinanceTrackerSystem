@@ -7,189 +7,189 @@ using DataManagers;
 
 namespace ControllerTests
 {
-	[TestClass]
-	public class ControllerUserTests
-	{
-		#region Initialize
+    [TestClass]
+    public class ControllerUserTests
+    {
+        #region Initialize
 
-		private GenericController _controller;
-		private SqlContext _testDb;
-		private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        private GenericController _controller;
+        private SqlContext _testDb;
+        private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
 
-		private UserRepositorySql _userRepo;
-		private UserDTO _userDTO;
-		private UserDTO _userConnected;
-		private UserLoginDTO _userLoginDTO;
+        private UserRepositorySql _userRepo;
+        private UserDTO _userDTO;
+        private UserDTO _userConnected;
+        private UserLoginDTO _userLoginDTO;
 
-		[TestInitialize]
-		public void Initialize()
-		{
-			_testDb = _contextFactory.CreateDbContext();
-			_userRepo = new UserRepositorySql(_testDb);
-			_controller = new GenericController(_userRepo);
+        [TestInitialize]
+        public void Initialize()
+        {
+            _testDb = _contextFactory.CreateDbContext();
+            _userRepo = new UserRepositorySql(_testDb);
+            _controller = new GenericController(_userRepo);
 
-			_userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-			_userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
-			_userConnected.UserId = 1;
-			_userDTO.UserId = _userConnected.UserId;
+            _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+            _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            _userConnected.UserId = 1;
+            _userDTO.UserId = _userConnected.UserId;
 
-			_userLoginDTO = new UserLoginDTO("jhonnie@gmail.com", "Jhoooniee123");
-
-
-			_controller.RegisterUser(_userConnected);
-			_controller.SetUserConnected(_userConnected.UserId);
-		}
-
-		#endregion
-
-		#region Cleanup
-
-		[TestCleanup]
-		public void CleanUp()
-		{
-			_testDb.Database.EnsureDeleted();
-		}
-
-		#endregion
-
-		#region FindUser
-
-		[TestMethod]
-		public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
-		{
-			UserDTO userFound = _controller.FindUser(_userDTO.UserId);
-
-			Assert.AreEqual(userFound.Email, _userDTO.Email);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
-		{
-
-			_userDTO.UserId = 1000000;
-			UserDTO userFound = _controller.FindUser(_userDTO.UserId);
-
-			Assert.IsNull(userFound);
-		}
-
-		#endregion
-
-		#region Register
-
-		[TestMethod]
-		public void RegisterMethod_ShouldAddNewUserIntoDb()
-		{
-			UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-				"KennieDock222", "North Av");
-			userToAdd.UserId = 2;
-
-			_controller.RegisterUser(userToAdd);
+            _userLoginDTO = new UserLoginDTO(1, "jhonnie@gmail.com", "Jhoooniee123");
 
 
-			UserDTO userInDb = _controller.FindUser(userToAdd.UserId);
-			Assert.AreEqual(userToAdd.Email, userInDb.Email);
-		}
+            _controller.RegisterUser(_userConnected);
+            _controller.SetUserConnected(_userConnected.UserId);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void RegisterUserAlreadyRegistered_ShouldThrowException()
-		{
-			UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-				"KennieDock222", "North Av");
-			_controller.RegisterUser(userToAdd);
-			_controller.RegisterUser(userToAdd);
-		}
+        #endregion
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldThrowException()
-		{
-			UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
-				"KennieDock222", "North Av");
-			_controller.RegisterUser(userAdded);
+        #region Cleanup
 
-			UserDTO userWithSameEmail = new UserDTO("Kenny", "Dock", "keNNieS@gmail.com",
-				"KennieDock222", "North Av");
-			_controller.RegisterUser(userWithSameEmail);
-		}
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _testDb.Database.EnsureDeleted();
+        }
 
-		[TestMethod]
-		public void GivenUserToCreate_PasswordsMustMatch()
-		{
-			string passwordRepeated = _userDTO.Password;
-			_controller.PasswordMatch(_userDTO.Password, passwordRepeated);
-		}
+        #endregion
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
-		{
-			string passwordIncorrect = "passwordIncorrect";
-			_controller.PasswordMatch(_userDTO.Password, passwordIncorrect);
+        #region FindUser
 
-		}
-		#endregion
+        [TestMethod]
+        public void GivenUserDTO_ShouldBePossibleToFindUserRelatedInDb()
+        {
+            UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
-		#region Update
+            Assert.AreEqual(userFound.Email, _userDTO.Email);
+        }
 
-		[TestMethod]
-		public void GivenUserToUpdate_ShouldBeUpdatedInDb()
-		{
-			UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
-				"Jhonix2003!!", "South Av");
-			dtoWithUpdates.UserId = _userConnected.UserId;
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
+        {
 
-			_controller.UpdateUser(dtoWithUpdates);
+            _userDTO.UserId = 1000000;
+            UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
-			UserDTO userInDb = _controller.FindUser(dtoWithUpdates.UserId);
-			Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
-			Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
-			Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
-			Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
-			Assert.AreEqual(userInDb.Email, dtoWithUpdates.Email);
-		}
+            Assert.IsNull(userFound);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
-		{
-			UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", ""); ;
-			newDtoWithoutChanges.UserId = _userConnected.UserId;
+        #endregion
 
-			_controller.UpdateUser(newDtoWithoutChanges);
-		}
+        #region Register
 
-		#endregion
+        [TestMethod]
+        public void RegisterMethod_ShouldAddNewUserIntoDb()
+        {
+            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            userToAdd.UserId = 2;
 
-		#region Login
+            _controller.RegisterUser(userToAdd);
 
-		[TestMethod]
-		public void GivenUserDTO_ShouldBePossibleToLogin()
-		{
-			_userLoginDTO.Email = "jhonnie@gmail.com";
-			_userLoginDTO.Password = "Jhoooniee123!";
 
-			Assert.IsTrue(_controller.LoginUser(_userLoginDTO));
-		}
+            UserDTO userInDb = _controller.FindUser(userToAdd.UserId);
+            Assert.AreEqual(userToAdd.Email, userInDb.Email);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
-		{
-			_controller.LoginUser(_userLoginDTO);
-		}
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegisterUserAlreadyRegistered_ShouldThrowException()
+        {
+            UserDTO userToAdd = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.RegisterUser(userToAdd);
+            _controller.RegisterUser(userToAdd);
+        }
 
-		#endregion
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void RegisteringUserWithSameEmailButDifferentUpperCase_ShouldThrowException()
+        {
+            UserDTO userAdded = new UserDTO("Kenny", "Dock", "kennies@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.RegisterUser(userAdded);
 
-		[TestMethod]
-		public void GivenUserDTO_ShouldSetUserConnected()
-		{
-			UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo",
-				"nachitoquevedo@gmail.com", "Nacho200304!", "");
+            UserDTO userWithSameEmail = new UserDTO("Kenny", "Dock", "keNNieS@gmail.com",
+                "KennieDock222", "North Av");
+            _controller.RegisterUser(userWithSameEmail);
+        }
 
-			_controller.SetUserConnected(userToConnect.UserId);
-		}
+        [TestMethod]
+        public void GivenUserToCreate_PasswordsMustMatch()
+        {
+            string passwordRepeated = _userDTO.Password;
+            _controller.PasswordMatch(_userDTO.Password, passwordRepeated);
+        }
 
-	}
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserToCreateWithDifferentPasswords_ShouldThrowException()
+        {
+            string passwordIncorrect = "passwordIncorrect";
+            _controller.PasswordMatch(_userDTO.Password, passwordIncorrect);
+
+        }
+        #endregion
+
+        #region Update
+
+        [TestMethod]
+        public void GivenUserToUpdate_ShouldBeUpdatedInDb()
+        {
+            UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
+                "Jhonix2003!!", "South Av");
+            dtoWithUpdates.UserId = _userConnected.UserId;
+
+            _controller.UpdateUser(dtoWithUpdates);
+
+            UserDTO userInDb = _controller.FindUser(dtoWithUpdates.UserId);
+            Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
+            Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
+            Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
+            Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
+            Assert.AreEqual(userInDb.Email, dtoWithUpdates.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
+        {
+            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", ""); ;
+            newDtoWithoutChanges.UserId = _userConnected.UserId;
+
+            _controller.UpdateUser(newDtoWithoutChanges);
+        }
+
+        #endregion
+
+        #region Login
+
+        [TestMethod]
+        public void GivenUserDTO_ShouldBePossibleToLogin()
+        {
+            _userLoginDTO.Email = "jhonnie@gmail.com";
+            _userLoginDTO.Password = "Jhoooniee123!";
+
+            Assert.IsTrue(_controller.LoginUser(_userLoginDTO));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserNotRegisteredWhenTryingToLogin_ShouldThrowException()
+        {
+            _controller.LoginUser(_userLoginDTO);
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void GivenUserDTO_ShouldSetUserConnected()
+        {
+            UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo",
+                "nachitoquevedo@gmail.com", "Nacho200304!", "");
+
+            _controller.SetUserConnected(userToConnect.UserId);
+        }
+
+    }
 }

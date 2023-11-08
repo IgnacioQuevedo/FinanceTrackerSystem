@@ -15,10 +15,11 @@ namespace BusinessLogic.Dtos_Components
 
         public UserLoginDTO() { }
 
-        public UserLoginDTO(string email, string password)
+        public UserLoginDTO(int userId, string email, string password)
         {
             Email = email;
             Password = password;
+            UserId = userId;
         }
 
 

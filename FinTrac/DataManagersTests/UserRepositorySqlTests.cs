@@ -29,7 +29,7 @@ namespace DataManagersTests
             _userRepo = new UserRepositorySql(_testDb);
             _genericUser = new User("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
             _genericUserDTO = new UserDTO("Jhon", "Sans", "jhonny@gmail.com", "Jhooony12345", "");
-            _genericUserLoginDTO = new UserLoginDTO("jhonny@gmail.com", "Jhooony12345");
+            _genericUserLoginDTO = new UserLoginDTO(1, "jhonny@gmail.com", "Jhooony12345");
         }
 
         #endregion
