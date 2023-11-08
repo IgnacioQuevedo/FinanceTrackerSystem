@@ -19,7 +19,7 @@ namespace BusinessLogicTests.Dto_Components
         public void GivenEmail_ShouldBeSetted()
         {
             UserLoginDTO.Email = "someone@example.com";
-            Assert.AreEqual("@example.com", UserLoginDTO.Email);
+            Assert.AreEqual("someone@example.com", UserLoginDTO.Email);
         }
 
     }
