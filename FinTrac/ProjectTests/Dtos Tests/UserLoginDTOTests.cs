@@ -33,7 +33,7 @@ namespace BusinessLogicTests.Dto_Components
         {
             string password = "ABCDE12345678";
             UserLoginDTO.Password = password;
-            Assert.AreEqual("1232", UserLoginDTO.Password);
+            Assert.AreEqual(password, UserLoginDTO.Password);
         }
 
 
