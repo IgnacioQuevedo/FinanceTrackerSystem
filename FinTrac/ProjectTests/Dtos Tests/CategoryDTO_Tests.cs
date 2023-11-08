@@ -18,6 +18,12 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenId_ShouldBeSetted()
+        {
+            
+        }
+        
         #region Name
 
         [TestMethod]

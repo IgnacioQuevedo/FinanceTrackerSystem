@@ -47,9 +47,12 @@ namespace ControllerTests
         {
             Category categoryToConvert = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
 
-            CategoryDTO categoryDTOs = MapperCategory.ToCategoryDTO(categoryToConvert);
+            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(categoryToConvert);
             
-            Assert.IsInstanceOfType(categoryDTOs,typeof(CategoryDTO));
+            Assert.IsInstanceOfType(categoryDTO,typeof(CategoryDTO));
+            Assert.AreEqual(categoryToConvert.Name,categoryDTO.Name);
+            Assert.AreEqual(categoryToConvert.Status,categoryDTO.Status);
+            Assert.AreEqual(categoryToConvert.Type,categoryDTO.Type);
         }
     }
 }
