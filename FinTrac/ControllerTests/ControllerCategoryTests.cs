@@ -61,7 +61,7 @@ namespace ControllerTests
             categoryInDb = _testDb.Users.First().MyCategories.First();
 
             Assert.IsNotNull(categoryInDb.CategoryUser);
-            Assert.AreEqual(dtoToAdd.CategoryUserId, categoryInDb.UserId);
+            Assert.AreEqual(dtoToAdd.UserId, categoryInDb.UserId);
             Assert.AreEqual(dtoToAdd.Name, categoryInDb.Name);
             Assert.AreEqual(dtoToAdd.Status, categoryInDb.Status);
             Assert.AreEqual(dtoToAdd.Type, categoryInDb.Type);
@@ -90,8 +90,7 @@ namespace ControllerTests
             Category categoryFound = _controller.FindCategory(categoryDTO);
             
             Assert.AreEqual(categoryDTO.CategoryId,categoryFound.CategoryId);
-            Assert.AreEqual(categoryDTO.CategoryUserId,categoryFound.UserId);
-
+            Assert.AreEqual(categoryDTO.UserId,categoryFound.UserId);
         }
 
         #endregion

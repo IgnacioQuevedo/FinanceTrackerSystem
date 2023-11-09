@@ -130,7 +130,7 @@ public class GenericController : IUserController
     {
         try
         {
-            SetUserConnected(dtoToAdd.CategoryUserId);
+            SetUserConnected(dtoToAdd.UserId);
             Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
             
             _userConnected.AddCategory(categoryToAdd);
@@ -145,7 +145,7 @@ public class GenericController : IUserController
 
     public Category FindCategory(CategoryDTO categoryDto)
     {
-        SetUserConnected(categoryDto.CategoryUserId);
+        SetUserConnected(categoryDto.UserId);
         return _userConnected.MyCategories[categoryDto.CategoryId - 1];
     }
 }

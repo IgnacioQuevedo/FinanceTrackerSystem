@@ -56,7 +56,7 @@ namespace ControllerTests
             Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
             Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
             Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
-            Assert.AreEqual(categoryDTO_ToConvert.CategoryUserId,generatedCategory.UserId);
+            Assert.AreEqual(categoryDTO_ToConvert.UserId,generatedCategory.UserId);
         }
         
         [TestMethod]

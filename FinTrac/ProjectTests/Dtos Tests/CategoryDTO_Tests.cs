@@ -81,9 +81,9 @@ namespace TestProject1
         {
             int categoryUserId = 1;
 
-            _categoryDto.CategoryUserId = 1;
+            _categoryDto.UserId = 1;
             
-            Assert.AreEqual(categoryUserId,_categoryDto.CategoryUserId);
+            Assert.AreEqual(categoryUserId,_categoryDto.UserId);
 
         }
         
@@ -103,7 +103,7 @@ namespace TestProject1
             Assert.AreEqual(categoryName,genericCategoryDTO.Name);
             Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
             Assert.AreEqual(categoryType,genericCategoryDTO.Type);
-            Assert.AreEqual(categoryUserId,genericCategoryDTO.CategoryUserId);
+            Assert.AreEqual(categoryUserId,genericCategoryDTO.UserId);
         }
 
         #endregion
