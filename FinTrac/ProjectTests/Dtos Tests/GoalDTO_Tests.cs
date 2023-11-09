@@ -95,7 +95,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO.UserId = 1;
 
-            Assert.AreEqual(0, _goalDTO.UserId);
+            Assert.AreEqual(1, _goalDTO.UserId);
         }
 
         #region Constructor
