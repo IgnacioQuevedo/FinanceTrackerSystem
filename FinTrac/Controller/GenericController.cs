@@ -128,9 +128,17 @@ public class GenericController : IUserController
 
     public void CreateCategory(CategoryDTO dtoToAdd)
     {
-        SetUserConnected(dtoToAdd.CategoryUserId);
-        Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
-        _userConnected.AddCategory(categoryToAdd);
-        _userRepo.Update(_userConnected);
+        try
+        {
+            SetUserConnected(dtoToAdd.CategoryUserId);
+            Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
+            
+            _userConnected.AddCategory(categoryToAdd);
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
     }
 }
