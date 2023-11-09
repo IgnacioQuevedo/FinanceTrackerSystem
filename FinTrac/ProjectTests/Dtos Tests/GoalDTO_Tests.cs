@@ -97,7 +97,6 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenGoalId_ShouldBeSetted()
         {
             _goalDTO.GoalId = 1;
-
             Assert.AreEqual(1, _goalDTO.GoalId);
         }
 
