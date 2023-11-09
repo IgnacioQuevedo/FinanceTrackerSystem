@@ -109,12 +109,13 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateAGoalDTO()
         {
-            GoalDTO myGoalDTO = new GoalDTO(genericTitleGoalDTO, genericMaxAmountOfGoal, genericCurrencyEnum, genericListOfCategories);
+            GoalDTO myGoalDTO = new GoalDTO(genericTitleGoalDTO, genericMaxAmountOfGoal, genericCurrencyEnum, genericListOfCategories, genericUserId);
 
             Assert.AreEqual(genericTitleGoalDTO, myGoalDTO.Title);
             Assert.AreEqual(genericMaxAmountOfGoal, myGoalDTO.MaxAmountToSpend);
             Assert.AreEqual(genericCurrencyEnum, myGoalDTO.CurrencyOfAmount);
             Assert.AreEqual(genericListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
+            Assert.AreEqual(genericUserId, myGoalDTO.UserId);
         }
 
         #endregion

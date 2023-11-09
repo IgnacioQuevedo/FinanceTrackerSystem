@@ -18,12 +18,13 @@ namespace BusinessLogic.Dtos_Components
 
         public GoalDTO() { }
 
-        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnum currencyOfAmount, List<Category> categoriesOfGoal)
+        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnum currencyOfAmount, List<Category> categoriesOfGoal, int userId)
         {
             Title = title;
             MaxAmountToSpend = maxAmountToSpend;
             CurrencyOfAmount = currencyOfAmount;
             CategoriesOfGoalDTO = categoriesOfGoal;
+            UserId = userId;
         }
     }
 }
