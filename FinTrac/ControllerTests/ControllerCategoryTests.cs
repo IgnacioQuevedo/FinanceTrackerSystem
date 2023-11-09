@@ -93,6 +93,17 @@ namespace ControllerTests
             Assert.AreEqual(categoryDTO.UserId,categoryFound.UserId);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCategoryDTOThatIsNotInDb_WhenTryingToFound_ShouldThrowException()
+        {
+            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
+            categoryDTO.CategoryId = 1;
+            
+            Category categoryFound = _controller.FindCategory(categoryDTO);
+            
+        }
+
         #endregion
     }
 }
