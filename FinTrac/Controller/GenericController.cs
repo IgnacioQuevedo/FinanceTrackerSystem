@@ -1,3 +1,4 @@
+using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
@@ -124,4 +125,11 @@ public class GenericController : IUserController
     #endregion
 
     #endregion
+
+    public void CreateCategory(CategoryDTO dtoToAdd)
+    {
+        SetUserConnected(dtoToAdd.CategoryUserId);
+        Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
+        _userConnected.AddCategory(categoryToAdd);
+    }
 }

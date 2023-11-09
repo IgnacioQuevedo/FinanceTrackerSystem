@@ -22,8 +22,8 @@ namespace TestProject1
         [TestMethod]
         public void GivenId_ShouldBeSetted()
         {
-            _categoryDto.Id = 1;
-            Assert.AreEqual(1,_categoryDto.Id);
+            _categoryDto.CategoryId = 1;
+            Assert.AreEqual(1,_categoryDto.CategoryId);
         }
 
         #endregion
