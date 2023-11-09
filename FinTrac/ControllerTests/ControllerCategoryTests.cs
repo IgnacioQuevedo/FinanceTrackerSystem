@@ -101,8 +101,30 @@ namespace ControllerTests
             categoryDTO.CategoryId = 1;
             
             _controller.FindCategory(categoryDTO);
-            
         }
+        #endregion
+
+        #region Update Category
+
+        [TestMethod]
+        public void GivenCategoryDTOToUpdate_ShouldBeUpdatedInDb()
+        {
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
+            categoryDto.CategoryId = 1;
+            
+            _controller.CreateCategory(categoryDto);
+
+            CategoryDTO categoryDtoWithUpdates = new CategoryDTO("Party", StatusEnum.Disabled, TypeEnum.Outcome, 1);
+            categoryDtoWithUpdates.CategoryId = 1;
+            
+            _controller.UpdateCategory(categoryDtoWithUpdates);
+
+            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDto);
+
+        }
+        
+        
+
         #endregion
     }
 }

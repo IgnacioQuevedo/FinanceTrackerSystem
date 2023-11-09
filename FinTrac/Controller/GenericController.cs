@@ -153,4 +153,9 @@ public class GenericController : IUserController
             throw new Exception("Category was not found, an error on index must be somewhere.");
         }
     }
+
+    public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
+    {
+        throw new NotImplementedException();
+    }
 }
