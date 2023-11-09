@@ -10,6 +10,7 @@ namespace BusinessLogic.Dtos_Components
 {
     public class GoalDTO
     {
+        public int GoalId { get; set; }
         public int UserId { get; set; }
         public string Title { get; set; }
         public int MaxAmountToSpend { get; set; }

@@ -13,6 +13,8 @@ namespace BusinessLogicTests.Dtos_Tests
     [TestClass]
     public class GoalDTO_Tests
     {
+        #region Initialize
+
         private GoalDTO _goalDTO;
         private CategoryDTO genericCategoryDTO;
         private List<CategoryDTO> genericListOfCategories;
@@ -20,8 +22,6 @@ namespace BusinessLogicTests.Dtos_Tests
         private int genericMaxAmountOfGoal;
         private string genericTitleGoalDTO;
         private int genericUserId;
-
-        #region Initialize
 
         [TestInitialize]
         public void Initialize()
@@ -91,6 +91,15 @@ namespace BusinessLogicTests.Dtos_Tests
         }
 
         #endregion
+
+
+        [TestMethod]
+        public void GivenGoalId_ShouldBeSetted()
+        {
+            _goalDTO.GoalId = 1;
+
+            Assert.AreEqual(0, _goalDTO.GoalId);
+        }
 
         #region User Id
 

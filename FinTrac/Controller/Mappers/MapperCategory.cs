@@ -5,12 +5,12 @@ using Mappers;
 
 namespace Controller.Mappers;
 
-public static class MapperCategory
+public abstract class MapperCategory
 {
     public static CategoryDTO ToCategoryDTO(Category categoryToConvert)
     {
         CategoryDTO categoryDTO =
-            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type,categoryToConvert.UserId);
+            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type, categoryToConvert.UserId);
         categoryDTO.Id = categoryToConvert.CategoryId;
 
         return categoryDTO;
