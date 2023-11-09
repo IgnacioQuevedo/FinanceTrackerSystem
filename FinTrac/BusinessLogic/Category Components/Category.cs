@@ -19,7 +19,7 @@ namespace BusinessLogic.Category_Components
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
         
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public User CategoryUser { get; set; }
         public List<Goal> CategoryGoals { get; set; }
 

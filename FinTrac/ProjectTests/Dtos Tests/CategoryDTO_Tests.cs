@@ -76,6 +76,18 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenUserOfCategoryId_ShouldBePossibleToAssignItToDTO()
+        {
+            int categoryUserId = 1;
+
+            _categoryDto.CategoryUserId = 1;
+            
+            Assert.AreEqual(categoryUserId,_categoryDto.CategoryUserId);
+
+        }
+        
+
         #region Constructor
 
         [TestMethod] 
@@ -84,12 +96,14 @@ namespace TestProject1
             string categoryName = "Food";
             StatusEnum categoryStatus = StatusEnum.Enabled;
             TypeEnum categoryType = TypeEnum.Income;
+            int categoryUserId = 1;
 
-            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
+            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType,categoryUserId);
 
             Assert.AreEqual(categoryName,genericCategoryDTO.Name);
             Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
             Assert.AreEqual(categoryType,genericCategoryDTO.Type);
+            Assert.AreEqual(categoryUserId,genericCategoryDTO.CategoryUserId);
         }
 
         #endregion

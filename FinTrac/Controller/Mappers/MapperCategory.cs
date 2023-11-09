@@ -1,5 +1,5 @@
 using BusinessLogic.Category_Components;
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using Mappers;
 
@@ -10,7 +10,7 @@ public static class MapperCategory
     public static CategoryDTO ToCategoryDTO(Category categoryToConvert)
     {
         CategoryDTO categoryDTO =
-            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type);
+            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type,categoryToConvert.UserId);
         categoryDTO.Id = categoryToConvert.CategoryId;
 
         return categoryDTO;
@@ -22,6 +22,7 @@ public static class MapperCategory
         {
             Category categoryConverted =
                 new Category(categoryDTO_ToConvert.Name, categoryDTO_ToConvert.Status, categoryDTO_ToConvert.Type);
+            categoryConverted.UserId = categoryDTO_ToConvert.CategoryUserId;
 
             categoryConverted.CategoryId = categoryDTO_ToConvert.Id;
 
