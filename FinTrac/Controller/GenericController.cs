@@ -135,10 +135,17 @@ public class GenericController : IUserController
             
             _userConnected.AddCategory(categoryToAdd);
             _userRepo.Update(_userConnected);
+            
         }
         catch (ExceptionMapper Exception)
         {
             throw new Exception(Exception.Message);
         }
+    }
+
+    public Category FindCategory(CategoryDTO categoryDto)
+    {
+        SetUserConnected(categoryDto.CategoryUserId);
+        return _userConnected.MyCategories[categoryDto.CategoryId - 1];
     }
 }

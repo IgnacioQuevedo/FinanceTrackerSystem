@@ -85,7 +85,8 @@ namespace ControllerTests
         {
             CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
             categoryDTO.CategoryId = 1;
-
+            
+            _controller.CreateCategory(categoryDTO);
             Category categoryFound = _controller.FindCategory(categoryDTO);
             
             Assert.AreEqual(categoryDTO.CategoryId,categoryFound.CategoryId);
