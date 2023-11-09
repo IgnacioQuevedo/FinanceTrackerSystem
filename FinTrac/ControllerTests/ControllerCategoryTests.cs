@@ -66,7 +66,16 @@ namespace ControllerTests
 
         }
         
-        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void CreateCategoryMethodWithIncorrectData_ShouldThrowException()
+        {
+            CategoryDTO dtoToAdd = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income,_userConnected.UserId);
+            Category categoryInDb = new Category();
+
+            _controller.CreateCategory(dtoToAdd);
+            
+        }
         
         
         
