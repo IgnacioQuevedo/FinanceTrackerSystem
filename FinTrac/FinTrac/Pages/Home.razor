@@ -1,9 +1,9 @@
-﻿@page "/Home/{userId:int}";
-@layout MainLayout;
+﻿@page "/Home";
+
 @inject IUserController UserController
 @inject IJSRuntime JSRuntime
 
-<CascadingValue Value="userConnected">
+<section>
 	<div id="@carouselName" class="carousel slide" data-bs-ride="carousel" data-bs-wrap="true" data-bs-interval="3000" data-bs-pause="false">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -30,25 +30,17 @@
 			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
-</CascadingValue>
+</section>
 
 @code {
-	[Parameter]
-	public int userId { get; set; }
-	
-	public UserDTO userConnected { get; set; }
 
 	const string carouselName = "carouselExampleIndicators"; // NOTE: the ID of the carousel
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		object[] args = { carouselName };
-		await JSRuntime.InvokeVoidAsync("startCarousel", args); // NOTE: call JavaScript function with the ID of the carousel
-	}
-
-	protected override void OnInitialized()
-	{
-		userConnected = UserController.FindUser(userId);
+		await JSRuntime.InvokeVoidAsync("startCarousel", args); 
+		// NOTE: call JavaScript function with the ID of the carousel
 	}
 
 }

@@ -1,4 +1,4 @@
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Microsoft.EntityFrameworkCore;
@@ -57,7 +57,8 @@ public class UserRepositorySql
         return _database.Users.FirstOrDefault(u => u.UserId == userId);
     }
 
-    public bool Login(UserDTO userLogin)
+    public bool Login(UserLoginDTO userLogin)
+
     {
         var userInDb = GetUserViaEmail(userLogin.Email);
 
@@ -72,6 +73,7 @@ public class UserRepositorySql
 
     private User? GetUserViaEmail(string emailUser)
     {
+        emailUser = emailUser.ToLower();
         User userInDb = _database.Users.FirstOrDefault(u => u.Email == emailUser);
         return userInDb;
     }

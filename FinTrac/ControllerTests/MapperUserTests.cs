@@ -1,4 +1,4 @@
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.User_Components;
 using Controller;
 using DataManagers;
@@ -7,89 +7,89 @@ using Mappers;
 
 namespace ControllerTests
 {
-    [TestClass]
-    public class MapperUserTests
-    {
-        #region Initialize
+	[TestClass]
+	public class MapperUserTests
+	{
+		#region Initialize
 
-        private GenericController _controller;
-        private SqlContext _testDb;
-        private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
-        
-        private UserRepositorySql _userRepo;
-        private UserDTO _userDTO;
-        private UserDTO _userConnected;
+		private GenericController _controller;
+		private SqlContext _testDb;
+		private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            _testDb = _contextFactory.CreateDbContext();
-            _userRepo = new UserRepositorySql(_testDb);
-            _controller = new GenericController(_userRepo);
-            
-            _userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-            _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
-            _userConnected.UserId = 1;
-            _userDTO.UserId = _userConnected.UserId;
-            
-            _controller.RegisterUser(_userConnected);
-            _controller.SetUserConnected(_userConnected.UserId);
-        }
+		private UserRepositorySql _userRepo;
+		private UserDTO _userDTO;
+		private UserDTO _userConnected;
 
-        #endregion
+		[TestInitialize]
+		public void Initialize()
+		{
+			_testDb = _contextFactory.CreateDbContext();
+			_userRepo = new UserRepositorySql(_testDb);
+			_controller = new GenericController(_userRepo);
 
-        #region Cleanup
+			_userDTO = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+			_userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+			_userConnected.UserId = 1;
+			_userDTO.UserId = _userConnected.UserId;
 
-        [TestCleanup]
-        public void CleanUp()
-        {
-            _testDb.Database.EnsureDeleted();
-        }
+			_controller.RegisterUser(_userConnected);
+			_controller.SetUserConnected(_userConnected.UserId);
+		}
 
-        #endregion
+		#endregion
 
-        #region To User
+		#region Cleanup
 
-        [TestMethod]
-        public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
-        {
-            User userConverted = MapperUser.ToUser(_userDTO);
+		[TestCleanup]
+		public void CleanUp()
+		{
+			_testDb.Database.EnsureDeleted();
+		}
 
-            Assert.AreEqual(_userDTO.FirstName, userConverted.FirstName);
-            Assert.AreEqual(_userDTO.LastName, userConverted.LastName);
-            Assert.AreEqual(_userDTO.Email, userConverted.Email);
-            Assert.AreEqual(_userDTO.Password, userConverted.Password);
-            Assert.AreEqual(_userDTO.Address, userConverted.Address);
-        }
+		#endregion
 
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionMapper))]
-        public void GivenUserDTOWithIncorrectData_ShoulThrowException()
-        {
-            UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
-            User userConverted = MapperUser.ToUser(DtoWithBadValues);
-        }
+		#region To User
 
-        #endregion
+		[TestMethod]
+		public void GivenUserDTO_ShouldBePossibleToConvertItToUser()
+		{
+			User userConverted = MapperUser.ToUser(_userDTO);
 
-        #region To UserDTO
+			Assert.AreEqual(_userDTO.FirstName, userConverted.FirstName);
+			Assert.AreEqual(_userDTO.LastName, userConverted.LastName);
+			Assert.AreEqual(_userDTO.Email, userConverted.Email);
+			Assert.AreEqual(_userDTO.Password, userConverted.Password);
+			Assert.AreEqual(_userDTO.Address, userConverted.Address);
+		}
 
-        [TestMethod]
-        public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
-        {
-            User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
-            UserDTO userDto = MapperUser.ToUserDTO(userReceived);
+		[TestMethod]
+		[ExpectedException(typeof(ExceptionMapper))]
+		public void GivenUserDTOWithIncorrectData_ShoulThrowException()
+		{
+			UserDTO DtoWithBadValues = new UserDTO("Jhon", "Sans", "", "Jhoooniee123", "");
+			User userConverted = MapperUser.ToUser(DtoWithBadValues);
+		}
 
-            Assert.AreEqual(userDto.FirstName, userReceived.FirstName);
-            Assert.AreEqual(userDto.LastName, userReceived.LastName);
-            Assert.AreEqual(userDto.Email, userReceived.Email);
-            Assert.AreEqual(userDto.Password, userReceived.Password);
-            Assert.AreEqual(userDto.Address, userReceived.Address);
-        }
+		#endregion
 
-        #endregion
+		#region To UserDTO
+
+		[TestMethod]
+		public void GivenUser_ShouldBePossibleToConvertItToUserDTO()
+		{
+			User userReceived = new User("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123", "");
+			UserDTO userDto = MapperUser.ToUserDTO(userReceived);
+
+			Assert.AreEqual(userDto.FirstName, userReceived.FirstName);
+			Assert.AreEqual(userDto.LastName, userReceived.LastName);
+			Assert.AreEqual(userDto.Email, userReceived.Email);
+			Assert.AreEqual(userDto.Password, userReceived.Password);
+			Assert.AreEqual(userDto.Address, userReceived.Address);
+		}
+
+		#endregion
 
 
-        
-    }
+
+	}
 }

@@ -1,8 +1,6 @@
 ﻿@page "/";
-@layout LayoutForGuest;
+@layout MainLayout;
 @inject IUserController UserController
-
-
 
 <PageTitle>Login</PageTitle>
 
@@ -32,12 +30,12 @@
 
                                     <div class="form-outline mb-4">
                                         <input type="email" id="form2Example11" class="form-control"
-                                               placeholder="Email address" @bind-value="userDTO.Email" />
+                                               placeholder="Email address" @bind-value="userLoginDTO.Email" />
                                         <label class="form-label" for="form2Example11">Email address</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example22" class="form-control" @bind-value="userDTO.Password" />
+                                        <input type="password" id="form2Example22" class="form-control" @bind-value="userLoginDTO.Password" />
                                         <label class="form-label" for="form2Example22">Password</label>
                                     </div>
 
@@ -78,25 +76,31 @@
 @code
 {
 
-    private UserDTO userDTO = new UserDTO();
+    [CascadingParameter]
+    public EventCallback<UserDTO> NotifyChangeToMain { get; set; }
+
+    private UserLoginDTO userLoginDTO = new UserLoginDTO();
+    public UserDTO userDTO = new UserDTO();
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        userDTO.Email = "gonzalocamejo859@gmail.com";
-        userDTO.Password = "MARIOCAMEJO2003!";
+        userLoginDTO.Email = "gonzalocamejo859@gmail.com";
+        userLoginDTO.Password = "MARIOCAMEJO2003!";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
-
+        userDTO = null;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
     public void LoginUser()
     {
         try
         {
-            if (UserController.LoginUser(userDTO))
+            if (UserController.LoginUser(userLoginDTO))
             {
-                NavigationManager.NavigateTo($"/Home/{userDTO.UserId}");
+                SendDataToLayout();
+                NavigationManager.NavigateTo($"/Home");
             }
         }
         catch(Exception ExceptionUser)
@@ -105,6 +109,13 @@
             errorTxt = ExceptionUser.Message;
         }
 
+    }
+
+    public void SendDataToLayout()
+    {
+        userDTO = UserController.FindUser(userLoginDTO.UserId);
+        userDTO.flag = 1;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
 }

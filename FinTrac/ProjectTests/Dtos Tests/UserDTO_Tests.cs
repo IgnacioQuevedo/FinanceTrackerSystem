@@ -1,107 +1,107 @@
-using BusinessLogic.Dto_Components;
+using BusinessLogic.Dtos_Components;
 
 namespace TestProject1
 {
-    [TestClass]
-    public class UserDTO_Tests
-    {
-        #region Initialize
-        private UserDTO UserDTO;
+	[TestClass]
+	public class UserDTO_Tests
+	{
+		#region Initialize
+		private UserDTO UserDTO;
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            UserDTO = new UserDTO();
-        }
-        #endregion
-        
-        #region FirstName
-        [TestMethod]
-        public void GivenFirstName_ShouldBeSetted()
-        {
-            string firstName = "Ignacio";
-            UserDTO.FirstName = firstName;
+		[TestInitialize]
+		public void Initialize()
+		{
+			UserDTO = new UserDTO();
+		}
+		#endregion
 
-            Assert.AreEqual(firstName, UserDTO.FirstName);
-        }
-        #endregion
+		#region FirstName
+		[TestMethod]
+		public void GivenFirstName_ShouldBeSetted()
+		{
+			string firstName = "Ignacio";
+			UserDTO.FirstName = firstName;
 
-        #region LastName
-        [TestMethod]
-        public void GivenLastName_ShouldBeSetted()
-        {
-            string lastName = "Quevedo";
-            UserDTO userDto = new UserDTO();
-            userDto.LastName = lastName;
-            
-            Assert.AreEqual(lastName,userDto.LastName);
-        }
-        #endregion
+			Assert.AreEqual(firstName, UserDTO.FirstName);
+		}
+		#endregion
 
-        #region Password
-        [TestMethod]
-        public void GivenPassword_ShouldBeSetted()
-        {
-            string password = "Pass.Ignacio2023";
-            UserDTO.Password = password;
-            Assert.AreEqual(password,UserDTO.Password);
-        }
-        #endregion
-        
-        #region Email
-        [TestMethod]
-        public void GivenEmail_ShouldBeSetted()
-        {
-            string email = "nachitoquevedo@gmail.com";
-            UserDTO.Email = email;
+		#region LastName
+		[TestMethod]
+		public void GivenLastName_ShouldBeSetted()
+		{
+			string lastName = "Quevedo";
+			UserDTO userDto = new UserDTO();
+			userDto.LastName = lastName;
 
-            Assert.AreEqual(email,UserDTO.Email);
-        }
-        #endregion
+			Assert.AreEqual(lastName, userDto.LastName);
+		}
+		#endregion
 
-        #region Adress
-        [TestMethod]
-        public void GivenAddress_ShouldBeSetted()
-        {
-            string address = "Av Brasil 1215";
+		#region Password
+		[TestMethod]
+		public void GivenPassword_ShouldBeSetted()
+		{
+			string password = "Pass.Ignacio2023";
+			UserDTO.Password = password;
+			Assert.AreEqual(password, UserDTO.Password);
+		}
+		#endregion
 
-            UserDTO.Address = address;
+		#region Email
+		[TestMethod]
+		public void GivenEmail_ShouldBeSetted()
+		{
+			string email = "nachitoquevedo@gmail.com";
+			UserDTO.Email = email;
 
-            Assert.AreEqual(address,UserDTO.Address);
+			Assert.AreEqual(email, UserDTO.Email);
+		}
+		#endregion
 
-        }
-        #endregion
-        
-        #region Setting an Id
-        
-        [TestMethod]
-        public void GivenId_ShouldBeSetted()
-        {
-            int givenId = 1;
-            UserDTO.UserId = 1;
-            
-            Assert.AreEqual(givenId, UserDTO.UserId);
-        }
-        #endregion
-        
-        #region Constructor
-        [TestMethod]
-        public void GivenValues_ShouldBePossibleToCreateAUserDTO()
-        {
-            string firstName = "Gonzalo";
-            string lastName = "Camejo";
-            string email = "gonchi@gmail.com";
-            string password = "Pass.202304!";
-            string address = "";
+		#region Adress
+		[TestMethod]
+		public void GivenAddress_ShouldBeSetted()
+		{
+			string address = "Av Brasil 1215";
 
-            UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, password, address);
+			UserDTO.Address = address;
 
-            Assert.AreEqual(firstName,genericUserDTO.FirstName);
-            Assert.AreEqual(lastName,genericUserDTO.LastName);
-            Assert.AreEqual(email,genericUserDTO.Email);
-            Assert.AreEqual(address,genericUserDTO.Address);
-        }
-        #endregion
-      
-    }
+			Assert.AreEqual(address, UserDTO.Address);
+
+		}
+		#endregion
+
+		#region Setting an Id
+
+		[TestMethod]
+		public void GivenId_ShouldBeSetted()
+		{
+			int givenId = 1;
+			UserDTO.UserId = 1;
+
+			Assert.AreEqual(givenId, UserDTO.UserId);
+		}
+		#endregion
+
+		#region Constructor
+		[TestMethod]
+		public void GivenValues_ShouldBePossibleToCreateAUserDTO()
+		{
+			string firstName = "Gonzalo";
+			string lastName = "Camejo";
+			string email = "gonchi@gmail.com";
+			string password = "Pass.202304!";
+			string address = "";
+
+			UserDTO genericUserDTO = new UserDTO(firstName, lastName, email, password, address);
+
+			Assert.AreEqual(firstName, genericUserDTO.FirstName);
+			Assert.AreEqual(lastName, genericUserDTO.LastName);
+			Assert.AreEqual(email, genericUserDTO.Email);
+			Assert.AreEqual(address, genericUserDTO.Address);
+		}
+		#endregion
+
+	}
 }
