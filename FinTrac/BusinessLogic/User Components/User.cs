@@ -161,6 +161,7 @@ namespace BusinessLogic.User_Components
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
+            
         }
 
         private void ValidatePasswordUppercase(string posiblePassword)

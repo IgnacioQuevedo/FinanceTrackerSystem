@@ -3,87 +3,97 @@ using BusinessLogic.Enums;
 
 namespace TestProject1
 {
-	[TestClass]
-	public class CategoryDTO_Tests
-	{
-		#region Initialize
+    [TestClass]
+    public class CategoryDTO_Tests
+    {
+        #region Initialize
 
-		private CategoryDTO _categoryDto;
+        private CategoryDTO _categoryDto;
 
-		[TestInitialize]
-		public void Initialize()
-		{
-			_categoryDto = new CategoryDTO();
-		}
+        [TestInitialize]
+        public void Initialize()
+        {
+            _categoryDto = new CategoryDTO();
+        }
 
-		#endregion
+        #endregion
 
-		#region Name
+        #region Setting category Id
+        [TestMethod]
+        public void GivenId_ShouldBeSetted()
+        {
+            _categoryDto.Id = 1;
+            Assert.AreEqual(1,_categoryDto.Id);
+        }
 
-		[TestMethod]
-		public void GivenName_ShouldBeSetted()
-		{
-			string categoryName = "Food";
+        #endregion
+        
+        #region Name
 
-			CategoryDTO categoryDTO = new CategoryDTO();
-			_categoryDto.Name = categoryName;
+        [TestMethod]
+        public void GivenName_ShouldBeSetted()
+        {
+            string categoryName = "Food";
 
-			Assert.AreEqual(categoryName, _categoryDto.Name);
-		}
+            CategoryDTO categoryDTO = new CategoryDTO();
+            _categoryDto.Name = categoryName;
 
-		#endregion
+            Assert.AreEqual(categoryName, _categoryDto.Name);
+        }
 
-		#region Status
-		[TestMethod]
-		public void GivenStatus_BothShouldBeSetted()
-		{
-			StatusEnum categoryStatus1 = StatusEnum.Enabled;
-			StatusEnum categoryStatus2 = StatusEnum.Disabled;
+        #endregion
 
-			_categoryDto.Status = categoryStatus1;
-			Assert.AreEqual(_categoryDto.Status, categoryStatus1);
+        #region Status
+        [TestMethod]
+        public void GivenStatus_BothShouldBeSetted()
+        {
+            StatusEnum categoryStatus1 = StatusEnum.Enabled;
+            StatusEnum categoryStatus2 = StatusEnum.Disabled;
+            
+            _categoryDto.Status = categoryStatus1;
+            Assert.AreEqual(_categoryDto.Status,categoryStatus1);
+            
+            _categoryDto.Status = categoryStatus2;
+            Assert.AreEqual(_categoryDto.Status,categoryStatus2);
+        }
 
-			_categoryDto.Status = categoryStatus2;
-			Assert.AreEqual(_categoryDto.Status, categoryStatus2);
-		}
+        #endregion
 
-		#endregion
+        #region Type
 
-		#region Type
+        [TestMethod]
+        public void GivenType_BothShouldBeSetted()
+        {
+            TypeEnum typeEnum = TypeEnum.Income;
+            TypeEnum typeEnum2 = TypeEnum.Outcome;
+            
+            _categoryDto.Type = typeEnum;
+            Assert.AreEqual(_categoryDto.Type,typeEnum);
+            
+            _categoryDto.Type = typeEnum2;
+            Assert.AreEqual(_categoryDto.Type,typeEnum2);
+        }
 
-		[TestMethod]
-		public void GivenType_BothShouldBeSetted()
-		{
-			TypeEnum typeEnum = TypeEnum.Income;
-			TypeEnum typeEnum2 = TypeEnum.Outcome;
+        #endregion
 
-			_categoryDto.Type = typeEnum;
-			Assert.AreEqual(_categoryDto.Type, typeEnum);
+        #region Constructor
 
-			_categoryDto.Type = typeEnum2;
-			Assert.AreEqual(_categoryDto.Type, typeEnum2);
-		}
+        [TestMethod] 
+        public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
+        {
+            string categoryName = "Food";
+            StatusEnum categoryStatus = StatusEnum.Enabled;
+            TypeEnum categoryType = TypeEnum.Income;
 
-		#endregion
+            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
 
-		#region Constructor
+            Assert.AreEqual(categoryName,genericCategoryDTO.Name);
+            Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
+            Assert.AreEqual(categoryType,genericCategoryDTO.Type);
+        }
 
-		[TestMethod]
-		public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
-		{
-			string categoryName = "Food";
-			StatusEnum categoryStatus = StatusEnum.Enabled;
-			TypeEnum categoryType = TypeEnum.Income;
-
-			CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
-
-			Assert.AreEqual(categoryName, genericCategoryDTO.Name);
-			Assert.AreEqual(categoryStatus, genericCategoryDTO.Status);
-			Assert.AreEqual(categoryType, genericCategoryDTO.Type);
-		}
-
-		#endregion
-
-
-	}
+        #endregion
+      
+      
+    }
 }

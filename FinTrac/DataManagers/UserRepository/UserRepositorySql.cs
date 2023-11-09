@@ -58,6 +58,7 @@ public class UserRepositorySql
     }
 
     public bool Login(UserLoginDTO userLogin)
+
     {
         var userInDb = GetUserViaEmail(userLogin.Email);
 
@@ -76,5 +77,4 @@ public class UserRepositorySql
         User userInDb = _database.Users.FirstOrDefault(u => u.Email == emailUser);
         return userInDb;
     }
-
 }
