@@ -77,5 +77,22 @@ namespace ControllerTests
         }
 
         #endregion
+
+        #region Find Category
+
+        [TestMethod]
+        public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
+        {
+            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
+            categoryDTO.CategoryId = 1;
+
+            Category categoryFound = _controller.FindCategory(categoryDTO);
+            
+            Assert.AreEqual(categoryDTO.CategoryId,categoryFound.CategoryId);
+            Assert.AreEqual(categoryDTO.CategoryUserId,categoryFound.UserId);
+
+        }
+
+        #endregion
     }
 }
