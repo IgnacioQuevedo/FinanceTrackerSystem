@@ -22,12 +22,39 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
 
 
+        private List<Category> _genericListOfCategories;
+        private Category _category1;
+        private Category _category2;
+
+        private CategoryDTO _categoryDTO1;
+        private CategoryDTO _categoryDTO2;
+
+        private Goal _goalToConvert;
+
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _controller = new GenericController(_userRepo);
+
+
+            _genericListOfCategories = new List<Category>();
+            _category1 = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            _category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+            _category1.CategoryId = 1;
+            _category2.CategoryId = 1;
+
+            _genericListOfCategories.Add(_category1);
+            _genericListOfCategories.Add(_category2);
+
+            _categoryDTO1 = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 0);
+            _categoryDTO2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Outcome, 0);
+            _categoryDTO1.CategoryId = 1;
+            _categoryDTO2.CategoryId = 1;
+
+            _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
+            _goalToConvert.GoalId = 1;
         }
 
         #endregion
@@ -42,38 +69,24 @@ namespace ControllerTests
 
         #endregion
 
+        #region To GoalDTO
+
         [TestMethod]
         public void GivenGoal_ShouldBePossibleToConvertToGoalDTO()
         {
-            List<Category> listOfCategories = new List<Category>();
-            Category category1 = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-            Category category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
-            category1.CategoryId = 1;
-            category2.CategoryId = 1;
-
-            CategoryDTO categoryDTO1 = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 0);
-            CategoryDTO categoryDTO2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Outcome, 0);
-            categoryDTO1.CategoryId = 1;
-            categoryDTO2.CategoryId = 1;
-
-
-            listOfCategories.Add(category1);
-            listOfCategories.Add(category2);
-
-            Goal goalToConvert = new Goal("Less party", 100, listOfCategories);
-            goalToConvert.GoalId = 1;
-
-            GoalDTO goalDTO = MapperGoal.ToGoalDTO(goalToConvert);
+            GoalDTO goalDTO = MapperGoal.ToGoalDTO(_goalToConvert);
 
             Assert.IsInstanceOfType(goalDTO, typeof(GoalDTO));
-            Assert.AreEqual(goalDTO.GoalId, goalToConvert.GoalId);
-            Assert.AreEqual(goalDTO.Title, goalToConvert.Title);
-            Assert.AreEqual(goalDTO.MaxAmountToSpend, goalToConvert.MaxAmountToSpend);
-            Assert.AreEqual(goalDTO.CurrencyOfAmount, goalToConvert.CurrencyOfAmount);
-            Assert.AreEqual(goalDTO.UserId, goalToConvert.UserId);
-            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[0], categoryDTO1));
-            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], categoryDTO2));
+            Assert.AreEqual(goalDTO.GoalId, _goalToConvert.GoalId);
+            Assert.AreEqual(goalDTO.Title, _goalToConvert.Title);
+            Assert.AreEqual(goalDTO.MaxAmountToSpend, _goalToConvert.MaxAmountToSpend);
+            Assert.AreEqual(goalDTO.CurrencyOfAmount, _goalToConvert.CurrencyOfAmount);
+            Assert.AreEqual(goalDTO.UserId, _goalToConvert.UserId);
+            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[0], _categoryDTO1));
+            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], _categoryDTO2));
         }
+
+        #endregion
 
     }
 }
