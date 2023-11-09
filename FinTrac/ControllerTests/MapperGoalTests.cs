@@ -48,6 +48,14 @@ namespace ControllerTests
             List<Category> listOfCategories = new List<Category>();
             Category category1 = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
             Category category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+            category1.CategoryId = 1;
+            category2.CategoryId = 1;
+
+            CategoryDTO categoryDTO1 = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 0);
+            CategoryDTO categoryDTO2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Outcome, 0);
+            categoryDTO1.CategoryId = 1;
+            categoryDTO2.CategoryId = 1;
+
 
             listOfCategories.Add(category1);
             listOfCategories.Add(category2);
@@ -63,7 +71,8 @@ namespace ControllerTests
             Assert.AreEqual(goalDTO.MaxAmountToSpend, goalToConvert.MaxAmountToSpend);
             Assert.AreEqual(goalDTO.CurrencyOfAmount, goalToConvert.CurrencyOfAmount);
             Assert.AreEqual(goalDTO.UserId, goalToConvert.UserId);
-            Assert.AreEqual(goalDTO.CategoriesOfGoalDTO, goalToConvert.CategoriesOfGoal);
+            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[0], categoryDTO1));
+            Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], categoryDTO2));
         }
 
     }

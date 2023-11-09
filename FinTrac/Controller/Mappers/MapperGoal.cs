@@ -25,7 +25,7 @@ namespace Controller.Mappers
                 new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
             goalDTO.GoalId = goalToConvert.GoalId;
 
-            return null;
+            return goalDTO;
         }
 
     }

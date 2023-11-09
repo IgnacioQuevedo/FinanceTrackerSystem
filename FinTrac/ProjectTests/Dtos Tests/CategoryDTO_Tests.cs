@@ -22,12 +22,12 @@ namespace TestProject1
         [TestMethod]
         public void GivenId_ShouldBeSetted()
         {
-            _categoryDto.Id = 1;
-            Assert.AreEqual(1,_categoryDto.Id);
+            _categoryDto.CategoryId = 1;
+            Assert.AreEqual(1, _categoryDto.CategoryId);
         }
 
         #endregion
-        
+
         #region Name
 
         [TestMethod]
@@ -49,12 +49,12 @@ namespace TestProject1
         {
             StatusEnum categoryStatus1 = StatusEnum.Enabled;
             StatusEnum categoryStatus2 = StatusEnum.Disabled;
-            
+
             _categoryDto.Status = categoryStatus1;
-            Assert.AreEqual(_categoryDto.Status,categoryStatus1);
-            
+            Assert.AreEqual(_categoryDto.Status, categoryStatus1);
+
             _categoryDto.Status = categoryStatus2;
-            Assert.AreEqual(_categoryDto.Status,categoryStatus2);
+            Assert.AreEqual(_categoryDto.Status, categoryStatus2);
         }
 
         #endregion
@@ -66,12 +66,12 @@ namespace TestProject1
         {
             TypeEnum typeEnum = TypeEnum.Income;
             TypeEnum typeEnum2 = TypeEnum.Outcome;
-            
+
             _categoryDto.Type = typeEnum;
-            Assert.AreEqual(_categoryDto.Type,typeEnum);
-            
+            Assert.AreEqual(_categoryDto.Type, typeEnum);
+
             _categoryDto.Type = typeEnum2;
-            Assert.AreEqual(_categoryDto.Type,typeEnum2);
+            Assert.AreEqual(_categoryDto.Type, typeEnum2);
         }
 
         #endregion
@@ -82,15 +82,15 @@ namespace TestProject1
             int categoryUserId = 1;
 
             _categoryDto.CategoryUserId = 1;
-            
-            Assert.AreEqual(categoryUserId,_categoryDto.CategoryUserId);
+
+            Assert.AreEqual(categoryUserId, _categoryDto.CategoryUserId);
 
         }
-        
+
 
         #region Constructor
 
-        [TestMethod] 
+        [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
         {
             string categoryName = "Food";
@@ -98,16 +98,16 @@ namespace TestProject1
             TypeEnum categoryType = TypeEnum.Income;
             int categoryUserId = 1;
 
-            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType,categoryUserId);
+            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType, categoryUserId);
 
-            Assert.AreEqual(categoryName,genericCategoryDTO.Name);
-            Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
-            Assert.AreEqual(categoryType,genericCategoryDTO.Type);
-            Assert.AreEqual(categoryUserId,genericCategoryDTO.CategoryUserId);
+            Assert.AreEqual(categoryName, genericCategoryDTO.Name);
+            Assert.AreEqual(categoryStatus, genericCategoryDTO.Status);
+            Assert.AreEqual(categoryType, genericCategoryDTO.Type);
+            Assert.AreEqual(categoryUserId, genericCategoryDTO.CategoryUserId);
         }
 
         #endregion
-      
-      
+
+
     }
 }
