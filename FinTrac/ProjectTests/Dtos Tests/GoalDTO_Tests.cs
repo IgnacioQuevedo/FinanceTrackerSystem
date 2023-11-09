@@ -92,6 +92,7 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region  Goal Id
 
         [TestMethod]
         public void GivenGoalId_ShouldBeSetted()
@@ -99,6 +100,8 @@ namespace BusinessLogicTests.Dtos_Tests
             _goalDTO.GoalId = 1;
             Assert.AreEqual(1, _goalDTO.GoalId);
         }
+
+        #endregion
 
         #region User Id
 

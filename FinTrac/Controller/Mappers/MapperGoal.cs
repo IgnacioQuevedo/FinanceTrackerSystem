@@ -11,14 +11,22 @@ namespace Controller.Mappers
 {
     public abstract class MapperGoal
     {
-        //public static GoalDTO ToGoalDTO(Goal goalToConvert)
-        //{
+        public static GoalDTO ToGoalDTO(Goal goalToConvert)
+        {
+            List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
 
-        //    GoalDTO goalDTO =
-        //        new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, goalToConvert.CategoriesOfGoal, goalToConvert.UserId);
-        //    goalDTO.GoalId = goalToConvert.GoalId;
+            foreach (Category category in goalToConvert.CategoriesOfGoal)
+            {
+                CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
+                listCategoryDTO.Add(categoryDTO);
+            }
 
-        //    return goalDTO;
-        //}
+            GoalDTO goalDTO =
+                new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
+            goalDTO.GoalId = goalToConvert.GoalId;
+
+            return null;
+        }
+
     }
 }
