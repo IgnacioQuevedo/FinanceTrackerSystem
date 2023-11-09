@@ -58,7 +58,7 @@ namespace ControllerTests
 
             categoryInDb= _testDb.Users.First().MyCategories.First();
             
-            Assert.AreEqual(dtoToAdd.CategoryId,categoryInDb.CategoryId);
+            Assert.IsNotNull(categoryInDb.CategoryUser);
             Assert.AreEqual(dtoToAdd.CategoryUserId,categoryInDb.UserId);
             Assert.AreEqual(dtoToAdd.Name,categoryInDb.Name);
             Assert.AreEqual(dtoToAdd.Status,categoryInDb.Status);

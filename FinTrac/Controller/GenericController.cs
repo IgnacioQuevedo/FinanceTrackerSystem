@@ -131,5 +131,6 @@ public class GenericController : IUserController
         SetUserConnected(dtoToAdd.CategoryUserId);
         Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
         _userConnected.AddCategory(categoryToAdd);
+        _userRepo.Update(_userConnected);
     }
 }
