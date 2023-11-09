@@ -30,6 +30,7 @@ namespace ControllerTests
         private CategoryDTO _categoryDTO2;
 
         private Goal _goalToConvert;
+        private GoalDTO GoalDTOToConvert;
 
         [TestInitialize]
         public void Initialize()
@@ -87,6 +88,19 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenGoalDTOWithCorrectData_ShouldBePossibleToConvertToGoal()
+        {
+            Goal goalConverted = MapperGoal.ToGoal(goalDTOToConvert);
+
+            Assert.IsInstanceOfType(goalConverted, typeof(Goal));
+            Assert.AreEqual(categoryDTO_ToConvert.CategoryId, generatedCategory.CategoryId);
+            Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
+            Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
+            Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
+            Assert.AreEqual(categoryDTO_ToConvert.CategoryUserId, generatedCategory.UserId);
+        }
 
 
     }

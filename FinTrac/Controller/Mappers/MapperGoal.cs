@@ -22,6 +22,27 @@ namespace Controller.Mappers
             return goalDTO;
         }
 
+        public static Goal ToGoal(GoalDTO goalDTOToConvert)
+        {
+            List<Category> listOfCategories = new List<Category>();
+
+            foreach (CategoryDTO categoryDTO in goalDTOToConvert.CategoriesOfGoalDTO)
+            {
+                Category category = MapperCategory.ToCategory(categoryDTO);
+                listOfCategories.Add(category);
+            }
+
+
+            Goal goal =
+                new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, goalDTOToConvert.CurrencyOfAmount, listOfCategories, goalToConvert.UserId);
+
+            goalDTO.GoalId = goalToConvert.GoalId;
+
+            return goalDTO;
+        }
+
+
+
         private static List<CategoryDTO> ToListOfGoalDTO(Goal goalToConvert)
         {
             List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
