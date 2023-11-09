@@ -19,6 +19,7 @@ namespace BusinessLogicTests.Dtos_Tests
         private CurrencyEnum genericCurrencyEnum;
         private int genericMaxAmountOfGoal;
         private string genericTitleGoalDTO;
+        private int genericUserId;
 
         #region Initialize
 
@@ -37,6 +38,8 @@ namespace BusinessLogicTests.Dtos_Tests
             genericMaxAmountOfGoal = 100;
 
             genericTitleGoalDTO = "Less Party";
+
+            genericUserId = 1;
         }
 
         #endregion
@@ -89,14 +92,17 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region User Id
 
         [TestMethod]
         public void GivenUserId_ShouldBeSetted()
         {
-            _goalDTO.UserId = 1;
+            _goalDTO.UserId = genericUserId;
 
-            Assert.AreEqual(1, _goalDTO.UserId);
+            Assert.AreEqual(genericUserId, _goalDTO.UserId);
         }
+
+        #endregion
 
         #region Constructor
 
