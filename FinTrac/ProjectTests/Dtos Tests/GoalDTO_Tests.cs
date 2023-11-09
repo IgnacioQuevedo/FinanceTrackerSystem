@@ -10,97 +10,116 @@ using BusinessLogic.Goal_Components;
 
 namespace BusinessLogicTests.Dtos_Tests
 {
-	[TestClass]
-	public class GoalDTO_Tests
-	{
-		private GoalDTO _goalDTO;
-		private Category genericCategory;
-		private List<Category> genericListOfCategories;
-		private CurrencyEnum genericCurrencyEnum;
-		private int genericMaxAmountOfGoal;
-		private string genericTitleGoalDTO;
+    [TestClass]
+    public class GoalDTO_Tests
+    {
+        private GoalDTO _goalDTO;
+        private CategoryDTO genericCategoryDTO;
+        private List<CategoryDTO> genericListOfCategories;
+        private CurrencyEnum genericCurrencyEnum;
+        private int genericMaxAmountOfGoal;
+        private string genericTitleGoalDTO;
+        private int genericUserId;
 
-		#region Initialize
+        #region Initialize
 
-		[TestInitialize]
-		public void Initialize()
-		{
-			_goalDTO = new GoalDTO();
+        [TestInitialize]
+        public void Initialize()
+        {
+            _goalDTO = new GoalDTO();
 
-			genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            genericCategoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 1);
 
-			List<Category> myListOfCategories = new List<Category>();
-			myListOfCategories.Add(genericCategory);
+            List<CategoryDTO> myListOfCategories = new List<CategoryDTO>();
+            myListOfCategories.Add(genericCategoryDTO);
 
-			genericCurrencyEnum = CurrencyEnum.USA;
+            genericCurrencyEnum = CurrencyEnum.USA;
 
-			genericMaxAmountOfGoal = 100;
+            genericMaxAmountOfGoal = 100;
 
-			genericTitleGoalDTO = "Less Party";
-		}
+            genericTitleGoalDTO = "Less Party";
 
-		#endregion
+            genericUserId = 1;
+        }
 
-		#region Title
+        #endregion
 
-		[TestMethod]
-		public void GivenTitle_ShouldBeSetted()
-		{
-			_goalDTO.Title = genericTitleGoalDTO;
+        #region Title
 
-			Assert.AreEqual(genericTitleGoalDTO, _goalDTO.Title);
-		}
+        [TestMethod]
+        public void GivenTitle_ShouldBeSetted()
+        {
+            _goalDTO.Title = genericTitleGoalDTO;
 
-		#endregion
+            Assert.AreEqual(genericTitleGoalDTO, _goalDTO.Title);
+        }
 
-		#region Max amount to spend
-		[TestMethod]
-		public void GivenMaxAmountToSpend_ShouldBeSetted()
-		{
-			_goalDTO.MaxAmountToSpend = genericMaxAmountOfGoal;
+        #endregion
 
-			Assert.AreEqual(genericMaxAmountOfGoal, _goalDTO.MaxAmountToSpend);
-		}
+        #region Max amount to spend
+        [TestMethod]
+        public void GivenMaxAmountToSpend_ShouldBeSetted()
+        {
+            _goalDTO.MaxAmountToSpend = genericMaxAmountOfGoal;
 
-		#endregion
+            Assert.AreEqual(genericMaxAmountOfGoal, _goalDTO.MaxAmountToSpend);
+        }
 
-		#region Currency of amount
+        #endregion
 
-		[TestMethod]
-		public void GivenCurrencyOfAmount_ShoulBeSetted()
-		{
-			_goalDTO.CurrencyOfAmount = genericCurrencyEnum;
+        #region Currency of amount
 
-			bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
-			Assert.IsTrue(belongToEnum);
-		}
+        [TestMethod]
+        public void GivenCurrencyOfAmount_ShoulBeSetted()
+        {
+            _goalDTO.CurrencyOfAmount = genericCurrencyEnum;
 
-		#endregion
+            bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
+            Assert.IsTrue(belongToEnum);
+        }
 
-		#region List Of Categories
+        #endregion
 
-		[TestMethod]
-		public void GivenListOfCategories_ShoulBeSetted()
-		{
-			_goalDTO.CategoriesOfGoalDTO = genericListOfCategories;
+        #region List Of Categories
 
-			Assert.AreEqual(genericListOfCategories, _goalDTO.CategoriesOfGoalDTO);
-		}
+        [TestMethod]
+        public void GivenListOfCategories_ShoulBeSetted()
+        {
+            _goalDTO.CategoriesOfGoalDTO = genericListOfCategories;
 
-		#endregion
+            Assert.AreEqual(genericListOfCategories, _goalDTO.CategoriesOfGoalDTO);
+        }
 
-		[TestMethod]
-		public void GivenValues_ShouldBePossibleToCreateAGoalDTO()
-		{
-			GoalDTO myGoalDTO = new GoalDTO(genericTitleGoalDTO, genericMaxAmountOfGoal, genericCurrencyEnum, genericListOfCategories);
+        #endregion
 
-			Assert.AreEqual(genericTitleGoalDTO, myGoalDTO.Title);
-			Assert.AreEqual(genericMaxAmountOfGoal, myGoalDTO.MaxAmountToSpend);
-			Assert.AreEqual(genericCurrencyEnum, myGoalDTO.CurrencyOfAmount);
-			Assert.AreEqual(genericListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
-		}
+        #region User Id
+
+        [TestMethod]
+        public void GivenUserId_ShouldBeSetted()
+        {
+            _goalDTO.UserId = genericUserId;
+
+            Assert.AreEqual(genericUserId, _goalDTO.UserId);
+        }
+
+        #endregion
+
+        #region Constructor
+
+        [TestMethod]
+        public void GivenValues_ShouldBePossibleToCreateAGoalDTO()
+        {
+            GoalDTO myGoalDTO = new GoalDTO(genericTitleGoalDTO, genericMaxAmountOfGoal, genericCurrencyEnum, genericListOfCategories, genericUserId);
+
+            Assert.AreEqual(genericTitleGoalDTO, myGoalDTO.Title);
+            Assert.AreEqual(genericMaxAmountOfGoal, myGoalDTO.MaxAmountToSpend);
+            Assert.AreEqual(genericCurrencyEnum, myGoalDTO.CurrencyOfAmount);
+            Assert.AreEqual(genericListOfCategories, myGoalDTO.CategoriesOfGoalDTO);
+            Assert.AreEqual(genericUserId, myGoalDTO.UserId);
+        }
+
+        #endregion
 
 
-
-	}
+    }
 }
