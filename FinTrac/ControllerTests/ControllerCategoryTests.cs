@@ -100,10 +100,9 @@ namespace ControllerTests
             CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
             categoryDTO.CategoryId = 1;
             
-            Category categoryFound = _controller.FindCategory(categoryDTO);
+            _controller.FindCategory(categoryDTO);
             
         }
-=
         #endregion
     }
 }
