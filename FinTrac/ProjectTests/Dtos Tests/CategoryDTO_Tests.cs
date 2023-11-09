@@ -76,6 +76,18 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenUserOfCategoryId_ShouldBePossibleToAssignItToDTO()
+        {
+            int categoryUserId = 1;
+
+            _categoryDto.CategoryUserId = 1;
+            
+            Assert.AreEqual(categoryUserId,_categoryDto.CategoryUserId);
+
+        }
+        
+
         #region Constructor
 
         [TestMethod] 

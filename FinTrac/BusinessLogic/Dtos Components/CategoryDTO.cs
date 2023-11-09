@@ -8,6 +8,7 @@ namespace BusinessLogic.Dtos_Components
 		public string Name { get; set; } = "";
 		public StatusEnum Status { get; set; }
 		public TypeEnum Type { get; set; }
+		
 
 
 		public CategoryDTO()
