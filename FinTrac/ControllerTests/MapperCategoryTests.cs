@@ -46,7 +46,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
         {
-            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income);
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income,1);
             categoryDTO_ToConvert.Id = 1;
 
             Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
@@ -56,13 +56,14 @@ namespace ControllerTests
             Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
             Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
             Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
+            Assert.AreEqual(categoryDTO_ToConvert.CategoryUserId,generatedCategory.UserId);
         }
         
         [TestMethod]
         [ExpectedException(typeof(ExceptionMapper))]
         public void GivenCategoryDTOWithIncorrectData_ShouldThrowException()
         {
-            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income);
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income,1);
             categoryDTO_ToConvert.Id = 1;
 
             MapperCategory.ToCategory(categoryDTO_ToConvert);

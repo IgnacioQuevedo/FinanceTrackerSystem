@@ -96,12 +96,14 @@ namespace TestProject1
             string categoryName = "Food";
             StatusEnum categoryStatus = StatusEnum.Enabled;
             TypeEnum categoryType = TypeEnum.Income;
+            int categoryUserId = 1;
 
-            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType);
+            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType,categoryUserId);
 
             Assert.AreEqual(categoryName,genericCategoryDTO.Name);
             Assert.AreEqual(categoryStatus,genericCategoryDTO.Status);
             Assert.AreEqual(categoryType,genericCategoryDTO.Type);
+            Assert.AreEqual(categoryUserId,genericCategoryDTO.CategoryUserId);
         }
 
         #endregion
