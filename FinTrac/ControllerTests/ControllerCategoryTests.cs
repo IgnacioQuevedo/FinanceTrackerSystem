@@ -1,5 +1,7 @@
+using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
 using Controller;
@@ -46,7 +48,28 @@ namespace ControllerTests
 
         #endregion
 
-       
+        [TestMethod]
+        public void CreateCategoryMethodWithCorrectData_ShoudlAddCategoryToDb()
+        {
+            CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,_userConnected.UserId);
+            Category categoryInDb = new Category();
 
+            _controller.CreateCategory(dtoToAdd);
+
+            categoryInDb= _testDb.Users.First().MyCategories.First();
+            
+            Assert.AreEqual(dtoToAdd,categoryInDb);
+
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 }
