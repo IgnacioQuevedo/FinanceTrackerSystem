@@ -97,7 +97,6 @@ public class GenericController : IUserController
             }
 
             _userRepo.Update(userWithUpdates);
-
         }
         catch (ExceptionMapper Exception)
         {
@@ -132,10 +131,9 @@ public class GenericController : IUserController
         {
             SetUserConnected(dtoToAdd.UserId);
             Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
-            
+
             _userConnected.AddCategory(categoryToAdd);
             _userRepo.Update(_userConnected);
-            
         }
         catch (ExceptionMapper Exception)
         {
@@ -145,7 +143,14 @@ public class GenericController : IUserController
 
     public Category FindCategory(CategoryDTO categoryDto)
     {
-        SetUserConnected(categoryDto.UserId);
-        return _userConnected.MyCategories[categoryDto.CategoryId - 1];
+        try
+        {
+            SetUserConnected(categoryDto.UserId);
+            return _userConnected.MyCategories[categoryDto.CategoryId - 1];
+        }
+        catch (Exception Exception)
+        {
+            throw new Exception("Category was not found, an error on index must be somewhere.");
+        }
     }
 }
