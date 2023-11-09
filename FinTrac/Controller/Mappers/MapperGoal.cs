@@ -13,13 +13,7 @@ namespace Controller.Mappers
     {
         public static GoalDTO ToGoalDTO(Goal goalToConvert)
         {
-            List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
-
-            foreach (Category category in goalToConvert.CategoriesOfGoal)
-            {
-                CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
-                listCategoryDTO.Add(categoryDTO);
-            }
+            List<CategoryDTO> listCategoryDTO = ToListOfGoalDTO(goalToConvert);
 
             GoalDTO goalDTO =
                 new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
@@ -28,5 +22,17 @@ namespace Controller.Mappers
             return goalDTO;
         }
 
+        private static List<CategoryDTO> ToListOfGoalDTO(Goal goalToConvert)
+        {
+            List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
+
+            foreach (Category category in goalToConvert.CategoriesOfGoal)
+            {
+                CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
+                listCategoryDTO.Add(categoryDTO);
+            }
+
+            return listCategoryDTO;
+        }
     }
 }
