@@ -43,7 +43,7 @@
     </thead>
     <tbody>
 
-        @foreach (var category in categoryList.Where(t => t != null))
+        @* @foreach (var category in categoryList.Where(t => t != null))
         {
             <tr>
                 <td>@category.Name</td>
@@ -56,7 +56,7 @@
                     <button class="btn btn-danger btn-sm button" @onclick="(() => DeleteCategory(category.CategoryId))">Delete</button>
                 </td>
             </tr>
-        }
+        } *@
     </tbody>
     <br />
 
@@ -72,13 +72,14 @@
     private List<Category>? categoryList;
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO user { get; set; }
 
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        categoryList = user.GetCategories();
+        string nombre = user.FirstName;
+        //categoryList = user.GetCategories();
         SuccesAlert.IsSucess = false;
         ErrorAlert.isError = false;
     }
@@ -87,7 +88,7 @@
     {
         try
         {
-            user.DeleteCategory(user.MyCategories[categoryId]);
+            //user.DeleteCategory(user.MyCategories[categoryId]);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionCategory)

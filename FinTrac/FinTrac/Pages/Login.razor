@@ -1,5 +1,5 @@
 ﻿@page "/";
-@layout LayoutForGuest;
+@layout MainLayout;
 @inject IUserController UserController
 
 <PageTitle>Login</PageTitle>
@@ -76,7 +76,11 @@
 @code
 {
 
+    [CascadingParameter]
+    public EventCallback<UserDTO> NotifyChangeToMain { get; set; }
+
     private UserLoginDTO userLoginDTO = new UserLoginDTO();
+    public UserDTO userDTO = new UserDTO();
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
@@ -85,7 +89,8 @@
         userLoginDTO.Password = "MARIOCAMEJO2003!";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
-
+        userDTO = null;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
     public void LoginUser()
@@ -94,7 +99,8 @@
         {
             if (UserController.LoginUser(userLoginDTO))
             {
-                NavigationManager.NavigateTo($"/Home/{userLoginDTO.UserId}");
+                SendDataToLayout();
+                NavigationManager.NavigateTo($"/Home");
             }
         }
         catch(Exception ExceptionUser)
@@ -103,6 +109,13 @@
             errorTxt = ExceptionUser.Message;
         }
 
+    }
+
+    public void SendDataToLayout()
+    {
+        userDTO = UserController.FindUser(userLoginDTO.UserId);
+        userDTO.flag = 1;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
 }

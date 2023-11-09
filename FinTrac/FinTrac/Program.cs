@@ -19,6 +19,7 @@ builder.Services.AddDbContext<SqlContext>(options =>
 
 builder.Services.AddScoped<UserRepositorySql>();
 builder.Services.AddScoped<GenericController>();
+builder.Services.AddScoped<IUserController, GenericController>();
 
 var app = builder.Build();
 

@@ -1,92 +1,100 @@
 ﻿@page "/Modify"
+@layout MainLayout
 
-@using BusinessLogic.Exceptions;
 @using BusinessLogic.Dtos_Components;
 @inject IUserController UserController
 
-<div class="container">
-    <h1>Edit Profile</h1>
-    <hr>
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-3">
-            <div class="text-center">
-                <img src="https://avatarfiles.alphacoders.com/813/81325.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar" />
-            </div>
-        </div>
-
-        <!-- edit form column -->
-        <div class="col-md-9 personal-info">
-
-            <h3>Personal info</h3>
-            <br />
-
-            @if (ErrorAlert.isError)
-            {
-                <ErrorAlert errorTxt="@errorTxt" />
-            }
-
-
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">First name:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" @bind-value="firstName" />
+@if (userToModifyDTO != null)
+{
+    <section>
+        <div class="container">
+            <h1>Edit Profile</h1>
+            <hr>
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <img src="https://avatarfiles.alphacoders.com/813/81325.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar" />
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Last name:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" @bind-value="lastName" />
-                    </div>
-                </div>
+                <!-- edit form column -->
+                <div class="col-md-9 personal-info">
 
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Password:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="password" @bind-value="password" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Address:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" @bind-value="address" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8">
-                        <input type="button" class="btn btn-primary" id="miboton" value="Save Changes" @onclick="ModifyUser" />
-                        <span></span>
-                        <input type="button" class="btn btn-default" id="miboton" value="Cancel" @onclick="presetValues" />
-                    </div>
-
+                    <h3>Personal info</h3>
                     <br />
 
-                    @if (SuccesAlert.IsSucess)
+                    @if (ErrorAlert.isError)
                     {
-                        <SuccesAlert errorTxt="User modified successfully" />
+                        <ErrorAlert errorTxt="@errorTxt" />
                     }
+
+
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">First name:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" @bind-value="firstName" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Last name:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" @bind-value="lastName" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" @bind-value="password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" @bind-value="address" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-8">
+                                <input type="button" class="btn btn-primary" id="miboton" value="Save Changes" @onclick="ModifyUser" />
+                                <span></span>
+                                <input type="button" class="btn btn-default" id="miboton" value="Cancel" @onclick="presetValues" />
+                            </div>
+
+                            <br />
+
+                            @if (SuccesAlert.IsSucess)
+                            {
+                                <SuccesAlert errorTxt="User modified successfully" />
+                            }
+                        </div>
+
+
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
-<hr>
+        <hr>
+
+    </section>
+}
 
 @code {
     private string firstName;
     private string lastName;
     private string password;
     private string address;
-    private UserDTO userToModifyDTO;
-    public string errorTxt { get; set; }
 
     [CascadingParameter]
-    private User user { get; set; }
+    public UserDTO userToModifyDTO { get; set; }
+
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
@@ -97,17 +105,17 @@
 
     private void presetValues()
     {
-        firstName = user.FirstName;
-        lastName = user.LastName;
-        password = user.Password;
-        address = user.Address;
+        firstName = userToModifyDTO.FirstName;
+        lastName = userToModifyDTO.LastName;
+        password = userToModifyDTO.Password;
+        address = userToModifyDTO.Address;
     }
 
     private void ModifyUser()
     {
         try
         {
-            userToModifyDTO = new UserDTO(firstName, lastName, user.Email, password, address);
+            userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
             SuccesAlert.ShowSucessAlert();
         }
