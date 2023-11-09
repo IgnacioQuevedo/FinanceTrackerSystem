@@ -14,8 +14,8 @@ namespace BusinessLogicTests.Dtos_Tests
     public class GoalDTO_Tests
     {
         private GoalDTO _goalDTO;
-        private Category genericCategory;
-        private List<Category> genericListOfCategories;
+        private CategoryDTO genericCategoryDTO;
+        private List<CategoryDTO> genericListOfCategories;
         private CurrencyEnum genericCurrencyEnum;
         private int genericMaxAmountOfGoal;
         private string genericTitleGoalDTO;
@@ -28,10 +28,10 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO = new GoalDTO();
 
-            genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            genericCategoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 1);
 
-            List<Category> myListOfCategories = new List<Category>();
-            myListOfCategories.Add(genericCategory);
+            List<CategoryDTO> myListOfCategories = new List<CategoryDTO>();
+            myListOfCategories.Add(genericCategoryDTO);
 
             genericCurrencyEnum = CurrencyEnum.USA;
 
