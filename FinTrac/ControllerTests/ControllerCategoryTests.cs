@@ -59,7 +59,8 @@ namespace ControllerTests
         public void CreateCategoryMethodWithCorrectData_ShoudlAddCategoryToDb()
         {
             CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
-            CategoryDTO dtoToAdd2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd2 =
+                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
             Category categoryInDb = new Category();
 
             _controller.CreateCategory(dtoToAdd);
@@ -72,7 +73,7 @@ namespace ControllerTests
             Assert.AreEqual(dtoToAdd.Name, categoryInDb.Name);
             Assert.AreEqual(dtoToAdd.Status, categoryInDb.Status);
             Assert.AreEqual(dtoToAdd.Type, categoryInDb.Type);
-            Assert.AreEqual(2,_testDb.Users.First().MyCategories.Count);
+            Assert.AreEqual(2, _testDb.Users.First().MyCategories.Count);
         }
 
         [TestMethod]
@@ -151,8 +152,9 @@ namespace ControllerTests
         [TestMethod]
         public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
         {
-            CategoryDTO category2 = new CategoryDTO("Party",StatusEnum.Enabled,TypeEnum.Income,_userConnected.UserId);
-            
+            CategoryDTO category2 =
+                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+
             _controller.CreateCategory(categoryDTO);
             _controller.CreateCategory(category2);
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
@@ -160,7 +162,7 @@ namespace ControllerTests
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
             _controller.DeleteCategory(categoryDTO);
             _controller.DeleteCategory(category2);
-            
+
             int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
             Assert.AreEqual(amountOfCategoriesInDb - 2, amountOfCategoriesPostDelete);
@@ -175,28 +177,32 @@ namespace ControllerTests
 
         #endregion
 
+        #region Receive Category List
+
         [TestMethod]
-        public void GetAllCategoriesMethod_ShouldReturnCategoryList()
+        public void ReceiveCategoryListMethod_ShouldReturnCategoryList()
         {
-            CategoryDTO category2 = new CategoryDTO("Party",StatusEnum.Enabled,TypeEnum.Income,_userConnected.UserId);
-            CategoryDTO category3 = new CategoryDTO("Gym",StatusEnum.Enabled,TypeEnum.Outcome,_userConnected.UserId);
-            
+            CategoryDTO category2 =
+                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnum.Enabled, TypeEnum.Outcome, _userConnected.UserId);
+
             _controller.CreateCategory(categoryDTO);
             _controller.CreateCategory(category2);
             _controller.CreateCategory(category3);
 
             List<Category> allCategories = new List<Category>();
-            
+
             allCategories = _controller.ReceiveCategoryListFromUser(_userConnected.UserId);
-            
-            Assert.AreEqual(3,allCategories.Count);
+
+            Assert.AreEqual(3, allCategories.Count);
         }
-        
+
         [TestMethod]
-        public void GetAllCategoriesMethodWithoutCategories_ShouldNotReturnNull()
+        public void ReceiveCategoryListMethod_WhenListHasNotCategories_ShouldNotReturnNull()
         {
             Assert.IsNotNull(_controller.ReceiveCategoryListFromUser(_userConnected.UserId));
         }
-        
+
+        #endregion
     }
 }
