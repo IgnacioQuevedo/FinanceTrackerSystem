@@ -9,7 +9,7 @@ namespace Controller.IControllers
         public Category FindCategory(int idOfCategoryToFind);
         public void UpdateCategory(CategoryDTO categoryDtoWithUpdates);
         public void DeleteCategory(CategoryDTO categoryDtoCategoryId);
-        public List<Category> GetAllCategories(int userConnectedId);
+        public List<CategoryDTO> GetAllCategories(int userConnectedId);
 
 
     }

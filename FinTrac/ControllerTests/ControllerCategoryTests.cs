@@ -187,7 +187,7 @@ namespace ControllerTests
 
             List<Category> allCategories = new List<Category>();
             
-            allCategories = _controller.GetAllCategories(_userConnected.UserId);
+            allCategories = _controller.ReceiveCategoryListFromUser(_userConnected.UserId);
             
             Assert.AreEqual(3,allCategories.Count);
         }
@@ -195,7 +195,7 @@ namespace ControllerTests
         [TestMethod]
         public void GetAllCategoriesMethodWithoutCategories_ShouldNotReturnNull()
         {
-            Assert.IsNotNull(_controller.GetAllCategories(_userConnected.UserId));
+            Assert.IsNotNull(_controller.ReceiveCategoryListFromUser(_userConnected.UserId));
         }
         
     }

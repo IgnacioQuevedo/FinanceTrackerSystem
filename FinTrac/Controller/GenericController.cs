@@ -192,10 +192,11 @@ public class GenericController : IUserController, ICategoryController
         
     }
 
-    public List<Category> GetAllCategories(int userConnectedId)
+    public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
     {
         SetUserConnected(userConnectedId);
         return _userConnected.MyCategories;
     }
+    
     #endregion
 }
