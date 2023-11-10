@@ -11,6 +11,7 @@ namespace BusinessLogic.Dtos_Components
 		public TypeEnum Type { get; set; }
 		
 		public int UserId { get; set; }
+		public DateTime CreationDate { get; set; } = DateTime.Now.Date;
 
 
 		public CategoryDTO()

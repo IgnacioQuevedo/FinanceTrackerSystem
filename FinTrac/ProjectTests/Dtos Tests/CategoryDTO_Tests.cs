@@ -91,11 +91,11 @@ namespace TestProject1
         }
 
         #endregion
-
+        
         [TestMethod]
         public void GivenCreationDate_ShouldBePossibleToAssignIt()
         {
-            DateTime creationDate = DateTime.Now;
+            DateTime creationDate = DateTime.Now.Date;
 
             _categoryDto.CreationDate = creationDate;
             
