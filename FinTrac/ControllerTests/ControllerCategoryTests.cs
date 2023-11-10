@@ -59,9 +59,11 @@ namespace ControllerTests
         public void CreateCategoryMethodWithCorrectData_ShoudlAddCategoryToDb()
         {
             CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
             Category categoryInDb = new Category();
 
             _controller.CreateCategory(dtoToAdd);
+            _controller.CreateCategory(dtoToAdd2);
 
             categoryInDb = _testDb.Users.First().MyCategories.First();
 
@@ -70,6 +72,7 @@ namespace ControllerTests
             Assert.AreEqual(dtoToAdd.Name, categoryInDb.Name);
             Assert.AreEqual(dtoToAdd.Status, categoryInDb.Status);
             Assert.AreEqual(dtoToAdd.Type, categoryInDb.Type);
+            Assert.AreEqual(2,_testDb.Users.First().MyCategories.Count);
         }
 
         [TestMethod]
@@ -148,14 +151,19 @@ namespace ControllerTests
         [TestMethod]
         public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
         {
+            CategoryDTO category2 = new CategoryDTO("Party",StatusEnum.Enabled,TypeEnum.Income,_userConnected.UserId);
+            
             _controller.CreateCategory(categoryDTO);
+            _controller.CreateCategory(category2);
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
 
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
             _controller.DeleteCategory(categoryDTO);
+            _controller.DeleteCategory(category2);
+            
             int amountOfCategoriesPostDelete = categoryListsOfUser.Count;
 
-            Assert.AreEqual(amountOfCategoriesInDb - 1, amountOfCategoriesPostDelete);
+            Assert.AreEqual(amountOfCategoriesInDb - 2, amountOfCategoriesPostDelete);
         }
 
         // [TestMethod]
@@ -182,8 +190,6 @@ namespace ControllerTests
             allCategories = _controller.GetAllCategories(_userConnected.UserId);
             
             Assert.AreEqual(3,allCategories.Count);
-
-
         }
     }
 }

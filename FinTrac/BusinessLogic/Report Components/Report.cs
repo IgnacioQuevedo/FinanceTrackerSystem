@@ -32,7 +32,7 @@ namespace BusinessLogic.Report_Components
                 goalAchieved = true;
                 foreach (var category in myGoal.CategoriesOfGoal)
                 {
-                    totalSpent += spendingsPerCategory[category.CategoryId];
+                    totalSpent += spendingsPerCategory[category.CategoryId -1];
                 }
                 if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
                 ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
@@ -54,7 +54,7 @@ namespace BusinessLogic.Report_Components
 
             foreach (var category in loggedUser.MyCategories.Where(t => t != null))
             {
-                totalSpentPerCategory = spendingsPerCategory[category.CategoryId];
+                totalSpentPerCategory = spendingsPerCategory[category.CategoryId -1];
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
 
@@ -290,7 +290,7 @@ namespace BusinessLogic.Report_Components
 
         private static void LoadPerCategory(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
         {
-            arrayToLoad[transaction.TransactionCategory.CategoryId] += amountToAdd;
+            arrayToLoad[transaction.TransactionCategory.CategoryId -1] += amountToAdd;
         }
         #endregion
     }

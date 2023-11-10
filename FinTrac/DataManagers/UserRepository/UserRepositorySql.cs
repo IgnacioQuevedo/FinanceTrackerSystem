@@ -47,11 +47,12 @@ public class UserRepositorySql
     public void Update(User updatedUser)
     {
         var existingUser = FindUserInDb(updatedUser.UserId);
-
         _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
+        
         _database.SaveChanges();
     }
-
+    
+    
     public User FindUserInDb(int userId)
     {
         return _database.Users.FirstOrDefault(u => u.UserId == userId);

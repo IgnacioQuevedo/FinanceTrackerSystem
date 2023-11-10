@@ -14,6 +14,7 @@ namespace BusinessLogic.Category_Components
     public class Category
     {
         #region Properties
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         public string Name { get; set; } = "";

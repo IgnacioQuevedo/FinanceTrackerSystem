@@ -134,9 +134,10 @@ public class GenericController : IUserController
         {
             SetUserConnected(dtoToAdd.UserId);
             Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
-
-
+            categoryToAdd.CategoryId = 0;
+            
             _userConnected.AddCategory(categoryToAdd);
+            
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionMapper Exception)
@@ -144,7 +145,7 @@ public class GenericController : IUserController
             throw new Exception(Exception.Message);
         }
     }
-
+    
     public Category FindCategory(int idOfCategoryToFind)
     {
         try
@@ -176,8 +177,6 @@ public class GenericController : IUserController
         }
     }
     
-    #endregion
-    
     public void DeleteCategory(CategoryDTO categoryDtoCategoryId)
     {
         try
@@ -198,4 +197,5 @@ public class GenericController : IUserController
         SetUserConnected(userConnectedId);
         return _userConnected.MyCategories;
     }
+    #endregion
 }

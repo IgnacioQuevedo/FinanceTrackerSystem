@@ -53,8 +53,9 @@ public class ReportTests
         loggedUser.AddExchangeHistory(genericExchangeHistory4);
 
         genericCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+        genericCategory.CategoryId = 1;
         genericCategory2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
-
+        genericCategory2.CategoryId = 2;
         myMonetaryAccount = new MonetaryAccount("Brou Savings", 1000, CurrencyEnum.UY, DateTime.Now);
 
         loggedUser.AddMonetaryAccount(myMonetaryAccount);
@@ -68,8 +69,11 @@ public class ReportTests
         myMonetaryAccount.AddTransaction(genericTransaction);
 
         loggedUser.AddCategory(genericCategory);
+        loggedUser.MyCategories[0].CategoryId = 1;
+        
         loggedUser.AddCategory(genericCategory2);
-
+        loggedUser.MyCategories[1].CategoryId = 2;
+        
         List<Category> myCategoriesForGoal = new List<Category>() { loggedUser.MyCategories[0] };
 
         goalFood = new Goal("Less food", 100, myCategoriesForGoal);
@@ -145,6 +149,9 @@ public class ReportTests
     {
         CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, DateTime.Now);
 
+        genericCategory.CategoryId = 1;
+        genericCategory2.CategoryId = 2;
+        
         Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
         Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
