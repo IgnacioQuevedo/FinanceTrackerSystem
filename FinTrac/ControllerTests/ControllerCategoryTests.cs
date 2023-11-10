@@ -198,11 +198,33 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        public void ReceiveCategoryListMethod_WhenListHasNotCategories_ShouldNotReturnNull()
+        public void ReceiveCategoryListMethod_WhenListHasNoCategories_ShouldNotReturnNull()
         {
             Assert.IsNotNull(_controller.ReceiveCategoryListFromUser(_userConnected.UserId));
         }
 
+        #endregion
+
+        #region Get All Categories
+
+        [TestMethod]
+        public void GetAllCategoriesMethod_ShouldReturnCategoryDTOList()
+        {
+            CategoryDTO category2 =
+                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnum.Enabled, TypeEnum.Outcome, _userConnected.UserId);
+
+            _controller.CreateCategory(categoryDTO);
+            _controller.CreateCategory(category2);
+            _controller.CreateCategory(category3);
+
+            List<CategoryDTO> allCategories = new List<CategoryDTO>();
+
+            allCategories = _controller.GetAllCategories(_userConnected.UserId);
+
+            Assert.AreEqual(3, allCategories.Count);
+        }
+        
         #endregion
         
     }
