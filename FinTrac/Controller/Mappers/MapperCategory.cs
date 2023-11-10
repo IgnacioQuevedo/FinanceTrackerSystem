@@ -44,11 +44,23 @@ public static class MapperCategory
             CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
             listCategoryDTO.Add(categoryDTO);
         }
+
         return listCategoryDTO;
     }
 
-    public static void ToListOfCategory(List<CategoryDTO> categoryDtoList)
+    public static List<Category> ToListOfCategory(List<CategoryDTO> categoryDtoList)
     {
-        throw new NotImplementedException();
+        List<Category> listOfCategories = new List<Category>();
+
+        foreach (CategoryDTO categoryDTO in categoryDtoList)
+        {
+            Category category = MapperCategory.ToCategory(categoryDTO);
+            listOfCategories.Add(category);
+        }
+        return listOfCategories;
     }
+    
+    
+    
+    
 }

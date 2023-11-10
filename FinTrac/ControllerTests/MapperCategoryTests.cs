@@ -136,7 +136,7 @@ namespace ControllerTests
 
             List<Category> categoryList = new List<Category>();
 
-            MapperCategory.ToListOfCategory(categoryDTOList);
+            categoryList = MapperCategory.ToListOfCategory(categoryDTOList);
             
             Assert.IsInstanceOfType(categoryList[0],typeof(Category));
             Assert.IsInstanceOfType(categoryList[1],typeof(Category));
