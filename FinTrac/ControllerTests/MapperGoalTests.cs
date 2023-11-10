@@ -96,6 +96,9 @@ namespace ControllerTests
 
         #endregion
 
+
+        #region To Goal
+
         [TestMethod]
         public void GivenGoalDTOWithCorrectData_ShouldBePossibleToConvertToGoal()
         {
@@ -108,6 +111,8 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToConvert.MaxAmountToSpend, goalConverted.MaxAmountToSpend);
             Assert.AreEqual(_goalDTOToConvert.UserId, goalConverted.UserId);
         }
+
+        #endregion
 
 
     }
