@@ -1,9 +1,6 @@
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
-using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
-using BusinessLogic.Goal_Components;
-using BusinessLogic.User_Components;
 using Controller;
 using DataManagers;
 
@@ -144,5 +141,14 @@ namespace ControllerTests
             _controller.UpdateCategory(categoryWithoutUpdates);
         }
         #endregion
+
+        [TestMethod]
+        public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
+        {
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
+            categoryDto.CategoryId = 1;
+            _controller.CreateCategory(categoryDto);
+
+        }
     }
 }
