@@ -13,6 +13,8 @@ namespace Controller.Mappers
 {
     public abstract class MapperGoal
     {
+        #region To GoalDTO}
+
         public static GoalDTO ToGoalDTO(Goal goalToConvert)
         {
             List<CategoryDTO> listCategoryDTO = ToListOfGoalDTO(goalToConvert);
@@ -23,6 +25,10 @@ namespace Controller.Mappers
 
             return goalDTO;
         }
+
+        #endregion
+
+        #region To Goal
 
         public static Goal ToGoal(GoalDTO goalDTOToConvert)
         {
@@ -42,6 +48,10 @@ namespace Controller.Mappers
                 throw new ExceptionMapper(Exception.Message);
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static List<Category> ToListOfGoal(GoalDTO goalDTOToConvert)
         {
@@ -68,5 +78,7 @@ namespace Controller.Mappers
 
             return listCategoryDTO;
         }
+
+        #endregion
     }
 }

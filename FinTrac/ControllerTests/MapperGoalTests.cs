@@ -118,6 +118,7 @@ namespace ControllerTests
         public void GivenGoalDTOWithIncorrectData_ShouldThrowException()
         {
             GoalDTO goalDTO_ToConvert = new GoalDTO("", 200, CurrencyEnum.UY, _genericListOfCategoriesDTO, 1);
+
             goalDTO_ToConvert.GoalId = 1;
 
             MapperGoal.ToGoal(goalDTO_ToConvert);
