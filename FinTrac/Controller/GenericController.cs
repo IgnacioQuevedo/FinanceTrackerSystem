@@ -175,13 +175,10 @@ public class GenericController : IUserController
     }
     
     #endregion
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+    public void DeleteCategory(int categoryDtoCategoryId)
+    {
+        throw new NotImplementedException();
+    }
 }
