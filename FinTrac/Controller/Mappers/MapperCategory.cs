@@ -10,7 +10,8 @@ public static class MapperCategory
     public static CategoryDTO ToCategoryDTO(Category categoryToConvert)
     {
         CategoryDTO categoryDTO =
-            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type,categoryToConvert.UserId);
+            new CategoryDTO(categoryToConvert.Name, categoryToConvert.Status, categoryToConvert.Type,
+                categoryToConvert.UserId);
         categoryDTO.CategoryId = categoryToConvert.CategoryId;
 
         return categoryDTO;
@@ -22,7 +23,7 @@ public static class MapperCategory
         {
             Category categoryConverted =
                 new Category(categoryDTO_ToConvert.Name, categoryDTO_ToConvert.Status, categoryDTO_ToConvert.Type);
-            
+
             categoryConverted.UserId = categoryDTO_ToConvert.UserId;
             categoryConverted.CategoryId = categoryDTO_ToConvert.CategoryId;
 
@@ -36,6 +37,13 @@ public static class MapperCategory
 
     public static List<CategoryDTO> ToListOfCategoryDTO(List<Category> categoryList)
     {
-        throw new NotImplementedException();
+        List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
+
+        foreach (Category category in categoryList)
+        {
+            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
+            listCategoryDTO.Add(categoryDTO);
+        }
+        return listCategoryDTO;
     }
 }

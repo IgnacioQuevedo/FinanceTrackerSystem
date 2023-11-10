@@ -89,6 +89,7 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
         public void GivenCategoryList_ShouldConvertItToCategoryDTOList()
         {
             Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
