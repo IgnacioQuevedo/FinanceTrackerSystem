@@ -191,4 +191,9 @@ public class GenericController : IUserController
         }
         
     }
+
+    public List<Category> GetAllCategories()
+    {
+        throw new NotImplementedException();
+    }
 }

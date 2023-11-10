@@ -157,7 +157,7 @@ namespace ControllerTests
 
             Assert.AreEqual(amountOfCategoriesInDb - 1, amountOfCategoriesPostDelete);
         }
-        
+
         // [TestMethod]
         // [ExpectedException(typeof(Exception))]
         // public void GivenACategoryAssignedToATransaction_ShouldThrowException()
@@ -166,5 +166,26 @@ namespace ControllerTests
         // }
 
         #endregion
+
+        [TestMethod]
+        public void GetAllCategoriesMethod_ShouldReturnCategoryList()
+        {
+            CategoryDTO category2 = new CategoryDTO("Party",StatusEnum.Enabled,TypeEnum.Income,_userConnected.UserId);
+            CategoryDTO category3 = new CategoryDTO("Gym",StatusEnum.Enabled,TypeEnum.Outcome,_userConnected.UserId);
+            
+            
+            _controller.CreateCategory(categoryDTO);
+            _controller.CreateCategory(category2);
+            _controller.CreateCategory(category3);
+
+            List<Category> allCategories = new List<Category>();
+            
+            allCategories = _controller.GetAllCategories();
+            
+            
+            Assert.AreEqual(3,allCategories.Count);
+
+
+        }
     }
 }
