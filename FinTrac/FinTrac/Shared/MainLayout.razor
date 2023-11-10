@@ -11,7 +11,7 @@
     @if (userDTO != null)
     {
         <div class="sidebar">
-            <NavMenu />
+            <NavMenu/>
         </div>
     }
 
@@ -46,6 +46,11 @@
     private void NotifyLayoutWithUser(UserDTO userDTOGiven)
     {
         userDTO = userDTOGiven;
-        menuFlag = userDTO.flag == 1 ? true : false;
+        
+        if (userDTOGiven != null)
+        {
+            menuFlag = userDTO.flag == 1 ? true : false;
+        }
     }
+
 }

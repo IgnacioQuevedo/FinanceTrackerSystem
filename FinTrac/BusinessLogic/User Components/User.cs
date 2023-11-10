@@ -239,7 +239,9 @@ namespace BusinessLogic.User_Components
             {
                 if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
-                    MyCategories[i] = categoryToUpdate;
+                    MyCategories[i].Name = categoryToUpdate.Name;
+                    MyCategories[i].Status = categoryToUpdate.Status;
+                    MyCategories[i].Type = categoryToUpdate.Type;
                     flag = true;
                 }
             }

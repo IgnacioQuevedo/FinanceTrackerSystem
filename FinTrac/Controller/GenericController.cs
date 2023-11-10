@@ -85,7 +85,10 @@ public class GenericController : IUserController
 
     public void UpdateUser(UserDTO userDtoUpdated)
     {
-        SetUserConnected(userDtoUpdated.UserId);
+        int userConnectedId = _userRepo.GetUserViaEmail(userDtoUpdated.Email).UserId;
+        userDtoUpdated.UserId = userConnectedId;
+        
+        SetUserConnected(userConnectedId);
 
         try
         {

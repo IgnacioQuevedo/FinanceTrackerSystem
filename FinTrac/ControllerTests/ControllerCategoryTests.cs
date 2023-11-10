@@ -111,19 +111,21 @@ namespace ControllerTests
         {
             CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDto.CategoryId = 1;
-            
             _controller.CreateCategory(categoryDto);
 
             CategoryDTO categoryDtoWithUpdates = new CategoryDTO("Party", StatusEnum.Disabled, TypeEnum.Outcome, 1);
             categoryDtoWithUpdates.CategoryId = 1;
-            
+
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
             Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDto);
 
+            Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId,categoryDtoWithUpdates.CategoryId);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.UserId,categoryDtoWithUpdates.UserId);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Name,categoryDtoWithUpdates.Name);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Status,categoryDtoWithUpdates.Status);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Type,categoryDtoWithUpdates.Type);
         }
-        
-        
 
         #endregion
     }
