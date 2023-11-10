@@ -161,7 +161,7 @@ namespace ControllerTests
             _controller.DeleteCategory(categoryDTO);
             _controller.DeleteCategory(category2);
             
-            int amountOfCategoriesPostDelete = categoryListsOfUser.Count;
+            int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
             Assert.AreEqual(amountOfCategoriesInDb - 2, amountOfCategoriesPostDelete);
         }
@@ -191,5 +191,16 @@ namespace ControllerTests
             
             Assert.AreEqual(3,allCategories.Count);
         }
+        
+        [TestMethod]
+        public void GetAllCategoriesMethodWithoutCategories_ShouldNotReturnNull()
+        {
+            List<Category> allCategories = new List<Category>();
+            
+            allCategories = _controller.GetAllCategories(_userConnected.UserId);
+
+            Assert.IsNotNull(allCategories);
+        }
+        
     }
 }
