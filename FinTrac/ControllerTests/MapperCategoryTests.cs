@@ -93,8 +93,11 @@ namespace ControllerTests
         public void GivenCategoryList_ShouldConvertItToCategoryDTOList()
         {
             Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            category.CategoryId = 1;
+            category.UserId = 1;
+            
             Category category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
-
+            
             List<Category> categoryList = new List<Category>();
             
             categoryList.Add(category);
@@ -106,7 +109,13 @@ namespace ControllerTests
             
             Assert.IsInstanceOfType(categoryDtoList[0],typeof(CategoryDTO));
             Assert.IsInstanceOfType(categoryDtoList[1],typeof(CategoryDTO));
-
+            
+            Assert.AreEqual(category.Name,categoryDtoList[0].Name);
+            Assert.AreEqual(category.Status,categoryDtoList[0].Status);
+            Assert.AreEqual(category.Type,categoryDtoList[0].Type);
+            Assert.AreEqual(category.CreationDate,categoryDtoList[0].CreationDate);
+            Assert.AreEqual(category.UserId,categoryDtoList[0].UserId);
+            Assert.AreEqual(category.CategoryId,categoryDtoList[0].CategoryId);
         }
         
         
