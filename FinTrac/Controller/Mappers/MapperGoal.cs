@@ -32,13 +32,12 @@ namespace Controller.Mappers
                 listOfCategories.Add(category);
             }
 
-
             Goal goal =
-                new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, goalDTOToConvert.CurrencyOfAmount, listOfCategories, goalToConvert.UserId);
+                new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
-            goalDTO.GoalId = goalToConvert.GoalId;
+            goalDTOToConvert.GoalId = goalDTOToConvert.GoalId;
 
-            return goalDTO;
+            return goal;
         }
 
 
