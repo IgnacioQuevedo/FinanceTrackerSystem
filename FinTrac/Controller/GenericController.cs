@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
@@ -192,8 +193,9 @@ public class GenericController : IUserController
         
     }
 
-    public List<Category> GetAllCategories()
+    public List<Category> GetAllCategories(int userConnectedId)
     {
-        throw new NotImplementedException();
+        SetUserConnected(userConnectedId);
+        return _userConnected.MyCategories;
     }
 }

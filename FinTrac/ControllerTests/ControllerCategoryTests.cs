@@ -173,15 +173,13 @@ namespace ControllerTests
             CategoryDTO category2 = new CategoryDTO("Party",StatusEnum.Enabled,TypeEnum.Income,_userConnected.UserId);
             CategoryDTO category3 = new CategoryDTO("Gym",StatusEnum.Enabled,TypeEnum.Outcome,_userConnected.UserId);
             
-            
             _controller.CreateCategory(categoryDTO);
             _controller.CreateCategory(category2);
             _controller.CreateCategory(category3);
 
             List<Category> allCategories = new List<Category>();
             
-            allCategories = _controller.GetAllCategories();
-            
+            allCategories = _controller.GetAllCategories(_userConnected.UserId);
             
             Assert.AreEqual(3,allCategories.Count);
 
