@@ -1,5 +1,6 @@
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -178,8 +179,16 @@ public class GenericController : IUserController
     
     public void DeleteCategory(CategoryDTO categoryDtoCategoryId)
     {
-        SetUserConnected(categoryDtoCategoryId.UserId);
-        _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId.UserId));
-        _userRepo.Update(_userConnected);
+        try
+        {
+            SetUserConnected(categoryDtoCategoryId.UserId);
+            _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId.UserId));
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionCategoryManagement Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+        
     }
 }

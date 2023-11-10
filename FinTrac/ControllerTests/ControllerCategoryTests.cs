@@ -1,7 +1,11 @@
+using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.User_Components;
 using Controller;
+using Controller.Mappers;
 using DataManagers;
 
 namespace ControllerTests
@@ -18,6 +22,8 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
+        private CategoryDTO categoryDTO;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -28,6 +34,8 @@ namespace ControllerTests
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
             _userConnected.UserId = 1;
 
+            categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
+            categoryDTO.CategoryId = 1;
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
@@ -80,9 +88,6 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
         {
-            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
-            categoryDTO.CategoryId = 1;
-
             _controller.CreateCategory(categoryDTO);
             Category categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
 
@@ -94,9 +99,6 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenCategoryDTOThatIsNotInDb_WhenTryingToFound_ShouldThrowException()
         {
-            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
-            categoryDTO.CategoryId = 1;
-
             _controller.FindCategory(categoryDTO.CategoryId);
         }
 
@@ -107,16 +109,14 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTOToUpdate_ShouldBeUpdatedInDb()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
-            categoryDto.CategoryId = 1;
-            _controller.CreateCategory(categoryDto);
+            _controller.CreateCategory(categoryDTO);
 
             CategoryDTO categoryDtoWithUpdates = new CategoryDTO("Party", StatusEnum.Disabled, TypeEnum.Outcome, 1);
             categoryDtoWithUpdates.CategoryId = 1;
 
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
-            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDto.CategoryId);
+            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId, categoryDtoWithUpdates.CategoryId);
             Assert.AreEqual(categoryInDbWithSupossedChanges.UserId, categoryDtoWithUpdates.UserId);
@@ -124,7 +124,7 @@ namespace ControllerTests
             Assert.AreEqual(categoryInDbWithSupossedChanges.Status, categoryDtoWithUpdates.Status);
             Assert.AreEqual(categoryInDbWithSupossedChanges.Type, categoryDtoWithUpdates.Type);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void TryingToUpdateWithoutAnyChanges_ShouldThrowException()
@@ -140,21 +140,31 @@ namespace ControllerTests
             categoryWithoutUpdates.CategoryId = categoryRegistered.CategoryId;
             _controller.UpdateCategory(categoryWithoutUpdates);
         }
+
         #endregion
+
+        #region Delete Category
 
         [TestMethod]
         public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
-            categoryDto.CategoryId = 1;
-            _controller.CreateCategory(categoryDto);
+            _controller.CreateCategory(categoryDTO);
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
-            
+
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
-            _controller.DeleteCategory(categoryDto);
+            _controller.DeleteCategory(categoryDTO);
             int amountOfCategoriesPostDelete = categoryListsOfUser.Count;
-            
-            Assert.AreEqual(amountOfCategoriesInDb -1, amountOfCategoriesPostDelete);
+
+            Assert.AreEqual(amountOfCategoriesInDb - 1, amountOfCategoriesPostDelete);
         }
+        
+        // [TestMethod]
+        // [ExpectedException(typeof(Exception))]
+        // public void GivenACategoryAssignedToATransaction_ShouldThrowException()
+        // {
+        //     //We will implement it in a near future when create methods of account and transaction are done.
+        // }
+
+        #endregion
     }
 }
