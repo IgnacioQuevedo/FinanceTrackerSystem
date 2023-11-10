@@ -83,25 +83,26 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
         {
-            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
+            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDTO.CategoryId = 1;
-            
+
             _controller.CreateCategory(categoryDTO);
-            Category categoryFound = _controller.FindCategory(categoryDTO);
-            
-            Assert.AreEqual(categoryDTO.CategoryId,categoryFound.CategoryId);
-            Assert.AreEqual(categoryDTO.UserId,categoryFound.UserId);
+            Category categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+
+            Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
+            Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenCategoryDTOThatIsNotInDb_WhenTryingToFound_ShouldThrowException()
         {
-            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,1);
+            CategoryDTO categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDTO.CategoryId = 1;
-            
-            _controller.FindCategory(categoryDTO);
+
+            _controller.FindCategory(categoryDTO.CategoryId);
         }
+
         #endregion
 
         #region Update Category
@@ -118,28 +119,30 @@ namespace ControllerTests
 
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
-            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDto);
+            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDto.CategoryId);
 
-            Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId,categoryDtoWithUpdates.CategoryId);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.UserId,categoryDtoWithUpdates.UserId);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.Name,categoryDtoWithUpdates.Name);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.Status,categoryDtoWithUpdates.Status);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.Type,categoryDtoWithUpdates.Type);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId, categoryDtoWithUpdates.CategoryId);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.UserId, categoryDtoWithUpdates.UserId);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Name, categoryDtoWithUpdates.Name);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Status, categoryDtoWithUpdates.Status);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Type, categoryDtoWithUpdates.Type);
         }
-        #endregion
-
+        
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void TryingToUpdateWithoutAnyChanges_ShouldThrowException()
         {
-            CategoryDTO categoryRegistered = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,_userConnected.UserId);
+            CategoryDTO categoryRegistered =
+                new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
             categoryRegistered.CategoryId = 1;
-            
+
             _controller.CreateCategory(categoryRegistered);
-            
-            CategoryDTO categoryWithoutUpdates = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income,_userConnected.UserId);
+
+            CategoryDTO categoryWithoutUpdates =
+                new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
             categoryWithoutUpdates.CategoryId = categoryRegistered.CategoryId;
             _controller.UpdateCategory(categoryWithoutUpdates);
         }
+        #endregion
     }
 }

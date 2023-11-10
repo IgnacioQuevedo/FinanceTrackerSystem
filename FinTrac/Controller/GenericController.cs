@@ -145,12 +145,12 @@ public class GenericController : IUserController
         }
     }
 
-    public Category FindCategory(CategoryDTO categoryDto)
+    public Category FindCategory(int idOfCategoryToFind)
     {
         try
         {
-            SetUserConnected(categoryDto.UserId);
-            return _userConnected.MyCategories[categoryDto.CategoryId - 1];
+            SetUserConnected(idOfCategoryToFind);
+            return _userConnected.MyCategories[idOfCategoryToFind - 1];
         }
         catch (Exception Exception)
         {
@@ -162,7 +162,7 @@ public class GenericController : IUserController
     {
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        Category categoryWithoutUpd = _userConnected.MyCategories[categoryDtoWithUpdates.CategoryId - 1];
+        Category categoryWithoutUpd = FindCategory(categoryDtoWithUpdates.CategoryId);
         
         categoryToUpd.CategoryUser = _userConnected;
         if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
