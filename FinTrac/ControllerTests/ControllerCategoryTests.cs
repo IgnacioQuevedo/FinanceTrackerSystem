@@ -225,7 +225,12 @@ namespace ControllerTests
             Assert.AreEqual(3, allCategories.Count);
         }
         
-        #endregion
+        [TestMethod]
+        public void GetAllCategoriesMethod_WhenListHasNoCategories_ShouldNotReturnNull()
+        {
+            Assert.IsNotNull(_controller.GetAllCategories(_userConnected.UserId));
+        }
         
+        #endregion
     }
 }
