@@ -256,7 +256,6 @@ namespace BusinessLogic.User_Components
         {
             ValidateIfCategoryHasTransactions(categoryToDelete);
             MyCategories.Remove(categoryToDelete);
-            MyCategories.Insert(categoryToDelete.CategoryId, null);
         }
 
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)

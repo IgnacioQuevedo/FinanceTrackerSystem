@@ -175,10 +175,11 @@ public class GenericController : IUserController
     }
     
     #endregion
-
-
-    public void DeleteCategory(int categoryDtoCategoryId)
+    
+    public void DeleteCategory(CategoryDTO categoryDtoCategoryId)
     {
-        throw new NotImplementedException();
+        SetUserConnected(categoryDtoCategoryId.UserId);
+        _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId.UserId));
+        _userRepo.Update(_userConnected);
     }
 }
