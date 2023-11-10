@@ -10,7 +10,7 @@ using Mappers;
 
 namespace Controller;
 
-public class GenericController : IUserController
+public class GenericController : IUserController, ICategoryController
 {
     private UserRepositorySql _userRepo;
     private User _userConnected { get; set; }
