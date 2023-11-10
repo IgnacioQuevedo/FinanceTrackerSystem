@@ -10,8 +10,9 @@ namespace BusinessLogic.Dtos_Components
 		public StatusEnum Status { get; set; }
 		public TypeEnum Type { get; set; }
 		
-		public int UserId { get; set; }
 		public DateTime CreationDate { get; set; } = DateTime.Now.Date;
+		public int UserId { get; set; }
+		
 
 
 		public CategoryDTO()
