@@ -195,11 +195,7 @@ namespace ControllerTests
         [TestMethod]
         public void GetAllCategoriesMethodWithoutCategories_ShouldNotReturnNull()
         {
-            List<Category> allCategories = new List<Category>();
-            
-            allCategories = _controller.GetAllCategories(_userConnected.UserId);
-
-            Assert.IsNotNull(allCategories);
+            Assert.IsNotNull(_controller.GetAllCategories(_userConnected.UserId));
         }
         
     }
