@@ -96,7 +96,6 @@ namespace ControllerTests
 
         #endregion
 
-
         #region To Goal
 
         [TestMethod]
@@ -125,9 +124,5 @@ namespace ControllerTests
         }
 
         #endregion
-
-
-
-
     }
 }
