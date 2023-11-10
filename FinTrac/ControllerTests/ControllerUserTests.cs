@@ -66,7 +66,6 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
         {
-
             _userDTO.UserId = 1000000;
             UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
@@ -127,8 +126,8 @@ namespace ControllerTests
         {
             string passwordIncorrect = "passwordIncorrect";
             _controller.PasswordMatch(_userDTO.Password, passwordIncorrect);
-
         }
+
         #endregion
 
         #region Update
@@ -150,7 +149,8 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
-            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", ""); ;
+            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            ;
             newDtoWithoutChanges.UserId = _userConnected.UserId;
 
             _controller.UpdateUser(newDtoWithoutChanges);
@@ -178,6 +178,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region SettingUserConected
+
         [TestMethod]
         public void GivenUserDTO_ShouldSetUserConnected()
         {
@@ -187,5 +189,6 @@ namespace ControllerTests
             _controller.SetUserConnected(userToConnect.UserId);
         }
 
+        #endregion
     }
 }

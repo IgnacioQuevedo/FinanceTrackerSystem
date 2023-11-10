@@ -127,6 +127,7 @@ public class GenericController : IUserController
 
     #endregion
 
+    #region Category Section
     public void CreateCategory(CategoryDTO dtoToAdd)
     {
         try
@@ -174,4 +175,13 @@ public class GenericController : IUserController
             _userRepo.Update(_userConnected);
         }
     }
+    
+    #endregion
+    
+    
+    
+    
+    
+    
+    
 }
