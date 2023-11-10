@@ -194,9 +194,12 @@ public class GenericController : IUserController, ICategoryController
 
     public List<CategoryDTO> GetAllCategories(int userConnectedId)
     {
-        
-        
-        
+        SetUserConnected(userConnectedId);
+        List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
+
+        listCategoryDTO = MapperCategory.ToListOfCategoryDTO(_userConnected.MyCategories);
+
+        return listCategoryDTO;
     }
 
     public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
