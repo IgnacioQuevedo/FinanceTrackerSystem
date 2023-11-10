@@ -46,4 +46,9 @@ public static class MapperCategory
         }
         return listCategoryDTO;
     }
+
+    public static void ToListOfCategory(List<CategoryDTO> categoryDtoList)
+    {
+        throw new NotImplementedException();
+    }
 }

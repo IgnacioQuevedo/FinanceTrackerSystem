@@ -126,5 +126,20 @@ namespace ControllerTests
             Assert.AreEqual(_category.CategoryId, categoryDtoList[0].CategoryId);
         }
 
+        [TestMethod]
+        public void GivenCategoryDTOList_ShouldConvertItToCategoryList()
+        {
+
+            List<CategoryDTO> categoryDTOList = new List<CategoryDTO>();
+            categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category));
+            categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category2));
+
+            List<Category> categoryList = new List<Category>();
+
+            MapperCategory.ToListOfCategory(categoryDTOList);
+            
+            Assert.IsInstanceOfType(categoryList[0],typeof(Category));
+            Assert.IsInstanceOfType(categoryList[1],typeof(Category));
+        }
     }
 }
