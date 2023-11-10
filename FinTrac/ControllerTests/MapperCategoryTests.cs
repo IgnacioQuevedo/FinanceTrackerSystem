@@ -20,20 +20,20 @@ namespace ControllerTests
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
 
         private UserRepositorySql _userRepo;
-        
+
         private Category _category;
         private Category _category2;
         private List<Category> _categoryList;
         private List<CategoryDTO> categoryDtoList;
-        
+
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _controller = new GenericController(_userRepo);
-            
-            
+
+
             _category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
             _category.CategoryId = 1;
             _category.UserId = 1;
@@ -109,10 +109,11 @@ namespace ControllerTests
 
         #endregion
 
+        #region ToCategoryDTOList
+
         [TestMethod]
         public void GivenCategoryList_ShouldConvertItToCategoryDTOList()
         {
-            
             categoryDtoList = MapperCategory.ToListOfCategoryDTO(_categoryList);
 
             Assert.IsInstanceOfType(categoryDtoList[0], typeof(CategoryDTO));
@@ -126,19 +127,22 @@ namespace ControllerTests
             Assert.AreEqual(_category.CategoryId, categoryDtoList[0].CategoryId);
         }
 
+        #endregion
+
+        #region ToCategoryList
+
         [TestMethod]
         public void GivenCategoryDTOList_ShouldConvertItToCategoryList()
         {
-
             List<CategoryDTO> categoryDTOList = new List<CategoryDTO>();
             categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category));
             categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category2));
 
             List<Category> categoryList = MapperCategory.ToListOfCategory(categoryDTOList);
-            
-            Assert.IsInstanceOfType(categoryList[0],typeof(Category));
-            Assert.IsInstanceOfType(categoryList[1],typeof(Category));
-            
+
+            Assert.IsInstanceOfType(categoryList[0], typeof(Category));
+            Assert.IsInstanceOfType(categoryList[1], typeof(Category));
+
             Assert.AreEqual(_category.Name, categoryList[0].Name);
             Assert.AreEqual(_category.Status, categoryList[0].Status);
             Assert.AreEqual(_category.Type, categoryList[0].Type);
@@ -146,5 +150,7 @@ namespace ControllerTests
             Assert.AreEqual(_category.UserId, categoryList[0].UserId);
             Assert.AreEqual(_category.CategoryId, categoryList[0].CategoryId);
         }
+
+        #endregion
     }
 }
