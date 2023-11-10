@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
@@ -19,14 +20,32 @@ namespace ControllerTests
         private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
 
         private UserRepositorySql _userRepo;
-
-
+        
+        private Category _category;
+        private Category _category2;
+        private List<Category> _categoryList;
+        private List<CategoryDTO> categoryDtoList;
+        
         [TestInitialize]
         public void Initialize()
         {
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _controller = new GenericController(_userRepo);
+            
+            
+            _category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            _category.CategoryId = 1;
+            _category.UserId = 1;
+
+            _category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            _categoryList = new List<Category>();
+
+            _categoryList.Add(_category);
+            _categoryList.Add(_category2);
+
+            categoryDtoList = new List<CategoryDTO>();
         }
 
         #endregion
@@ -46,7 +65,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
         {
-            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income,1);
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDTO_ToConvert.CategoryId = 1;
 
             Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
@@ -56,18 +75,19 @@ namespace ControllerTests
             Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
             Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
             Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
-            Assert.AreEqual(categoryDTO_ToConvert.UserId,generatedCategory.UserId);
+            Assert.AreEqual(categoryDTO_ToConvert.UserId, generatedCategory.UserId);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ExceptionMapper))]
         public void GivenCategoryDTOWithIncorrectData_ShouldThrowException()
         {
-            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income,1);
+            CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDTO_ToConvert.CategoryId = 1;
 
             MapperCategory.ToCategory(categoryDTO_ToConvert);
         }
+
         #endregion
 
         #region ToCategoryDTO
@@ -92,33 +112,19 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCategoryList_ShouldConvertItToCategoryDTOList()
         {
-            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-            category.CategoryId = 1;
-            category.UserId = 1;
             
-            Category category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
-            
-            List<Category> categoryList = new List<Category>();
-            
-            categoryList.Add(category);
-            categoryList.Add(category2);
+            categoryDtoList = MapperCategory.ToListOfCategoryDTO(_categoryList);
 
-            List<CategoryDTO> categoryDtoList = new List<CategoryDTO>();
+            Assert.IsInstanceOfType(categoryDtoList[0], typeof(CategoryDTO));
+            Assert.IsInstanceOfType(categoryDtoList[1], typeof(CategoryDTO));
 
-            categoryDtoList = MapperCategory.ToListOfCategoryDTO(categoryList);
-            
-            Assert.IsInstanceOfType(categoryDtoList[0],typeof(CategoryDTO));
-            Assert.IsInstanceOfType(categoryDtoList[1],typeof(CategoryDTO));
-            
-            Assert.AreEqual(category.Name,categoryDtoList[0].Name);
-            Assert.AreEqual(category.Status,categoryDtoList[0].Status);
-            Assert.AreEqual(category.Type,categoryDtoList[0].Type);
-            Assert.AreEqual(category.CreationDate,categoryDtoList[0].CreationDate);
-            Assert.AreEqual(category.UserId,categoryDtoList[0].UserId);
-            Assert.AreEqual(category.CategoryId,categoryDtoList[0].CategoryId);
+            Assert.AreEqual(_category.Name, categoryDtoList[0].Name);
+            Assert.AreEqual(_category.Status, categoryDtoList[0].Status);
+            Assert.AreEqual(_category.Type, categoryDtoList[0].Type);
+            Assert.AreEqual(_category.CreationDate, categoryDtoList[0].CreationDate);
+            Assert.AreEqual(_category.UserId, categoryDtoList[0].UserId);
+            Assert.AreEqual(_category.CategoryId, categoryDtoList[0].CategoryId);
         }
-        
-        
-        
+
     }
 }
