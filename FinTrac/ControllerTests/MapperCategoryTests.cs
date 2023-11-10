@@ -47,12 +47,12 @@ namespace ControllerTests
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
         {
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income,1);
-            categoryDTO_ToConvert.Id = 1;
+            categoryDTO_ToConvert.CategoryId = 1;
 
             Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
 
             Assert.IsInstanceOfType(generatedCategory, typeof(Category));
-            Assert.AreEqual(categoryDTO_ToConvert.Id, generatedCategory.CategoryId);
+            Assert.AreEqual(categoryDTO_ToConvert.CategoryId, generatedCategory.CategoryId);
             Assert.AreEqual(categoryDTO_ToConvert.Name, generatedCategory.Name);
             Assert.AreEqual(categoryDTO_ToConvert.Status, generatedCategory.Status);
             Assert.AreEqual(categoryDTO_ToConvert.Type, generatedCategory.Type);
@@ -64,7 +64,7 @@ namespace ControllerTests
         public void GivenCategoryDTOWithIncorrectData_ShouldThrowException()
         {
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income,1);
-            categoryDTO_ToConvert.Id = 1;
+            categoryDTO_ToConvert.CategoryId = 1;
 
             MapperCategory.ToCategory(categoryDTO_ToConvert);
         }
@@ -81,7 +81,7 @@ namespace ControllerTests
             CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(categoryToConvert);
 
             Assert.IsInstanceOfType(categoryDTO, typeof(CategoryDTO));
-            Assert.AreEqual(categoryToConvert.CategoryId, categoryDTO.Id);
+            Assert.AreEqual(categoryToConvert.CategoryId, categoryDTO.CategoryId);
             Assert.AreEqual(categoryToConvert.Name, categoryDTO.Name);
             Assert.AreEqual(categoryToConvert.Status, categoryDTO.Status);
             Assert.AreEqual(categoryToConvert.Type, categoryDTO.Type);
