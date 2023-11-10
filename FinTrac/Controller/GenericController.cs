@@ -159,6 +159,10 @@ public class GenericController : IUserController
 
     public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
     {
-        throw new NotImplementedException();
+        SetUserConnected(categoryDtoWithUpdates.UserId);
+        Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
+        _userConnected.ModifyCategory(categoryToUpd);
+        _userRepo.Update(_userConnected);
+        
     }
 }

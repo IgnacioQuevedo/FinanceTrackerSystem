@@ -136,18 +136,14 @@ namespace ControllerTests
         [TestMethod]
         public void GivenUserToUpdate_ShouldBeUpdatedInDb()
         {
-            UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
-                "Jhonix2003!!", "South Av");
-            dtoWithUpdates.UserId = _userConnected.UserId;
+            _controller.UpdateUser(_userDTO);
 
-            _controller.UpdateUser(dtoWithUpdates);
-
-            UserDTO userInDb = _controller.FindUser(dtoWithUpdates.UserId);
-            Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
-            Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
-            Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
-            Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
-            Assert.AreEqual(userInDb.Email, dtoWithUpdates.Email);
+            UserDTO userInDb = _controller.FindUser(_userDTO.UserId);
+            Assert.AreEqual(userInDb.FirstName, _userDTO.FirstName);
+            Assert.AreEqual(userInDb.LastName, _userDTO.LastName);
+            Assert.AreEqual(userInDb.Password, _userDTO.Password);
+            Assert.AreEqual(userInDb.Address, _userDTO.Address);
+            Assert.AreEqual(userInDb.Email, _userDTO.Email);
         }
 
         [TestMethod]
