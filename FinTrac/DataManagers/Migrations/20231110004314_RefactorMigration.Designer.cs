@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataManagers.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20231109155517_UserIdInCategoryCantBeNullable")]
-    partial class UserIdInCategoryCantBeNullable
+    [Migration("20231110004314_RefactorMigration")]
+    partial class RefactorMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

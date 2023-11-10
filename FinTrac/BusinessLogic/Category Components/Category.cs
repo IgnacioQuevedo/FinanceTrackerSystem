@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace BusinessLogic.Category_Components
     public class Category
     {
         #region Properties
-        public int CategoryId { get; set; } = -1;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CategoryId { get; set; }
         public string Name { get; set; } = "";
         public DateTime CreationDate { get; } = DateTime.Now.Date;
         public StatusEnum Status { get; set; }
