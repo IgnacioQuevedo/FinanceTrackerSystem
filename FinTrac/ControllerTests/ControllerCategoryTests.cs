@@ -148,11 +148,11 @@ namespace ControllerTests
             CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
             categoryDto.CategoryId = 1;
             _controller.CreateCategory(categoryDto);
+            List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
             
-            int amountOfCategoriesInDb = _testDb.Users.First().MyCategories.Count;
-
+            int amountOfCategoriesInDb = categoryListsOfUser.Count;
             _controller.DeleteCategory(categoryDto);
-            int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
+            int amountOfCategoriesPostDelete = categoryListsOfUser.Count;
             
             Assert.AreEqual(amountOfCategoriesInDb -1, amountOfCategoriesPostDelete);
         }

@@ -153,10 +153,11 @@ public class CategoryTests
     public void GivenCategoryToDelete_ShouldDelete()
     {
         genericUser.AddCategory(genericCategory);
+        int amountOfCategoriesPreDelete = genericUser.MyCategories.Count;
         int idOfCategoryDeleted = genericCategory.CategoryId;
         genericUser.DeleteCategory(genericCategory);
 
-        Assert.IsNull(genericUser.MyCategories[idOfCategoryDeleted]);
+        Assert.AreEqual(genericUser.MyCategories.Count,amountOfCategoriesPreDelete - 1);
     }
 
     [TestMethod]
