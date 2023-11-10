@@ -161,10 +161,9 @@ public class GenericController : IUserController
     {
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        categoryToUpd.CategoryUser = _userConnected;
-
         Category categoryWithoutUpd = _userConnected.MyCategories[categoryDtoWithUpdates.CategoryId - 1];
-
+        
+        categoryToUpd.CategoryUser = _userConnected;
         if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
         {
             throw new Exception("There are non existential changes, change at least one please.");
