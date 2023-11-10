@@ -88,5 +88,27 @@ namespace ControllerTests
         }
 
         #endregion
+
+        public void GivenCategoryList_ShouldConvertItToCategoryDTOList()
+        {
+            Category category = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+            Category category2 = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            List<Category> categoryList = new List<Category>();
+            
+            categoryList.Add(category);
+            categoryList.Add(category2);
+
+            List<CategoryDTO> categoryDtoList = new List<CategoryDTO>();
+
+            categoryDtoList = MapperCategory.ToListOfCategoryDTO(categoryList);
+            
+            Assert.IsInstanceOfType(categoryDtoList[0],typeof(CategoryDTO));
+            Assert.IsInstanceOfType(categoryDtoList[1],typeof(CategoryDTO));
+
+        }
+        
+        
+        
     }
 }

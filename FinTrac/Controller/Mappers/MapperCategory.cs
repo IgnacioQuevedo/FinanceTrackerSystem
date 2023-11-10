@@ -33,4 +33,9 @@ public static class MapperCategory
             throw new ExceptionMapper(Exception.Message);
         }
     }
+
+    public static List<CategoryDTO> ToListOfCategoryDTO(List<Category> categoryList)
+    {
+        throw new NotImplementedException();
+    }
 }

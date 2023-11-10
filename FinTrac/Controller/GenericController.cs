@@ -192,11 +192,9 @@ public class GenericController : IUserController, ICategoryController
         
     }
 
-
     public List<CategoryDTO> GetAllCategories(int userConnectedId)
     {
-        
-        
+        throw new NotImplementedException();
     }
 
     public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
