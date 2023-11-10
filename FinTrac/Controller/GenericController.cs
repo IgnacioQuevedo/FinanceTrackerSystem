@@ -161,7 +161,18 @@ public class GenericController : IUserController
     {
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        _userConnected.ModifyCategory(categoryToUpd);
-        _userRepo.Update(_userConnected);
+        categoryToUpd.CategoryUser = _userConnected;
+
+        Category categoryWithoutUpd = _userConnected.MyCategories[categoryDtoWithUpdates.CategoryId - 1];
+
+        if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
+        {
+            throw new Exception("There are non existential changes, change at least one please.");
+        }
+        else
+        {
+            _userConnected.ModifyCategory(categoryToUpd);
+            _userRepo.Update(_userConnected);
+        }
     }
 }
