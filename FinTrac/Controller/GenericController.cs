@@ -87,9 +87,8 @@ public class GenericController : IUserController
     {
         int userConnectedId = _userRepo.GetUserViaEmail(userDtoUpdated.Email).UserId;
         userDtoUpdated.UserId = userConnectedId;
-        
-        SetUserConnected(userConnectedId);
 
+        SetUserConnected(userConnectedId);
         try
         {
             User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
@@ -135,6 +134,7 @@ public class GenericController : IUserController
             SetUserConnected(dtoToAdd.UserId);
             Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
 
+
             _userConnected.AddCategory(categoryToAdd);
             _userRepo.Update(_userConnected);
         }
@@ -163,6 +163,5 @@ public class GenericController : IUserController
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
         _userConnected.ModifyCategory(categoryToUpd);
         _userRepo.Update(_userConnected);
-        
     }
 }
