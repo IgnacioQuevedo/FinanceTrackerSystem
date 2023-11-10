@@ -8,7 +8,7 @@ namespace Controller.IControllers
         public void CreateCategory(CategoryDTO dtoToAdd);
         public Category FindCategory(int idOfCategoryToFind);
         public void UpdateCategory(CategoryDTO categoryDtoWithUpdates);
-        public void DeleteCategory(CategoryDTO categoryDtoCategoryId);
+        public void DeleteCategory(int categoryDtoCategoryId);
         public List<CategoryDTO> GetAllCategories(int userConnectedId);
 
 

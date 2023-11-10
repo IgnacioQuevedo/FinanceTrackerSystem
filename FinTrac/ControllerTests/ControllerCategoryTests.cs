@@ -152,16 +152,17 @@ namespace ControllerTests
         [TestMethod]
         public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
         {
-            CategoryDTO category2 =
+            CategoryDTO categoryDTO2 =
                 new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            categoryDTO2.CategoryId = 2;
 
             _controller.CreateCategory(categoryDTO);
-            _controller.CreateCategory(category2);
+            _controller.CreateCategory(categoryDTO2);
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
 
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
-            _controller.DeleteCategory(categoryDTO);
-            _controller.DeleteCategory(category2);
+            _controller.DeleteCategory(categoryDTO.CategoryId);
+            _controller.DeleteCategory(categoryDTO2.CategoryId);
 
             int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
@@ -224,13 +225,13 @@ namespace ControllerTests
 
             Assert.AreEqual(3, allCategories.Count);
         }
-        
+
         [TestMethod]
         public void GetAllCategoriesMethod_WhenListHasNoCategories_ShouldNotReturnNull()
         {
             Assert.IsNotNull(_controller.GetAllCategories(_userConnected.UserId));
         }
-        
+
         #endregion
     }
 }

@@ -128,6 +128,7 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
     #region Category Section
+
     public void CreateCategory(CategoryDTO dtoToAdd)
     {
         try
@@ -135,9 +136,9 @@ public class GenericController : IUserController, ICategoryController
             SetUserConnected(dtoToAdd.UserId);
             Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
             categoryToAdd.CategoryId = 0;
-            
+
             _userConnected.AddCategory(categoryToAdd);
-            
+
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionMapper Exception)
@@ -145,18 +146,19 @@ public class GenericController : IUserController, ICategoryController
             throw new Exception(Exception.Message);
         }
     }
-    
+
     public Category FindCategory(int idOfCategoryToFind)
     {
-        try
+        SetUserConnected(idOfCategoryToFind);
+        foreach (var category in _userConnected.MyCategories)
         {
-            SetUserConnected(idOfCategoryToFind);
-            return _userConnected.MyCategories[idOfCategoryToFind - 1];
+            if (category.CategoryId == idOfCategoryToFind)
+            {
+                return category;
+            }
         }
-        catch (Exception Exception)
-        {
-            throw new Exception("Category was not found, an error on index must be somewhere.");
-        }
+
+        throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
     public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
@@ -164,7 +166,7 @@ public class GenericController : IUserController, ICategoryController
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
         Category categoryWithoutUpd = FindCategory(categoryDtoWithUpdates.CategoryId);
-        
+
         categoryToUpd.CategoryUser = _userConnected;
         if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
         {
@@ -176,20 +178,19 @@ public class GenericController : IUserController, ICategoryController
             _userRepo.Update(_userConnected);
         }
     }
-    
-    public void DeleteCategory(CategoryDTO categoryDtoCategoryId)
+
+    public void DeleteCategory(int categoryDtoCategoryId)
     {
         try
         {
-            SetUserConnected(categoryDtoCategoryId.UserId);
-            _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId.UserId));
+            SetUserConnected(categoryDtoCategoryId);
+            _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId));
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionCategoryManagement Exception)
         {
             throw new Exception(Exception.Message);
         }
-        
     }
 
     public List<CategoryDTO> GetAllCategories(int userConnectedId)
@@ -207,6 +208,6 @@ public class GenericController : IUserController, ICategoryController
         SetUserConnected(userConnectedId);
         return _userConnected.MyCategories;
     }
-    
+
     #endregion
 }
