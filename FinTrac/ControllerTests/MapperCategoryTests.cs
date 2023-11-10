@@ -134,12 +134,17 @@ namespace ControllerTests
             categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category));
             categoryDTOList.Add(MapperCategory.ToCategoryDTO(_category2));
 
-            List<Category> categoryList = new List<Category>();
-
-            categoryList = MapperCategory.ToListOfCategory(categoryDTOList);
+            List<Category> categoryList = MapperCategory.ToListOfCategory(categoryDTOList);
             
             Assert.IsInstanceOfType(categoryList[0],typeof(Category));
             Assert.IsInstanceOfType(categoryList[1],typeof(Category));
+            
+            Assert.AreEqual(_category.Name, categoryList[0].Name);
+            Assert.AreEqual(_category.Status, categoryList[0].Status);
+            Assert.AreEqual(_category.Type, categoryList[0].Type);
+            Assert.AreEqual(_category.CreationDate, categoryList[0].CreationDate);
+            Assert.AreEqual(_category.UserId, categoryList[0].UserId);
+            Assert.AreEqual(_category.CategoryId, categoryList[0].CategoryId);
         }
     }
 }
