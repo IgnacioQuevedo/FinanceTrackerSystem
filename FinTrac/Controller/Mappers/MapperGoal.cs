@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Exceptions;
 using BusinessLogic.Goal_Components;
+using Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,14 +26,21 @@ namespace Controller.Mappers
 
         public static Goal ToGoal(GoalDTO goalDTOToConvert)
         {
-            List<Category> listOfCategories = ToListOfGoal(goalDTOToConvert);
+            try
+            {
+                List<Category> listOfCategories = ToListOfGoal(goalDTOToConvert);
 
-            Goal goal =
-                new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
+                Goal goal =
+                    new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
-            goalDTOToConvert.GoalId = goalDTOToConvert.GoalId;
+                goalDTOToConvert.GoalId = goalDTOToConvert.GoalId;
 
-            return goal;
+                return goal;
+            }
+            catch (ExceptionValidateGoal Exception)
+            {
+                throw new ExceptionMapper(Exception.Message);
+            }
         }
 
         private static List<Category> ToListOfGoal(GoalDTO goalDTOToConvert)
