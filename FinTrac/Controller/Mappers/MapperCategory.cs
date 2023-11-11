@@ -44,7 +44,7 @@ public abstract class MapperCategory
 
         foreach (Category category in categoryList)
         {
-            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
+            CategoryDTO categoryDTO = ToCategoryDTO(category);
             listCategoryDTO.Add(categoryDTO);
         }
 
@@ -57,7 +57,7 @@ public abstract class MapperCategory
 
         foreach (CategoryDTO categoryDTO in categoryDtoList)
         {
-            Category category = MapperCategory.ToCategory(categoryDTO);
+            Category category = ToCategory(categoryDTO);
             listOfCategories.Add(category);
         }
         return listOfCategories;
