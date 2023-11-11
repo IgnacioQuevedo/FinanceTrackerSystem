@@ -249,17 +249,23 @@ namespace ControllerTests
 
         #endregion
 
+        #region Get All Exchange Histories DTO
+
         [TestMethod]
         public void GetAllExchangeHistories_ShouldReturnListWithExchangeHistoriesDTO()
         {
 
             List<ExchangeHistoryDTO> exchangeHistoriesDTOInDb = _controller.GetAllExchangeHistories(_userConnected.UserId);
             
+            Assert.AreEqual(2,exchangeHistoriesDTOInDb.Count);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].ExchangeHistoryId, exchangeHistoryToCreate.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Currency, exchangeHistoryToCreate.Currency);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Value, exchangeHistoryToCreate.Value);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].ValueDate, exchangeHistoryToCreate.ValueDate);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].UserId, exchangeHistoryToCreate.UserId);
         }
+
+        #endregion 
+     
     }
 }
