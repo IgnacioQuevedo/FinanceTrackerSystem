@@ -367,4 +367,9 @@ public class GenericController : IUserController, ICategoryController
             throw new Exception(ExceptionType.Message);
         }
     }
+
+    public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedUserId)
+    {
+        throw new NotImplementedException();
+    }
 }

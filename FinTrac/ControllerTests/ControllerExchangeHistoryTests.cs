@@ -174,76 +174,90 @@ namespace ControllerTests
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenExchangeHistoryDTOWithTransactions_WhenTryingToUpdate_ShouldThrowException()
         {
             Account exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
             Category exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
-            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
-            Transaction.CheckExistenceOfExchange(DateTime.Now.Date,_testDb.Users.First().MyExchangesHistory);
-            
+            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
+                exampleCategory);
+            Transaction.CheckExistenceOfExchange(DateTime.Now.Date, _testDb.Users.First().MyExchangesHistory);
+
             exampleCategory.CategoryId = 0;
             exampleAccount.AccountId = 0;
             transaction.TransactionId = 0;
-            
+
             _testDb.Users.First().MyCategories.Add(exampleCategory);
             _testDb.Users.First().MyAccounts.Add(exampleAccount);
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction);
-            
+
             _testDb.SaveChanges();
 
             ExchangeHistoryDTO exchangeHistoryDTOWithUpdates = exchangeHistoryToCreate;
             exchangeHistoryDTOWithUpdates.Currency = CurrencyEnum.UY;
             exchangeHistoryDTOWithUpdates.Value = 3;
-            
+
             _controller.UpdateExchangeHistory(exchangeHistoryDTOWithUpdates);
         }
 
-        
-        
         #endregion
-
+        
+        #region Delete ExchangeHistory
 
         [TestMethod]
         public void GivenExchangeHistoryDTOWithoutTransactions_WhenDeleting_ShouldDeleteItFromDb()
         {
             DateTime creationDate = new DateTime(2023, 12, 12, 0, 0, 0, 0);
-            ExchangeHistoryDTO anotherExchangeHistory = new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
-            
+            ExchangeHistoryDTO anotherExchangeHistory =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
+
             _controller.CreateExchangeHistory(anotherExchangeHistory);
             anotherExchangeHistory.ExchangeHistoryId = 2;
-            
+
             int exchangeHistoriesInDbPreDelete = _testDb.Users.First().MyExchangesHistory.Count;
-        
+
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
             _controller.DeleteExchangeHistory(anotherExchangeHistory);
             int exchangeHistoriesInDbPostDelete = _testDb.Users.First().MyExchangesHistory.Count;
 
-            Assert.AreEqual(exchangeHistoriesInDbPreDelete -2 ,exchangeHistoriesInDbPostDelete);
-
+            Assert.AreEqual(exchangeHistoriesInDbPreDelete - 2, exchangeHistoriesInDbPostDelete);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenExchangeHistoryDTOWithTransactions_WhenDeleting_ShouldThrowException()
         {
             Account exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
             Category exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
-            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
-            Transaction.CheckExistenceOfExchange(DateTime.Now.Date,_testDb.Users.First().MyExchangesHistory);
-            
+            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
+                exampleCategory);
+            Transaction.CheckExistenceOfExchange(DateTime.Now.Date, _testDb.Users.First().MyExchangesHistory);
+
             exampleCategory.CategoryId = 0;
             exampleAccount.AccountId = 0;
             transaction.TransactionId = 0;
-            
+
             _testDb.Users.First().MyCategories.Add(exampleCategory);
             _testDb.Users.First().MyAccounts.Add(exampleAccount);
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction);
-            
+
             _testDb.SaveChanges();
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void GetAllExchangeHistories_ShouldReturnListWithExchangeHistoriesDTO()
+        {
+
+            List<ExchangeHistoryDTO> exchangeHistoriesDTOInDb = _controller.GetAllExchangeHistories(_userConnected.UserId);
+            
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0], exchangeHistoryToCreate);
+            Assert.AreEqual(exchangeHistoriesDTOInDb[1], anotherExchangeHistory);
+
         }
     }
 }
