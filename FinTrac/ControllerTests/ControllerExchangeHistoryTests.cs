@@ -109,7 +109,8 @@ namespace ControllerTests
             ExchangeHistory exchangeHistoryFoundAndReturned =
                 _controller.FindExchangeHistoryInDB(exchangeHistoryToCreate);
 
-            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFoundAndReturned.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId,
+                exchangeHistoryFoundAndReturned.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFoundAndReturned.UserId);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFoundAndReturned.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFoundAndReturned.ValueDate);
@@ -127,12 +128,12 @@ namespace ControllerTests
         #endregion
 
         #region Find ExchangeHistory
-        
+
         [TestMethod]
         public void GivenExchangeHistoryId_MustBeFindInDb_AndShouldBeFoundedAndReturnedDTO()
         {
             ExchangeHistoryDTO exchangeHistoryFound =
-                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId,_userConnected.UserId);
+                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId, _userConnected.UserId);
 
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFound.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFound.UserId);
@@ -140,38 +141,36 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFound.ValueDate);
             Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFound.Currency);
         }
-        
+
         #endregion
 
         [TestMethod]
         public void GivenExchangeDTOWithCorrectDataToUpdate_ShouldBeUpdatedInDb()
         {
-            ExchangeHistoryDTO exchangeHistoryWithUpdates = 
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now,_userConnected.UserId);
+            ExchangeHistoryDTO exchangeHistoryWithUpdates =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
-            
+
             ExchangeHistoryDTO exchangeHistoryInDb =
                 _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId, _userConnected.UserId);
-            
-            Assert.AreEqual(exchangeHistoryWithUpdates.UserId,exchangeHistoryInDb.UserId);
-            Assert.AreEqual(exchangeHistoryWithUpdates.Currency,exchangeHistoryInDb.Currency);
-            Assert.AreEqual(exchangeHistoryWithUpdates.Value,exchangeHistoryInDb.Value);
-            Assert.AreEqual(exchangeHistoryWithUpdates.ValueDate,exchangeHistoryInDb.ValueDate);
-            
+
+            Assert.AreEqual(exchangeHistoryWithUpdates.UserId, exchangeHistoryInDb.UserId);
+            Assert.AreEqual(exchangeHistoryWithUpdates.Currency, exchangeHistoryInDb.Currency);
+            Assert.AreEqual(exchangeHistoryWithUpdates.Value, exchangeHistoryInDb.Value);
+            Assert.AreEqual(exchangeHistoryWithUpdates.ValueDate, exchangeHistoryInDb.ValueDate);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenExchangeDTOWithInCorrectDataToUpdate_ShouldThrowException()
         {
-            ExchangeHistoryDTO exchangeHistoryWithUpdates = 
-                new ExchangeHistoryDTO(CurrencyEnum.USA, -35.6M, DateTime.Now,_userConnected.UserId);
+            ExchangeHistoryDTO exchangeHistoryWithUpdates =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, -35.6M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
-            
         }
     }
 }

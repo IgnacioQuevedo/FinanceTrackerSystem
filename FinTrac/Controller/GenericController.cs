@@ -331,7 +331,9 @@ public class GenericController : IUserController, ICategoryController
         try
         {
             SetUserConnected((int)dtoWithUpdates.UserId);
+            
             ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
+            
             _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
             _userRepo.Update(_userConnected);
         }
