@@ -27,8 +27,7 @@ namespace ControllerTests
         private ExchangeHistoryDTO exchangeHistoryToCreate;
         private ExchangeHistoryDTO anotherExchangeHistory;
         private DateTime creationDate;
-        
-        
+
 
         [TestInitialize]
         public void Initialize()
@@ -42,16 +41,16 @@ namespace ControllerTests
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
-            
-            
-             exchangeHistoryToCreate =
+
+
+            exchangeHistoryToCreate =
                 new ExchangeHistoryDTO(CurrencyEnum.USA, 39.5M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryToCreate.UserId = 1;
             exchangeHistoryToCreate.ExchangeHistoryId = 1;
 
             creationDate = new DateTime(2023, 3, 2, 12, 12, 00);
-            
-             anotherExchangeHistory =
+
+            anotherExchangeHistory =
                 new ExchangeHistoryDTO(CurrencyEnum.USA, 2.5M, creationDate, _userConnected.UserId);
 
             anotherExchangeHistory.UserId = 1;
@@ -59,7 +58,6 @@ namespace ControllerTests
 
             _controller.CreateExchangeHistory(exchangeHistoryToCreate);
             _controller.CreateExchangeHistory(anotherExchangeHistory);
-            
         }
 
         #endregion
@@ -73,7 +71,7 @@ namespace ControllerTests
         }
 
         #endregion
-        
+
         #region Create ExchangeHistory
 
         [TestMethod]
@@ -100,6 +98,7 @@ namespace ControllerTests
             exchangeHistoryToCreate.Value = -1;
             _controller.CreateExchangeHistory(exchangeHistoryToCreate);
         }
+
         #endregion
 
         [TestMethod]
@@ -107,23 +106,20 @@ namespace ControllerTests
         {
             ExchangeHistory exchangeHistoryFound =
                 _controller.FindExchangeHistory(exchangeHistoryToCreate);
-            
-            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId,exchangeHistoryFound.ExchangeHistoryId);
-            Assert.AreEqual(exchangeHistoryToCreate.UserId,exchangeHistoryFound.UserId);
-            Assert.AreEqual(exchangeHistoryToCreate.Value,exchangeHistoryFound.Value);
-            Assert.AreEqual(exchangeHistoryToCreate.ValueDate,exchangeHistoryFound.ValueDate);
-            Assert.AreEqual(exchangeHistoryToCreate.Currency,exchangeHistoryFound.Currency);
+
+            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFound.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFound.UserId);
+            Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFound.Value);
+            Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFound.ValueDate);
+            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFound.Currency);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenExchangeHistoryThatIsNotIndb_ShouldThrowExceptionBecauseItWasNotFound()
         {
             exchangeHistoryToCreate.ExchangeHistoryId = -1;
-            ExchangeHistory exchangeHistoryFound =
-                _controller.FindExchangeHistory(exchangeHistoryToCreate);
- 
+            _controller.FindExchangeHistory(exchangeHistoryToCreate);
         }
-        
     }
 }

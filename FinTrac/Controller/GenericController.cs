@@ -268,12 +268,13 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
     #region Exchange History Section
+
     public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
     {
         try
         {
             SetUserConnected((int)exchangeDTO.UserId);
-        
+
             ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
             _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
             _userRepo.Update(_userConnected);
@@ -288,26 +289,15 @@ public class GenericController : IUserController, ICategoryController
 
     public ExchangeHistory FindExchangeHistory(ExchangeHistoryDTO exchangeToFound)
     {
-        
         SetUserConnected((int)exchangeToFound.UserId);
-    
-        ExchangeHistory exchangeFound = null;
 
-            foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
+        foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
+        {
+            if (exchangeHistory.ExchangeHistoryId == exchangeToFound.ExchangeHistoryId)
             {
-                if (exchangeHistory.ExchangeHistoryId == exchangeToFound.ExchangeHistoryId)
-                {
-                    exchangeFound =  exchangeHistory;
-                }
+                return exchangeHistory;
             }
-
-            if (exchangeFound == null)
-            {
-                throw new Exception("Exchange History was not found, an error on index must be somewhere.");
-            }
-            else
-            {
-                return exchangeFound;
-            }
+        }
+        throw new Exception("Exchange History was not found, an error on index must be somewhere.");
     }
 }
