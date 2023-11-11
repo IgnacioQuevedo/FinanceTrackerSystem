@@ -91,11 +91,13 @@ namespace ControllerTests
 
         #endregion
 
+        #region Get All Goals
         [TestMethod]
         public void GivenUser_ShouldReturnItCorrespondingListOfGoals()
         {
             _controller.CreateCategory(_categoryDTO1);
             _controller.CreateGoal(_goalDTOToAdd);
+
             _goalDTOToAdd.GoalId = 1;
 
             List<GoalDTO> goalsInDb = _controller.GetAllGoals(_userConnected.UserId);
@@ -112,6 +114,8 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, goalsInDb[0].CategoriesOfGoalDTO[0].Type);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, goalsInDb[0].CategoriesOfGoalDTO[0].UserId);
         }
+
+        #endregion
 
 
     }
