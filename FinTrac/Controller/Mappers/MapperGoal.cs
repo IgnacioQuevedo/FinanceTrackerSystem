@@ -30,18 +30,16 @@ namespace Controller.Mappers
 
         #region To Goal
 
-        public static Goal ToGoal(GoalDTO goalDTOToConvert)
+        public static Goal ToGoal(GoalDTO goalDTOToConvert, List<Category> listOfCategories)
         {
             try
             {
-                List<Category> listOfCategories = MapperCategory.ToListOfCategory(goalDTOToConvert.CategoriesOfGoalDTO);
-
                 Goal goal =
                     new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
                 goal.UserId = goalDTOToConvert.UserId;
 
-                goalDTOToConvert.GoalId = goalDTOToConvert.GoalId;
+                goalDTOToConvert.GoalId = goal.GoalId;
 
                 return goal;
             }

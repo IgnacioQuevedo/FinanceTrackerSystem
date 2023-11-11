@@ -220,7 +220,8 @@ public class GenericController : IUserController, ICategoryController
 
         try
         {
-            Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate);
+            List<Category> categoriesOfGoal = SetListOfCategories(goalDtoToCreate);
+            Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate, categoriesOfGoal);
             goalToAdd.GoalId = 0;
             _userConnected.AddGoal(goalToAdd);
             _userRepo.Update(_userConnected);
@@ -232,6 +233,17 @@ public class GenericController : IUserController, ICategoryController
         {
             throw new Exception(ExceptionType.Message);
         }
+    }
+
+    private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
+    {
+        List<Category> result = new List<Category>();
+        foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
+        {
+            result.Add(FindCategory(categoryDTO.CategoryId));
+        }
+
+        return result;
     }
 
     #endregion
