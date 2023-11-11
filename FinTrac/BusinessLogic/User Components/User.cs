@@ -517,7 +517,9 @@ namespace BusinessLogic.User_Components
             {
                 if (idToUpdate == MyExchangesHistory[i].ExchangeHistoryId)
                 {
-                    MyExchangesHistory[i] = exchangeHistoryToUpdate;
+                    MyExchangesHistory[i].Currency = exchangeHistoryToUpdate.Currency;
+                    MyExchangesHistory[i].Value = exchangeHistoryToUpdate.Value;
+                    MyExchangesHistory[i].ValueDate = exchangeHistoryToUpdate.ValueDate;
                     updated = true;
                 }
             }

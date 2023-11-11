@@ -144,11 +144,11 @@ namespace ControllerTests
         #endregion
 
         [TestMethod]
-        public void GivenExchangeDTOWithUpdates_ShouldBeUpdatedInDb()
+        public void GivenExchangeDTOWithCorrectUpdate_ShouldBeUpdatedInDb()
         {
             ExchangeHistoryDTO exchangeHistoryWithUpdates = 
                 new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now,_userConnected.UserId);
-            exchangeHistoryWithUpdates.UserId = _userConnected.UserId;
+            exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
             

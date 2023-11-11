@@ -15,6 +15,7 @@ public abstract class MapperExchangeHistory
                 new ExchangeHistory(exchangeHistoryDto.Currency, exchangeHistoryDto.Value,
                     exchangeHistoryDto.ValueDate);
 
+            exchangeHistory.ExchangeHistoryId = exchangeHistoryDto.ExchangeHistoryId;
             exchangeHistory.UserId = exchangeHistoryDto.UserId;
 
             return exchangeHistory;

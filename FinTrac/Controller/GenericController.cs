@@ -276,6 +276,7 @@ public class GenericController : IUserController, ICategoryController
             SetUserConnected((int)exchangeDTO.UserId);
 
             ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
+            exchangeHistoryToCreate.ExchangeHistoryId = 0;
             _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
             _userRepo.Update(_userConnected);
         }
@@ -325,8 +326,11 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
 
-    public void UpdateExchangeHistory(ExchangeHistoryDTO exchangeHistoryWithUpdates)
+    public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates)
     {
-        throw new NotImplementedException();
+        SetUserConnected((int)dtoWithUpdates.UserId);
+        ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
+        _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
+        _userRepo.Update(_userConnected);
     }
 }
