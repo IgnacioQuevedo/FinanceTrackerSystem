@@ -62,10 +62,5 @@ public abstract class MapperCategory
         }
         return listOfCategories;
     }
-
-
-    public static List<ExchangeHistory> ToListOfExchangeHistory(List<ExchangeHistoryDTO> exchangeHistoryDtoList)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
