@@ -38,6 +38,14 @@ public abstract class MapperExchangeHistory
 
     public static List<ExchangeHistoryDTO> ToListOfExchangeHistoryDTO(List<ExchangeHistory> exchangeHistoryList)
     {
-        throw new NotImplementedException();
+        List<ExchangeHistoryDTO> listCategoryDTO = new List<ExchangeHistoryDTO>();
+
+        foreach (ExchangeHistory category in exchangeHistoryList)
+        {
+            ExchangeHistoryDTO exchangeHistoryDTO = MapperExchangeHistory.ToExchangeHistoryDTO(category);
+            listCategoryDTO.Add(exchangeHistoryDTO);
+        }
+
+        return listCategoryDTO;
     }
 }
