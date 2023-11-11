@@ -93,7 +93,8 @@ namespace TestProject1
             int idOfExchangeHistoryToDelete = exchangeHistoryExample.ExchangeHistoryId;
             genericUser.DeleteExchangeHistory(exchangeHistoryExample);
 
-            Assert.IsNull(genericUser.MyExchangesHistory[idOfExchangeHistoryToDelete]);
+            int numberOfExchangeHistoriesPostDelete = genericUser.MyExchangesHistory.Count;
+            Assert.AreEqual(0,numberOfExchangeHistoriesPostDelete);
         }
 
         #endregion

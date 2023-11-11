@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
@@ -164,6 +165,7 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
                 return category;
             }
         }
+
         throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
@@ -278,4 +280,111 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
     }
 
     #endregion
+
+    #region Exchange History Section
+
+    public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
+    {
+        try
+        {
+            SetUserConnected((int)exchangeDTO.UserId);
+
+            ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
+            exchangeHistoryToCreate.ExchangeHistoryId = 0;
+            _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+    }
+
+    #endregion
+
+    public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound, int idUserConnected)
+    {
+        SetUserConnected(idUserConnected);
+
+        ExchangeHistoryDTO exchangeHistoryDTOFound =
+            MapperExchangeHistory.ToExchangeHistoryDTO(searchInDbForAnExchange(IdOfExchangeToFound));
+
+        return exchangeHistoryDTOFound;
+    }
+
+
+    #region ExchangeHistory Find method specifically for controller section.
+
+    //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
+    public ExchangeHistory FindExchangeHistoryInDB(ExchangeHistoryDTO exchangeToFound)
+    {
+        SetUserConnected((int)exchangeToFound.UserId);
+        return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
+    }
+
+    private ExchangeHistory searchInDbForAnExchange(int idOfExchangeToSearch)
+    {
+        foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
+        {
+            if (exchangeHistory.ExchangeHistoryId == idOfExchangeToSearch)
+            {
+                {
+                    return exchangeHistory;
+                }
+            }
+        }
+
+        throw new Exception("Exchange History was not found, an error on index must be somewhere.");
+    }
+
+    #endregion
+
+
+    public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates)
+    {
+        try
+        {
+            SetUserConnected((int)dtoWithUpdates.UserId);
+
+            ExchangeHistory exchangeHistoryToUpdate = FindExchangeHistoryInDB(dtoWithUpdates);
+            exchangeHistoryToUpdate.ValidateApplianceExchangeOnTransaction();
+
+            ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
+            _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
+            _userRepo.Update(_userConnected);
+        }
+
+        catch (Exception ExceptionType)
+            when (
+                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+            )
+        {
+            throw new Exception(ExceptionType.Message);
+        }
+    }
+
+    public void DeleteExchangeHistory(ExchangeHistoryDTO dtoToDelete)
+    {
+        try
+        {
+            SetUserConnected((int)dtoToDelete.UserId);
+            ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
+            exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
+            _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
+            _userRepo.Update(_userConnected);
+        }
+        catch (Exception ExceptionType)
+            when (
+                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+            )
+        {
+            throw new Exception(ExceptionType.Message);
+        }
+    }
+
+    public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
+    }
 }
