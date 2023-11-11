@@ -254,9 +254,9 @@ namespace BusinessLogic.User_Components
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
         {
             bool founded = false;
-            foreach (Account account in MyAccounts.Where(t => t != null))
+            foreach (Account account in MyAccounts)
             {
-                foreach (Transaction transaction in account.MyTransactions.Where(t => t != null))
+                foreach (Transaction transaction in account.MyTransactions)
                 {
                     if (transaction.TransactionCategory == categoryToDelete)
                     {
