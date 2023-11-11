@@ -270,11 +270,18 @@ public class GenericController : IUserController, ICategoryController
     #region Exchange History Section
     public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
     {
-        SetUserConnected((int)exchangeDTO.UserId);
+        try
+        {
+            SetUserConnected((int)exchangeDTO.UserId);
         
-        ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
-        _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
-        _userRepo.Update(_userConnected);
+            ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
+            _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
     }
 
     #endregion
