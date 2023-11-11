@@ -26,6 +26,11 @@ namespace Controller.Mappers
             return goalDTO;
         }
 
+        public static List<GoalDTO> ToListOfGoalDTO(List<Goal> listOfGoals)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region To Goal

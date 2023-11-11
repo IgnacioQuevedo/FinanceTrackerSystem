@@ -102,6 +102,13 @@ namespace ControllerTests
             Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], _categoryDTO2));
         }
 
+        [TestMethod]
+        public void GivenListOfGoals_ShouldReturnListOfGoalDTO()
+        {
+            MapperGoal.ToListOfGoalDTO(_goalList);
+            Assert.AreEqual(false, true);
+        }
+
         #endregion
 
         #region To Goal
