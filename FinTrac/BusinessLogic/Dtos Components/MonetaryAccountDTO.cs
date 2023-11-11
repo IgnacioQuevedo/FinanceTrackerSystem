@@ -14,6 +14,7 @@ namespace BusinessLogic.Dtos_Components
         public string Name { get; set; }
         public decimal Amount { get; set; }
         public CurrencyEnumDTO Currency { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public MonetaryAccountDTO() { }
     }

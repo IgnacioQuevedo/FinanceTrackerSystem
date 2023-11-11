@@ -66,5 +66,16 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenCreationDate_ShouldBeSetted()
+        {
+            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
+
+            myMonetaryAccountDTO.CreationDate = DateTime.Now.Date;
+
+            Assert.AreEqual(myMonetaryAccountDTO.CreationDate, DateTime.Now);
+        }
+
     }
 }
