@@ -144,6 +144,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Update ExchangeHistory
+
         [TestMethod]
         public void GivenExchangeDTOWithCorrectDataToUpdate_ShouldBeUpdatedInDb()
         {
@@ -172,5 +174,7 @@ namespace ControllerTests
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
         }
+
+        #endregion
     }
 }
