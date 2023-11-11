@@ -181,13 +181,23 @@ namespace ControllerTests
         [TestMethod]
         public void GivenExchangeHistoryDTO_WhenDeleting_ShouldDeleteItFromDb()
         {
+            DateTime creationDate = new DateTime(2023, 12, 12, 0, 0, 0, 0);
+            ExchangeHistoryDTO anotherExchangeHistory = 
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
+            
+            
+            _controller.CreateExchangeHistory(anotherExchangeHistory);
+            anotherExchangeHistory.ExchangeHistoryId = 2;
+            
             int exchangeHistoriesInDbPreDelete = _testDb.Users.First().MyExchangesHistory.Count;
-
+        
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
+            _controller.DeleteExchangeHistory(anotherExchangeHistory);
+            
             
             int exchangeHistoriesInDbPostDelete = _testDb.Users.First().MyExchangesHistory.Count;
 
-            Assert.AreEqual(exchangeHistoriesInDbPreDelete -1 ,exchangeHistoriesInDbPostDelete);
+            Assert.AreEqual(exchangeHistoriesInDbPreDelete -2 ,exchangeHistoriesInDbPostDelete);
 
         }
         
