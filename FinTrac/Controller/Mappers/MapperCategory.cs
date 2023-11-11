@@ -1,6 +1,7 @@
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.ExchangeHistory_Components;
 using Mappers;
 
 namespace Controller.Mappers;
@@ -61,8 +62,10 @@ public abstract class MapperCategory
         }
         return listOfCategories;
     }
-    
-    
-    
-    
+
+
+    public static List<ExchangeHistory> ToListOfExchangeHistory(List<ExchangeHistoryDTO> exchangeHistoryDtoList)
+    {
+        throw new NotImplementedException();
+    }
 }

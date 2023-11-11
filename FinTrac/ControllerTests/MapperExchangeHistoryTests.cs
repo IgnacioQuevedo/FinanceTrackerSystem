@@ -98,6 +98,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region ToListOfExchangeHistoryDTO
+
         [TestMethod]
         public void GivenExchangeHistoryList_ShouldConvertItToExchangeHistoryDTOList()
         {
@@ -121,5 +123,30 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistory1.ValueDate, exchangeHistoryDTOList[0].ValueDate);
             Assert.AreEqual(exchangeHistory1.ExchangeHistoryId, exchangeHistoryDTOList[0].ExchangeHistoryId);
         }
+
+        #endregion
+
+        #region ToListOfExchangeHistory
+
+        [TestMethod]
+        public void GivenExchangeHistoryDTOToList_ShouldConvertItToExchangeHistoryList()
+        {
+            ExchangeHistoryDTO exchangeHistory1 = new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now.Date,1);
+            ExchangeHistoryDTO exchangeHistory2 = new ExchangeHistoryDTO(CurrencyEnum.USA, 40, DateTime.Now.Date,1);
+
+            
+            List<ExchangeHistoryDTO> exchangeHistoryDTOList = new List<ExchangeHistoryDTO>();
+            exchangeHistoryDTOList.Add(exchangeHistory1);
+            exchangeHistoryDTOList.Add(exchangeHistory2);
+
+            List<ExchangeHistory> categoryList = MapperCategory.ToListOfExchangeHistory(exchangeHistoryDTOList);
+
+            Assert.IsInstanceOfType(categoryList[0], typeof(ExchangeHistory));
+            Assert.IsInstanceOfType(categoryList[1], typeof(ExchangeHistory));
+        }
+
+        
+
+        #endregion
     }
 }
