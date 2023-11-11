@@ -274,6 +274,7 @@ public class GenericController : IUserController, ICategoryController
         
         ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
         _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
+        _userRepo.Update(_userConnected);
     }
 
     #endregion

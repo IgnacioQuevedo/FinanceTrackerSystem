@@ -58,7 +58,7 @@ namespace ControllerTests
 
             _controller.CreateExchangeHistory(exchangeHistoryToCreate);
             
-            Assert.AreEqual(exchangeHistoryToCreate,_testDb.Users.First().MyExchangesHistory.Count);
+            Assert.AreEqual(1,_testDb.Users.First().MyExchangesHistory.Count);
             
         }
         
