@@ -115,7 +115,7 @@ namespace TestProject1
             Assert.AreEqual(myMonetaryAccounntDTO.Amount, _amountToSet);
             Assert.AreEqual(myMonetaryAccounntDTO.Currency, _currencyToSet);
             Assert.AreEqual(myMonetaryAccounntDTO.CreationDate, _creationDateToSet);
-            Assert.AreEqual(myMonetaryAccounntDTO.UserId, 0);
+            Assert.AreEqual(myMonetaryAccounntDTO.UserId, _userIdToSet);
         }
     }
 }
