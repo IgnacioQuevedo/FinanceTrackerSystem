@@ -264,4 +264,11 @@ public class GenericController : IUserController, ICategoryController
     }
 
     #endregion
+
+    #region Exchange History Section
+
+    
+    
+
+    #endregion
 }
