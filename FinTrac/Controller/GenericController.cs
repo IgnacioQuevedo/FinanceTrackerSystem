@@ -331,11 +331,17 @@ public class GenericController : IUserController, ICategoryController
         try
         {
             SetUserConnected((int)dtoWithUpdates.UserId);
-            
+
+            ExchangeHistory exchangeHistoryToUpdate = FindExchangeHistoryInDB(dtoWithUpdates);
+            exchangeHistoryToUpdate.ValidateApplianceExchangeOnTransaction();
+
             ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
-            
             _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
             _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionExchangeHistoryManagement Exception)
+        {
+            throw new Exception(Exception.Message);
         }
         catch (ExceptionMapper Exception)
         {
@@ -347,16 +353,18 @@ public class GenericController : IUserController, ICategoryController
     {
         try
         {
-            SetUserConnected((int) exchangeHistoryToCreate.UserId);
+            SetUserConnected((int)exchangeHistoryToCreate.UserId);
             ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(exchangeHistoryToCreate);
             exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
             _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
             _userRepo.Update(_userConnected);
         }
-        catch (ExceptionExchangeHistoryManagement Exception)
+        catch (Exception ExceptionType)
+            when (
+                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+            )
         {
-            throw new Exception(Exception.Message);
+            throw new Exception(ExceptionType.Message);
         }
-      
     }
 }
