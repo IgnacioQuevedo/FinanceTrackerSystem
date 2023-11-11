@@ -34,7 +34,12 @@ namespace TestProject1
 
         #endregion  
 
+        [TestMethod]
+        public void GivenName_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.Name = "Something";
 
-
+            Assert.AreEqual(_creditCardAccountDTO.Name, "S");
+        }
     }
 }

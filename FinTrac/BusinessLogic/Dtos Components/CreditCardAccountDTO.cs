@@ -11,6 +11,9 @@ namespace BusinessLogic.Dtos_Components
     {
 
         public int CreditCardAccountId { get; set; }
+        public string Name { get; set; }
+
+
 
         public CreditCardAccountDTO() { }
 
