@@ -4,6 +4,7 @@ using BusinessLogic.ExchangeHistory_Components;
 using Controller;
 using Controller.Mappers;
 using DataManagers;
+using Mappers;
 
 
 namespace ControllerTests
@@ -61,6 +62,16 @@ namespace ControllerTests
 			Assert.AreEqual(exchangeHistoryGenerated.Value,exchangeHistoryDTO.Value);
 			Assert.AreEqual(exchangeHistoryGenerated.ValueDate,exchangeHistoryDTO.ValueDate);
 			Assert.AreEqual(exchangeHistoryGenerated.UserId,exchangeHistoryDTO.UserId);
+		}
+		
+		[TestMethod]
+		[ExpectedException(typeof(ExceptionMapper))]
+		public void GivenExchangeHistoryDTOWithIncorrectData_ShouldThrowException()
+		{
+
+			ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(CurrencyEnum.USA, -3, DateTime.Now,_userConnected.UserId);
+
+			ExchangeHistory exchangeHistoryGenerated = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
 		}
 		
 	}

@@ -9,10 +9,10 @@ namespace BusinessLogic.Dtos_Components
 {
     public class ExchangeHistoryDTO
     {
+        public int ExchangeHistoryId { get; set; }
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
-        
         public int UserId { get; set; }
 
         public ExchangeHistoryDTO() { }
