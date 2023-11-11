@@ -74,7 +74,7 @@ namespace TestProject1
 
             myMonetaryAccountDTO.CreationDate = DateTime.Now.Date;
 
-            Assert.AreEqual(myMonetaryAccountDTO.CreationDate, DateTime.Now);
+            Assert.AreEqual(myMonetaryAccountDTO.CreationDate, DateTime.Now.Date);
         }
 
     }
