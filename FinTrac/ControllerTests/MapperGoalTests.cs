@@ -110,6 +110,12 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToConvert.CurrencyOfAmount, goalConverted.CurrencyOfAmount);
             Assert.AreEqual(_goalDTOToConvert.MaxAmountToSpend, goalConverted.MaxAmountToSpend);
             Assert.AreEqual(_goalDTOToConvert.UserId, goalConverted.UserId);
+
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Name, goalConverted.CategoriesOfGoal[0].Name);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CategoryId, goalConverted.CategoriesOfGoal[0].CategoryId);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Status, goalConverted.CategoriesOfGoal[0].Status);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CreationDate, goalConverted.CategoriesOfGoal[0].CreationDate);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Type, goalConverted.CategoriesOfGoal[0].Type);
         }
 
 
