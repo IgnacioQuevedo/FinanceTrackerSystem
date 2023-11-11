@@ -28,7 +28,14 @@ namespace Controller.Mappers
 
         public static List<GoalDTO> ToListOfGoalDTO(List<Goal> listOfGoals)
         {
-            throw new NotImplementedException();
+            List<GoalDTO> myListOfGoalDTO = new List<GoalDTO>();
+
+            foreach (Goal goal in listOfGoals)
+            {
+                myListOfGoalDTO.Add(ToGoalDTO(goal));
+            }
+
+            return myListOfGoalDTO;
         }
 
         #endregion

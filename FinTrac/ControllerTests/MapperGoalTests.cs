@@ -105,8 +105,15 @@ namespace ControllerTests
         [TestMethod]
         public void GivenListOfGoals_ShouldReturnListOfGoalDTO()
         {
-            MapperGoal.ToListOfGoalDTO(_goalList);
-            Assert.AreEqual(false, true);
+            List<GoalDTO> listOfGoalDTO = MapperGoal.ToListOfGoalDTO(_goalList);
+            GoalDTO goalObtained = listOfGoalDTO[0];
+
+            Assert.AreEqual(goalObtained.Title, _goalList[0].Title);
+            Assert.AreEqual(goalObtained.GoalId, _goalList[0].GoalId);
+            Assert.AreEqual(goalObtained.UserId, _goalList[0].UserId);
+            Assert.AreEqual(goalObtained.CurrencyOfAmount, _goalList[0].CurrencyOfAmount);
+            Assert.AreEqual(goalObtained.MaxAmountToSpend, _goalList[0].MaxAmountToSpend);
+
         }
 
         #endregion
