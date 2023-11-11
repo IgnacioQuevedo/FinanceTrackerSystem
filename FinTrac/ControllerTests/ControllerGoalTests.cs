@@ -99,8 +99,18 @@ namespace ControllerTests
             _goalDTOToAdd.GoalId = 1;
 
             List<GoalDTO> goalsInDb = _controller.GetAllGoals(_userConnected.UserId);
-            Assert.AreEqual(false, true);
 
+            Assert.AreEqual(_goalDTOToAdd.UserId, goalsInDb[0].UserId);
+            Assert.AreEqual(_goalDTOToAdd.GoalId, goalsInDb[0].GoalId);
+            Assert.AreEqual(_goalDTOToAdd.Title, goalsInDb[0].Title);
+            Assert.AreEqual(_goalDTOToAdd.MaxAmountToSpend, goalsInDb[0].MaxAmountToSpend);
+            Assert.AreEqual(_goalDTOToAdd.CurrencyOfAmount, goalsInDb[0].CurrencyOfAmount);
+
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].CategoryId, goalsInDb[0].CategoriesOfGoalDTO[0].CategoryId);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Name, goalsInDb[0].CategoriesOfGoalDTO[0].Name);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, goalsInDb[0].CategoriesOfGoalDTO[0].Status);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, goalsInDb[0].CategoriesOfGoalDTO[0].Type);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, goalsInDb[0].CategoriesOfGoalDTO[0].UserId);
         }
 
 
