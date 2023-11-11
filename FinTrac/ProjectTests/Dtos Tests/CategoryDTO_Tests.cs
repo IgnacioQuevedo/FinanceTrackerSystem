@@ -6,6 +6,7 @@ namespace TestProject1
     [TestClass]
     public class CategoryDTO_Tests
     {
+
         #region Initialize
 
         private CategoryDTO _categoryDto;
@@ -104,7 +105,7 @@ namespace TestProject1
         }
 
         #endregion
-        
+
         #region Constructor
 
         [TestMethod]

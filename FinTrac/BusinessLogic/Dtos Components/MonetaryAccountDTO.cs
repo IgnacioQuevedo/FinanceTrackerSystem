@@ -18,5 +18,14 @@ namespace BusinessLogic.Dtos_Components
         public int UserId { get; set; }
 
         public MonetaryAccountDTO() { }
+
+        public MonetaryAccountDTO(string name, decimal amount, CurrencyEnumDTO currency, DateTime creationDate, int userId)
+        {
+            Name = name;
+            Amount = amount;
+            Currency = currency;
+            CreationDate = creationDate;
+            UserId = userId;
+        }
     }
 }
