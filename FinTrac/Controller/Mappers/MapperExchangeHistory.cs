@@ -25,4 +25,14 @@ public abstract class MapperExchangeHistory
         }
         
     }
+
+    public static ExchangeHistoryDTO ToExchangeHistoryDTO(ExchangeHistory exchangeHistory)
+    {
+        ExchangeHistoryDTO exchangeHistoryDTO =
+            new ExchangeHistoryDTO(exchangeHistory.Currency, exchangeHistory.Value, exchangeHistory.ValueDate,exchangeHistory.UserId);
+
+        exchangeHistoryDTO.ExchangeHistoryId = exchangeHistory.ExchangeHistoryId;
+
+        return exchangeHistoryDTO;
+    }
 }
