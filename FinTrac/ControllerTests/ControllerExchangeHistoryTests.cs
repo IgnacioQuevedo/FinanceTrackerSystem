@@ -175,6 +175,34 @@ namespace ControllerTests
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
         }
         
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenExchangeHistoryDTOWithTransactions_WhenTryingToUpdate_ShouldThrowException()
+        {
+            Account exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
+            Category exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
+            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
+            Transaction.CheckExistenceOfExchange(DateTime.Now.Date,_testDb.Users.First().MyExchangesHistory);
+            
+            exampleCategory.CategoryId = 0;
+            exampleAccount.AccountId = 0;
+            transaction.TransactionId = 0;
+            
+            _testDb.Users.First().MyCategories.Add(exampleCategory);
+            _testDb.Users.First().MyAccounts.Add(exampleAccount);
+            _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction);
+            
+            _testDb.SaveChanges();
+
+            ExchangeHistoryDTO exchangeHistoryDTOWithUpdates = exchangeHistoryToCreate;
+            exchangeHistoryDTOWithUpdates.Currency = CurrencyEnum.UY;
+            exchangeHistoryDTOWithUpdates.Value = 3;
+            
+            _controller.UpdateExchangeHistory(exchangeHistoryDTOWithUpdates);
+        }
+
+        
+        
         #endregion
 
 
