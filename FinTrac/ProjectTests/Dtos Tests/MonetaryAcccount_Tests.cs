@@ -44,7 +44,7 @@ namespace TestProject1
 
             myMonetaryAccountDTO.Currency = CurrencyEnumDTO.EUR;
 
-            Assert.AreEqual(myMonetaryAccountDTO.Currency, CurrencyEnumDTO.UY);
+            Assert.AreEqual(myMonetaryAccountDTO.Currency, CurrencyEnumDTO.EUR);
         }
     }
 }
