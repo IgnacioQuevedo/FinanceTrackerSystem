@@ -77,5 +77,16 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenExchangeHistory_ShouldBePossibleToConvertToExchangeHistoryDTO()
+        {
+            ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA, 30.8M, DateTime.Now.Date);
+
+            ExchangeHistoryDTO exchangeHistoryCreated = MapperExchangeHistory.ToExchangeHistoryDTO(exchangeHistory);
+            
+            Assert.IsInstanceOfType(exchangeHistoryCreated,typeof(ExchangeHistoryDTO));
+        }
+        
     }
 }
