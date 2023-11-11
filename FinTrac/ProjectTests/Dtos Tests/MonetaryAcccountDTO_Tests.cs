@@ -106,6 +106,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Constructor
+
         [TestMethod]
         public void GivenValues_ShouldCreateMonetaryAccountDTO()
         {
@@ -117,5 +119,7 @@ namespace TestProject1
             Assert.AreEqual(myMonetaryAccounntDTO.CreationDate, _creationDateToSet);
             Assert.AreEqual(myMonetaryAccounntDTO.UserId, _userIdToSet);
         }
+
+        #endregion
     }
 }
