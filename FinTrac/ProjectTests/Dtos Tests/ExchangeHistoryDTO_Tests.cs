@@ -12,7 +12,7 @@ namespace BusinessLogicTests.Dtos_Tests
     public class ExchangeHistoryDTO_Tests
     {
         private ExchangeHistoryDTO _genericExchangeHistoryDTO;
-        private CurrencyEnum _genericCurrencyDTO;
+        private CurrencyEnumDTO _genericCurrencyDTO;
         private decimal genericValueDTO;
         private DateTime _dateOfExchangeDTO;
 
@@ -22,7 +22,7 @@ namespace BusinessLogicTests.Dtos_Tests
         public void Initialize()
         {
             _genericExchangeHistoryDTO = new ExchangeHistoryDTO();
-            _genericCurrencyDTO = CurrencyEnum.USA;
+            _genericCurrencyDTO = CurrencyEnumDTO.USA;
             _dateOfExchangeDTO = new DateTime(2023, 05, 01);
         }
 
@@ -79,7 +79,7 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateExchangeHistoryDTO()
         {
-            ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO, 1);
+            ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO((CurrencyEnumDTO)_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO, 1);
 
             Assert.AreEqual(_genericCurrencyDTO, exchangeHistoryDTO.Currency);
             Assert.AreEqual(genericValueDTO, exchangeHistoryDTO.Value);

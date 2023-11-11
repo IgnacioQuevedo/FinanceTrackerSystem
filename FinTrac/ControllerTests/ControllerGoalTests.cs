@@ -35,7 +35,7 @@ namespace ControllerTests
             _userRepo = new UserRepositorySql(_testDb);
             _controller = new GenericController(_userRepo);
 
-            _categoryDTO1 = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 1);
+            _categoryDTO1 = new CategoryDTO("Food", (StatusEnumDTO)StatusEnum.Enabled, (TypeEnumDTO)TypeEnum.Outcome, 1);
             _categoryDTO1.CategoryId = 1;
 
             _genericListCategoryDTO = new List<CategoryDTO>();
@@ -81,8 +81,8 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToAdd.UserId, goalInDb.UserId);
 
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Name, goalInDb.CategoriesOfGoal[0].Name);
-            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, goalInDb.CategoriesOfGoal[0].Status);
-            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, goalInDb.CategoriesOfGoal[0].Type);
+            Assert.AreEqual((StatusEnum)_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, goalInDb.CategoriesOfGoal[0].Status);
+            Assert.AreEqual((TypeEnum)_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, goalInDb.CategoriesOfGoal[0].Type);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, goalInDb.CategoriesOfGoal[0].UserId);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].CategoryId, goalInDb.CategoriesOfGoal[0].CategoryId);
 
@@ -133,12 +133,12 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToAdd.GoalId, myListOfGoalsInDb[0].GoalId);
             Assert.AreEqual(_goalDTOToAdd.Title, myListOfGoalsInDb[0].Title);
             Assert.AreEqual(_goalDTOToAdd.MaxAmountToSpend, myListOfGoalsInDb[0].MaxAmountToSpend);
-            Assert.AreEqual(_goalDTOToAdd.CurrencyOfAmount, myListOfGoalsInDb[0].CurrencyOfAmount);
+            Assert.AreEqual((CurrencyEnum)_goalDTOToAdd.CurrencyOfAmount, myListOfGoalsInDb[0].CurrencyOfAmount);
 
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].CategoryId, myListOfGoalsInDb[0].CategoriesOfGoal[0].CategoryId);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Name, myListOfGoalsInDb[0].CategoriesOfGoal[0].Name);
-            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, myListOfGoalsInDb[0].CategoriesOfGoal[0].Status);
-            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, myListOfGoalsInDb[0].CategoriesOfGoal[0].Type);
+            Assert.AreEqual((StatusEnum)_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, myListOfGoalsInDb[0].CategoriesOfGoal[0].Status);
+            Assert.AreEqual((TypeEnum)_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, myListOfGoalsInDb[0].CategoriesOfGoal[0].Type);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, myListOfGoalsInDb[0].CategoriesOfGoal[0].UserId);
 
 

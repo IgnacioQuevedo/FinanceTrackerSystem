@@ -82,7 +82,7 @@
     {
         try
         {
-            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
+            CategoryDTO newCategory = new CategoryDTO(name, (StatusEnumDTO) status, (TypeEnumDTO) type,userConnected.UserId);
             CategoryController.CreateCategory(newCategory);
             SuccesAlert.ShowSucessAlert();
 

@@ -148,7 +148,7 @@ public class GenericController : IUserController, ICategoryController
         }
     }
 
-    public Category FindCategory(int idOfCategoryToFind)
+    public Category FindCategoryInDb(int idOfCategoryToFind)
     {
         SetUserConnected(idOfCategoryToFind);
 
@@ -162,11 +162,19 @@ public class GenericController : IUserController, ICategoryController
         throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
+    public CategoryDTO FindCategory(int idOfCategoryToFind)
+    {
+        CategoryDTO categoryDTOFound = MapperCategory.ToCategoryDTO(FindCategoryInDb(idOfCategoryToFind));
+
+        return categoryDTOFound;
+    }
+
+
     public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
     {
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        Category categoryWithoutUpd = FindCategory(categoryDtoWithUpdates.CategoryId);
+        Category categoryWithoutUpd = FindCategoryInDb(categoryDtoWithUpdates.CategoryId);
 
         categoryToUpd.CategoryUser = _userConnected;
         if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
@@ -185,7 +193,7 @@ public class GenericController : IUserController, ICategoryController
         try
         {
             SetUserConnected(categoryDtoCategoryId);
-            _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId));
+            _userConnected.DeleteCategory(FindCategoryInDb(categoryDtoCategoryId));
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionCategoryManagement Exception)
@@ -257,7 +265,7 @@ public class GenericController : IUserController, ICategoryController
         List<Category> result = new List<Category>();
         foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
         {
-            result.Add(FindCategory(categoryDTO.CategoryId));
+            result.Add(FindCategoryInDb(categoryDTO.CategoryId));
         }
 
         return result;

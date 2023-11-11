@@ -1,5 +1,5 @@
 ﻿@page "/Category/{categoryId:int}/Edit"
-@using BusinessLogic.Category_Components;
+
 @layout MainLayout
 
 @inject  ICategoryController CategoryController;
@@ -53,7 +53,6 @@
 
     [CascadingParameter]
     public UserDTO userConnected { get; set; }
-
 
     private string name;
     private StatusEnumDTO status;

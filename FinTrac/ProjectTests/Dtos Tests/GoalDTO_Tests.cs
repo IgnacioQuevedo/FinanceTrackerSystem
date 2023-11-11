@@ -28,7 +28,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO = new GoalDTO();
 
-            genericCategoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 1);
+            genericCategoryDTO = new CategoryDTO("Food", (StatusEnumDTO)StatusEnum.Enabled, (TypeEnumDTO)TypeEnum.Outcome, 1);
 
             List<CategoryDTO> myListOfCategories = new List<CategoryDTO>();
             myListOfCategories.Add(genericCategoryDTO);

@@ -64,7 +64,7 @@ namespace ControllerTests
             _goalDTOToConvert = new GoalDTO("Less party", 100, CurrencyEnum.UY, _genericListOfCategoriesDTO, 0);
             _goalDTOToConvert.GoalId = 1;
             _goalDTOToConvert.UserId = 1;
-            
+
             _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
             _goalToConvert.GoalId = 1;
             _goalDTOToConvert.UserId = 0;
@@ -131,15 +131,15 @@ namespace ControllerTests
             Assert.IsInstanceOfType(goalConverted, typeof(Goal));
             Assert.AreEqual(_goalDTOToConvert.GoalId, goalConverted.GoalId);
             Assert.AreEqual(_goalDTOToConvert.Title, goalConverted.Title);
-            Assert.AreEqual(_goalDTOToConvert.CurrencyOfAmount, goalConverted.CurrencyOfAmount);
+            Assert.AreEqual((CurrencyEnum)_goalDTOToConvert.CurrencyOfAmount, goalConverted.CurrencyOfAmount);
             Assert.AreEqual(_goalDTOToConvert.MaxAmountToSpend, goalConverted.MaxAmountToSpend);
             Assert.AreEqual(_goalDTOToConvert.UserId, goalConverted.UserId);
 
             Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Name, goalConverted.CategoriesOfGoal[0].Name);
             Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CategoryId, goalConverted.CategoriesOfGoal[0].CategoryId);
-            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Status, goalConverted.CategoriesOfGoal[0].Status);
+            Assert.AreEqual((StatusEnum)_goalDTOToConvert.CategoriesOfGoalDTO[0].Status, goalConverted.CategoriesOfGoal[0].Status);
             Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CreationDate, goalConverted.CategoriesOfGoal[0].CreationDate);
-            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Type, goalConverted.CategoriesOfGoal[0].Type);
+            Assert.AreEqual((TypeEnum)_goalDTOToConvert.CategoriesOfGoalDTO[0].Type, goalConverted.CategoriesOfGoal[0].Type);
         }
 
 
