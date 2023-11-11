@@ -73,8 +73,7 @@ namespace ControllerTests
         }
 
         #endregion
-
-
+        
         #region Create ExchangeHistory
 
         [TestMethod]
@@ -102,5 +101,21 @@ namespace ControllerTests
             _controller.CreateExchangeHistory(exchangeHistoryToCreate);
         }
         #endregion
+
+        [TestMethod]
+        public void GivenExchangeHistoryIdToFindInDb_ShouldBeFounded()
+        {
+            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
+            ExchangeHistory exchangeHistoryFound =
+                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId);
+            
+            
+            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId,exchangeHistoryFound.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryToCreate.UserId,exchangeHistoryFound.UserId);
+            Assert.AreEqual(exchangeHistoryToCreate.Value,exchangeHistoryFound.Value);
+            Assert.AreEqual(exchangeHistoryToCreate.ValueDate,exchangeHistoryFound.ValueDate);
+            Assert.AreEqual(exchangeHistoryToCreate.Currency,exchangeHistoryFound.Currency);
+        }
+        
     }
 }

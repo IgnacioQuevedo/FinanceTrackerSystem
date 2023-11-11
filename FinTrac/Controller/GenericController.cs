@@ -285,4 +285,9 @@ public class GenericController : IUserController, ICategoryController
     }
 
     #endregion
+
+    public ExchangeHistory FindExchangeHistory(int exchangeHistoryId)
+    {
+        throw new NotImplementedException();
+    }
 }
