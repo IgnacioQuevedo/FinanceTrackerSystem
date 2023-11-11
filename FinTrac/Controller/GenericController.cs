@@ -289,6 +289,7 @@ public class GenericController : IUserController, ICategoryController
     public ExchangeHistory FindExchangeHistory(ExchangeHistoryDTO exchangeToFound)
     {
         SetUserConnected((int)exchangeToFound.UserId);
+        
         ExchangeHistory exchangeFound = new ExchangeHistory();
 
             foreach (var exchangeHistory in _userConnected.MyExchangesHistory)

@@ -115,5 +115,15 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.Currency,exchangeHistoryFound.Currency);
         }
         
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenExchangeHistoryThatIsNotIndb_ShouldThrowExceptionBecauseItWasNotFound()
+        {
+            exchangeHistoryToCreate.ExchangeHistoryId = -1;
+            ExchangeHistory exchangeHistoryFound =
+                _controller.FindExchangeHistory(exchangeHistoryToCreate);
+ 
+        }
+        
     }
 }
