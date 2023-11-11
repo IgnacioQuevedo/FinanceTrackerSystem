@@ -131,6 +131,7 @@ namespace TestProject1
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
             exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
+            exchangeUpdated.ExchangeHistoryId = -1;
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
 

@@ -9,17 +9,20 @@ namespace BusinessLogic.Dtos_Components
 {
     public class ExchangeHistoryDTO
     {
+        public int ExchangeHistoryId { get; set; }
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
+        public int? UserId { get; set; }
 
         public ExchangeHistoryDTO() { }
 
-        public ExchangeHistoryDTO(CurrencyEnum currency, decimal value, DateTime valueDate ) 
+        public ExchangeHistoryDTO(CurrencyEnum currency, decimal value, DateTime valueDate, int? userId ) 
         {
             Currency = currency;
             Value = value;
             ValueDate = valueDate;
+            UserId = userId;
         }
     }
 }

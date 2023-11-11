@@ -1,6 +1,7 @@
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.ExchangeHistory_Components;
 using Mappers;
 
 namespace Controller.Mappers;
@@ -26,7 +27,7 @@ public abstract class MapperCategory
                 new Category(categoryDTO_ToConvert.Name, categoryDTO_ToConvert.Status, categoryDTO_ToConvert.Type);
 
             categoryConverted.UserId = categoryDTO_ToConvert.UserId;
-
+            
             categoryConverted.CategoryId = categoryDTO_ToConvert.CategoryId;
 
             return categoryConverted;
@@ -43,7 +44,7 @@ public abstract class MapperCategory
 
         foreach (Category category in categoryList)
         {
-            CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
+            CategoryDTO categoryDTO = ToCategoryDTO(category);
             listCategoryDTO.Add(categoryDTO);
         }
 
@@ -56,12 +57,10 @@ public abstract class MapperCategory
 
         foreach (CategoryDTO categoryDTO in categoryDtoList)
         {
-            listOfCategories.Add(MapperCategory.ToCategory(categoryDTO));
+            Category category = ToCategory(categoryDTO);
+            listOfCategories.Add(category);
         }
         return listOfCategories;
     }
-    
-    
-    
     
 }
