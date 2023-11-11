@@ -2,6 +2,7 @@
 
 @using Controller.IControllers
 @inject ICategoryController CategoryController;
+@inject IGoalController GoalController;
 <h3>Goal Creation</h3>
 
 @if (ErrorAlert.isError)
@@ -81,6 +82,7 @@
         try
         {
             goalToCreate = new GoalDTO(title, maxAmount, currencyType, categoriesAssignedToGoal, userConnected.UserId);
+            GoalController.CreateGoal(goalToCreate);
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             ResetValues();
@@ -110,7 +112,7 @@
     {
         title = "";
         maxAmount = 0;
-        // allCategoriesCreated = userConnected.GetCategories();
+        allCategoriesCreated = CategoryController.GetAllCategories(userConnected.UserId);
         categoriesAssignedToGoal = new List<CategoryDTO>();
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;

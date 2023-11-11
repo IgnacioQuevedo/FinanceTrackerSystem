@@ -92,7 +92,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenGoal_ShouldBePossibleToConvertToGoalDTO()
         {
-            GoalDTO goalDTO = MapperGoal.ToGoalDTO(_goalToConvert);
+            GoalDTO goalDTO = MapperGoal.ToGoalDTO(_goalToConvert, _genericListOfCategoriesDTO);
 
             Assert.IsInstanceOfType(goalDTO, typeof(GoalDTO));
             Assert.AreEqual(goalDTO.GoalId, _goalToConvert.GoalId);

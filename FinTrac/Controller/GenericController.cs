@@ -11,7 +11,7 @@ using Mappers;
 
 namespace Controller;
 
-public class GenericController : IUserController, ICategoryController
+public class GenericController : IUserController, ICategoryController, IGoalController
 {
     private UserRepositorySql _userRepo;
     private User _userConnected { get; set; }

@@ -16,9 +16,8 @@ namespace Controller.Mappers
     {
         #region To GoalDTO
 
-        public static GoalDTO ToGoalDTO(Goal goalToConvert)
+        public static GoalDTO ToGoalDTO(Goal goalToConvert, List<CategoryDTO> listCategoryDTO)
         {
-            List<CategoryDTO> listCategoryDTO = MapperCategory.ToListOfCategoryDTO(goalToConvert.CategoriesOfGoal);
 
             GoalDTO goalDTO =
                 new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, (CurrencyEnumDTO)goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
@@ -33,7 +32,7 @@ namespace Controller.Mappers
 
             foreach (Goal goal in listOfGoals)
             {
-                myListOfGoalDTO.Add(ToGoalDTO(goal));
+                myListOfGoalDTO.Add(ToGoalDTO(goal, MapperCategory.ToListOfCategoryDTO(goal.CategoriesOfGoal)));
             }
 
             return myListOfGoalDTO;
@@ -50,6 +49,7 @@ namespace Controller.Mappers
                 Goal goal =
                     new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
+                goal.CurrencyOfAmount = (CurrencyEnum)goalDTOToConvert.CurrencyOfAmount;
                 goal.UserId = goalDTOToConvert.UserId;
 
                 goalDTOToConvert.GoalId = goal.GoalId;
