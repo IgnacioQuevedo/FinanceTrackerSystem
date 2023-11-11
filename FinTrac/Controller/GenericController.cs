@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -150,7 +151,7 @@ public class GenericController : IUserController, ICategoryController
     public Category FindCategory(int idOfCategoryToFind)
     {
         SetUserConnected(idOfCategoryToFind);
-        
+
         foreach (var category in _userConnected.MyCategories)
         {
             if (category.CategoryId == idOfCategoryToFind)
@@ -207,6 +208,30 @@ public class GenericController : IUserController, ICategoryController
     {
         SetUserConnected(userConnectedId);
         return _userConnected.MyCategories;
+    }
+
+    #endregion
+
+    #region Goal Section
+
+    public void CreateGoal(GoalDTO goalDtoToCreate)
+    {
+        SetUserConnected((int)goalDtoToCreate.UserId);
+
+        try
+        {
+            Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate);
+            goalToAdd.GoalId = 0;
+            _userConnected.AddGoal(goalToAdd);
+            _userRepo.Update(_userConnected);
+        }
+        catch (Exception ExceptionType) when (
+            ExceptionType is ExceptionUserRepository ||
+            ExceptionType is ExceptionMapper
+        )
+        {
+            throw new Exception(ExceptionType.Message);
+        }
     }
 
     #endregion

@@ -63,6 +63,7 @@ namespace ControllerTests
 
             _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
             _goalToConvert.GoalId = 1;
+            _goalDTOToConvert.UserId = 0;
         }
 
         #endregion
