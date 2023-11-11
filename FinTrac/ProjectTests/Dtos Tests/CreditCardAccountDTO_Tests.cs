@@ -11,12 +11,14 @@ namespace TestProject1
 
         private CreditCardAccountDTO _creditCardAccountDTO;
         private int _creditCardAccountId;
+        private string _nameToSet;
 
         [TestInitialize]
         public void Initialize()
         {
             _creditCardAccountDTO = new CreditCardAccountDTO();
             _creditCardAccountId = 1;
+            _nameToSet = "Itau volar";
         }
 
         #endregion
@@ -32,14 +34,18 @@ namespace TestProject1
 
         }
 
-        #endregion  
+        #endregion
+
+        #region Name
 
         [TestMethod]
         public void GivenName_ShouldBeSetted()
         {
-            _creditCardAccountDTO.Name = "Something";
+            _creditCardAccountDTO.Name = _nameToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.Name, "Something");
+            Assert.AreEqual(_creditCardAccountDTO.Name, _nameToSet);
         }
+
+        #endregion
     }
 }
