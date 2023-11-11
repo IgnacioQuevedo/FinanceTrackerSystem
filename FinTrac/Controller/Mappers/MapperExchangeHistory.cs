@@ -3,10 +3,15 @@ using BusinessLogic.ExchangeHistory_Components;
 
 namespace Controller.Mappers;
 
-public class MapperExchangeHistory
+public abstract class MapperExchangeHistory
 {
     public static ExchangeHistory ToExchangeHistory(ExchangeHistoryDTO exchangeHistoryDto)
     {
-        throw new NotImplementedException();
+        ExchangeHistory exchangeHistory =
+            new ExchangeHistory(exchangeHistoryDto.Currency, exchangeHistoryDto.Value, exchangeHistoryDto.ValueDate);
+
+        exchangeHistory.UserId = exchangeHistoryDto.UserId;
+
+        return exchangeHistory;
     }
 }

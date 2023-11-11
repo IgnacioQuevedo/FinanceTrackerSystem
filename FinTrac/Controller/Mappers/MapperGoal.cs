@@ -39,7 +39,8 @@ namespace Controller.Mappers
                 Goal goal =
                     new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
-                goalDTOToConvert.GoalId = goalDTOToConvert.GoalId;
+                goal.GoalId = goalDTOToConvert.GoalId;
+                goal.UserId = goalDTOToConvert.UserId;
 
                 return goal;
             }
