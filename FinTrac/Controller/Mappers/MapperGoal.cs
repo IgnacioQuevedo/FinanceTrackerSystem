@@ -17,7 +17,7 @@ namespace Controller.Mappers
 
         public static GoalDTO ToGoalDTO(Goal goalToConvert)
         {
-            List<CategoryDTO> listCategoryDTO = ToListOfGoalDTO(goalToConvert);
+            List<CategoryDTO> listCategoryDTO = MapperCategory.ToListOfCategoryDTO(goalToConvert.CategoriesOfGoal);
 
             GoalDTO goalDTO =
                 new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
@@ -26,21 +26,32 @@ namespace Controller.Mappers
             return goalDTO;
         }
 
+        public static List<GoalDTO> ToListOfGoalDTO(List<Goal> listOfGoals)
+        {
+            List<GoalDTO> myListOfGoalDTO = new List<GoalDTO>();
+
+            foreach (Goal goal in listOfGoals)
+            {
+                myListOfGoalDTO.Add(ToGoalDTO(goal));
+            }
+
+            return myListOfGoalDTO;
+        }
+
         #endregion
 
         #region To Goal
 
-        public static Goal ToGoal(GoalDTO goalDTOToConvert)
+        public static Goal ToGoal(GoalDTO goalDTOToConvert, List<Category> listOfCategories)
         {
             try
             {
-                List<Category> listOfCategories = ToListOfGoal(goalDTOToConvert);
-
                 Goal goal =
                     new Goal(goalDTOToConvert.Title, goalDTOToConvert.MaxAmountToSpend, listOfCategories);
 
-                goal.GoalId = goalDTOToConvert.GoalId;
                 goal.UserId = goalDTOToConvert.UserId;
+
+                goalDTOToConvert.GoalId = goal.GoalId;
 
                 return goal;
             }
@@ -50,35 +61,6 @@ namespace Controller.Mappers
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private static List<Category> ToListOfGoal(GoalDTO goalDTOToConvert)
-        {
-            List<Category> listOfCategories = new List<Category>();
-
-            foreach (CategoryDTO categoryDTO in goalDTOToConvert.CategoriesOfGoalDTO)
-            {
-                Category category = MapperCategory.ToCategory(categoryDTO);
-                listOfCategories.Add(category);
-            }
-
-            return listOfCategories;
-        }
-
-        private static List<CategoryDTO> ToListOfGoalDTO(Goal goalToConvert)
-        {
-            List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
-
-            foreach (Category category in goalToConvert.CategoriesOfGoal)
-            {
-                CategoryDTO categoryDTO = MapperCategory.ToCategoryDTO(category);
-                listCategoryDTO.Add(categoryDTO);
-            }
-
-            return listCategoryDTO;
-        }
 
         #endregion
     }

@@ -33,6 +33,8 @@ namespace ControllerTests
         private Goal _goalToConvert;
         private GoalDTO _goalDTOToConvert;
 
+        private List<Goal> _goalList;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -65,6 +67,12 @@ namespace ControllerTests
             
             _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
             _goalToConvert.GoalId = 1;
+            _goalDTOToConvert.UserId = 0;
+
+            _goalList = new List<Goal>();
+            _goalList.Add(_goalToConvert);
+
+
         }
 
         #endregion
@@ -96,6 +104,21 @@ namespace ControllerTests
             Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], _categoryDTO2));
         }
 
+        [TestMethod]
+        public void GivenListOfGoals_ShouldReturnListOfGoalDTO()
+        {
+            List<GoalDTO> listOfGoalDTO = MapperGoal.ToListOfGoalDTO(_goalList);
+
+            GoalDTO goalObtained = listOfGoalDTO[0];
+
+            Assert.AreEqual(goalObtained.Title, _goalList[0].Title);
+            Assert.AreEqual(goalObtained.GoalId, _goalList[0].GoalId);
+            Assert.AreEqual(goalObtained.UserId, _goalList[0].UserId);
+            Assert.AreEqual(goalObtained.CurrencyOfAmount, _goalList[0].CurrencyOfAmount);
+            Assert.AreEqual(goalObtained.MaxAmountToSpend, _goalList[0].MaxAmountToSpend);
+
+        }
+
         #endregion
 
         #region To Goal
@@ -103,7 +126,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenGoalDTOWithCorrectData_ShouldBePossibleToConvertToGoal()
         {
-            Goal goalConverted = MapperGoal.ToGoal(_goalDTOToConvert);
+            Goal goalConverted = MapperGoal.ToGoal(_goalDTOToConvert, _genericListOfCategories);
 
             Assert.IsInstanceOfType(goalConverted, typeof(Goal));
             Assert.AreEqual(_goalDTOToConvert.GoalId, goalConverted.GoalId);
@@ -111,10 +134,17 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToConvert.CurrencyOfAmount, goalConverted.CurrencyOfAmount);
             Assert.AreEqual(_goalDTOToConvert.MaxAmountToSpend, goalConverted.MaxAmountToSpend);
             Assert.AreEqual(_goalDTOToConvert.UserId, goalConverted.UserId);
+
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Name, goalConverted.CategoriesOfGoal[0].Name);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CategoryId, goalConverted.CategoriesOfGoal[0].CategoryId);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Status, goalConverted.CategoriesOfGoal[0].Status);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].CreationDate, goalConverted.CategoriesOfGoal[0].CreationDate);
+            Assert.AreEqual(_goalDTOToConvert.CategoriesOfGoalDTO[0].Type, goalConverted.CategoriesOfGoal[0].Type);
         }
 
 
         [TestMethod]
+
         [ExpectedException(typeof(ExceptionMapper))]
         public void GivenGoalDTOWithIncorrectData_ShouldThrowException()
         {
@@ -122,9 +152,11 @@ namespace ControllerTests
 
             goalDTO_ToConvert.GoalId = 1;
 
-            MapperGoal.ToGoal(goalDTO_ToConvert);
+            MapperGoal.ToGoal(goalDTO_ToConvert, _genericListOfCategories);
         }
 
         #endregion
+
     }
+
 }

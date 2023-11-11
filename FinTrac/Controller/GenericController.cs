@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -150,7 +151,7 @@ public class GenericController : IUserController, ICategoryController
     public Category FindCategory(int idOfCategoryToFind)
     {
         SetUserConnected(idOfCategoryToFind);
-        
+
         foreach (var category in _userConnected.MyCategories)
         {
             if (category.CategoryId == idOfCategoryToFind)
@@ -207,6 +208,59 @@ public class GenericController : IUserController, ICategoryController
     {
         SetUserConnected(userConnectedId);
         return _userConnected.MyCategories;
+    }
+
+    #endregion
+
+    #region Goal Section
+
+    public void CreateGoal(GoalDTO goalDtoToCreate)
+    {
+        SetUserConnected((int)goalDtoToCreate.UserId);
+
+        try
+        {
+            List<Category> categoriesOfGoal = SetListOfCategories(goalDtoToCreate);
+            Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate, categoriesOfGoal);
+            goalToAdd.GoalId = 0;
+
+            _userConnected.AddGoal(goalToAdd);
+            _userRepo.Update(_userConnected);
+        }
+        catch (Exception ExceptionType) when (
+            ExceptionType is ExceptionUserRepository ||
+            ExceptionType is ExceptionMapper
+        )
+        {
+            throw new Exception(ExceptionType.Message);
+        }
+    }
+
+    public List<GoalDTO> GetAllGoalsDTO(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        List<GoalDTO> listGoalDTO = new List<GoalDTO>();
+
+        listGoalDTO = MapperGoal.ToListOfGoalDTO(_userConnected.MyGoals);
+
+        return listGoalDTO;
+    }
+
+    public List<Goal> ReceiveGoalListFromUser(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        return _userConnected.MyGoals;
+    }
+
+    private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
+    {
+        List<Category> result = new List<Category>();
+        foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
+        {
+            result.Add(FindCategory(categoryDTO.CategoryId));
+        }
+
+        return result;
     }
 
     #endregion
