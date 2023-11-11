@@ -9,19 +9,21 @@ namespace BusinessLogic.Dtos_Components
 		public StatusEnum Status { get; set; }
 		public TypeEnum Type { get; set; }
 		
-		public int CategoryUserId { get; set; }
+		public DateTime CreationDate { get; set; } = DateTime.Now.Date;
+		public int UserId { get; set; }
+		
 
 
 		public CategoryDTO()
 		{
 
 		}
-		public CategoryDTO(string name, StatusEnum status, TypeEnum type, int categoryUserId)
+		public CategoryDTO(string name, StatusEnum status, TypeEnum type, int userId)
 		{
 			Name = name;
 			Status = status;
 			Type = type;
-			CategoryUserId = categoryUserId;
+			UserId = userId;
 		}
 	}
 }

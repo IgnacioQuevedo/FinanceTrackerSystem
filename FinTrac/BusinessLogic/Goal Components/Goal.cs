@@ -21,16 +21,16 @@ namespace BusinessLogic.Goal_Components
         public int MaxAmountToSpend { get; set; }
         public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
         public List<Category> CategoriesOfGoal { get; set; }
-
-
         public int UserId { get; set; }
         public User GoalUser { get; set; }
-
 
         #endregion
 
         #region Constructor
-        public Goal() { }
+
+        public Goal()
+        {
+        }
 
         public Goal(string title, int maxAmount, List<Category> categoriesAsignedToGoal)
         {
@@ -43,6 +43,7 @@ namespace BusinessLogic.Goal_Components
         #endregion
 
         #region Validations
+
         public void ValidateGoal()
         {
             ValidateTitle();
@@ -76,5 +77,4 @@ namespace BusinessLogic.Goal_Components
 
         #endregion
     }
-
 }

@@ -1,6 +1,6 @@
 using DataManagers;
 using Controller;
-using DataManagers.IControllers;
+using Controller.IControllers;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -20,6 +20,7 @@ builder.Services.AddDbContext<SqlContext>(options =>
 builder.Services.AddScoped<UserRepositorySql>();
 builder.Services.AddScoped<GenericController>();
 builder.Services.AddScoped<IUserController, GenericController>();
+builder.Services.AddScoped<ICategoryController, GenericController>();
 
 var app = builder.Build();
 

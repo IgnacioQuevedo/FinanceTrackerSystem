@@ -19,6 +19,7 @@ namespace TestProject1
         #endregion
 
         #region Setting category Id
+
         [TestMethod]
         public void GivenId_ShouldBeSetted()
         {
@@ -44,6 +45,7 @@ namespace TestProject1
         #endregion
 
         #region Status
+
         [TestMethod]
         public void GivenStatus_BothShouldBeSetted()
         {
@@ -76,18 +78,33 @@ namespace TestProject1
 
         #endregion
 
+        #region Setting User Id
+
         [TestMethod]
         public void GivenUserOfCategoryId_ShouldBePossibleToAssignItToDTO()
         {
             int categoryUserId = 1;
+            _categoryDto.UserId = 1;
 
-            _categoryDto.CategoryUserId = 1;
-
-            Assert.AreEqual(categoryUserId, _categoryDto.CategoryUserId);
-
+            Assert.AreEqual(categoryUserId, _categoryDto.UserId);
         }
 
+        #endregion
 
+        #region CreationDate
+
+        [TestMethod]
+        public void GivenCreationDate_ShouldBePossibleToAssignIt()
+        {
+            DateTime creationDate = DateTime.Now.Date;
+
+            _categoryDto.CreationDate = creationDate;
+
+            Assert.AreEqual(_categoryDto.CreationDate, creationDate);
+        }
+
+        #endregion
+        
         #region Constructor
 
         [TestMethod]
@@ -98,16 +115,17 @@ namespace TestProject1
             TypeEnum categoryType = TypeEnum.Income;
             int categoryUserId = 1;
 
-            CategoryDTO genericCategoryDTO = new CategoryDTO(categoryName, categoryStatus, categoryType, categoryUserId);
+            CategoryDTO genericCategoryDTO =
+                new CategoryDTO(categoryName, categoryStatus, categoryType, categoryUserId);
+
 
             Assert.AreEqual(categoryName, genericCategoryDTO.Name);
             Assert.AreEqual(categoryStatus, genericCategoryDTO.Status);
             Assert.AreEqual(categoryType, genericCategoryDTO.Type);
-            Assert.AreEqual(categoryUserId, genericCategoryDTO.CategoryUserId);
+            Assert.AreEqual(categoryUserId, genericCategoryDTO.UserId);
         }
 
         #endregion
-
 
     }
 }

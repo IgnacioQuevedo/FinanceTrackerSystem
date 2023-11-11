@@ -194,16 +194,9 @@ namespace BusinessLogic.User_Components
 
         public void AddCategory(Category categoryToAdd)
         {
-            setCategoryId(categoryToAdd);
             ValidateRegisteredCategory(categoryToAdd);
             MyCategories.Add(categoryToAdd);
         }
-
-        private void setCategoryId(Category categoryToAdd)
-        {
-            categoryToAdd.CategoryId = MyCategories.Count;
-        }
-
         private void ValidateRegisteredCategory(Category categoryToAdd)
         {
             foreach (var category in MyCategories.Where(t => t != null))
@@ -239,7 +232,10 @@ namespace BusinessLogic.User_Components
             {
                 if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
-                    MyCategories[i] = categoryToUpdate;
+                    
+                    MyCategories[i].Name = categoryToUpdate.Name;
+                    MyCategories[i].Status = categoryToUpdate.Status;
+                    MyCategories[i].Type = categoryToUpdate.Type;
                     flag = true;
                 }
             }
@@ -253,15 +249,14 @@ namespace BusinessLogic.User_Components
         {
             ValidateIfCategoryHasTransactions(categoryToDelete);
             MyCategories.Remove(categoryToDelete);
-            MyCategories.Insert(categoryToDelete.CategoryId, null);
         }
 
         private void ValidateIfCategoryHasTransactions(Category categoryToDelete)
         {
             bool founded = false;
-            foreach (Account account in MyAccounts.Where(t => t != null))
+            foreach (Account account in MyAccounts)
             {
-                foreach (Transaction transaction in account.MyTransactions.Where(t => t != null))
+                foreach (Transaction transaction in account.MyTransactions)
                 {
                     if (transaction.TransactionCategory == categoryToDelete)
                     {

@@ -1,8 +1,9 @@
 ﻿@page "/Category/Create/"
-
+@layout MainLayout
 
 @using BusinessLogic.Category_Components;
 @using BusinessLogic.Enums;
+@inject  ICategoryController CategoryController;
 
 <head>
 
@@ -68,7 +69,7 @@
     private TypeEnum type;
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO userConnected { get; set; }
 
     public string errorTxt { get; set; }
 
@@ -81,8 +82,8 @@
     {
         try
         {
-            Category newCategory = new Category(name, status, type);
-            mainUser.AddCategory(newCategory);
+            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
+            CategoryController.CreateCategory(newCategory);
             SuccesAlert.ShowSucessAlert();
 
             await Task.Delay(2000);
@@ -99,7 +100,8 @@
     {
         name = "";
         status = StatusEnum.Enabled;
-        type = TypeEnum.Income;        
+        type = TypeEnum.Income;  
+        
         // Helps prevent threading-related issues and ensures that UI updates are done
         InvokeAsync(() =>
         {

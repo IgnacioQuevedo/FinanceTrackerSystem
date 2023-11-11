@@ -66,7 +66,6 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenUserDTOThatUserIsNotRegistered_ShouldReturnNULL()
         {
-
             _userDTO.UserId = 1000000;
             UserDTO userFound = _controller.FindUser(_userDTO.UserId);
 
@@ -127,8 +126,8 @@ namespace ControllerTests
         {
             string passwordIncorrect = "passwordIncorrect";
             _controller.PasswordMatch(_userDTO.Password, passwordIncorrect);
-
         }
+
         #endregion
 
         #region Update
@@ -136,25 +135,22 @@ namespace ControllerTests
         [TestMethod]
         public void GivenUserToUpdate_ShouldBeUpdatedInDb()
         {
-            UserDTO dtoWithUpdates = new UserDTO("Jhonix", "Loxed", "kennies@gmail.com",
-                "Jhonix2003!!", "South Av");
-            dtoWithUpdates.UserId = _userConnected.UserId;
+            _controller.UpdateUser(_userDTO);
 
-            _controller.UpdateUser(dtoWithUpdates);
-
-            UserDTO userInDb = _controller.FindUser(dtoWithUpdates.UserId);
-            Assert.AreEqual(userInDb.FirstName, dtoWithUpdates.FirstName);
-            Assert.AreEqual(userInDb.LastName, dtoWithUpdates.LastName);
-            Assert.AreEqual(userInDb.Password, dtoWithUpdates.Password);
-            Assert.AreEqual(userInDb.Address, dtoWithUpdates.Address);
-            Assert.AreEqual(userInDb.Email, dtoWithUpdates.Email);
+            UserDTO userInDb = _controller.FindUser(_userDTO.UserId);
+            Assert.AreEqual(userInDb.FirstName, _userDTO.FirstName);
+            Assert.AreEqual(userInDb.LastName, _userDTO.LastName);
+            Assert.AreEqual(userInDb.Password, _userDTO.Password);
+            Assert.AreEqual(userInDb.Address, _userDTO.Address);
+            Assert.AreEqual(userInDb.Email, _userDTO.Email);
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
-            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", ""); ;
+            UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            ;
             newDtoWithoutChanges.UserId = _userConnected.UserId;
 
             _controller.UpdateUser(newDtoWithoutChanges);
@@ -182,6 +178,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region SettingUserConected
+
         [TestMethod]
         public void GivenUserDTO_ShouldSetUserConnected()
         {
@@ -191,5 +189,6 @@ namespace ControllerTests
             _controller.SetUserConnected(userToConnect.UserId);
         }
 
+        #endregion
     }
 }

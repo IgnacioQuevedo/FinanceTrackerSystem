@@ -1,15 +1,16 @@
+using System.Security.Cryptography;
+using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.User_Components;
+using Controller.IControllers;
 using Controller.Mappers;
-using DataManagers.IControllers;
 using DataManagers;
 using Mappers;
-using BusinessLogic.Dtos_Components;
 
 namespace Controller;
 
-public class GenericController : IUserController
+public class GenericController : IUserController, ICategoryController
 {
     private UserRepositorySql _userRepo;
     private User _userConnected { get; set; }
@@ -84,8 +85,10 @@ public class GenericController : IUserController
 
     public void UpdateUser(UserDTO userDtoUpdated)
     {
-        SetUserConnected(userDtoUpdated.UserId);
+        int userConnectedId = _userRepo.GetUserViaEmail(userDtoUpdated.Email).UserId;
+        userDtoUpdated.UserId = userConnectedId;
 
+        SetUserConnected(userConnectedId);
         try
         {
             User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
@@ -96,7 +99,6 @@ public class GenericController : IUserController
             }
 
             _userRepo.Update(userWithUpdates);
-
         }
         catch (ExceptionMapper Exception)
         {
@@ -122,6 +124,90 @@ public class GenericController : IUserController
     }
 
     #endregion
+
+    #endregion
+
+    #region Category Section
+
+    public void CreateCategory(CategoryDTO dtoToAdd)
+    {
+        try
+        {
+            SetUserConnected(dtoToAdd.UserId);
+            Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
+            categoryToAdd.CategoryId = 0;
+
+            _userConnected.AddCategory(categoryToAdd);
+
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+    }
+
+    public Category FindCategory(int idOfCategoryToFind)
+    {
+        SetUserConnected(idOfCategoryToFind);
+        
+        foreach (var category in _userConnected.MyCategories)
+        {
+            if (category.CategoryId == idOfCategoryToFind)
+            {
+                return category;
+            }
+        }
+        throw new Exception("Category was not found, an error on index must be somewhere.");
+    }
+
+    public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
+    {
+        SetUserConnected(categoryDtoWithUpdates.UserId);
+        Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
+        Category categoryWithoutUpd = FindCategory(categoryDtoWithUpdates.CategoryId);
+
+        categoryToUpd.CategoryUser = _userConnected;
+        if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
+        {
+            throw new Exception("There are non existential changes, change at least one please.");
+        }
+        else
+        {
+            _userConnected.ModifyCategory(categoryToUpd);
+            _userRepo.Update(_userConnected);
+        }
+    }
+
+    public void DeleteCategory(int categoryDtoCategoryId)
+    {
+        try
+        {
+            SetUserConnected(categoryDtoCategoryId);
+            _userConnected.DeleteCategory(FindCategory(categoryDtoCategoryId));
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionCategoryManagement Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+    }
+
+    public List<CategoryDTO> GetAllCategories(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
+
+        listCategoryDTO = MapperCategory.ToListOfCategoryDTO(_userConnected.MyCategories);
+
+        return listCategoryDTO;
+    }
+
+    public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        return _userConnected.MyCategories;
+    }
 
     #endregion
 }
