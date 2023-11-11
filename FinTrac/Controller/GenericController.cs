@@ -345,6 +345,10 @@ public class GenericController : IUserController, ICategoryController
 
     public void DeleteExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
     {
-        throw new NotImplementedException();
+        
+        SetUserConnected((int) exchangeHistoryToCreate.UserId);
+        ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(exchangeHistoryToCreate);
+        _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
+        _userRepo.Update(_userConnected);
     }
 }

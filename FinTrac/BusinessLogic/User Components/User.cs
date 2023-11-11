@@ -501,7 +501,6 @@ namespace BusinessLogic.User_Components
         public void DeleteExchangeHistory(ExchangeHistory exchangeHistoryToDelete)
         {
             MyExchangesHistory.Remove(exchangeHistoryToDelete);
-            MyExchangesHistory.Insert(exchangeHistoryToDelete.ExchangeHistoryId, null);
         }
 
         #endregion
