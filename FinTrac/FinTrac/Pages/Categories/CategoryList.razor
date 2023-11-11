@@ -1,6 +1,6 @@
 ﻿@page "/Category"
 @layout MainLayout
-@using BusinessLogic.Category_Components;
+
 @using Controller.Mappers
 @inject  ICategoryController CategoryController;
 
@@ -45,7 +45,7 @@
     </thead>
     <tbody>
 
-    @foreach (var category in categoryList.Where(t => t != null))
+    @foreach (var category in categoryList)
     {
         <tr>
             <td>@category.Name</td>

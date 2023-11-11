@@ -42,7 +42,7 @@ namespace ControllerTests
 
             _genericListCategoryDTO.Add(_categoryDTO1);
 
-            _goalDTOToAdd = new GoalDTO("Less party", 200, CurrencyEnum.UY, _genericListCategoryDTO, 1);
+            _goalDTOToAdd = new GoalDTO("Less party", 200, CurrencyEnumDTO.UY, _genericListCategoryDTO, 1);
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
             _userConnected.UserId = 1;
 
@@ -76,7 +76,7 @@ namespace ControllerTests
 
             Assert.AreEqual(_goalDTOToAdd.GoalId, goalInDb.GoalId);
             Assert.AreEqual(_goalDTOToAdd.Title, goalInDb.Title);
-            Assert.AreEqual(_goalDTOToAdd.CurrencyOfAmount, goalInDb.CurrencyOfAmount);
+            Assert.AreEqual((CurrencyEnum)_goalDTOToAdd.CurrencyOfAmount, goalInDb.CurrencyOfAmount);
             Assert.AreEqual(_goalDTOToAdd.MaxAmountToSpend, goalInDb.MaxAmountToSpend);
             Assert.AreEqual(_goalDTOToAdd.UserId, goalInDb.UserId);
 

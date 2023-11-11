@@ -1,8 +1,6 @@
 ﻿@page "/Category/Create/"
 @layout MainLayout
 
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
 @inject  ICategoryController CategoryController;
 
 <head>
@@ -28,8 +26,8 @@
         <div>
             <label for="type">Type</label>
             <select class="form-select" aria-label="Default select example" @bind="type">
-                <option value="@TypeEnum.Income">@TypeEnum.Income</option>
-                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+                <option value="@TypeEnumDTO.Income">@TypeEnumDTO.Income</option>
+                <option value="@TypeEnumDTO.Outcome">@TypeEnumDTO.Outcome</option>
             </select>
         </div>
 
@@ -37,8 +35,8 @@
         <div>
             <label for="status">Status</label>
             <select class="form-select" aria-label="Default select example" @bind="status">
-                <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
-                <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
+                <option value="@StatusEnumDTO.Enabled">@StatusEnumDTO.Enabled</option>
+                <option value="@StatusEnumDTO.Disabled">@StatusEnumDTO.Disabled</option>
             </select>
         </div>
     </form>
@@ -65,8 +63,8 @@
 
 @code {
     private string name;
-    private StatusEnum status;
-    private TypeEnum type;
+    private StatusEnumDTO status;
+    private TypeEnumDTO type;
 
     [CascadingParameter]
     public UserDTO userConnected { get; set; }
@@ -82,8 +80,9 @@
     {
         try
         {
-            CategoryDTO newCategory = new CategoryDTO(name, (StatusEnumDTO) status, (TypeEnumDTO) type,userConnected.UserId);
+            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
             CategoryController.CreateCategory(newCategory);
+
             SuccesAlert.ShowSucessAlert();
 
             await Task.Delay(2000);
@@ -99,8 +98,8 @@
     private void ResetValues()
     {
         name = "";
-        status = StatusEnum.Enabled;
-        type = TypeEnum.Income;  
+        status = StatusEnumDTO.Enabled;
+        type = TypeEnumDTO.Income;  
         
         // Helps prevent threading-related issues and ensures that UI updates are done
         InvokeAsync(() =>

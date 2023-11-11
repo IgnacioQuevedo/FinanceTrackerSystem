@@ -61,7 +61,7 @@ namespace ControllerTests
             _genericListOfCategoriesDTO.Add(_categoryDTO1);
             _genericListOfCategoriesDTO.Add(_categoryDTO2);
 
-            _goalDTOToConvert = new GoalDTO("Less party", 100, CurrencyEnum.UY, _genericListOfCategoriesDTO, 0);
+            _goalDTOToConvert = new GoalDTO("Less party", 100, CurrencyEnumDTO.UY, _genericListOfCategoriesDTO, 0);
             _goalDTOToConvert.GoalId = 1;
             _goalDTOToConvert.UserId = 1;
 
@@ -98,7 +98,7 @@ namespace ControllerTests
             Assert.AreEqual(goalDTO.GoalId, _goalToConvert.GoalId);
             Assert.AreEqual(goalDTO.Title, _goalToConvert.Title);
             Assert.AreEqual(goalDTO.MaxAmountToSpend, _goalToConvert.MaxAmountToSpend);
-            Assert.AreEqual(goalDTO.CurrencyOfAmount, _goalToConvert.CurrencyOfAmount);
+            Assert.AreEqual((CurrencyEnum)goalDTO.CurrencyOfAmount, _goalToConvert.CurrencyOfAmount);
             Assert.AreEqual(goalDTO.UserId, _goalToConvert.UserId);
             Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[0], _categoryDTO1));
             Assert.IsTrue(Helper.AreTheSameObject(goalDTO.CategoriesOfGoalDTO[1], _categoryDTO2));
@@ -114,7 +114,7 @@ namespace ControllerTests
             Assert.AreEqual(goalObtained.Title, _goalList[0].Title);
             Assert.AreEqual(goalObtained.GoalId, _goalList[0].GoalId);
             Assert.AreEqual(goalObtained.UserId, _goalList[0].UserId);
-            Assert.AreEqual(goalObtained.CurrencyOfAmount, _goalList[0].CurrencyOfAmount);
+            Assert.AreEqual((CurrencyEnum)goalObtained.CurrencyOfAmount, _goalList[0].CurrencyOfAmount);
             Assert.AreEqual(goalObtained.MaxAmountToSpend, _goalList[0].MaxAmountToSpend);
 
         }
@@ -148,7 +148,7 @@ namespace ControllerTests
         [ExpectedException(typeof(ExceptionMapper))]
         public void GivenGoalDTOWithIncorrectData_ShouldThrowException()
         {
-            GoalDTO goalDTO_ToConvert = new GoalDTO("", 200, CurrencyEnum.UY, _genericListOfCategoriesDTO, 1);
+            GoalDTO goalDTO_ToConvert = new GoalDTO("", 200, CurrencyEnumDTO.UY, _genericListOfCategoriesDTO, 1);
 
             goalDTO_ToConvert.GoalId = 1;
 
