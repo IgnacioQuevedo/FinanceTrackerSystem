@@ -125,5 +125,20 @@ namespace ControllerTests
         }
 
         #endregion
+        
+        [TestMethod]
+        public void GivenExchangeHistoryId_MustBeFindInDb_AndShouldBeFoundedAndReturnedDTO()
+        {
+            ExchangeHistoryDTO exchangeHistoryFound =
+                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId,_userConnected.UserId);
+
+            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFound.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFound.UserId);
+            Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFound.Value);
+            Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFound.ValueDate);
+            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFound.Currency);
+        }
+        
+
     }
 }
