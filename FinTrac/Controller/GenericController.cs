@@ -248,7 +248,8 @@ public class GenericController : IUserController, ICategoryController
 
     public List<Goal> ReceiveGoalListFromUser(int userConnectedId)
     {
-        throw new NotImplementedException();
+        SetUserConnected(userConnectedId);
+        return _userConnected.MyGoals;
     }
 
     private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
