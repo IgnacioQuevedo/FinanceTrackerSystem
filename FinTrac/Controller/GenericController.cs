@@ -236,7 +236,7 @@ public class GenericController : IUserController, ICategoryController
         }
     }
 
-    public List<GoalDTO> GetAllGoals(int userConnectedId)
+    public List<GoalDTO> GetAllGoalsDTO(int userConnectedId)
     {
         SetUserConnected(userConnectedId);
         List<GoalDTO> listGoalDTO = new List<GoalDTO>();

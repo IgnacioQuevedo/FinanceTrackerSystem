@@ -90,7 +90,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region Get All Goals
+        #region Get All GoalsDTO
 
         [TestMethod]
         public void GivenUserId_ShouldReturnItCorrespondingListOfGoalsDTO()
@@ -100,7 +100,7 @@ namespace ControllerTests
 
             _goalDTOToAdd.GoalId = 1;
 
-            List<GoalDTO> goalsInDb = _controller.GetAllGoals(_userConnected.UserId);
+            List<GoalDTO> goalsInDb = _controller.GetAllGoalsDTO(_userConnected.UserId);
 
             Assert.AreEqual(_goalDTOToAdd.UserId, goalsInDb[0].UserId);
             Assert.AreEqual(_goalDTOToAdd.GoalId, goalsInDb[0].GoalId);
@@ -116,6 +116,8 @@ namespace ControllerTests
         }
 
         #endregion
+
+        #region Get All goals from user
 
         [TestMethod]
         public void GivenUserId_ShouldReturnItCorrespondingListOfGoals()
@@ -141,6 +143,8 @@ namespace ControllerTests
 
 
         }
+
+        #endregion
 
     }
 
