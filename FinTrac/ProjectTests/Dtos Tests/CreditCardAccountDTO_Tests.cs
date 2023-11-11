@@ -68,7 +68,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.CreationDate = DateTime.Now.Date;
 
-            Assert.AreEqual(_creditCardAccountDTO.Currency, DateTime.Now.Date);
+            Assert.AreEqual(_creditCardAccountDTO.CreationDate, DateTime.Now.Date);
         }
 
 
