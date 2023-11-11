@@ -51,6 +51,15 @@ public abstract class MapperExchangeHistory
 
     public static List<ExchangeHistory> ToListOfExchangeHistory(List<ExchangeHistoryDTO> exchangeHistoryDtoList)
     {
-        throw new NotImplementedException();
+        List<ExchangeHistory> listOfExchangeHistories = new List<ExchangeHistory>();
+        
+        foreach (ExchangeHistoryDTO exchangeHistoryDTO in exchangeHistoryDtoList)
+        {
+            ExchangeHistory exchangeHistory = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
+            listOfExchangeHistories.Add(exchangeHistory);
+        }
+        return listOfExchangeHistories;
+
+
     }
 }
