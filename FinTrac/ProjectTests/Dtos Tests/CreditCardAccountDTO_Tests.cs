@@ -39,7 +39,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.Name = "Something";
 
-            Assert.AreEqual(_creditCardAccountDTO.Name, "S");
+            Assert.AreEqual(_creditCardAccountDTO.Name, "Something");
         }
     }
 }
