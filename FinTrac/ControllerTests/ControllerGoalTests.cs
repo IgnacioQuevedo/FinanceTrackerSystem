@@ -1,6 +1,5 @@
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
-using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
@@ -92,8 +91,9 @@ namespace ControllerTests
         #endregion
 
         #region Get All Goals
+
         [TestMethod]
-        public void GivenUser_ShouldReturnItCorrespondingListOfGoals()
+        public void GivenUserId_ShouldReturnItCorrespondingListOfGoalsDTO()
         {
             _controller.CreateCategory(_categoryDTO1);
             _controller.CreateGoal(_goalDTOToAdd);
@@ -117,7 +117,32 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenUserId_ShouldReturnItCorrespondingListOfGoals()
+        {
+            _controller.CreateCategory(_categoryDTO1);
+            _controller.CreateGoal(_goalDTOToAdd);
+
+            _goalDTOToAdd.GoalId = 1;
+
+            List<Goal> myListOfGoalsInDb = _controller.ReceiveGoalListFromUser(_userConnected.UserId);
+
+            Assert.AreEqual(_goalDTOToAdd.UserId, myListOfGoalsInDb[0].UserId);
+            Assert.AreEqual(_goalDTOToAdd.GoalId, myListOfGoalsInDb[0].GoalId);
+            Assert.AreEqual(_goalDTOToAdd.Title, myListOfGoalsInDb[0].Title);
+            Assert.AreEqual(_goalDTOToAdd.MaxAmountToSpend, myListOfGoalsInDb[0].MaxAmountToSpend);
+            Assert.AreEqual(_goalDTOToAdd.CurrencyOfAmount, myListOfGoalsInDb[0].CurrencyOfAmount);
+
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].CategoryId, myListOfGoalsInDb[0].CategoriesOfGoal[0].CategoryId);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Name, myListOfGoalsInDb[0].CategoriesOfGoal[0].Name);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Status, myListOfGoalsInDb[0].CategoriesOfGoal[0].Status);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].Type, myListOfGoalsInDb[0].CategoriesOfGoal[0].Type);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, myListOfGoalsInDb[0].CategoriesOfGoal[0].UserId);
+
+
+        }
 
     }
+
 }
 

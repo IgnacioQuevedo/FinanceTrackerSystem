@@ -246,6 +246,11 @@ public class GenericController : IUserController, ICategoryController
         return listGoalDTO;
     }
 
+    public List<Goal> ReceiveGoalListFromUser(int userConnectedId)
+    {
+        throw new NotImplementedException();
+    }
+
     private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
     {
         List<Category> result = new List<Category>();
