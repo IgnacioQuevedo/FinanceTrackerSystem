@@ -87,12 +87,16 @@
         ErrorAlert.isError = false;
     }
 
-    private void DeleteCategory(int categoryId)
+    private async Task DeleteCategory(int categoryId)
     {
         try
         {
             CategoryController.DeleteCategory(categoryId);
+            
+            ResetValues();
+            await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
+            
         }
         catch (Exception ExceptionCategory)
         {
@@ -106,5 +110,16 @@
         return date.ToString("dd/MM/yyyy");
     }
 
+    private void ResetValues()
+    {
+    // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            OnInitialized();
+            StateHasChanged();
+        });
+    }
 
 }

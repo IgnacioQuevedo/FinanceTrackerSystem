@@ -150,6 +150,7 @@ public class GenericController : IUserController, ICategoryController
     public Category FindCategory(int idOfCategoryToFind)
     {
         SetUserConnected(idOfCategoryToFind);
+        
         foreach (var category in _userConnected.MyCategories)
         {
             if (category.CategoryId == idOfCategoryToFind)
@@ -157,7 +158,6 @@ public class GenericController : IUserController, ICategoryController
                 return category;
             }
         }
-
         throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
