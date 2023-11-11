@@ -87,7 +87,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region Find Category
+        #region Find Category In Db
 
         [TestMethod]
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
@@ -110,6 +110,7 @@ namespace ControllerTests
         public void GivenCategoryDTO_ShouldReturnCategoryDTO_OnDb()
         {
             _controller.CreateCategory(categoryDTO);
+
             CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
