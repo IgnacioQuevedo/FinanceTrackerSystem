@@ -84,7 +84,6 @@ namespace TestProject1
         public void GivenUserOfCategoryId_ShouldBePossibleToAssignItToDTO()
         {
             int categoryUserId = 1;
-
             _categoryDto.UserId = 1;
 
             Assert.AreEqual(categoryUserId, _categoryDto.UserId);
@@ -119,6 +118,7 @@ namespace TestProject1
             CategoryDTO genericCategoryDTO =
                 new CategoryDTO(categoryName, categoryStatus, categoryType, categoryUserId);
 
+
             Assert.AreEqual(categoryName, genericCategoryDTO.Name);
             Assert.AreEqual(categoryStatus, genericCategoryDTO.Status);
             Assert.AreEqual(categoryType, genericCategoryDTO.Type);
@@ -126,5 +126,6 @@ namespace TestProject1
         }
 
         #endregion
+
     }
 }

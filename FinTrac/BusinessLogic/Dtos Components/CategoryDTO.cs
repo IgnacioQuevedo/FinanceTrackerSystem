@@ -4,7 +4,6 @@ namespace BusinessLogic.Dtos_Components
 {
 	public class CategoryDTO
 	{
-		
 		public int CategoryId { get; set; }
 		public string Name { get; set; } = "";
 		public StatusEnum Status { get; set; }

@@ -66,6 +66,7 @@ namespace ControllerTests
         public void GivenCategoryDTOWithCorrectData_ShouldBePossibleToConvertToCategory()
         {
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("foood", StatusEnum.Enabled, TypeEnum.Income, 1);
+
             categoryDTO_ToConvert.CategoryId = 1;
 
             Category generatedCategory = MapperCategory.ToCategory(categoryDTO_ToConvert);
@@ -83,6 +84,7 @@ namespace ControllerTests
         public void GivenCategoryDTOWithIncorrectData_ShouldThrowException()
         {
             CategoryDTO categoryDTO_ToConvert = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income, 1);
+
             categoryDTO_ToConvert.CategoryId = 1;
 
             MapperCategory.ToCategory(categoryDTO_ToConvert);
