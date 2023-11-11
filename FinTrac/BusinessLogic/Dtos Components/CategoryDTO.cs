@@ -1,4 +1,3 @@
-using BusinessLogic.Enums;
 
 namespace BusinessLogic.Dtos_Components
 {
@@ -6,8 +5,8 @@ namespace BusinessLogic.Dtos_Components
 	{
 		public int CategoryId { get; set; }
 		public string Name { get; set; } = "";
-		public StatusEnum Status { get; set; }
-		public TypeEnum Type { get; set; }
+		public StatusEnumDTO Status { get; set; }
+		public TypeEnumDTO Type { get; set; }
 		
 		public DateTime CreationDate { get; set; } = DateTime.Now.Date;
 		public int UserId { get; set; }
@@ -18,7 +17,7 @@ namespace BusinessLogic.Dtos_Components
 		{
 
 		}
-		public CategoryDTO(string name, StatusEnum status, TypeEnum type, int userId)
+		public CategoryDTO(string name, StatusEnumDTO status, TypeEnumDTO type, int userId)
 		{
 			Name = name;
 			Status = status;

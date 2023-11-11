@@ -18,7 +18,7 @@ namespace BusinessLogicTests.Dtos_Tests
         private GoalDTO _goalDTO;
         private CategoryDTO genericCategoryDTO;
         private List<CategoryDTO> genericListOfCategories;
-        private CurrencyEnum genericCurrencyEnum;
+        private CurrencyEnumDTO genericCurrencyEnum;
         private int genericMaxAmountOfGoal;
         private string genericTitleGoalDTO;
         private int genericUserId;
@@ -28,12 +28,12 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO = new GoalDTO();
 
-            genericCategoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 1);
+            genericCategoryDTO = new CategoryDTO("Food", (StatusEnumDTO)StatusEnum.Enabled, (TypeEnumDTO)TypeEnum.Outcome, 1);
 
             List<CategoryDTO> myListOfCategories = new List<CategoryDTO>();
             myListOfCategories.Add(genericCategoryDTO);
 
-            genericCurrencyEnum = CurrencyEnum.USA;
+            genericCurrencyEnum = CurrencyEnumDTO.USA;
 
             genericMaxAmountOfGoal = 100;
 
@@ -74,7 +74,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             _goalDTO.CurrencyOfAmount = genericCurrencyEnum;
 
-            bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), _goalDTO.CurrencyOfAmount);
+            bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnumDTO), _goalDTO.CurrencyOfAmount);
             Assert.IsTrue(belongToEnum);
         }
 

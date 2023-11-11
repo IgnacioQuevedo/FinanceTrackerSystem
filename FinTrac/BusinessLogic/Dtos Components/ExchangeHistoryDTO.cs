@@ -1,5 +1,4 @@
-﻿using BusinessLogic.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +9,14 @@ namespace BusinessLogic.Dtos_Components
     public class ExchangeHistoryDTO
     {
         public int ExchangeHistoryId { get; set; }
-        public CurrencyEnum Currency { get; set; }
+        public CurrencyEnumDTO Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
         public int? UserId { get; set; }
 
         public ExchangeHistoryDTO() { }
 
-        public ExchangeHistoryDTO(CurrencyEnum currency, decimal value, DateTime valueDate, int? userId ) 
+        public ExchangeHistoryDTO(CurrencyEnumDTO currency, decimal value, DateTime valueDate, int? userId ) 
         {
             Currency = currency;
             Value = value;

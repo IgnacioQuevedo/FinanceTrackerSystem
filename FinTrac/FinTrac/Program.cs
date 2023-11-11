@@ -21,6 +21,7 @@ builder.Services.AddScoped<UserRepositorySql>();
 builder.Services.AddScoped<GenericController>();
 builder.Services.AddScoped<IUserController, GenericController>();
 builder.Services.AddScoped<ICategoryController, GenericController>();
+builder.Services.AddScoped<IGoalController, GenericController>();
 
 var app = builder.Build();
 

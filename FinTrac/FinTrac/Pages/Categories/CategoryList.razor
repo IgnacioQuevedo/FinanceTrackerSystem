@@ -1,6 +1,5 @@
 ﻿@page "/Category"
 @layout MainLayout
-
 @inject  ICategoryController CategoryController;
 
 
@@ -44,7 +43,7 @@
     </thead>
     <tbody>
 
-    @foreach (var category in categoryList.Where(t => t != null))
+    @foreach (var category in categoryList)
     {
         <tr>
             <td>@category.Name</td>

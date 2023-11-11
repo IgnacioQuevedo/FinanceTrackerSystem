@@ -116,6 +116,7 @@ public class GoalTests
     [TestMethod]
     public void GivenUyEnum_ShouldBeSetted()
     {
+        myGoal.CurrencyOfAmount = CurrencyEnum.UY;
         bool belongToEnum = Enum.IsDefined(typeof(CurrencyEnum), myGoal.CurrencyOfAmount);
         Assert.IsTrue(belongToEnum);
     }

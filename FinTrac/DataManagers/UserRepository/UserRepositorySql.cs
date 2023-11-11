@@ -23,6 +23,7 @@ public class UserRepositorySql
             .Include(u => u.MyAccounts)
             .Include(u => u.MyAccounts).ThenInclude(a => a.MyTransactions)
             .Include(u => u.MyGoals)
+            .Include(u => u.MyGoals).ThenInclude(g => g.CategoriesOfGoal)
             .Include(u => u.MyExchangesHistory)
             .FirstOrDefault(u => u.UserId == userConnected.UserId);
 
