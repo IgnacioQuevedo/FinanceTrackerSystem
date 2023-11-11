@@ -328,9 +328,16 @@ public class GenericController : IUserController, ICategoryController
 
     public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates)
     {
-        SetUserConnected((int)dtoWithUpdates.UserId);
-        ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
-        _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
-        _userRepo.Update(_userConnected);
+        try
+        {
+            SetUserConnected((int)dtoWithUpdates.UserId);
+            ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
+            _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
     }
 }
