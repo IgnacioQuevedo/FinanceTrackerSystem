@@ -62,5 +62,15 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenCreationDate_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.CreationDate = DateTime.Now.Date;
+
+            Assert.AreEqual(_creditCardAccountDTO.Currency, DateTime.Now.Date);
+        }
+
+
     }
 }

@@ -14,6 +14,7 @@ namespace BusinessLogic.Dtos_Components
         public int CreditCardAccountId { get; set; }
         public string Name { get; set; }
         public CurrencyEnumDTO Currency { get; set; }
+        public DateTime CreationDate { get; set; }
 
 
 
