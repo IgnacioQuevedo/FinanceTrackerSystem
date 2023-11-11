@@ -10,23 +10,29 @@ namespace TestProject1
         #region Initialize
 
         private CreditCardAccountDTO _creditCardAccountDTO;
+        private int _creditCardAccountId;
 
         [TestInitialize]
         public void Initialize()
         {
             _creditCardAccountDTO = new CreditCardAccountDTO();
+            _creditCardAccountId = 1;
         }
 
         #endregion
 
+        #region Credit Card Account Id
+
         [TestMethod]
         public void GivenCredtiCardAccountId_ShouldBeSetted()
         {
-            _creditCardAccountDTO.CreditCardAccountId = 1;
+            _creditCardAccountDTO.CreditCardAccountId = _creditCardAccountId;
 
-            Assert.AreEqual(_creditCardAccountDTO.CreditCardAccountId, 1);
+            Assert.AreEqual(_creditCardAccountDTO.CreditCardAccountId, _creditCardAccountId);
 
         }
+
+        #endregion  
 
 
 
