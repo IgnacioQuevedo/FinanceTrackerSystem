@@ -9,6 +9,8 @@ namespace BusinessLogic.Dtos_Components
 {
     public class MonetaryAccountDTO
     {
+
+        public int MonetaryAccountId { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
         public CurrencyEnumDTO Currency { get; set; }
