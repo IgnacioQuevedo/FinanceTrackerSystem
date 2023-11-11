@@ -82,10 +82,16 @@ namespace ControllerTests
         public void GivenExchangeHistory_ShouldBePossibleToConvertToExchangeHistoryDTO()
         {
             ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA, 30.8M, DateTime.Now.Date);
+            exchangeHistory.UserId = 1;
 
-            ExchangeHistoryDTO exchangeHistoryCreated = MapperExchangeHistory.ToExchangeHistoryDTO(exchangeHistory);
+            ExchangeHistoryDTO exchangeHistoryDTOCreated = MapperExchangeHistory.ToExchangeHistoryDTO(exchangeHistory);
             
-            Assert.IsInstanceOfType(exchangeHistoryCreated,typeof(ExchangeHistoryDTO));
+            Assert.IsInstanceOfType(exchangeHistoryDTOCreated,typeof(ExchangeHistoryDTO));
+            Assert.AreEqual(exchangeHistoryDTOCreated.ExchangeHistoryId,exchangeHistory.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryDTOCreated.Currency,exchangeHistory.Currency);
+            Assert.AreEqual(exchangeHistoryDTOCreated.Value,exchangeHistory.Value);
+            Assert.AreEqual(exchangeHistoryDTOCreated.ValueDate,exchangeHistory.ValueDate);
+            Assert.AreEqual(exchangeHistoryDTOCreated.UserId,exchangeHistory.UserId);
         }
         
     }
