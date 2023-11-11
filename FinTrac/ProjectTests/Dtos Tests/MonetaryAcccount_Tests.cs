@@ -6,17 +6,28 @@ namespace TestProject1
     [TestClass]
     public class MonetaryAccountDTO_Tests
     {
+
+        #region Initialize
+
+        private MonetaryAccountDTO _monetaryAccountDTO;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _monetaryAccountDTO = new MonetaryAccountDTO();
+        }
+
+        #endregion
+
         #region Id
 
         [TestMethod]
         public void GivenMonetaryId_ShouldBeSetted()
         {
-            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
-
             int idToSet = 1;
-            myMonetaryAccountDTO.MonetaryAccountId = idToSet;
+            _monetaryAccountDTO.MonetaryAccountId = idToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.MonetaryAccountId, idToSet);
+            Assert.AreEqual(_monetaryAccountDTO.MonetaryAccountId, idToSet);
         }
 
         #endregion
@@ -27,12 +38,10 @@ namespace TestProject1
 
         public void GivenName_ShouldBeSetted()
         {
-            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
             string nameToSet = "Brou";
+            _monetaryAccountDTO.Name = "Brou";
 
-            myMonetaryAccountDTO.Name = "Brou";
-
-            Assert.AreEqual(myMonetaryAccountDTO.Name, nameToSet);
+            Assert.AreEqual(_monetaryAccountDTO.Name, nameToSet);
         }
 
         #endregion
@@ -42,12 +51,10 @@ namespace TestProject1
         [TestMethod]
         public void GivenAmount_ShouldBeSetted()
         {
-            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
-
             decimal amountToSet = 1000;
-            myMonetaryAccountDTO.Amount = amountToSet;
+            _monetaryAccountDTO.Amount = amountToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.Amount, amountToSet);
+            Assert.AreEqual(_monetaryAccountDTO.Amount, amountToSet);
         }
 
         #endregion
@@ -57,12 +64,10 @@ namespace TestProject1
         [TestMethod]
         public void GivenCurrency_ShouldBeSetted()
         {
-            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
-
             CurrencyEnumDTO currencyToSet = CurrencyEnumDTO.EUR;
-            myMonetaryAccountDTO.Currency = currencyToSet;
+            _monetaryAccountDTO.Currency = currencyToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.Currency, currencyToSet);
+            Assert.AreEqual(_monetaryAccountDTO.Currency, currencyToSet);
         }
 
         #endregion
@@ -87,12 +92,10 @@ namespace TestProject1
         [TestMethod]
         public void GivenUserId_ShouldBeSetted()
         {
-            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
-
             int userIdToSet = 1;
-            myMonetaryAccountDTO.UserId = userIdToSet;
+            _monetaryAccountDTO.UserId = userIdToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.UserId, userIdToSet);
+            Assert.AreEqual(_monetaryAccountDTO.UserId, userIdToSet);
         }
 
         #endregion
