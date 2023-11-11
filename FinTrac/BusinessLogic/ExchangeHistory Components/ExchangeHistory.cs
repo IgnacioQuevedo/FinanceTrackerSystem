@@ -16,7 +16,7 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
         #region Properties
-        public int ExchangeHistoryId { get; set; } = -1;
+        public int ExchangeHistoryId { get; set; }
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
@@ -65,7 +65,7 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
 
-        #endregion
+        #endregion 
 
         #region Have Exchanges
         public static bool HaveExchanges(User loggedUser)
