@@ -144,7 +144,7 @@ namespace ControllerTests
         #endregion
 
         [TestMethod]
-        public void GivenExchangeDTOWithCorrectUpdate_ShouldBeUpdatedInDb()
+        public void GivenExchangeDTOWithCorrectDataToUpdate_ShouldBeUpdatedInDb()
         {
             ExchangeHistoryDTO exchangeHistoryWithUpdates = 
                 new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now,_userConnected.UserId);
@@ -154,7 +154,7 @@ namespace ControllerTests
             
             ExchangeHistoryDTO exchangeHistoryInDb =
                 _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId, _userConnected.UserId);
-
+            
             Assert.AreEqual(exchangeHistoryWithUpdates.UserId,exchangeHistoryInDb.UserId);
             Assert.AreEqual(exchangeHistoryWithUpdates.Currency,exchangeHistoryInDb.Currency);
             Assert.AreEqual(exchangeHistoryWithUpdates.Value,exchangeHistoryInDb.Value);
