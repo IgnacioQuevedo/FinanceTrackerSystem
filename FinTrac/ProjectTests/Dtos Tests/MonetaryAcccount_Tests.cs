@@ -82,6 +82,8 @@ namespace TestProject1
 
         #endregion
 
+
+
         [TestMethod]
         public void GivenUserId_ShouldBeSetted()
         {
@@ -89,7 +91,7 @@ namespace TestProject1
 
             myMonetaryAccountDTO.UserId = 1;
 
-            Assert.AreEqual(myMonetaryAccountDTO.UserId, 0);
+            Assert.AreEqual(myMonetaryAccountDTO.UserId, 1);
         }
 
     }
