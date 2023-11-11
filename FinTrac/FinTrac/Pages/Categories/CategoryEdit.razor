@@ -76,7 +76,6 @@
         try
         {
             categoryUpdated = new CategoryDTO(name, status, categoryToEdit.Type,userConnected.UserId);
-            categoryUpdated.CreationDate = categoryToEdit.CreationDate;
             categoryUpdated.CategoryId = categoryId;
             
             CategoryController.UpdateCategory(categoryUpdated);

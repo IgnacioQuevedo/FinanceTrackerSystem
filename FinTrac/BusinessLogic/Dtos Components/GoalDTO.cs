@@ -11,7 +11,7 @@ namespace BusinessLogic.Dtos_Components
     public class GoalDTO
     {
         public int GoalId { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string Title { get; set; }
         public int MaxAmountToSpend { get; set; }
         public CurrencyEnum CurrencyOfAmount { get; set; }
@@ -19,7 +19,7 @@ namespace BusinessLogic.Dtos_Components
 
         public GoalDTO() { }
 
-        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnum currencyOfAmount, List<CategoryDTO> categoriesOfGoal, int userId)
+        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnum currencyOfAmount, List<CategoryDTO> categoriesOfGoal, int? userId)
         {
             Title = title;
             MaxAmountToSpend = maxAmountToSpend;

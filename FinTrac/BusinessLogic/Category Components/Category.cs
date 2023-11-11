@@ -18,7 +18,7 @@ namespace BusinessLogic.Category_Components
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         public string Name { get; set; } = "";
-        public DateTime CreationDate { get; } = DateTime.Now.Date;
+        public DateTime CreationDate { get; private set; } = DateTime.Now.Date;
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
         

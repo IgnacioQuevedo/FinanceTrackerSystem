@@ -13,7 +13,7 @@ namespace Controller.Mappers
 {
     public abstract class MapperGoal
     {
-        #region To GoalDTO}
+        #region To GoalDTO
 
         public static GoalDTO ToGoalDTO(Goal goalToConvert)
         {
