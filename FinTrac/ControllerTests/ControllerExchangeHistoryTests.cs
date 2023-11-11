@@ -24,6 +24,11 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
+        private ExchangeHistoryDTO exchangeHistoryToCreate;
+        private ExchangeHistoryDTO anotherExchangeHistory;
+        private DateTime creationDate;
+        
+        
 
         [TestInitialize]
         public void Initialize()
@@ -37,6 +42,24 @@ namespace ControllerTests
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
+            
+            
+             exchangeHistoryToCreate =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 39.5M, DateTime.Now, _userConnected.UserId);
+            exchangeHistoryToCreate.UserId = 1;
+            exchangeHistoryToCreate.ExchangeHistoryId = 1;
+
+            creationDate = new DateTime(2023, 3, 2, 12, 12, 00);
+            
+             anotherExchangeHistory =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 2.5M, creationDate, _userConnected.UserId);
+
+            anotherExchangeHistory.UserId = 1;
+            anotherExchangeHistory.ExchangeHistoryId = 1;
+
+            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
+            _controller.CreateExchangeHistory(anotherExchangeHistory);
+            
         }
 
         #endregion
@@ -51,37 +74,36 @@ namespace ControllerTests
 
         #endregion
 
+
+        #region Create ExchangeHistory
+
         [TestMethod]
         public void CreateExchangeMethodWithCorrectData_ShoulAddExchangeHistoryToDb()
         {
-            ExchangeHistoryDTO exchangeHistoryToCreate =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 39.5M, DateTime.Now, _userConnected.UserId);
-            exchangeHistoryToCreate.UserId = 1;
-            exchangeHistoryToCreate.ExchangeHistoryId = 1;
-            
-            DateTime creationDate = new DateTime(2023, 3, 2, 12, 12, 00);
-            
-            ExchangeHistoryDTO anotherExchangeHistory =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 2.5M, creationDate, _userConnected.UserId);
-
-            anotherExchangeHistory.UserId = 1;
-            anotherExchangeHistory.ExchangeHistoryId = 1;
-            
-            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
-            _controller.CreateExchangeHistory(anotherExchangeHistory);
-
             ExchangeHistory exchangeHistoryInDb = _testDb.Users.First().MyExchangesHistory[0];
             ExchangeHistory anotherExchangeHistoryInDb = _testDb.Users.First().MyExchangesHistory[1];
 
             Assert.AreEqual(2, _testDb.Users.First().MyExchangesHistory.Count);
-            
+
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryInDb.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryInDb.UserId);
             Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryInDb.Currency);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryInDb.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryInDb.ValueDate);
-            
-            Assert.AreEqual(anotherExchangeHistory.Currency,anotherExchangeHistoryInDb.Currency);
+
+            Assert.AreEqual(anotherExchangeHistory.Currency, anotherExchangeHistoryInDb.Currency);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void CreateExchangeMethodWithIncorrectData_ShoulThrowException()
+        {
+            exchangeHistoryToCreate.Value = -1;
+            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
+        }
+        
+        
+        
+        #endregion
     }
 }
