@@ -148,13 +148,18 @@ public class GenericController : IUserController, ICategoryController
         }
     }
 
-    public Category FindCategoryInDb(int idOfCategoryToFind)
+    public Category FindCategoryInDb(CategoryDTO categoryToFind)
     {
-        SetUserConnected(idOfCategoryToFind);
+        SetUserConnected(categoryToFind.UserId);
 
+        return SearchCategoryInDb(categoryToFind.CategoryId);
+    }
+
+    private Category SearchCategoryInDb(int idCategoryToFind)
+    {
         foreach (var category in _userConnected.MyCategories)
         {
-            if (category.CategoryId == idOfCategoryToFind)
+            if (category.CategoryId == idCategoryToFind)
             {
                 return category;
             }
@@ -162,11 +167,12 @@ public class GenericController : IUserController, ICategoryController
         throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
-    public CategoryDTO FindCategory(int idOfCategoryToFind)
+    public CategoryDTO FindCategory(int idCategoryToFind, int userId)
     {
-        CategoryDTO categoryDTOFound = MapperCategory.ToCategoryDTO(FindCategoryInDb(idOfCategoryToFind));
+        Category categoryFound = SearchCategoryInDb(idCategoryToFind);
+        CategoryDTO categoryFoundDTO = MapperCategory.ToCategoryDTO(categoryFound);
 
-        return categoryDTOFound;
+        return categoryFoundDTO;
     }
 
 
@@ -174,7 +180,7 @@ public class GenericController : IUserController, ICategoryController
     {
         SetUserConnected(categoryDtoWithUpdates.UserId);
         Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        Category categoryWithoutUpd = FindCategoryInDb(categoryDtoWithUpdates.CategoryId);
+        Category categoryWithoutUpd = FindCategoryInDb(categoryDtoWithUpdates);
 
         categoryToUpd.CategoryUser = _userConnected;
         if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
@@ -193,7 +199,7 @@ public class GenericController : IUserController, ICategoryController
         try
         {
             SetUserConnected(categoryDtoCategoryId);
-            _userConnected.DeleteCategory(FindCategoryInDb(categoryDtoCategoryId));
+            _userConnected.DeleteCategory(MapperCategory.ToCategory(FindCategory(categoryDtoCategoryId, _userConnected.UserId)));
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionCategoryManagement Exception)
@@ -265,7 +271,7 @@ public class GenericController : IUserController, ICategoryController
         List<Category> result = new List<Category>();
         foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
         {
-            result.Add(FindCategoryInDb(categoryDTO.CategoryId));
+            result.Add(FindCategoryInDb(categoryDTO));
         }
 
         return result;

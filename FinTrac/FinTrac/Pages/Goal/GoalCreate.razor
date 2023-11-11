@@ -100,7 +100,7 @@
 
         foreach (var stringId in stringValue)
         {
-            var categorySelected = CategoryController.FindCategory(int.Parse(stringId));
+            var categorySelected = CategoryController.FindCategory(int.Parse(stringId), userConnected.UserId);
             categoriesSelected.Add(categorySelected);
         }
         categoriesAssignedToGoal = categoriesSelected;
