@@ -104,16 +104,16 @@ namespace ControllerTests
         #region Find ExchangeHistory
 
         [TestMethod]
-        public void GivenExchangeHistoryIdToFindInDb_ShouldBeFounded()
+        public void GivenExchangeHistoryDTO_ToFindInDb_ShouldBeFounded_AndReturnTheExchangeHistory()
         {
-            ExchangeHistory exchangeHistoryFound =
-                _controller.FindExchangeHistory(exchangeHistoryToCreate);
+            ExchangeHistory exchangeHistoryFoundAndReturned =
+                _controller.FindExchangeHistoryInDB(exchangeHistoryToCreate);
 
-            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFound.ExchangeHistoryId);
-            Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFound.UserId);
-            Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFound.Value);
-            Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFound.ValueDate);
-            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFound.Currency);
+            Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryFoundAndReturned.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFoundAndReturned.UserId);
+            Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFoundAndReturned.Value);
+            Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFoundAndReturned.ValueDate);
+            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
         }
 
         [TestMethod]
@@ -121,14 +121,8 @@ namespace ControllerTests
         public void GivenExchangeHistoryThatIsNotIndb_ShouldThrowExceptionBecauseItWasNotFound()
         {
             exchangeHistoryToCreate.ExchangeHistoryId = -1;
-            _controller.FindExchangeHistory(exchangeHistoryToCreate);
+            _controller.FindExchangeHistoryInDB(exchangeHistoryToCreate);
         }
-
-        #endregion
-
-        #region Update ExchangeHistory
-
-        
 
         #endregion
     }

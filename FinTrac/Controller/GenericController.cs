@@ -287,17 +287,33 @@ public class GenericController : IUserController, ICategoryController
 
     #endregion
 
-    public ExchangeHistory FindExchangeHistory(ExchangeHistoryDTO exchangeToFound)
+    
+    #region ExchangeHistory Find method specifically for controller section.
+
+    //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
+    public ExchangeHistory FindExchangeHistoryInDB(ExchangeHistoryDTO exchangeToFound)
     {
         SetUserConnected((int)exchangeToFound.UserId);
-
+        return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
+    }
+    
+    private ExchangeHistory searchInDbForAnExchange(int idOfExchangeToSearch)
+    {
         foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
         {
-            if (exchangeHistory.ExchangeHistoryId == exchangeToFound.ExchangeHistoryId)
+            if (exchangeHistory.ExchangeHistoryId == idOfExchangeToSearch)
             {
-                return exchangeHistory;
+                {
+                    return exchangeHistory;
+                }
             }
         }
+
         throw new Exception("Exchange History was not found, an error on index must be somewhere.");
     }
+
+    #endregion
+
+
+    
 }
