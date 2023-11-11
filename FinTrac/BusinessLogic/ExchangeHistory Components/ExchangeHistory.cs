@@ -43,7 +43,6 @@ namespace BusinessLogic.ExchangeHistory_Components
         #region Validate Exchange
         public void ValidateExchange()
         {
-            ValidateCurrencyIsDollar();
             ValidateValueNumber();
         }
         #region Validate Exchange Auxiliaries
@@ -55,13 +54,6 @@ namespace BusinessLogic.ExchangeHistory_Components
             }
         }
 
-        private void ValidateCurrencyIsDollar()
-        {
-            if (Currency != CurrencyEnum.USA)
-            {
-                throw new ExceptionExchangeHistory("Only dollar currency is allowed");
-            }
-        }
         #endregion
 
 

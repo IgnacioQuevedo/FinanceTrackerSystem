@@ -166,7 +166,7 @@ namespace ControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void GivenExchangeDTOWithInCorrectDataToUpdate_ShouldThrowException()
+        public void GivenExchangeDTOWithIncorrectDataToUpdate_ShouldThrowException()
         {
             ExchangeHistoryDTO exchangeHistoryWithUpdates =
                 new ExchangeHistoryDTO(CurrencyEnum.USA, -35.6M, DateTime.Now, _userConnected.UserId);
@@ -174,7 +174,7 @@ namespace ControllerTests
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
         }
-
+        
         #endregion
 
 
@@ -182,9 +182,7 @@ namespace ControllerTests
         public void GivenExchangeHistoryDTOWithoutTransactions_WhenDeleting_ShouldDeleteItFromDb()
         {
             DateTime creationDate = new DateTime(2023, 12, 12, 0, 0, 0, 0);
-            ExchangeHistoryDTO anotherExchangeHistory = 
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
-            
+            ExchangeHistoryDTO anotherExchangeHistory = new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
             
             _controller.CreateExchangeHistory(anotherExchangeHistory);
             anotherExchangeHistory.ExchangeHistoryId = 2;
@@ -193,8 +191,6 @@ namespace ControllerTests
         
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
             _controller.DeleteExchangeHistory(anotherExchangeHistory);
-            
-            
             int exchangeHistoriesInDbPostDelete = _testDb.Users.First().MyExchangesHistory.Count;
 
             Assert.AreEqual(exchangeHistoriesInDbPreDelete -2 ,exchangeHistoriesInDbPostDelete);
@@ -220,7 +216,6 @@ namespace ControllerTests
             
             _testDb.SaveChanges();
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
-            
         }
     }
 }
