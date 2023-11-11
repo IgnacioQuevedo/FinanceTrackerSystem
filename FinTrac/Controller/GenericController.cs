@@ -287,7 +287,17 @@ public class GenericController : IUserController, ICategoryController
 
     #endregion
 
-    
+    public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound, int idUserConnected)
+    {
+        SetUserConnected(idUserConnected);
+
+        ExchangeHistoryDTO exchangeHistoryDTOFound =
+            MapperExchangeHistory.ToExchangeHistoryDTO(searchInDbForAnExchange(IdOfExchangeToFound));
+
+        return exchangeHistoryDTOFound;
+    }
+
+
     #region ExchangeHistory Find method specifically for controller section.
 
     //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
@@ -315,8 +325,5 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
 
-    public ExchangeHistoryDTO FindExchangeHistory(int exchangeHistoryId, int userConnectedUserId)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
