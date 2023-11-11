@@ -6,17 +6,20 @@ namespace TestProject1
     [TestClass]
     public class MonetaryAccountDTO_Tests
     {
+        #region Id
 
         [TestMethod]
         public void GivenMonetaryId_ShouldBeSetted()
         {
             MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
 
-            myMonetaryAccountDTO.MonetaryAccountId = 1;
+            int idToSet = 1;
+            myMonetaryAccountDTO.MonetaryAccountId = idToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.MonetaryAccountId, 1);
+            Assert.AreEqual(myMonetaryAccountDTO.MonetaryAccountId, idToSet);
         }
 
+        #endregion
 
         #region Name
 
