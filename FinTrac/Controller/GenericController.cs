@@ -306,7 +306,7 @@ public class GenericController : IUserController, ICategoryController
         SetUserConnected((int)exchangeToFound.UserId);
         return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
     }
-    
+
     private ExchangeHistory searchInDbForAnExchange(int idOfExchangeToSearch)
     {
         foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
@@ -325,5 +325,8 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
 
-    
+    public void UpdateExchangeHistory(ExchangeHistoryDTO exchangeHistoryWithUpdates)
+    {
+        throw new NotImplementedException();
+    }
 }

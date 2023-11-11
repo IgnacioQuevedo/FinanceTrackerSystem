@@ -142,6 +142,25 @@ namespace ControllerTests
         }
         
         #endregion
+
+        [TestMethod]
+        public void GivenExchangeDTOWithUpdates_ShouldBeUpdatedInDb()
+        {
+            ExchangeHistoryDTO exchangeHistoryWithUpdates = 
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now,_userConnected.UserId);
+            exchangeHistoryWithUpdates.UserId = _userConnected.UserId;
+
+            _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
+            
+            ExchangeHistoryDTO exchangeHistoryInDb =
+                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId, _userConnected.UserId);
+
+            Assert.AreEqual(exchangeHistoryWithUpdates.UserId,exchangeHistoryInDb.UserId);
+            Assert.AreEqual(exchangeHistoryWithUpdates.Currency,exchangeHistoryInDb.Currency);
+            Assert.AreEqual(exchangeHistoryWithUpdates.Value,exchangeHistoryInDb.Value);
+            Assert.AreEqual(exchangeHistoryWithUpdates.ValueDate,exchangeHistoryInDb.ValueDate);
+            
+        }
         
 
     }
