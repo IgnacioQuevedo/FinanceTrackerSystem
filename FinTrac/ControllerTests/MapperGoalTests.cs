@@ -106,6 +106,7 @@ namespace ControllerTests
         public void GivenListOfGoals_ShouldReturnListOfGoalDTO()
         {
             List<GoalDTO> listOfGoalDTO = MapperGoal.ToListOfGoalDTO(_goalList);
+
             GoalDTO goalObtained = listOfGoalDTO[0];
 
             Assert.AreEqual(goalObtained.Title, _goalList[0].Title);

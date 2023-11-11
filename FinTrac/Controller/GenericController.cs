@@ -236,6 +236,16 @@ public class GenericController : IUserController, ICategoryController
         }
     }
 
+    public List<GoalDTO> GetAllGoals(int userConnectedId)
+    {
+        SetUserConnected(userConnectedId);
+        List<GoalDTO> listGoalDTO = new List<GoalDTO>();
+
+        listGoalDTO = MapperGoal.ToListOfGoalDTO(_userConnected.MyGoals);
+
+        return listGoalDTO;
+    }
+
     private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
     {
         List<Category> result = new List<Category>();
