@@ -9,7 +9,7 @@ namespace Controller.IControllers
     {
         public void CreateExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate);
 
-        public void FindExchangeHistory(int exchangeHistoryId);
+        public void FindExchangeHistory(ExchangeHistoryDTO exchangeHistoryToFind);
 
         public void UpdateExchangeHistory(ExchangeHistoryDTO exchangeHistoryToUpdate);
 

@@ -105,10 +105,8 @@ namespace ControllerTests
         [TestMethod]
         public void GivenExchangeHistoryIdToFindInDb_ShouldBeFounded()
         {
-            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
             ExchangeHistory exchangeHistoryFound =
-                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId);
-            
+                _controller.FindExchangeHistory(exchangeHistoryToCreate);
             
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId,exchangeHistoryFound.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId,exchangeHistoryFound.UserId);

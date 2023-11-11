@@ -286,8 +286,19 @@ public class GenericController : IUserController, ICategoryController
 
     #endregion
 
-    public ExchangeHistory FindExchangeHistory(int exchangeHistoryId)
+    public ExchangeHistory FindExchangeHistory(ExchangeHistoryDTO exchangeToFound)
     {
-        throw new NotImplementedException();
+        SetUserConnected((int)exchangeToFound.UserId);
+        ExchangeHistory exchangeFound = new ExchangeHistory();
+
+            foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
+            {
+                if (exchangeHistory.ExchangeHistoryId == exchangeToFound.ExchangeHistoryId)
+                {
+                    exchangeFound =  exchangeHistory;
+                }
+            }
+
+            return exchangeFound;
     }
 }
