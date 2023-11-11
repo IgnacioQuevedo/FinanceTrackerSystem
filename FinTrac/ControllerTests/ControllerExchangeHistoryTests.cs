@@ -101,6 +101,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Find ExchangeHistory
+
         [TestMethod]
         public void GivenExchangeHistoryIdToFindInDb_ShouldBeFounded()
         {
@@ -121,5 +123,13 @@ namespace ControllerTests
             exchangeHistoryToCreate.ExchangeHistoryId = -1;
             _controller.FindExchangeHistory(exchangeHistoryToCreate);
         }
+
+        #endregion
+
+        #region Update ExchangeHistory
+
+        
+
+        #endregion
     }
 }
