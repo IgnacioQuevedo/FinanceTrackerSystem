@@ -112,7 +112,7 @@ namespace ControllerTests
             _controller.CreateCategory(categoryDTO);
             CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
 
-            Assert.AreEqual(categoryDTO.CategoryId, 0);
+            Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
             Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
         }
 
