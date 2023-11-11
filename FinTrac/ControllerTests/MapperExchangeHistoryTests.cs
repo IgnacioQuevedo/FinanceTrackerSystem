@@ -78,6 +78,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region ToExchangeHistoryDTO
+
         [TestMethod]
         public void GivenExchangeHistory_ShouldBePossibleToConvertToExchangeHistoryDTO()
         {
@@ -85,14 +87,15 @@ namespace ControllerTests
             exchangeHistory.UserId = 1;
 
             ExchangeHistoryDTO exchangeHistoryDTOCreated = MapperExchangeHistory.ToExchangeHistoryDTO(exchangeHistory);
-            
-            Assert.IsInstanceOfType(exchangeHistoryDTOCreated,typeof(ExchangeHistoryDTO));
-            Assert.AreEqual(exchangeHistoryDTOCreated.ExchangeHistoryId,exchangeHistory.ExchangeHistoryId);
-            Assert.AreEqual(exchangeHistoryDTOCreated.Currency,exchangeHistory.Currency);
-            Assert.AreEqual(exchangeHistoryDTOCreated.Value,exchangeHistory.Value);
-            Assert.AreEqual(exchangeHistoryDTOCreated.ValueDate,exchangeHistory.ValueDate);
-            Assert.AreEqual(exchangeHistoryDTOCreated.UserId,exchangeHistory.UserId);
+
+            Assert.IsInstanceOfType(exchangeHistoryDTOCreated, typeof(ExchangeHistoryDTO));
+            Assert.AreEqual(exchangeHistoryDTOCreated.ExchangeHistoryId, exchangeHistory.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoryDTOCreated.Currency, exchangeHistory.Currency);
+            Assert.AreEqual(exchangeHistoryDTOCreated.Value, exchangeHistory.Value);
+            Assert.AreEqual(exchangeHistoryDTOCreated.ValueDate, exchangeHistory.ValueDate);
+            Assert.AreEqual(exchangeHistoryDTOCreated.UserId, exchangeHistory.UserId);
         }
-        
+
+        #endregion
     }
 }
