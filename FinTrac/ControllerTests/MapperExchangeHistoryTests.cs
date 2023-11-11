@@ -1,9 +1,10 @@
 using BusinessLogic.Dtos_Components;
-using BusinessLogic.User_Components;
+using BusinessLogic.Enums;
+using BusinessLogic.ExchangeHistory_Components;
 using Controller;
-using DataManagers;
 using Controller.Mappers;
-using Mappers;
+using DataManagers;
+
 
 namespace ControllerTests
 {
@@ -46,8 +47,19 @@ namespace ControllerTests
 
 		#endregion
 
-		
-		
+		[TestMethod]
+		public void GivenExchangeHistoryDTO_ShouldBePossibleToConvertItToExchangeHistory()
+		{
+
+			ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now);
+
+			ExchangeHistory exchangeHistoryGenerated = Controller.Mappers.MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
+			
+			
+
+
+
+		}
 		
 		
 
