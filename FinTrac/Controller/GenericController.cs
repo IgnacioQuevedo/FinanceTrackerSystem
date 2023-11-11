@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
@@ -159,6 +160,7 @@ public class GenericController : IUserController, ICategoryController
                 return category;
             }
         }
+
         throw new Exception("Category was not found, an error on index must be somewhere.");
     }
 
@@ -266,13 +268,13 @@ public class GenericController : IUserController, ICategoryController
     #endregion
 
     #region Exchange History Section
-
-    public void CreateExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
+    public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
     {
-        throw new NotImplementedException();
+        SetUserConnected((int)exchangeDTO.UserId);
+        
+        ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
+        _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
     }
 
     #endregion
-
-    
 }

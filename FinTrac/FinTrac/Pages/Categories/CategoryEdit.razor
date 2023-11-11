@@ -1,7 +1,6 @@
 ﻿@page "/Category/{categoryId:int}/Edit"
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
 @layout MainLayout
+@using BusinessLogic.Dtos_Components.StatusEnumDTO;
 
 @inject  ICategoryController CategoryController;
 
@@ -57,14 +56,14 @@
 
 
     private string name;
-    private StatusEnum status;
-    private Category categoryToEdit;
+    private StatusEnumDTO status;
+    private CategoryDTO categoryToEdit;
     private CategoryDTO categoryUpdated;
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        categoryToEdit = CategoryController.FindCategory(categoryId);
+        categoryToEdit = CategoryController.FindCategoryDTO(categoryId);
         name = categoryToEdit.Name;
         status = categoryToEdit.Status;
         ErrorAlert.isError = false;
