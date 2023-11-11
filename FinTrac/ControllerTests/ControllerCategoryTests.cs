@@ -93,7 +93,7 @@ namespace ControllerTests
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
         {
             _controller.CreateCategory(categoryDTO);
-            Category categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+            Category categoryFound = _controller.FindCategoryInDb(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
             Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
@@ -105,6 +105,17 @@ namespace ControllerTests
         {
             _controller.FindCategory(categoryDTO.CategoryId);
         }
+
+        [TestMethod]
+        public void GivenCategoryDTO_ShouldReturnCategoryDTO_OnDb()
+        {
+            _controller.CreateCategory(categoryDTO);
+            CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+
+            Assert.AreEqual(categoryDTO.CategoryId, 0);
+            Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
+        }
+
 
         #endregion
 
@@ -120,7 +131,7 @@ namespace ControllerTests
 
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
-            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDTO.CategoryId);
+            Category categoryInDbWithSupossedChanges = _controller.FindCategoryInDb(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId, categoryDtoWithUpdates.CategoryId);
             Assert.AreEqual(categoryInDbWithSupossedChanges.UserId, categoryDtoWithUpdates.UserId);

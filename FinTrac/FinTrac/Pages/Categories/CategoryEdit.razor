@@ -1,5 +1,5 @@
 ﻿@page "/Category/{categoryId:int}/Edit"
-@using BusinessLogic.Category_Components;
+
 @using BusinessLogic.Enums;
 @layout MainLayout
 
@@ -58,7 +58,7 @@
 
     private string name;
     private StatusEnum status;
-    private Category categoryToEdit;
+    private CategoryDTO categoryToEdit;
     private CategoryDTO categoryUpdated;
     public string errorTxt { get; set; }
 
