@@ -10,7 +10,10 @@ namespace TestProject1
 
         public void GivenName_ShouldBeSetted()
         {
-            Assert.AreEqual(0, 1);
+            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
+            myMonetaryAccountDTO.Name = "Brou";
+
+            Assert.AreEqual(myMonetaryAccountDTO.Name, "Brou");
         }
     }
 }
