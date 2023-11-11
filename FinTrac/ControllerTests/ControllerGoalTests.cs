@@ -63,7 +63,26 @@ namespace ControllerTests
 
         #endregion
 
+        #region Create Goal
 
+        [TestMethod]
+        public void CreateMethod_ShouldAddNewGoalIntoDb()
+        {
+            _controller.CreateGoal(_goalDTOToAdd);
+
+            Goal goalInDb = _testDb.Users.First().MyGoals[0];
+
+            Assert.AreEqual(_goalDTOToAdd.GoalId, goalInDb.GoalId);
+            Assert.AreEqual(_goalDTOToAdd.Title, goalInDb.Title);
+            Assert.AreEqual(_goalDTOToAdd.CurrencyOfAmount, goalInDb.CurrencyOfAmount);
+            Assert.AreEqual(_goalDTOToAdd.MaxAmountToSpend, goalInDb.MaxAmountToSpend);
+            Assert.AreEqual(_goalDTOToAdd.UserId, goalInDb.UserId);
+            Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO, goalInDb.CategoriesOfGoal);
+
+
+        }
+
+        #endregion
 
 
     }
