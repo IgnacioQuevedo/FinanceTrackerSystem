@@ -21,7 +21,7 @@ namespace BusinessLogic.Dtos_Components
         {
             Currency = currency;
             Value = value;
-            ValueDate = valueDate;
+            ValueDate = valueDate.Date;
             UserId = userId;
         }
     }
