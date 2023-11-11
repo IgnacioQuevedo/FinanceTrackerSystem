@@ -54,13 +54,13 @@ namespace ControllerTests
         public void GivenExchangeHistoryDTOWithCorrectData_ShouldBePossibleToConvertItToExchangeHistory()
         {
             ExchangeHistoryDTO exchangeHistoryDTO =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 38.5M, DateTime.Now, _userConnected.UserId);
 
             ExchangeHistory exchangeHistoryGenerated = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
 
 
             Assert.IsInstanceOfType(exchangeHistoryGenerated, typeof(ExchangeHistory));
-            Assert.AreEqual(exchangeHistoryGenerated.Currency, exchangeHistoryDTO.Currency);
+            Assert.AreEqual(exchangeHistoryGenerated.Currency, (CurrencyEnum)exchangeHistoryDTO.Currency);
             Assert.AreEqual(exchangeHistoryGenerated.Value, exchangeHistoryDTO.Value);
             Assert.AreEqual(exchangeHistoryGenerated.ValueDate, exchangeHistoryDTO.ValueDate);
             Assert.AreEqual(exchangeHistoryGenerated.UserId, exchangeHistoryDTO.UserId);
@@ -71,7 +71,7 @@ namespace ControllerTests
         public void GivenExchangeHistoryDTOWithIncorrectData_ShouldThrowException()
         {
             ExchangeHistoryDTO exchangeHistoryDTO =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, -3, DateTime.Now, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, -3, DateTime.Now, _userConnected.UserId);
 
             MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
         }
@@ -90,7 +90,7 @@ namespace ControllerTests
 
             Assert.IsInstanceOfType(exchangeHistoryDTOCreated, typeof(ExchangeHistoryDTO));
             Assert.AreEqual(exchangeHistoryDTOCreated.ExchangeHistoryId, exchangeHistory.ExchangeHistoryId);
-            Assert.AreEqual(exchangeHistoryDTOCreated.Currency, exchangeHistory.Currency);
+            Assert.AreEqual((CurrencyEnum)exchangeHistoryDTOCreated.Currency, exchangeHistory.Currency);
             Assert.AreEqual(exchangeHistoryDTOCreated.Value, exchangeHistory.Value);
             Assert.AreEqual(exchangeHistoryDTOCreated.ValueDate, exchangeHistory.ValueDate);
             Assert.AreEqual(exchangeHistoryDTOCreated.UserId, exchangeHistory.UserId);
@@ -118,7 +118,7 @@ namespace ControllerTests
             Assert.IsInstanceOfType(exchangeHistoryDTOList[1], typeof(ExchangeHistoryDTO));
 
             Assert.AreEqual(exchangeHistory1.UserId, exchangeHistoryDTOList[0].UserId);
-            Assert.AreEqual(exchangeHistory1.Currency, exchangeHistoryDTOList[0].Currency);
+            Assert.AreEqual((CurrencyEnumDTO)exchangeHistory1.Currency, exchangeHistoryDTOList[0].Currency);
             Assert.AreEqual(exchangeHistory1.Value, exchangeHistoryDTOList[0].Value);
             Assert.AreEqual(exchangeHistory1.ValueDate, exchangeHistoryDTOList[0].ValueDate);
             Assert.AreEqual(exchangeHistory1.ExchangeHistoryId, exchangeHistoryDTOList[0].ExchangeHistoryId);
@@ -131,10 +131,10 @@ namespace ControllerTests
         [TestMethod]
         public void GivenExchangeHistoryDTOToList_ShouldConvertItToExchangeHistoryList()
         {
-            ExchangeHistoryDTO exchangeHistory1 = new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now.Date,1);
-            ExchangeHistoryDTO exchangeHistory2 = new ExchangeHistoryDTO(CurrencyEnum.USA, 40, DateTime.Now.Date,1);
+            ExchangeHistoryDTO exchangeHistory1 = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 38.5M, DateTime.Now.Date, 1);
+            ExchangeHistoryDTO exchangeHistory2 = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 40, DateTime.Now.Date, 1);
 
-            
+
             List<ExchangeHistoryDTO> exchangeHistoryDTOList = new List<ExchangeHistoryDTO>();
             exchangeHistoryDTOList.Add(exchangeHistory1);
             exchangeHistoryDTOList.Add(exchangeHistory2);
@@ -145,7 +145,7 @@ namespace ControllerTests
             Assert.IsInstanceOfType(categoryList[1], typeof(ExchangeHistory));
         }
 
-        
+
 
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.Enums;
 using BusinessLogic.Goal_Components;
 using Mappers;
 using System;
@@ -20,7 +21,7 @@ namespace Controller.Mappers
             List<CategoryDTO> listCategoryDTO = MapperCategory.ToListOfCategoryDTO(goalToConvert.CategoriesOfGoal);
 
             GoalDTO goalDTO =
-                new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
+                new GoalDTO(goalToConvert.Title, goalToConvert.MaxAmountToSpend, (CurrencyEnumDTO)goalToConvert.CurrencyOfAmount, listCategoryDTO, goalToConvert.UserId);
             goalDTO.GoalId = goalToConvert.GoalId;
 
             return goalDTO;

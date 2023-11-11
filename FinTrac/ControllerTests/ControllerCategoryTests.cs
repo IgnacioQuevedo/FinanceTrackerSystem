@@ -34,7 +34,7 @@ namespace ControllerTests
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
             _userConnected.UserId = 1;
 
-            categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
+            categoryDTO = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
             categoryDTO.CategoryId = 1;
 
             _controller.RegisterUser(_userConnected);
@@ -58,9 +58,9 @@ namespace ControllerTests
         [TestMethod]
         public void CreateCategoryMethodWithCorrectData_ShoudlAddCategoryToDb()
         {
-            CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             CategoryDTO dtoToAdd2 =
-                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+                new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             Category categoryInDb = new Category();
 
             _controller.CreateCategory(dtoToAdd);
@@ -71,8 +71,8 @@ namespace ControllerTests
             Assert.IsNotNull(categoryInDb.CategoryUser);
             Assert.AreEqual(dtoToAdd.UserId, categoryInDb.UserId);
             Assert.AreEqual(dtoToAdd.Name, categoryInDb.Name);
-            Assert.AreEqual(dtoToAdd.Status, categoryInDb.Status);
-            Assert.AreEqual(dtoToAdd.Type, categoryInDb.Type);
+            Assert.AreEqual(dtoToAdd.Status, (StatusEnumDTO)categoryInDb.Status);
+            Assert.AreEqual(dtoToAdd.Type, (TypeEnumDTO)categoryInDb.Type);
             Assert.AreEqual(2, _testDb.Users.First().MyCategories.Count);
         }
 
@@ -80,20 +80,20 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void CreateCategoryMethodWithIncorrectData_ShouldThrowException()
         {
-            CategoryDTO dtoToAdd = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd = new CategoryDTO("", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
 
             _controller.CreateCategory(dtoToAdd);
         }
 
         #endregion
 
-        #region Find Category
+        #region Find Category In Db
 
         [TestMethod]
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
         {
             _controller.CreateCategory(categoryDTO);
-            Category categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+            Category categoryFound = _controller.FindCategoryInDb(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
             Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
@@ -106,6 +106,18 @@ namespace ControllerTests
             _controller.FindCategory(categoryDTO.CategoryId);
         }
 
+        [TestMethod]
+        public void GivenCategoryDTO_ShouldReturnCategoryDTO_OnDb()
+        {
+            _controller.CreateCategory(categoryDTO);
+
+            CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+
+            Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
+            Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
+        }
+
+
         #endregion
 
         #region Update Category
@@ -115,18 +127,18 @@ namespace ControllerTests
         {
             _controller.CreateCategory(categoryDTO);
 
-            CategoryDTO categoryDtoWithUpdates = new CategoryDTO("Party", StatusEnum.Disabled, TypeEnum.Outcome, 1);
+            CategoryDTO categoryDtoWithUpdates = new CategoryDTO("Party", StatusEnumDTO.Disabled, TypeEnumDTO.Outcome, 1);
             categoryDtoWithUpdates.CategoryId = 1;
 
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
-            Category categoryInDbWithSupossedChanges = _controller.FindCategory(categoryDTO.CategoryId);
+            Category categoryInDbWithSupossedChanges = _controller.FindCategoryInDb(categoryDTO.CategoryId);
 
             Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId, categoryDtoWithUpdates.CategoryId);
             Assert.AreEqual(categoryInDbWithSupossedChanges.UserId, categoryDtoWithUpdates.UserId);
             Assert.AreEqual(categoryInDbWithSupossedChanges.Name, categoryDtoWithUpdates.Name);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.Status, categoryDtoWithUpdates.Status);
-            Assert.AreEqual(categoryInDbWithSupossedChanges.Type, categoryDtoWithUpdates.Type);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Status, (StatusEnum)categoryDtoWithUpdates.Status);
+            Assert.AreEqual(categoryInDbWithSupossedChanges.Type, (TypeEnum)categoryDtoWithUpdates.Type);
         }
 
         [TestMethod]
@@ -134,13 +146,13 @@ namespace ControllerTests
         public void TryingToUpdateWithoutAnyChanges_ShouldThrowException()
         {
             CategoryDTO categoryRegistered =
-                new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+                new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             categoryRegistered.CategoryId = 1;
 
             _controller.CreateCategory(categoryRegistered);
 
             CategoryDTO categoryWithoutUpdates =
-                new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+                new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             categoryWithoutUpdates.CategoryId = categoryRegistered.CategoryId;
             _controller.UpdateCategory(categoryWithoutUpdates);
         }
@@ -153,7 +165,7 @@ namespace ControllerTests
         public void GivenACategoryDTOToDelete_ShouldBeDeletedOnDb()
         {
             CategoryDTO categoryDTO2 =
-                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+                new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             categoryDTO2.CategoryId = 2;
 
             _controller.CreateCategory(categoryDTO);
@@ -184,8 +196,8 @@ namespace ControllerTests
         public void ReceiveCategoryListMethod_ShouldReturnCategoryList()
         {
             CategoryDTO category2 =
-                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
-            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnum.Enabled, TypeEnum.Outcome, _userConnected.UserId);
+                new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
+            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, _userConnected.UserId);
 
             _controller.CreateCategory(categoryDTO);
             _controller.CreateCategory(category2);
@@ -212,8 +224,8 @@ namespace ControllerTests
         public void GetAllCategoriesMethod_ShouldReturnCategoryDTOList()
         {
             CategoryDTO category2 =
-                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
-            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnum.Enabled, TypeEnum.Outcome, _userConnected.UserId);
+                new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
+            CategoryDTO category3 = new CategoryDTO("Gym", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, _userConnected.UserId);
 
             _controller.CreateCategory(categoryDTO);
             _controller.CreateCategory(category2);

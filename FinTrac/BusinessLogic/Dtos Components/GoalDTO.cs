@@ -14,12 +14,12 @@ namespace BusinessLogic.Dtos_Components
         public int? UserId { get; set; }
         public string Title { get; set; }
         public int MaxAmountToSpend { get; set; }
-        public CurrencyEnum CurrencyOfAmount { get; set; }
+        public CurrencyEnumDTO CurrencyOfAmount { get; set; }
         public List<CategoryDTO> CategoriesOfGoalDTO { get; set; }
 
         public GoalDTO() { }
 
-        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnum currencyOfAmount, List<CategoryDTO> categoriesOfGoal, int? userId)
+        public GoalDTO(string title, int maxAmountToSpend, CurrencyEnumDTO currencyOfAmount, List<CategoryDTO> categoriesOfGoal, int? userId)
         {
             Title = title;
             MaxAmountToSpend = maxAmountToSpend;

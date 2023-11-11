@@ -49,8 +49,8 @@ namespace TestProject1
         [TestMethod]
         public void GivenStatus_BothShouldBeSetted()
         {
-            StatusEnum categoryStatus1 = StatusEnum.Enabled;
-            StatusEnum categoryStatus2 = StatusEnum.Disabled;
+            StatusEnumDTO categoryStatus1 = StatusEnumDTO.Enabled;
+            StatusEnumDTO categoryStatus2 = StatusEnumDTO.Disabled;
 
             _categoryDto.Status = categoryStatus1;
             Assert.AreEqual(_categoryDto.Status, categoryStatus1);
@@ -66,8 +66,8 @@ namespace TestProject1
         [TestMethod]
         public void GivenType_BothShouldBeSetted()
         {
-            TypeEnum typeEnum = TypeEnum.Income;
-            TypeEnum typeEnum2 = TypeEnum.Outcome;
+            TypeEnumDTO typeEnum = TypeEnumDTO.Income;
+            TypeEnumDTO typeEnum2 = TypeEnumDTO.Outcome;
 
             _categoryDto.Type = typeEnum;
             Assert.AreEqual(_categoryDto.Type, typeEnum);
@@ -111,8 +111,8 @@ namespace TestProject1
         public void GivenValues_ShouldBePossibleToCreateACategoryDTO()
         {
             string categoryName = "Food";
-            StatusEnum categoryStatus = StatusEnum.Enabled;
-            TypeEnum categoryType = TypeEnum.Income;
+            StatusEnumDTO categoryStatus = StatusEnumDTO.Enabled;
+            TypeEnumDTO categoryType = TypeEnumDTO.Income;
             int categoryUserId = 1;
 
             CategoryDTO genericCategoryDTO =

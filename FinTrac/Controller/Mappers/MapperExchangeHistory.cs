@@ -1,4 +1,5 @@
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using Mappers;
@@ -12,7 +13,7 @@ public abstract class MapperExchangeHistory
         try
         {
             ExchangeHistory exchangeHistory =
-                new ExchangeHistory(exchangeHistoryDto.Currency, exchangeHistoryDto.Value,
+                new ExchangeHistory((CurrencyEnum)exchangeHistoryDto.Currency, exchangeHistoryDto.Value,
                     exchangeHistoryDto.ValueDate);
 
             exchangeHistory.UserId = exchangeHistoryDto.UserId;
@@ -28,7 +29,7 @@ public abstract class MapperExchangeHistory
     public static ExchangeHistoryDTO ToExchangeHistoryDTO(ExchangeHistory exchangeHistory)
     {
         ExchangeHistoryDTO exchangeHistoryDTO =
-            new ExchangeHistoryDTO(exchangeHistory.Currency, exchangeHistory.Value, exchangeHistory.ValueDate,
+            new ExchangeHistoryDTO( (CurrencyEnumDTO)exchangeHistory.Currency, exchangeHistory.Value, exchangeHistory.ValueDate,
                 exchangeHistory.UserId);
 
         exchangeHistoryDTO.ExchangeHistoryId = exchangeHistory.ExchangeHistoryId;

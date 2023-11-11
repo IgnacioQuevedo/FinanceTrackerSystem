@@ -1,8 +1,7 @@
 ﻿@page "/Goal/GoalCreation"
 
-@using BusinessLogic.Goal_Components;
-@using BusinessLogic.Category_Components;
-
+@using Controller.IControllers
+@inject ICategoryController CategoryController;
 <h3>Goal Creation</h3>
 
 @if (ErrorAlert.isError)
@@ -15,16 +14,29 @@
         <label for="title">Title</label>
         <input type="text" class="form-control" id="Name" @bind="title" />
     </div>
+
     <br />
+
     <div class="form-group">
         <label for="title">Max Amount To Spend</label>
         <input type="number" class="form-control" id="Name" @bind="maxAmount" />
+    </div>
+
+    <br />
+
+    <div>
+        <label for="title">Currency Type</label>
+        <select class="form-select" aria-label="Default select example" @bind="currencyType">
+            <option value="@CurrencyEnumDTO.UY">@CurrencyEnumDTO.UY</option>
+            <option value="@CurrencyEnumDTO.USA">@CurrencyEnumDTO.USA</option>
+            <option value="@CurrencyEnumDTO.EUR">@CurrencyEnumDTO.EUR</option>
+        </select>
     </div>
     <br />
 
     <select class="form-select" aria-label="multiple select example" multiple @onchange="OnChangeCategories">
 
-        @foreach (var category in allCategoriesCreated.Where(t => t != null))
+        @foreach (var category in allCategoriesCreated)
         {
             <option value="@category.CategoryId">@category.Name</option>
         }
@@ -45,17 +57,17 @@
 
 @code
 {
-
     private string title;
     private int maxAmount;
-    private List<Category> categoriesAssignedToGoal;
-    private List<Category> allCategoriesCreated;
+    private CurrencyEnumDTO currencyType;
+    private List<CategoryDTO> categoriesAssignedToGoal;
+    private List<CategoryDTO> allCategoriesCreated;
 
     [CascadingParameter]
 
-    public User user { get; set; }
+    public UserDTO userConnected { get; set; }
 
-    private Goal goalToCreate;
+    private GoalDTO goalToCreate;
 
     public string errorTxt { get; set; }
 
@@ -68,8 +80,7 @@
     {
         try
         {
-            goalToCreate = new Goal(title, maxAmount, categoriesAssignedToGoal);
-            user.AddGoal(goalToCreate);
+            goalToCreate = new GoalDTO(title, maxAmount, currencyType, categoriesAssignedToGoal, userConnected.UserId);
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             ResetValues();
@@ -85,11 +96,11 @@
     public void OnChangeCategories(ChangeEventArgs elementSelected)
     {
         var stringValue = (string[])elementSelected.Value;
-        var categoriesSelected = new List<Category>();
+        var categoriesSelected = new List<CategoryDTO>();
 
         foreach (var stringId in stringValue)
         {
-            var categorySelected = user.MyCategories[int.Parse(stringId)];
+            var categorySelected = CategoryController.FindCategory(int.Parse(stringId));
             categoriesSelected.Add(categorySelected);
         }
         categoriesAssignedToGoal = categoriesSelected;
@@ -99,8 +110,8 @@
     {
         title = "";
         maxAmount = 0;
-        allCategoriesCreated = user.GetCategories();
-        categoriesAssignedToGoal = new List<Category>();
+        // allCategoriesCreated = userConnected.GetCategories();
+        categoriesAssignedToGoal = new List<CategoryDTO>();
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
 
