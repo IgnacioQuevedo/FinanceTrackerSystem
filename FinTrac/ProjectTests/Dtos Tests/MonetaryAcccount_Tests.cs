@@ -36,5 +36,15 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenCurrency_ShouldBeSetted()
+        {
+            MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
+
+            myMonetaryAccountDTO.Currency = CurrencyEnumDTO.EUR;
+
+            Assert.AreEqual(myMonetaryAccountDTO.Currency, CurrencyEnumDTO.UY);
+        }
     }
 }
