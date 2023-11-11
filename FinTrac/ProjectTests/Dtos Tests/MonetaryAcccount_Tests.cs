@@ -29,7 +29,7 @@ namespace TestProject1
 
             myMonetaryAccountDTO.Amount = 1000;
 
-            Assert.AreEqual(myMonetaryAccountDTO.Amount, 0);
+            Assert.AreEqual(myMonetaryAccountDTO.Amount, 1000);
         }
     }
 }
