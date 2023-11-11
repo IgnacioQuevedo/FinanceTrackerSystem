@@ -96,14 +96,11 @@ namespace ControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
-        public void CreateExchangeMethodWithIncorrectData_ShoulThrowException()
+        public void CreateExchangeMethodWithIncorrectData_ShouldThrowException()
         {
             exchangeHistoryToCreate.Value = -1;
             _controller.CreateExchangeHistory(exchangeHistoryToCreate);
         }
-        
-        
-        
         #endregion
     }
 }
