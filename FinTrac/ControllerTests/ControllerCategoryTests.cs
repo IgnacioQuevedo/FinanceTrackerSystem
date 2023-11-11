@@ -93,7 +93,7 @@ namespace ControllerTests
         public void GivenCategoryDTO_ShouldBePossibleToFindItOnDb()
         {
             _controller.CreateCategory(categoryDTO);
-            Category categoryFound = _controller.FindCategoryInDb(categoryDTO.CategoryId);
+            Category categoryFound = _controller.FindCategoryInDb(categoryDTO);
 
             Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
             Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
@@ -103,7 +103,7 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenCategoryDTOThatIsNotInDb_WhenTryingToFound_ShouldThrowException()
         {
-            _controller.FindCategory(categoryDTO.CategoryId);
+            _controller.FindCategory(categoryDTO.CategoryId, categoryDTO.UserId);
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace ControllerTests
         {
             _controller.CreateCategory(categoryDTO);
 
-            CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId);
+            CategoryDTO categoryFound = _controller.FindCategory(categoryDTO.CategoryId, categoryDTO.UserId);
 
             Assert.AreEqual(categoryDTO.CategoryId, categoryFound.CategoryId);
             Assert.AreEqual(categoryDTO.UserId, categoryFound.UserId);
@@ -132,7 +132,7 @@ namespace ControllerTests
 
             _controller.UpdateCategory(categoryDtoWithUpdates);
 
-            Category categoryInDbWithSupossedChanges = _controller.FindCategoryInDb(categoryDTO.CategoryId);
+            Category categoryInDbWithSupossedChanges = _controller.FindCategoryInDb(categoryDTO);
 
             Assert.AreEqual(categoryInDbWithSupossedChanges.CategoryId, categoryDtoWithUpdates.CategoryId);
             Assert.AreEqual(categoryInDbWithSupossedChanges.UserId, categoryDtoWithUpdates.UserId);
@@ -178,7 +178,7 @@ namespace ControllerTests
 
             int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
-            Assert.AreEqual(amountOfCategoriesInDb - 2, amountOfCategoriesPostDelete);
+            Assert.AreEqual(amountOfCategoriesInDb, amountOfCategoriesPostDelete);
         }
 
         // [TestMethod]

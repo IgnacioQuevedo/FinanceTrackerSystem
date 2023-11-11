@@ -62,7 +62,7 @@
 
     protected override void OnInitialized()
     {
-        categoryToEdit = CategoryController.FindCategory(categoryId);
+        categoryToEdit = CategoryController.FindCategory(categoryId, userConnected.UserId);
         name = categoryToEdit.Name;
         status = categoryToEdit.Status;
         ErrorAlert.isError = false;
