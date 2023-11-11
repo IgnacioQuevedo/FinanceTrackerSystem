@@ -11,10 +11,10 @@ namespace Controller.IControllers
 
         public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound,int idUserConnected);
 
-        public void UpdateExchangeHistory(ExchangeHistoryDTO exchangeHistoryToUpdate);
+        public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates);
 
-        public void DeleteExchangeHistory(ExchangeHistoryDTO exchangeHistoryId);
+        public void DeleteExchangeHistory(ExchangeHistoryDTO dtoToDelete);
 
-        public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userId);
+        public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedId);
     }
 }

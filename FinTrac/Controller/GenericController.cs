@@ -339,22 +339,22 @@ public class GenericController : IUserController, ICategoryController
             _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
             _userRepo.Update(_userConnected);
         }
-        catch (ExceptionExchangeHistoryManagement Exception)
+
+        catch (Exception ExceptionType)
+            when (
+                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+            )
         {
-            throw new Exception(Exception.Message);
-        }
-        catch (ExceptionMapper Exception)
-        {
-            throw new Exception(Exception.Message);
+            throw new Exception(ExceptionType.Message);
         }
     }
 
-    public void DeleteExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
+    public void DeleteExchangeHistory(ExchangeHistoryDTO dtoToDelete)
     {
         try
         {
-            SetUserConnected((int)exchangeHistoryToCreate.UserId);
-            ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(exchangeHistoryToCreate);
+            SetUserConnected((int)dtoToDelete.UserId);
+            ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
             exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
             _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
             _userRepo.Update(_userConnected);
@@ -368,10 +368,9 @@ public class GenericController : IUserController, ICategoryController
         }
     }
 
-    public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedUserId)
+    public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedId)
     {
-        SetUserConnected(userConnectedUserId);
+        SetUserConnected(userConnectedId);
         return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
     }
-    
 }
