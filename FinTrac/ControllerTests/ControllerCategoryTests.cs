@@ -34,7 +34,7 @@ namespace ControllerTests
             _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
             _userConnected.UserId = 1;
 
-            categoryDTO = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, 1);
+            categoryDTO = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
             categoryDTO.CategoryId = 1;
 
             _controller.RegisterUser(_userConnected);
@@ -58,9 +58,9 @@ namespace ControllerTests
         [TestMethod]
         public void CreateCategoryMethodWithCorrectData_ShoudlAddCategoryToDb()
         {
-            CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             CategoryDTO dtoToAdd2 =
-                new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+                new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             Category categoryInDb = new Category();
 
             _controller.CreateCategory(dtoToAdd);
@@ -80,7 +80,7 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void CreateCategoryMethodWithIncorrectData_ShouldThrowException()
         {
-            CategoryDTO dtoToAdd = new CategoryDTO("", StatusEnum.Enabled, TypeEnum.Income, _userConnected.UserId);
+            CategoryDTO dtoToAdd = new CategoryDTO("", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
 
             _controller.CreateCategory(dtoToAdd);
         }

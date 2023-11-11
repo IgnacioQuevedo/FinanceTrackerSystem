@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Enums
+namespace BusinessLogic.Dtos_Components
 {
-    public enum CurrencyEnum
+    public enum CurrencyEnumDTO
     {
         [Description("$")]
         UY = 1,

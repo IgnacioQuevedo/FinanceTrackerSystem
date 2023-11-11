@@ -6,7 +6,7 @@ namespace Controller.IControllers
     public interface ICategoryController
     {
         public void CreateCategory(CategoryDTO dtoToAdd);
-        public Category FindCategory(int idOfCategoryToFind);
+        public CategoryDTO FindCategory(int idOfCategoryToFind);
         public void UpdateCategory(CategoryDTO categoryDtoWithUpdates);
         public void DeleteCategory(int categoryDtoCategoryId);
         public List<CategoryDTO> GetAllCategories(int userConnectedId);

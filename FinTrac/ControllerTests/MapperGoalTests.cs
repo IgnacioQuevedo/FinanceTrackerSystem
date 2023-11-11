@@ -53,8 +53,8 @@ namespace ControllerTests
             _genericListOfCategories.Add(_category1);
             _genericListOfCategories.Add(_category2);
 
-            _categoryDTO1 = new CategoryDTO("Food", StatusEnum.Enabled, TypeEnum.Outcome, 0);
-            _categoryDTO2 = new CategoryDTO("Party", StatusEnum.Enabled, TypeEnum.Outcome, 0);
+            _categoryDTO1 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 0);
+            _categoryDTO2 = new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 0);
             _categoryDTO1.CategoryId = 1;
             _categoryDTO2.CategoryId = 1;
 

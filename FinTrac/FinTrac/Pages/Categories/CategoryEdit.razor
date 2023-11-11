@@ -1,6 +1,5 @@
 ﻿@page "/Category/{categoryId:int}/Edit"
 @using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
 @layout MainLayout
 
 @inject  ICategoryController CategoryController;
@@ -21,8 +20,8 @@
         <label for="Status">Status</label>
         <select class="form-select" aria-label="Default select example" @bind="status">
 
-            <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
-            <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
+            <option value="@StatusEnumDTO.Enabled">@StatusEnumDTO.Enabled</option>
+            <option value="@StatusEnumDTO.Disabled">@StatusEnumDTO.Disabled</option>
         </select>
     </div>
 </form>
@@ -57,8 +56,8 @@
 
 
     private string name;
-    private StatusEnum status;
-    private Category categoryToEdit;
+    private StatusEnumDTO status;
+    private CategoryDTO categoryToEdit;
     private CategoryDTO categoryUpdated;
     public string errorTxt { get; set; }
 
