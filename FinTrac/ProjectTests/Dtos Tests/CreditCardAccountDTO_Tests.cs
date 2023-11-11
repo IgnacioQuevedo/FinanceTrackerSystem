@@ -53,7 +53,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.Currency = CurrencyEnumDTO.USA;
 
-            Assert.AreEqual(_creditCardAccountDTO.Currency, CurrencyEnumDTO.EUR);
+            Assert.AreEqual(_creditCardAccountDTO.Currency, CurrencyEnumDTO.USA);
         }
     }
 }
