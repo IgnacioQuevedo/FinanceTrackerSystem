@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace BusinessLogic.Dtos_Components
 
         public int CreditCardAccountId { get; set; }
         public string Name { get; set; }
+        public CurrencyEnumDTO Currency { get; set; }
 
 
 

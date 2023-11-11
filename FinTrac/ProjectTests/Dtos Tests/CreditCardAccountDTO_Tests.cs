@@ -47,5 +47,13 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenCurrency_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.Currency = CurrencyEnumDTO.USA;
+
+            Assert.AreEqual(_creditCardAccountDTO.Currency, CurrencyEnumDTO.EUR);
+        }
     }
 }
