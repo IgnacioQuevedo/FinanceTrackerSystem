@@ -1,5 +1,6 @@
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
+using System.Transactions;
 
 namespace TestProject1
 {
@@ -12,6 +13,7 @@ namespace TestProject1
         private CreditCardAccountDTO _creditCardAccountDTO;
         private int _creditCardAccountId;
         private string _nameToSet;
+        private CurrencyEnumDTO _currencyToSet;
 
         [TestInitialize]
         public void Initialize()
@@ -19,6 +21,7 @@ namespace TestProject1
             _creditCardAccountDTO = new CreditCardAccountDTO();
             _creditCardAccountId = 1;
             _nameToSet = "Itau volar";
+            _currencyToSet = CurrencyEnumDTO.EUR;
         }
 
         #endregion
@@ -48,12 +51,16 @@ namespace TestProject1
 
         #endregion
 
+        #region Currency
+
         [TestMethod]
         public void GivenCurrency_ShouldBeSetted()
         {
-            _creditCardAccountDTO.Currency = CurrencyEnumDTO.USA;
+            _creditCardAccountDTO.Currency = _currencyToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.Currency, CurrencyEnumDTO.USA);
+            Assert.AreEqual(_creditCardAccountDTO.Currency, _currencyToSet);
         }
+
+        #endregion
     }
 }
