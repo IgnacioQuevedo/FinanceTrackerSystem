@@ -57,13 +57,11 @@ namespace ControllerTests
 			
 			
 			Assert.IsInstanceOfType(exchangeHistoryGenerated,typeof(ExchangeHistory));
-			
-
-
-
+			Assert.AreEqual(exchangeHistoryGenerated.Currency,exchangeHistoryDTO.Currency);
+			Assert.AreEqual(exchangeHistoryGenerated.Value,exchangeHistoryDTO.Value);
+			Assert.AreEqual(exchangeHistoryGenerated.ValueDate,exchangeHistoryDTO.ValueDate);
+			Assert.AreEqual(exchangeHistoryGenerated.UserId,exchangeHistoryDTO.UserId);
 		}
 		
-		
-
 	}
 }
