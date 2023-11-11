@@ -101,7 +101,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region Find ExchangeHistory
+        #region Find ExchangeHistoryInDb
 
         [TestMethod]
         public void GivenExchangeHistoryDTO_ToFindInDb_ShouldBeFounded_AndReturnTheExchangeHistory()
@@ -125,6 +125,8 @@ namespace ControllerTests
         }
 
         #endregion
+
+        #region Find ExchangeHistory
         
         [TestMethod]
         public void GivenExchangeHistoryId_MustBeFindInDb_AndShouldBeFoundedAndReturnedDTO()
@@ -138,6 +140,8 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFound.ValueDate);
             Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFound.Currency);
         }
+        
+        #endregion
         
 
     }
