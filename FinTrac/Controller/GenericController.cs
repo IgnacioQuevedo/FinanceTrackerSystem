@@ -342,4 +342,9 @@ public class GenericController : IUserController, ICategoryController
             throw new Exception(Exception.Message);
         }
     }
+
+    public void DeleteExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
+    {
+        throw new NotImplementedException();
+    }
 }

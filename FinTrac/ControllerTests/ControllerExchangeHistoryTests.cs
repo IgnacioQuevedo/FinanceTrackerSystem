@@ -176,5 +176,22 @@ namespace ControllerTests
         }
 
         #endregion
+
+
+        [TestMethod]
+        public void GivenExchangeHistoryDTO_WhenDeleting_ShouldDeleteItFromDb()
+        {
+            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
+            int exchangeHistoriesInDbPreDelete = _testDb.Users.First().MyExchangesHistory.Count;
+
+            _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
+            
+            int exchangeHistoriesInDbPostDelete = _testDb.Users.First().MyExchangesHistory.Count;
+
+            Assert.AreEqual(exchangeHistoriesInDbPostDelete,exchangeHistoriesInDbPreDelete - 1);
+
+        }
+        
+        
     }
 }
