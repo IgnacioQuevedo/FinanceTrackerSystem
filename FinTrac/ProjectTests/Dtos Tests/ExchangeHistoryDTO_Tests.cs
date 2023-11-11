@@ -9,7 +9,7 @@ using BusinessLogic.Enums;
 namespace BusinessLogicTests.Dtos_Tests
 {
     [TestClass]
-    public class ExchangeHistory_Tests
+    public class ExchangeHistoryDTO_Tests
     {
         private ExchangeHistoryDTO _genericExchangeHistoryDTO;
         private CurrencyEnum _genericCurrencyDTO;
@@ -60,17 +60,31 @@ namespace BusinessLogicTests.Dtos_Tests
         }
 
         #endregion
+        
+        #region User Id
+
+        [TestMethod]
+        public void GivenUserId_ShouldBeSetted()
+        {
+            int genericUserId = 1;
+            _genericExchangeHistoryDTO.UserId = genericUserId;
+
+            Assert.AreEqual(genericUserId,  _genericExchangeHistoryDTO.UserId);
+        }
+
+        #endregion
 
         #region Constructor
 
         [TestMethod]
         public void GivenValues_ShouldBePossibleToCreateExchangeHistoryDTO()
         {
-            ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO);
+            ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(_genericCurrencyDTO, genericValueDTO, _dateOfExchangeDTO, 1);
 
             Assert.AreEqual(_genericCurrencyDTO, exchangeHistoryDTO.Currency);
             Assert.AreEqual(genericValueDTO, exchangeHistoryDTO.Value);
             Assert.AreEqual(_dateOfExchangeDTO, exchangeHistoryDTO.ValueDate);
+            Assert.AreEqual(exchangeHistoryDTO.UserId,1);
         }
 
         #endregion

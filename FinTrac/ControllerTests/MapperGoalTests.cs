@@ -60,7 +60,9 @@ namespace ControllerTests
             _genericListOfCategoriesDTO.Add(_categoryDTO2);
 
             _goalDTOToConvert = new GoalDTO("Less party", 100, CurrencyEnum.UY, _genericListOfCategoriesDTO, 0);
-
+            _goalDTOToConvert.GoalId = 1;
+            _goalDTOToConvert.UserId = 1;
+            
             _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
             _goalToConvert.GoalId = 1;
         }
