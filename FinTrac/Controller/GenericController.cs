@@ -288,9 +288,10 @@ public class GenericController : IUserController, ICategoryController
 
     public ExchangeHistory FindExchangeHistory(ExchangeHistoryDTO exchangeToFound)
     {
-        SetUserConnected((int)exchangeToFound.UserId);
         
-        ExchangeHistory exchangeFound = new ExchangeHistory();
+        SetUserConnected((int)exchangeToFound.UserId);
+    
+        ExchangeHistory exchangeFound = null;
 
             foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
             {
@@ -300,6 +301,13 @@ public class GenericController : IUserController, ICategoryController
                 }
             }
 
-            return exchangeFound;
+            if (exchangeFound == null)
+            {
+                throw new Exception("Exchange History was not found, an error on index must be somewhere.");
+            }
+            else
+            {
+                return exchangeFound;
+            }
     }
 }
