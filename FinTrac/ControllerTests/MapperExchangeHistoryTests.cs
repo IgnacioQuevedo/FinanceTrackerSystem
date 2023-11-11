@@ -9,70 +9,73 @@ using Mappers;
 
 namespace ControllerTests
 {
-	[TestClass]
-	public class ExchangeHistoryMapper
-	{
-		#region Initialize
+    [TestClass]
+    public class ExchangeHistoryMapper
+    {
+        #region Initialize
 
-		private GenericController _controller;
-		private SqlContext _testDb;
-		private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
+        private GenericController _controller;
+        private SqlContext _testDb;
+        private readonly IAppContextFactory _contextFactory = new InMemoryAppContextFactory();
 
-		private UserRepositorySql _userRepo;
-		private UserDTO _userDTO;
-		private UserDTO _userConnected;
+        private UserRepositorySql _userRepo;
+        private UserDTO _userDTO;
+        private UserDTO _userConnected;
 
-		[TestInitialize]
-		public void Initialize()
-		{
-			_testDb = _contextFactory.CreateDbContext();
-			_userRepo = new UserRepositorySql(_testDb);
-			_controller = new GenericController(_userRepo);
-			
-			_userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
-			_userConnected.UserId = 1;
-			
-			_controller.RegisterUser(_userConnected);
-			_controller.SetUserConnected(_userConnected.UserId);
-		}
+        [TestInitialize]
+        public void Initialize()
+        {
+            _testDb = _contextFactory.CreateDbContext();
+            _userRepo = new UserRepositorySql(_testDb);
+            _controller = new GenericController(_userRepo);
 
-		#endregion
+            _userConnected = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            _userConnected.UserId = 1;
 
-		#region Cleanup
+            _controller.RegisterUser(_userConnected);
+            _controller.SetUserConnected(_userConnected.UserId);
+        }
 
-		[TestCleanup]
-		public void CleanUp()
-		{
-			_testDb.Database.EnsureDeleted();
-		}
+        #endregion
 
-		#endregion
+        #region Cleanup
 
-		[TestMethod]
-		public void GivenExchangeHistoryDTOWithCorrectData_ShouldBePossibleToConvertItToExchangeHistory()
-		{
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _testDb.Database.EnsureDeleted();
+        }
 
-			ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now,_userConnected.UserId);
+        #endregion
 
-			ExchangeHistory exchangeHistoryGenerated = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
-			
-			
-			Assert.IsInstanceOfType(exchangeHistoryGenerated,typeof(ExchangeHistory));
-			Assert.AreEqual(exchangeHistoryGenerated.Currency,exchangeHistoryDTO.Currency);
-			Assert.AreEqual(exchangeHistoryGenerated.Value,exchangeHistoryDTO.Value);
-			Assert.AreEqual(exchangeHistoryGenerated.ValueDate,exchangeHistoryDTO.ValueDate);
-			Assert.AreEqual(exchangeHistoryGenerated.UserId,exchangeHistoryDTO.UserId);
-		}
-		
-		[TestMethod]
-		[ExpectedException(typeof(ExceptionMapper))]
-		public void GivenExchangeHistoryDTOWithIncorrectData_ShouldThrowException()
-		{
+        #region ToExchangeHistory
 
-			ExchangeHistoryDTO exchangeHistoryDTO = new ExchangeHistoryDTO(CurrencyEnum.USA, -3, DateTime.Now,_userConnected.UserId);
+        [TestMethod]
+        public void GivenExchangeHistoryDTOWithCorrectData_ShouldBePossibleToConvertItToExchangeHistory()
+        {
+            ExchangeHistoryDTO exchangeHistoryDTO =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 38.5M, DateTime.Now, _userConnected.UserId);
 
-			ExchangeHistory exchangeHistoryGenerated = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
-		}
-		
-	}
+            ExchangeHistory exchangeHistoryGenerated = MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
+
+
+            Assert.IsInstanceOfType(exchangeHistoryGenerated, typeof(ExchangeHistory));
+            Assert.AreEqual(exchangeHistoryGenerated.Currency, exchangeHistoryDTO.Currency);
+            Assert.AreEqual(exchangeHistoryGenerated.Value, exchangeHistoryDTO.Value);
+            Assert.AreEqual(exchangeHistoryGenerated.ValueDate, exchangeHistoryDTO.ValueDate);
+            Assert.AreEqual(exchangeHistoryGenerated.UserId, exchangeHistoryDTO.UserId);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionMapper))]
+        public void GivenExchangeHistoryDTOWithIncorrectData_ShouldThrowException()
+        {
+            ExchangeHistoryDTO exchangeHistoryDTO =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, -3, DateTime.Now, _userConnected.UserId);
+
+            MapperExchangeHistory.ToExchangeHistory(exchangeHistoryDTO);
+        }
+
+        #endregion
+    }
 }
