@@ -14,7 +14,7 @@ namespace TestProject1
 
             myMonetaryAccountDTO.MonetaryAccountId = 1;
 
-            Assert.AreEqual(myMonetaryAccountDTO.MonetaryAccountId, 0);
+            Assert.AreEqual(myMonetaryAccountDTO.MonetaryAccountId, 1);
         }
 
 
