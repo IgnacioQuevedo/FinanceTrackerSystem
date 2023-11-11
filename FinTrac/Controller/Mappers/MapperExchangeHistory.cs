@@ -35,4 +35,9 @@ public abstract class MapperExchangeHistory
 
         return exchangeHistoryDTO;
     }
+
+    public static List<ExchangeHistoryDTO> ToListOfExchangeHistoryDTO(List<ExchangeHistory> exchangeHistoryList)
+    {
+        throw new NotImplementedException();
+    }
 }
