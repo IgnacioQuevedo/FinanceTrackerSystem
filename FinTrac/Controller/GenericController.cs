@@ -223,6 +223,7 @@ public class GenericController : IUserController, ICategoryController
             List<Category> categoriesOfGoal = SetListOfCategories(goalDtoToCreate);
             Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate, categoriesOfGoal);
             goalToAdd.GoalId = 0;
+
             _userConnected.AddGoal(goalToAdd);
             _userRepo.Update(_userConnected);
         }

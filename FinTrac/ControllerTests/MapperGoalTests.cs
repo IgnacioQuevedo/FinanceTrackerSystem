@@ -33,6 +33,8 @@ namespace ControllerTests
         private Goal _goalToConvert;
         private GoalDTO _goalDTOToConvert;
 
+        private List<Goal> _goalList;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -64,6 +66,11 @@ namespace ControllerTests
             _goalToConvert = new Goal("Less party", 100, _genericListOfCategories);
             _goalToConvert.GoalId = 1;
             _goalDTOToConvert.UserId = 0;
+
+            _goalList = new List<Goal>();
+            _goalList.Add(_goalToConvert);
+
+
         }
 
         #endregion
@@ -120,6 +127,7 @@ namespace ControllerTests
 
 
         [TestMethod]
+
         [ExpectedException(typeof(ExceptionMapper))]
         public void GivenGoalDTOWithIncorrectData_ShouldThrowException()
         {
@@ -131,5 +139,7 @@ namespace ControllerTests
         }
 
         #endregion
+
     }
+
 }

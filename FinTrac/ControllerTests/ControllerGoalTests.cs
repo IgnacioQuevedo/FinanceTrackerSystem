@@ -87,7 +87,6 @@ namespace ControllerTests
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].UserId, goalInDb.CategoriesOfGoal[0].UserId);
             Assert.AreEqual(_goalDTOToAdd.CategoriesOfGoalDTO[0].CategoryId, goalInDb.CategoriesOfGoal[0].CategoryId);
 
-
         }
 
         #endregion
