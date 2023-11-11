@@ -373,4 +373,5 @@ public class GenericController : IUserController, ICategoryController
         SetUserConnected(userConnectedUserId);
         return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
     }
+    
 }

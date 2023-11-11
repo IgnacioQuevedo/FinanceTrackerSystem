@@ -250,7 +250,6 @@ namespace ControllerTests
         #endregion
 
         #region Get All Exchange Histories DTO
-
         [TestMethod]
         public void GetAllExchangeHistories_ShouldReturnListWithExchangeHistoriesDTO()
         {
@@ -266,6 +265,5 @@ namespace ControllerTests
         }
 
         #endregion 
-     
     }
 }
