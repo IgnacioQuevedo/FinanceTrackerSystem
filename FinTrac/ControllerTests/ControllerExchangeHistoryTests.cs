@@ -205,45 +205,22 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenExchangeHistoryDTOWithTransactions_WhenDeleting_ShouldThrowException()
         {
-            Account myaccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
-            Category categoria = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
-            categoria.CategoryId = 0;
-            categoria.UserId = 1;
-            categoria.CategoryUser = MapperUser.ToUser(_userConnected);
-            _testDb.Users.First().MyCategories.Add(categoria);
-            _testDb.SaveChanges();
-
-           
-            
-            myaccount.UserId = 1;
-            myaccount.AccountId = 0;
-            myaccount.AccountUser = MapperUser.ToUser(_userConnected);
-            _testDb.Users.First().MyAccounts.Add(myaccount);
-            _testDb.SaveChanges();
-            
-            Transaction transaction =
-                new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income, categoria);
-
-            transaction.TransactionId = 0;
-            transaction.TransactionCategory = categoria;
-            transaction.CategoryId = 1;
-            transaction.AccountId = 1;
-            transaction.TransactionAccount = myaccount;
+            Account exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
+            Category exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
+            Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
             Transaction.CheckExistenceOfExchange(DateTime.Now.Date,_testDb.Users.First().MyExchangesHistory);
             
+            exampleCategory.CategoryId = 0;
+            exampleAccount.AccountId = 0;
+            transaction.TransactionId = 0;
             
+            _testDb.Users.First().MyCategories.Add(exampleCategory);
+            _testDb.Users.First().MyAccounts.Add(exampleAccount);
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction);
-            _testDb.SaveChanges();
             
+            _testDb.SaveChanges();
             _controller.DeleteExchangeHistory(exchangeHistoryToCreate);
             
-            
-            int exchangeHistoriesInDbPostDelete = _testDb.Users.First().MyExchangesHistory.Count;
-
-            //Assert.AreEqual(exchangeHistoriesInDbPreDelete -2 ,exchangeHistoriesInDbPostDelete);
-
         }
-        
-        
     }
 }
