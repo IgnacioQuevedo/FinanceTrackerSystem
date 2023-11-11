@@ -24,7 +24,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.CreditCardAccountId = 1;
 
-            Assert.AreEqual(_creditCardAccountDTO.CreditCardAccountId, 0);
+            Assert.AreEqual(_creditCardAccountDTO.CreditCardAccountId, 1);
 
         }
 
