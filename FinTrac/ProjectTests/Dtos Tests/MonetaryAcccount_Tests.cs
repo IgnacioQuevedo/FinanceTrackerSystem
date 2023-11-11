@@ -22,14 +22,19 @@ namespace TestProject1
 
         #endregion
 
+        #region Amount
+
         [TestMethod]
         public void GivenAmount_ShouldBeSetted()
         {
             MonetaryAccountDTO myMonetaryAccountDTO = new MonetaryAccountDTO();
 
-            myMonetaryAccountDTO.Amount = 1000;
+            decimal amountToSet = 1000;
+            myMonetaryAccountDTO.Amount = amountToSet;
 
-            Assert.AreEqual(myMonetaryAccountDTO.Amount, 1000);
+            Assert.AreEqual(myMonetaryAccountDTO.Amount, amountToSet);
         }
+
+        #endregion
     }
 }
