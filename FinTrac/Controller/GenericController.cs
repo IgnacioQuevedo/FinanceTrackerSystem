@@ -267,8 +267,12 @@ public class GenericController : IUserController, ICategoryController
 
     #region Exchange History Section
 
-    
-    
+    public void CreateExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
+    {
+        throw new NotImplementedException();
+    }
 
     #endregion
+
+    
 }

@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Transaction_Components;
@@ -49,6 +50,17 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void CreateExchangeMethodWithCorrectData_ShoulAddExchangeHistoryToDb()
+        {
+            ExchangeHistoryDTO exchangeHistoryToCreate =
+                new ExchangeHistoryDTO(CurrencyEnum.USA, 39.5M, DateTime.Now, _userConnected.UserId);
 
+            _controller.CreateExchangeHistory(exchangeHistoryToCreate);
+            
+            Assert.AreEqual(exchangeHistoryToCreate,_testDb.Users.First().MyExchangesHistory.Count);
+            
+        }
+        
     }
 }
