@@ -345,10 +345,18 @@ public class GenericController : IUserController, ICategoryController
 
     public void DeleteExchangeHistory(ExchangeHistoryDTO exchangeHistoryToCreate)
     {
-        
-        SetUserConnected((int) exchangeHistoryToCreate.UserId);
-        ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(exchangeHistoryToCreate);
-        _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
-        _userRepo.Update(_userConnected);
+        try
+        {
+            SetUserConnected((int) exchangeHistoryToCreate.UserId);
+            ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(exchangeHistoryToCreate);
+            exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
+            _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionExchangeHistoryManagement Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+      
     }
 }
