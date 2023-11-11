@@ -91,6 +91,18 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenUser_ShouldReturnItCorrespondingListOfGoals()
+        {
+            _controller.CreateCategory(_categoryDTO1);
+            _controller.CreateGoal(_goalDTOToAdd);
+            _goalDTOToAdd.GoalId = 1;
+
+            List<GoalDTO> goalsInDb = _controller.GetAllGoals(_userConnected.UserId);
+            Assert.AreEqual(false, true);
+
+        }
+
 
     }
 }
