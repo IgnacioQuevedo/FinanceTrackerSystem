@@ -13,6 +13,10 @@ namespace BusinessLogic.Enums
         UY = 1,
 
         [Description("US$")]
-        USA = 2
+        USA = 2,
+
+        [Description("€")]
+        EUR = 3,
+
     }
 }
