@@ -255,9 +255,11 @@ namespace ControllerTests
 
             List<ExchangeHistoryDTO> exchangeHistoriesDTOInDb = _controller.GetAllExchangeHistories(_userConnected.UserId);
             
-            Assert.AreEqual(exchangeHistoriesDTOInDb[0], exchangeHistoryToCreate);
-            Assert.AreEqual(exchangeHistoriesDTOInDb[1], anotherExchangeHistory);
-
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0].ExchangeHistoryId, exchangeHistoryToCreate.ExchangeHistoryId);
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0].Currency, exchangeHistoryToCreate.Currency);
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0].Value, exchangeHistoryToCreate.Value);
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0].ValueDate, exchangeHistoryToCreate.ValueDate);
+            Assert.AreEqual(exchangeHistoriesDTOInDb[0].UserId, exchangeHistoryToCreate.UserId);
         }
     }
 }

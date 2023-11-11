@@ -370,6 +370,7 @@ public class GenericController : IUserController, ICategoryController
 
     public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedUserId)
     {
-        throw new NotImplementedException();
+        SetUserConnected(userConnectedUserId);
+        return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
     }
 }
