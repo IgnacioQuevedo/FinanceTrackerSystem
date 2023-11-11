@@ -162,6 +162,16 @@ namespace ControllerTests
             
         }
         
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenExchangeDTOWithInCorrectDataToUpdate_ShouldThrowException()
+        {
+            ExchangeHistoryDTO exchangeHistoryWithUpdates = 
+                new ExchangeHistoryDTO(CurrencyEnum.USA, -35.6M, DateTime.Now,_userConnected.UserId);
+            exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
+            _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
+            
+        }
     }
 }
