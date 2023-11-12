@@ -125,9 +125,9 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenAccountId_ShouldBeSetted()
         {
             int accountId = 1;
-            transactionDTO.accountId = accountId;
+            transactionDTO.AccountId = accountId;
             
-            Assert.AreEqual(transactionDTO.accountId,accountId);
+            Assert.AreEqual(transactionDTO.AccountId,accountId);
         }
 
         #region Constructor
@@ -142,9 +142,10 @@ namespace BusinessLogicTests.Dtos_Tests
             CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
             TypeEnumDTO type = TypeEnumDTO.Income;
             CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            int accountId = 1;
 
             TransactionDTO transactionDTO = new TransactionDTO(transactionId, title, creationDate, amount, currency,
-                type, transactionCategory);
+                type, transactionCategory,1);
 
             Assert.AreEqual(transactionDTO.TransactionId, transactionId);
             Assert.AreEqual(transactionDTO.Title, title);
@@ -153,6 +154,7 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.Currency, currency);
             Assert.AreEqual(transactionDTO.Type, type);
             Assert.AreEqual(transactionDTO.TransactionCategory, transactionCategory);
+            Assert.AreEqual(transactionDTO.AccountId, accountId);
         }
 
         #endregion
