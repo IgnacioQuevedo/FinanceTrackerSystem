@@ -125,7 +125,7 @@ namespace TestProject1
             DateTime dateTimeToSet = new DateTime(2023, 11, 12);
             _creditCardAccountDTO.ClosingDate = dateTimeToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.ClosingDate, 0);
+            Assert.AreEqual(_creditCardAccountDTO.ClosingDate, dateTimeToSet);
         }
 
     }
