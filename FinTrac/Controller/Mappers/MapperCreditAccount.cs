@@ -10,7 +10,7 @@ namespace Controller.Mappers;
 
 public abstract class MapperCreditAccount
 {
-
+    #region To CreditAccountDTO
 
     public static CreditCardAccountDTO ToCreditAccountDTO(CreditCardAccount myCreditAccount)
     {
@@ -22,4 +22,5 @@ public abstract class MapperCreditAccount
         return creditAccountDTO;
     }
 
+    #endregion
 }

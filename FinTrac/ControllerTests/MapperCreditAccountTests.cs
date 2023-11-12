@@ -43,8 +43,10 @@ namespace ControllerTests
 
         #endregion
 
+        #region To Credit Account
+
         [TestMethod]
-        public void GivenMonetaryAccount_ShouldConvertItToMonetaryAccountDTO()
+        public void GivenCreditAccount_ShouldConvertItToCreditAccountDTO()
         {
             CreditCardAccount givenCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.USA, DateTime.Now.Date, "Brou", "1233", 1000, new DateTime(2024, 11, 12));
 
@@ -61,6 +63,8 @@ namespace ControllerTests
             Assert.AreEqual(givenCreditAccount.IssuingBank, accountConverted.IssuingBank);
             Assert.AreEqual(givenCreditAccount.Last4Digits, accountConverted.Last4Digits);
         }
+
+        #endregion
 
 
     }
