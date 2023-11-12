@@ -23,4 +23,17 @@ public abstract class MapperCreditAccount
     }
 
     #endregion
+
+    #region ToListOfMonetaryAccountDTO
+
+    public static List<CreditCardAccountDTO> ToListOfCreditAccountDTO(List<CreditCardAccount> myListOfCreditAccount)
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+
+
+
+
 }

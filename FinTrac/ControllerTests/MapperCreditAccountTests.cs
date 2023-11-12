@@ -66,6 +66,27 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenListOfCreditAccounts_ShouldConvertToListOfCreditAccountDTO()
+        {
+            CreditCardAccount givenCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.UY, DateTime.Now.Date, "Brous", "1244", 1000, new DateTime(2024, 12, 11));
+
+            List<CreditCardAccount> creditAccounts = new List<CreditCardAccount>();
+            creditAccounts.Add(givenCreditAccount);
+
+            List<CreditCardAccountDTO> listConverted = MapperCreditAccount.ToListOfCreditAccountDTO(creditAccounts);
+
+            Assert.AreEqual(1, listConverted.Count);
+            Assert.AreEqual(creditAccounts[0].Name, listConverted[0].Name);
+            Assert.AreEqual(creditAccounts[0].AccountId, listConverted[0].CreditCardAccountId);
+            Assert.AreEqual(creditAccounts[0].AvailableCredit, listConverted[0].AvailableCredit);
+            Assert.AreEqual(creditAccounts[0].UserId, listConverted[0].UserId);
+            Assert.AreEqual(creditAccounts[0].CreationDate, listConverted[0].CreationDate);
+            Assert.AreEqual(creditAccounts[0].ClosingDate, listConverted[0].ClosingDate);
+            Assert.AreEqual(creditAccounts[0].Currency, (CurrencyEnum)listConverted[0].Currency);
+            Assert.AreEqual(creditAccounts[0].IssuingBank, listConverted[0].IssuingBank);
+            Assert.AreEqual(creditAccounts[0].Last4Digits, listConverted[0].Last4Digits);
+        }
 
     }
 }
