@@ -15,6 +15,7 @@ namespace TestProject1
         private string _nameToSet;
         private CurrencyEnumDTO _currencyToSet;
         private DateTime _creationDateToSet;
+        private string _issuingBankToSet;
 
         [TestInitialize]
         public void Initialize()
@@ -24,6 +25,7 @@ namespace TestProject1
             _nameToSet = "Itau volar";
             _currencyToSet = CurrencyEnumDTO.EUR;
             _creationDateToSet = DateTime.Now.Date;
+            _issuingBankToSet = "Prex";
         }
 
         #endregion
@@ -77,13 +79,17 @@ namespace TestProject1
 
         #endregion
 
+        #region Issuing bank
+
         [TestMethod]
         public void GivenIssuingBank_ShouldBeSetted()
         {
-            _creditCardAccountDTO.IssuingBank = "Prex";
+            _creditCardAccountDTO.IssuingBank = _issuingBankToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.IssuingBank, "Prex");
+            Assert.AreEqual(_creditCardAccountDTO.IssuingBank, _issuingBankToSet);
         }
+
+        #endregion
 
 
     }
