@@ -290,8 +290,6 @@ namespace BusinessLogic.User_Components
                     ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
                 }
             }
-
-            SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
 
@@ -304,14 +302,7 @@ namespace BusinessLogic.User_Components
                     ValidateIssuingBankAnd4LastDigits(accountToAdd, (CreditCardAccount)MyAccounts[i]);
                 }
             }
-
-            SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
-        }
-
-        private void SetAccountId(Account accountToAdd)
-        {
-            accountToAdd.AccountId = MyAccounts.Count;
         }
 
         #endregion

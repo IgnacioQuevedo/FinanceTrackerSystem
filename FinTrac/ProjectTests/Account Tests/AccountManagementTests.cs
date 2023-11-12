@@ -102,20 +102,6 @@ namespace BusinessLogicTests
         }
         #endregion
 
-        #region Asignation of Id
-
-        [TestMethod]
-        public void GivenAccountToAdd_ShouldAssignId()
-        {
-            genericUser.AddMonetaryAccount(genericMonetaryAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericMonetaryAccount.AccountId);
-
-            genericUser.AddCreditAccount(genericCreditCardAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericCreditCardAccount.AccountId);
-        }
-
-        #endregion
-
         #region Return Accounts
 
         [TestMethod]
@@ -144,8 +130,8 @@ namespace BusinessLogicTests
         public void GivenMonetaryAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
-
             MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
+            accountToUpdate.AccountId = 1;
             genericUser.AddMonetaryAccount(accountToUpdate);
 
             MonetaryAccount accountWithChanges = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
@@ -209,6 +195,7 @@ namespace BusinessLogicTests
 
             CreditCardAccount accountforUpdate = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
             genericUser.AddCreditAccount(accountforUpdate);
+            accountforUpdate.AccountId = 1;
 
             issuingBankToBeSetted = "Santander";
             last4DigitsToBeSetted = "1234";

@@ -45,13 +45,20 @@ public abstract class MapperMonetaryAccount
 
     public static MonetaryAccount ToMonetaryAccount(MonetaryAccountDTO myMonetaryAccountDTO)
     {
-        MonetaryAccount monetaryAccount =
-            new MonetaryAccount(myMonetaryAccountDTO.Name, myMonetaryAccountDTO.Amount, (CurrencyEnum)myMonetaryAccountDTO.Currency, myMonetaryAccountDTO.CreationDate);
+        try
+        {
+            MonetaryAccount monetaryAccount =
+                new MonetaryAccount(myMonetaryAccountDTO.Name, myMonetaryAccountDTO.Amount, (CurrencyEnum)myMonetaryAccountDTO.Currency, myMonetaryAccountDTO.CreationDate);
 
-        monetaryAccount.AccountId = myMonetaryAccountDTO.MonetaryAccountId;
-        monetaryAccount.UserId = myMonetaryAccountDTO.UserId;
+            monetaryAccount.AccountId = myMonetaryAccountDTO.MonetaryAccountId;
+            monetaryAccount.UserId = myMonetaryAccountDTO.UserId;
 
-        return monetaryAccount;
+            return monetaryAccount;
+        }
+        catch (ExceptionValidateAccount Exception)
+        {
+            throw new ExceptionMapper(Exception.Message);
+        }
     }
 
     #endregion

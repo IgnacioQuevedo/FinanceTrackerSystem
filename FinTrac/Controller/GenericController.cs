@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using BusinessLogic.Account_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
@@ -371,8 +372,8 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
             exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
             _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
-            
-            _userRepo.UpdateDbWhenDeleting(_userConnected,exchangeHistoryToDelete);
+
+            _userRepo.UpdateDbWhenDeleting(_userConnected, exchangeHistoryToDelete);
         }
         catch (Exception ExceptionType)
             when (
@@ -388,4 +389,24 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         SetUserConnected(userConnectedId);
         return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
     }
+
+    public void CreateMonetaryAccount(MonetaryAccountDTO monetAccountDTOToAdd)
+    {
+        try
+        {
+            SetUserConnected((int)monetAccountDTOToAdd.UserId);
+            MonetaryAccount monetAccountToAdd = MapperMonetaryAccount.ToMonetaryAccount(monetAccountDTOToAdd);
+            monetAccountToAdd.AccountId = 0;
+
+            _userConnected.AddMonetaryAccount(monetAccountToAdd);
+
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
+    }
+
+
 }
