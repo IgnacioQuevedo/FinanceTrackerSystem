@@ -91,11 +91,11 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenCategoryDTO_ShouldBeSetted()
         {
-            CategoryDTO categoryOfTransaction = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-            transactionDTO.TransactionCategory = categoryOfTransaction;
+            transactionDTO.TransactionCategory = transactionCategory;
             
-            Assert.AreEqual(transactionDTO.TransactionCategory,categoryOfTransaction);
+            Assert.AreEqual(transactionDTO.TransactionCategory,transactionCategory);
 
         }
     }
