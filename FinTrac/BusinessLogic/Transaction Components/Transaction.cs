@@ -15,9 +15,9 @@ namespace BusinessLogic.Transaction_Components
     public class Transaction
     {
         #region Properties
+        public int TransactionId { get; set; }
         public string Title { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
-        public int TransactionId { get; set; } = -1;
         public decimal Amount { get; set; }
         public CurrencyEnum Currency { get; set; }
         public TypeEnum Type { get; set; }

@@ -33,7 +33,20 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.CreationDate,creationDate);
 
         }
-        
+
+        [TestMethod]
+
+        public void GivenAmount_ShouldBeSetted()
+        {
+
+            int amount = 300;
+
+            transactionDTO.Amount = amount;
+            
+            Assert.AreEqual(transactionDTO.Amount,amount);
+
+
+        }
         
         
     }
