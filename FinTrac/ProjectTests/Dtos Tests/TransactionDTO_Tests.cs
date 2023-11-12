@@ -121,6 +121,15 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        [TestMethod]
+        public void GivenAccountId_ShouldBeSetted()
+        {
+            int accountId = 1;
+            transactionDTO.accountId = accountId;
+            
+            Assert.AreEqual(transactionDTO.accountId,accountId);
+        }
+
         #region Constructor
 
         [TestMethod]
