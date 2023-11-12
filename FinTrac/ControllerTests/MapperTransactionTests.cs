@@ -42,7 +42,7 @@ namespace ControllerTests
 
 
         [TestMethod]
-        public void GivenTransactionDTO_ShouldBePossibleToConvertItToTransaction()
+        public void GivenTransactionDTOWithCorrectData_ShouldBePossibleToConvertItToTransaction()
         {
             CategoryDTO exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
 
@@ -55,10 +55,11 @@ namespace ControllerTests
             Assert.AreEqual(transactionGenerated.TransactionId,transactionDTO.TransactionId);
             Assert.AreEqual(transactionGenerated.CreationDate,transactionDTO.CreationDate);
             Assert.AreEqual(transactionGenerated.Amount,transactionDTO.Amount);
-            Assert.AreEqual(transactionGenerated.Currency,transactionDTO.Currency);
-            Assert.AreEqual(transactionGenerated.Type,transactionDTO.Type);
-            Assert.AreEqual(transactionGenerated.TransactionCategory,transactionDTO.TransactionCategory);
+            Assert.AreEqual(transactionGenerated.Currency,(CurrencyEnum)transactionDTO.Currency);
+            Assert.AreEqual(transactionGenerated.Type,(TypeEnum)transactionDTO.Type);
             Assert.AreEqual(transactionGenerated.AccountId,transactionDTO.AccountId);
+            Assert.IsInstanceOfType(transactionGenerated.TransactionCategory,typeof(Category));
+            
         }
     }
 }
