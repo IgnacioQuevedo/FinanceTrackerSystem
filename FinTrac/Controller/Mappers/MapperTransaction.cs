@@ -67,8 +67,16 @@ public abstract class MapperTransaction
     #endregion
 
 
-    public static List<Transaction> ToListOfTransactions(object exchangeHistoryDtoList)
+    public static List<Transaction> ToListOfTransactions(List<TransactionDTO> transactionsDTO)
     {
-        throw new NotImplementedException();
+        List<Transaction> transactions = new List<Transaction>();
+
+        foreach (TransactionDTO transactionDTO in transactionsDTO)
+        {
+            Transaction transaction = MapperTransaction.ToTransaction(transactionDTO);
+            transactions.Add(transaction);
+        }
+
+        return transactions;
     }
 }

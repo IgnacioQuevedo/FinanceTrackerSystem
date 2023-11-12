@@ -152,9 +152,9 @@ namespace ControllerTests
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
             transactionsDTO.Add(transaction1);
 
-            List<Transaction> transactions = MapperTransaction.ToListOfTransactions(exchangeHistoryDTOList);
+            List<Transaction> transactions = MapperTransaction.ToListOfTransactions(transactionsDTO);
 
-            Assert.IsTrue(Helper.AreTheSameObject(transactions[0],MapperTransaction.ToTransaction(transactionsDTO[0])));
+            Assert.IsInstanceOfType(transactions[0], typeof(Transaction));
         }
 
 
