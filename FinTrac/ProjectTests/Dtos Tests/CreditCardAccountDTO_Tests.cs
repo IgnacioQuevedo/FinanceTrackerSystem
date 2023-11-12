@@ -19,6 +19,7 @@ namespace TestProject1
         private string _last4Digits;
         private decimal _availableCreditToSet;
         private DateTime _closingDateToSet;
+        private int _userId;
 
         [TestInitialize]
         public void Initialize()
@@ -133,13 +134,17 @@ namespace TestProject1
 
         #endregion
 
+        #region User Id
+
         [TestMethod]
         public void GivenUserId_ShouldBeSetted()
         {
-            _creditCardAccountDTO.UserId = 1;
+            _creditCardAccountDTO.UserId = _userId;
 
-            Assert.AreEqual(_creditCardAccountDTO.UserId, 1);
+            Assert.AreEqual(_creditCardAccountDTO.UserId, _userId);
         }
+
+        #endregion
 
     }
 }
