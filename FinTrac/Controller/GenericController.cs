@@ -413,6 +413,8 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     #endregion
 
+    #region Credit Card Account
+
     public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
     {
         try
@@ -430,6 +432,8 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             throw new Exception(Exception.Message);
         }
     }
+
+    #endregion
 
 
 
