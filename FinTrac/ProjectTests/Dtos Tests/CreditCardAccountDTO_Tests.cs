@@ -96,7 +96,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.Last4Digits = "1234";
 
-            Assert.AreEqual(_creditCardAccountDTO.Last4Digits, "123");
+            Assert.AreEqual(_creditCardAccountDTO.Last4Digits, "1234");
         }
 
 
