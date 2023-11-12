@@ -49,12 +49,17 @@ namespace BusinessLogicTests.Dtos_Tests
         [TestMethod]
         public void GivenCurrencyDTO_ShouldBeSetted()
         {
-            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.USA;
-
+            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.UY;
             transactionDTO.Currency = currencyEnumDTO;
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
             
+            currencyEnumDTO = CurrencyEnumDTO.USA;
+            transactionDTO.Currency = currencyEnumDTO;
             Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
 
+            currencyEnumDTO = CurrencyEnumDTO.EUR;
+            transactionDTO.Currency = currencyEnumDTO;
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
 
         }
         
