@@ -7,4 +7,5 @@ public class TransactionDTO
     public decimal Amount { get; set; }
     public CurrencyEnumDTO Currency { get; set; }
     public TypeEnumDTO Type { get; set; }
+    public CategoryDTO TransactionCategory { get; set; }
 }
