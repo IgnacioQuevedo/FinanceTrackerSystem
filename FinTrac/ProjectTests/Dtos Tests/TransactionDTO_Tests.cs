@@ -98,5 +98,13 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.TransactionCategory,transactionCategory);
 
         }
+
+        [TestMethod]
+        public void GivenIdToSet_ShouldBeSetted()
+        {
+            int transactionId = 1;
+            transactionDTO.Id = 1;
+            Assert.AreEqual(transactionDTO.Id,transactionId);
+        }
     }
 }
