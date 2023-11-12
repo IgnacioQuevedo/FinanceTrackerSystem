@@ -371,7 +371,8 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
             exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
             _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
-            _userRepo.Update(_userConnected);
+            
+            _userRepo.UpdateDbWhenDeleting(_userConnected,exchangeHistoryToDelete);
         }
         catch (Exception ExceptionType)
             when (

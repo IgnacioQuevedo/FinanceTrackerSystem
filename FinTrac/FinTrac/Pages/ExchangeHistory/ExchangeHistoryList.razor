@@ -59,7 +59,6 @@
     public UserDTO userConnected { get; set; }
 
     public string errorTxt { get; set; }
-
     public List<ExchangeHistoryDTO> exchangeHistoryList;
 
     protected override void OnInitialized()
@@ -68,24 +67,21 @@
         SuccesAlert.IsSucess = false;
         ErrorAlert.isError = false;
     }
-
-
+    
     private void EditExchangeHistory(ExchangeHistoryDTO exchangeToEdit)
     {
         ExchangeHistoryController.UpdateExchangeHistory(exchangeToEdit);
         NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeToEdit.ExchangeHistoryId}/Edit");
     }
 
-    private async Task DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
+    private void DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
     {
         try
         {
             ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
             ResetValues();
             
-            await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
-            
         }
         catch (Exception ExceptionExchangeHistory)
         {

@@ -53,6 +53,16 @@ public class UserRepositorySql
         _database.SaveChanges();
     }
 
+    //Sometimes E.F only removes userId from Db instead of the row, so if happens, we need to call this method.
+    public void UpdateDbWhenDeleting(User updatedUser, object entityWithProblem)
+    {
+        var existingUser = FindUserInDb(updatedUser.UserId);
+        _database.Entry(existingUser).CurrentValues.SetValues(updatedUser);
+        _database.Entry(entityWithProblem).State = EntityState.Deleted;
+        _database.SaveChanges();
+        
+    }
+
     public void UpdateGoal(User updatedUser)
     {
         _database.Attach(updatedUser);
