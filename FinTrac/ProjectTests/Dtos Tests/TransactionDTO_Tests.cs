@@ -22,5 +22,19 @@ namespace BusinessLogicTests.Dtos_Tests
             
             Assert.AreEqual(transactionDTO.Title,title);
         }
+
+        [TestMethod]
+        public void GivenCreationDate_ShouldBeSetted()
+        {
+            DateTime creationDate = DateTime.Now.Date;
+
+            transactionDTO.CreationDate = creationDate;
+            
+            Assert.AreEqual(transactionDTO.CreationDate,creationDate);
+
+        }
+        
+        
+        
     }
 }
