@@ -38,14 +38,11 @@ namespace BusinessLogicTests.Dtos_Tests
 
         public void GivenAmount_ShouldBeSetted()
         {
-
-            int amount = 300;
+            decimal amount = 300.5M;
 
             transactionDTO.Amount = amount;
             
             Assert.AreEqual(transactionDTO.Amount,amount);
-
-
         }
         
         
