@@ -1,6 +1,6 @@
 using BusinessLogic.Dtos_Components;
 
-namespace TestProject1
+namespace BusinessLogicTests.Dtos_Tests
 {
     [TestClass]
     public class TransactionDTO_Tests
@@ -13,10 +13,9 @@ namespace TestProject1
             string title = "Spent on popcorn";
             TransactionDTO transactionDTO = new TransactionDTO();
 
-            transactionDTO.title = title;
+            transactionDTO.Title = title;
             
-            Assert.AreEqual(transactionDTO.title,title);
-            
+            Assert.AreEqual(transactionDTO.Title,title);
         }
     }
 }
