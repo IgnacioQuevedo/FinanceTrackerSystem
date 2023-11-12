@@ -415,7 +415,20 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
     {
-        throw new NotImplementedException();
+        try
+        {
+            SetUserConnected((int)creditAccountDTOToAdd.UserId);
+            CreditCardAccount creditAccountToAdd = MapperCreditAccount.ToCreditAccount(creditAccountDTOToAdd);
+            creditAccountToAdd.AccountId = 0;
+
+            _userConnected.AddCreditAccount(creditAccountToAdd);
+
+            _userRepo.Update(_userConnected);
+        }
+        catch (ExceptionMapper Exception)
+        {
+            throw new Exception(Exception.Message);
+        }
     }
 
 

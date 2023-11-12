@@ -54,9 +54,22 @@ namespace ControllerTests
             CreditCardAccountDTO creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
             creditToCreateDTO1.CreditCardAccountId = 1;
 
-            _controller.CreateCreditAccount(creditToCreateDTO1);
+            CreditCardAccountDTO creditToCreateDTO2 = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
+            creditToCreateDTO2.CreditCardAccountId = 2;
 
-            Assert.AreEqual(1, _testDb.Users.First().MyAccounts.Count);
+            _controller.CreateCreditAccount(creditToCreateDTO1);
+            _controller.CreateCreditAccount(creditToCreateDTO2);
+
+            List<Account> myAccountsDb = _testDb.Users.First().MyAccounts;
+
+            Assert.IsNotNull(myAccountsDb[0].AccountUser);
+            Assert.AreEqual(myAccountsDb[0].UserId, creditToCreateDTO1.UserId);
+            Assert.AreEqual(myAccountsDb[0].Name, creditToCreateDTO1.Name);
+            Assert.AreEqual(myAccountsDb[0].AccountId, creditToCreateDTO1.CreditCardAccountId);
+            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)creditToCreateDTO1.Currency);
+            Assert.AreEqual(typeof(CreditCardAccount), myAccountsDb[0].GetType());
+
+            Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
 
     }
