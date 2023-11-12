@@ -60,9 +60,23 @@ namespace BusinessLogicTests.Dtos_Tests
             currencyEnumDTO = CurrencyEnumDTO.EUR;
             transactionDTO.Currency = currencyEnumDTO;
             Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
-
         }
         
+        [TestMethod]
+        public void GivenCurrency_ShouldBeSetted()
+        {
+            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.UY;
+            transactionDTO.Currency = currencyEnumDTO;
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
+            
+            currencyEnumDTO = CurrencyEnumDTO.USA;
+            transactionDTO.Currency = currencyEnumDTO;
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
+
+            currencyEnumDTO = CurrencyEnumDTO.EUR;
+            transactionDTO.Currency = currencyEnumDTO;
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
+        }
         
     }
 }
