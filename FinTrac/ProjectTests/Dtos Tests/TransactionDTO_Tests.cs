@@ -103,8 +103,8 @@ namespace BusinessLogicTests.Dtos_Tests
         public void GivenIdToSet_ShouldBeSetted()
         {
             int transactionId = 1;
-            transactionDTO.Id = 1;
-            Assert.AreEqual(transactionDTO.Id,transactionId);
+            transactionDTO.TransactionId = 1;
+            Assert.AreEqual(transactionDTO.TransactionId,transactionId);
         }
     }
 }
