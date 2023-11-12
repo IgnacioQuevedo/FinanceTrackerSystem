@@ -92,6 +92,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To CreditAccount
+
         [TestMethod]
         public void GivenCreditCardAccountDTO_ShouldConvertToCreditCardAccount()
         {
@@ -110,5 +112,7 @@ namespace ControllerTests
             Assert.AreEqual(givenCreditAccountDTO.IssuingBank, accountConverted.IssuingBank);
             Assert.AreEqual(givenCreditAccountDTO.Last4Digits, accountConverted.Last4Digits);
         }
+
+        #endregion
     }
 }

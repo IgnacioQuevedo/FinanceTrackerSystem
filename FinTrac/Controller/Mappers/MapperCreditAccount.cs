@@ -41,6 +41,8 @@ public abstract class MapperCreditAccount
 
     #endregion
 
+    #region To CreditAccount
+
     public static CreditCardAccount ToCreditAccount(CreditCardAccountDTO myCreditAccountDTO)
     {
         CreditCardAccount creditAccount =
@@ -51,4 +53,6 @@ public abstract class MapperCreditAccount
 
         return creditAccount;
     }
+
+    #endregion
 }
