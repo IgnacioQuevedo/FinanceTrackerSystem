@@ -9,7 +9,6 @@ namespace Controller.Mappers;
 public abstract class MapperTransaction
 {
     #region ToTransaction
-
     public static Transaction ToTransaction(TransactionDTO transactionDto)
     {
         try
@@ -65,8 +64,8 @@ public abstract class MapperTransaction
     }
 
     #endregion
-
-
+    
+    #region To list of Transactions
     public static List<Transaction> ToListOfTransactions(List<TransactionDTO> transactionsDTO)
     {
         List<Transaction> transactions = new List<Transaction>();
@@ -79,4 +78,6 @@ public abstract class MapperTransaction
 
         return transactions;
     }
+
+    #endregion
 }
