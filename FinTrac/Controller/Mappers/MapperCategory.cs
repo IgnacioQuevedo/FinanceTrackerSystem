@@ -30,7 +30,7 @@ public abstract class MapperCategory
             categoryConverted.UserId = categoryDTO_ToConvert.UserId;
 
             categoryConverted.CategoryId = categoryDTO_ToConvert.CategoryId;
-
+            
             return categoryConverted;
         }
         catch (ExceptionValidateCategory Exception)

@@ -148,10 +148,9 @@ namespace BusinessLogicTests.Dtos_Tests
             CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
             int accountId = 1;
 
-            TransactionDTO transactionDTO = new TransactionDTO(transactionId, title, creationDate, amount, currency,
+            TransactionDTO transactionDTO = new TransactionDTO(title, creationDate, amount, currency,
                 type, transactionCategory, 1);
-
-            Assert.AreEqual(transactionDTO.TransactionId, transactionId);
+            
             Assert.AreEqual(transactionDTO.Title, title);
             Assert.AreEqual(transactionDTO.CreationDate, creationDate);
             Assert.AreEqual(transactionDTO.Amount, amount);
