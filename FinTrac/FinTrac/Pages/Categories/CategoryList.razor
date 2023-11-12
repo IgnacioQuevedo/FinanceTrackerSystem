@@ -78,7 +78,7 @@
 
     protected override void OnInitialized()
     {
-z
+
         categoryList = CategoryController.GetAllCategories(userConnected.UserId);
 
         SuccesAlert.IsSucess = false;
@@ -89,7 +89,7 @@ z
     {
         try
         {
-            CategoryController.DeleteCategory(categoryId);
+            CategoryController.DeleteCategory(CategoryController.FindCategory(categoryId,userConnected.UserId));
             
             ResetValues();
             await Task.Delay(1);
