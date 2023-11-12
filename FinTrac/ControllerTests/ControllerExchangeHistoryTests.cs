@@ -84,11 +84,10 @@ namespace ControllerTests
 
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryInDb.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryInDb.UserId);
-            Assert.AreEqual((CurrencyEnum)exchangeHistoryToCreate.Currency, exchangeHistoryInDb.Currency);
+            Assert.AreEqual(exchangeHistoryToCreate.Currency, (CurrencyEnumDTO) exchangeHistoryInDb.Currency);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryInDb.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryInDb.ValueDate);
-
-            Assert.AreEqual((CurrencyEnum)anotherExchangeHistory.Currency, anotherExchangeHistoryInDb.Currency);
+            Assert.AreEqual(anotherExchangeHistory.Currency, (CurrencyEnumDTO) anotherExchangeHistoryInDb.Currency);
         }
 
         [TestMethod]
@@ -106,8 +105,8 @@ namespace ControllerTests
         [TestMethod]
         public void GivenExchangeHistoryDTO_ToFindInDb_ShouldBeFounded_AndReturnTheExchangeHistory()
         {
-            ExchangeHistory exchangeHistoryFoundAndReturned =
-                _controller.FindExchangeHistoryInDB(exchangeHistoryToCreate);
+            ExchangeHistoryDTO exchangeHistoryFoundAndReturned =
+                _controller.FindExchangeHistory(exchangeHistoryToCreate.ExchangeHistoryId,_userConnected.UserId);
 
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId,
                 exchangeHistoryFoundAndReturned.ExchangeHistoryId);
