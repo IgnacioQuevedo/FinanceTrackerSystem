@@ -196,12 +196,12 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         }
     }
 
-    public void DeleteCategory(int categoryDtoCategoryId)
+    public void DeleteCategory(CategoryDTO categoryDtoToDelete)
     {
         try
         {
-            SetUserConnected(categoryDtoCategoryId);
-            _userConnected.DeleteCategory(MapperCategory.ToCategory(FindCategory(categoryDtoCategoryId, _userConnected.UserId)));
+            SetUserConnected(categoryDtoToDelete.UserId);
+            _userConnected.DeleteCategory(FindCategoryInDb(categoryDtoToDelete));
             _userRepo.Update(_userConnected);
         }
         catch (ExceptionCategoryManagement Exception)

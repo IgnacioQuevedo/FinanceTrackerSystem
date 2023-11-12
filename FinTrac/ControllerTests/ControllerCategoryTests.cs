@@ -173,12 +173,12 @@ namespace ControllerTests
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
 
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
-            _controller.DeleteCategory(categoryDTO.CategoryId);
-            _controller.DeleteCategory(categoryDTO2.CategoryId);
+            _controller.DeleteCategory(categoryDTO);
+            _controller.DeleteCategory(categoryDTO2);
 
             int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
-            Assert.AreEqual(amountOfCategoriesInDb, amountOfCategoriesPostDelete);
+            Assert.AreEqual(amountOfCategoriesInDb -2, amountOfCategoriesPostDelete);
         }
 
         // [TestMethod]
