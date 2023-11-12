@@ -12,7 +12,7 @@ using Mappers;
 
 namespace Controller;
 
-public class GenericController : IUserController, ICategoryController, IGoalController
+public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController
 {
     private UserRepositorySql _userRepo;
     private User _userConnected { get; set; }
@@ -371,7 +371,8 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
             exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
             _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
-            _userRepo.Update(_userConnected);
+            
+            _userRepo.UpdateDbWhenDeleting(_userConnected,exchangeHistoryToDelete);
         }
         catch (Exception ExceptionType)
             when (

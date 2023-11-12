@@ -40,15 +40,15 @@ public abstract class MapperExchangeHistory
 
     public static List<ExchangeHistoryDTO> ToListOfExchangeHistoryDTO(List<ExchangeHistory> exchangeHistoryList)
     {
-        List<ExchangeHistoryDTO> listCategoryDTO = new List<ExchangeHistoryDTO>();
+        List<ExchangeHistoryDTO> listExchangeHistoryDTO = new List<ExchangeHistoryDTO>();
 
-        foreach (ExchangeHistory category in exchangeHistoryList)
+        foreach (ExchangeHistory exchangeHistory in exchangeHistoryList)
         {
-            ExchangeHistoryDTO exchangeHistoryDTO = MapperExchangeHistory.ToExchangeHistoryDTO(category);
-            listCategoryDTO.Add(exchangeHistoryDTO);
+            ExchangeHistoryDTO exchangeHistoryDTO = ToExchangeHistoryDTO(exchangeHistory);
+            listExchangeHistoryDTO.Add(exchangeHistoryDTO);
         }
 
-        return listCategoryDTO;
+        return listExchangeHistoryDTO;
     }
 
     public static List<ExchangeHistory> ToListOfExchangeHistory(List<ExchangeHistoryDTO> exchangeHistoryDtoList)
