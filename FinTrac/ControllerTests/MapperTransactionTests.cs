@@ -39,27 +39,32 @@ namespace ControllerTests
         }
 
         #endregion
-
+        
+        #region ToTransaction
 
         [TestMethod]
         public void GivenTransactionDTOWithCorrectData_ShouldBePossibleToConvertItToTransaction()
         {
-            CategoryDTO exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-            TransactionDTO transactionDTO = new TransactionDTO("Spent on food",DateTime.Now.Date, 200,
-                CurrencyEnumDTO.USA, TypeEnumDTO.Income, exampleCategory,1);
+            TransactionDTO transactionDTO = new TransactionDTO("Spent on food", DateTime.Now.Date, 200,
+                CurrencyEnumDTO.USA, TypeEnumDTO.Income, exampleCategory, 1);
             transactionDTO.TransactionId = 1;
 
             Transaction transactionGenerated = MapperTransaction.ToTransaction(transactionDTO);
-            
-            Assert.AreEqual(transactionGenerated.TransactionId,transactionDTO.TransactionId);
-            Assert.AreEqual(transactionGenerated.CreationDate,transactionDTO.CreationDate);
-            Assert.AreEqual(transactionGenerated.Amount,transactionDTO.Amount);
-            Assert.AreEqual(transactionGenerated.Currency,(CurrencyEnum)transactionDTO.Currency);
-            Assert.AreEqual(transactionGenerated.Type,(TypeEnum)transactionDTO.Type);
-            Assert.AreEqual(transactionGenerated.AccountId,transactionDTO.AccountId);
-            Assert.IsInstanceOfType(transactionGenerated.TransactionCategory,typeof(Category));
-            
+
+            Assert.AreEqual(transactionGenerated.TransactionId, transactionDTO.TransactionId);
+            Assert.AreEqual(transactionGenerated.CreationDate, transactionDTO.CreationDate);
+            Assert.AreEqual(transactionGenerated.Amount, transactionDTO.Amount);
+            Assert.AreEqual(transactionGenerated.Currency, (CurrencyEnum)transactionDTO.Currency);
+            Assert.AreEqual(transactionGenerated.Type, (TypeEnum)transactionDTO.Type);
+            Assert.AreEqual(transactionGenerated.AccountId, transactionDTO.AccountId);
+            Assert.IsInstanceOfType(transactionGenerated.TransactionCategory, typeof(Category));
         }
+
+        #endregion
+        
+        
+        
     }
 }
