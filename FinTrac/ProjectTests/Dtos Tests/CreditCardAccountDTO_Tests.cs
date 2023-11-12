@@ -82,7 +82,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.IssuingBank = "Prex";
 
-            Assert.AreEqual(_creditCardAccountDTO.CreationDate, "P");
+            Assert.AreEqual(_creditCardAccountDTO.IssuingBank, "Prex");
         }
 
 
