@@ -66,6 +66,7 @@ namespace BusinessLogicTests
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
 
             MonetaryAccount repitedNameAccount = new MonetaryAccount("Itau Saving Bank", 100, CurrencyEnum.UY, DateTime.Now);
+            repitedNameAccount.AccountId = 1;
             genericUser.AddMonetaryAccount(repitedNameAccount);
         }
 
@@ -96,7 +97,7 @@ namespace BusinessLogicTests
             DateTime closingDateNewCard = new DateTime(2030, 6, 10);
 
             CreditCardAccount accountWithEqualValues = new CreditCardAccount(equalName, currencyNewCard, DateTime.Now, issuingBankNewCard, last4DigitsNewCard, availableCreditNewCard, closingDateNewCard);
-
+            accountWithEqualValues.AccountId = 1;
             genericUser.AddCreditAccount(accountWithEqualValues);
         }
         #endregion
@@ -153,8 +154,8 @@ namespace BusinessLogicTests
             genericUser.ModifyMonetaryAccount(accountWithChanges);
         }
 
-      [TestMethod]
-      public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
+        [TestMethod]
+        public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
             int idAccount = genericMonetaryAccount.AccountId;
@@ -164,7 +165,7 @@ namespace BusinessLogicTests
             genericUser.ModifyMonetaryAccount(accountToUpdate);
 
 
-            MonetaryAccount accountUpdated= (MonetaryAccount) genericUser.MyAccounts[idAccount];
+            MonetaryAccount accountUpdated = (MonetaryAccount)genericUser.MyAccounts[idAccount];
             Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
         }
 

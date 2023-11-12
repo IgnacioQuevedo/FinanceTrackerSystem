@@ -87,7 +87,6 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.Currency, (CurrencyEnumDTO) exchangeHistoryInDb.Currency);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryInDb.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryInDb.ValueDate);
-
             Assert.AreEqual(anotherExchangeHistory.Currency, (CurrencyEnumDTO) anotherExchangeHistoryInDb.Currency);
         }
 
@@ -114,7 +113,7 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFoundAndReturned.UserId);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFoundAndReturned.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFoundAndReturned.ValueDate);
-            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
+            Assert.AreEqual((CurrencyEnum)exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
         }
 
         [TestMethod]
@@ -203,7 +202,7 @@ namespace ControllerTests
         }
 
         #endregion
-        
+
         #region Delete ExchangeHistory
 
         [TestMethod]
@@ -255,8 +254,8 @@ namespace ControllerTests
         {
 
             List<ExchangeHistoryDTO> exchangeHistoriesDTOInDb = _controller.GetAllExchangeHistories(_userConnected.UserId);
-            
-            Assert.AreEqual(2,exchangeHistoriesDTOInDb.Count);
+
+            Assert.AreEqual(2, exchangeHistoriesDTOInDb.Count);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].ExchangeHistoryId, exchangeHistoryToCreate.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Currency, exchangeHistoryToCreate.Currency);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Value, exchangeHistoryToCreate.Value);
