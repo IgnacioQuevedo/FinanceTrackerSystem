@@ -78,5 +78,14 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
         }
         
+        [TestMethod]
+        public void GivenType_ShouldBeSetted()
+        {
+            TypeEnumDTO typeEnumDTO = TypeEnumDTO.Income;
+            transactionDTO.Type = typeEnumDTO;
+            
+            Assert.AreEqual(typeEnumDTO, transactionDTO.Type);
+        }
+        
     }
 }
