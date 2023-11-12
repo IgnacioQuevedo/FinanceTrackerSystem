@@ -32,6 +32,8 @@ public abstract class MapperTransaction
 
     #endregion
 
+    #region ToTransactionDTO
+
     public static TransactionDTO ToTransactionDTO(Transaction transactionToConvert)
     {
         TransactionDTO transactionDTO =
@@ -41,7 +43,13 @@ public abstract class MapperTransaction
                 MapperCategory.ToCategoryDTO(transactionToConvert.TransactionCategory), transactionToConvert.AccountId);
 
         transactionDTO.TransactionId = transactionToConvert.TransactionId;
-        
+
         return transactionDTO;
     }
+
+    #endregion
+    
+    
+    
+    
 }
