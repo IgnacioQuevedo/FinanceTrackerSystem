@@ -110,7 +110,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.AvailableCredit = 2000;
 
-            Assert.AreEqual(_creditCardAccountDTO.AvailableCredit, 10);
+            Assert.AreEqual(_creditCardAccountDTO.AvailableCredit, 2000);
         }
 
     }
