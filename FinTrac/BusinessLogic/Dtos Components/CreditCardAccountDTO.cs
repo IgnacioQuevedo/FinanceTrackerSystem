@@ -19,6 +19,7 @@ namespace BusinessLogic.Dtos_Components
         public string Last4Digits { get; set; }
         public decimal AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
+        public int UserId { get; set; }
 
 
 

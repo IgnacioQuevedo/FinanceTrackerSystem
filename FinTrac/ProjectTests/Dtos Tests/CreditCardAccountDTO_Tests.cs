@@ -18,6 +18,7 @@ namespace TestProject1
         private string _issuingBankToSet;
         private string _last4Digits;
         private decimal _availableCreditToSet;
+        private DateTime _closingDateToSet;
 
         [TestInitialize]
         public void Initialize()
@@ -30,6 +31,7 @@ namespace TestProject1
             _issuingBankToSet = "Prex";
             _last4Digits = "1234";
             _availableCreditToSet = 2000;
+            _closingDateToSet = new DateTime(2023, 11, 12);
         }
 
         #endregion
@@ -119,14 +121,17 @@ namespace TestProject1
 
         #endregion
 
+        #region Closing Date
+
         [TestMethod]
         public void GivenClosingDate_ShouldBeSetted()
         {
-            DateTime dateTimeToSet = new DateTime(2023, 11, 12);
-            _creditCardAccountDTO.ClosingDate = dateTimeToSet;
+            _creditCardAccountDTO.ClosingDate = _closingDateToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.ClosingDate, dateTimeToSet);
+            Assert.AreEqual(_creditCardAccountDTO.ClosingDate, _closingDateToSet);
         }
+
+        #endregion
 
     }
 }
