@@ -28,7 +28,15 @@ public abstract class MapperCreditAccount
 
     public static List<CreditCardAccountDTO> ToListOfCreditAccountDTO(List<CreditCardAccount> myListOfCreditAccount)
     {
-        throw new NotImplementedException();
+        List<CreditCardAccountDTO> listCreditAccountDTO = new List<CreditCardAccountDTO>();
+
+        foreach (CreditCardAccount creditAccount in myListOfCreditAccount)
+        {
+            CreditCardAccountDTO monetAccountDTO = ToCreditAccountDTO(creditAccount);
+            listCreditAccountDTO.Add(monetAccountDTO);
+        }
+
+        return listCreditAccountDTO;
     }
 
     #endregion
