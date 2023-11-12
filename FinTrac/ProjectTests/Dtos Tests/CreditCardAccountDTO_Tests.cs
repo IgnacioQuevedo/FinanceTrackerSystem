@@ -17,6 +17,7 @@ namespace TestProject1
         private DateTime _creationDateToSet;
         private string _issuingBankToSet;
         private string _last4Digits;
+        private decimal _availableCreditToSet;
 
         [TestInitialize]
         public void Initialize()
@@ -28,6 +29,7 @@ namespace TestProject1
             _creationDateToSet = DateTime.Now.Date;
             _issuingBankToSet = "Prex";
             _last4Digits = "1234";
+            _availableCreditToSet = 2000;
         }
 
         #endregion
@@ -105,13 +107,16 @@ namespace TestProject1
 
         #endregion
 
+        #region Available credit
+
         [TestMethod]
         public void GivenAvailableCredit_ShouldBeSetted()
         {
-            _creditCardAccountDTO.AvailableCredit = 2000;
+            _creditCardAccountDTO.AvailableCredit = _availableCreditToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.AvailableCredit, 2000);
+            Assert.AreEqual(_creditCardAccountDTO.AvailableCredit, _availableCreditToSet);
         }
 
+        #endregion
     }
 }
