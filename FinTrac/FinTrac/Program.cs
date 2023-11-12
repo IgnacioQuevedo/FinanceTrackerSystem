@@ -22,6 +22,7 @@ builder.Services.AddScoped<GenericController>();
 builder.Services.AddScoped<IUserController, GenericController>();
 builder.Services.AddScoped<ICategoryController, GenericController>();
 builder.Services.AddScoped<IGoalController, GenericController>();
+builder.Services.AddScoped<IExchangeHistoryController, GenericController>();
 
 var app = builder.Build();
 
