@@ -14,6 +14,7 @@ namespace TestProject1
         private int _creditCardAccountId;
         private string _nameToSet;
         private CurrencyEnumDTO _currencyToSet;
+        private DateTime _creationDateToSet;
 
         [TestInitialize]
         public void Initialize()
@@ -22,6 +23,7 @@ namespace TestProject1
             _creditCardAccountId = 1;
             _nameToSet = "Itau volar";
             _currencyToSet = CurrencyEnumDTO.EUR;
+            _creationDateToSet = DateTime.Now.Date;
         }
 
         #endregion
@@ -63,13 +65,17 @@ namespace TestProject1
 
         #endregion
 
+        #region Creation Date
+
         [TestMethod]
         public void GivenCreationDate_ShouldBeSetted()
         {
-            _creditCardAccountDTO.CreationDate = DateTime.Now.Date;
+            _creditCardAccountDTO.CreationDate = _creationDateToSet;
 
-            Assert.AreEqual(_creditCardAccountDTO.CreationDate, DateTime.Now.Date);
+            Assert.AreEqual(_creditCardAccountDTO.CreationDate, _creationDateToSet);
         }
+
+        #endregion
 
 
     }
