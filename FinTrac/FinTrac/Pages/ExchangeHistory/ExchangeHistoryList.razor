@@ -6,38 +6,50 @@
 <h3>Exchange History List</h3>
 <br>
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt"/>
+}
+
+
 <div>
     <a class="btn btn-success" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/ExchangeHistory/ExchangeHistoryCreation"))">Create + </a>
 </div>
-<br />
-<br />
+<br/>
+<br/>
 
 <main>
     <table class="table table-striped table-bordered claseTabla">
         <thead>
-            <tr>
-                <th>Value</th>
-                <th>Currency</th>
-                <th>ValueDate</th>
-            </tr>
+        <tr>
+            <th>Value</th>
+            <th>Currency</th>
+            <th>ValueDate</th>
+        </tr>
         </thead>
         <tbody>
 
-            @foreach (var exchangeHistory in exchangeHistoryList)
-            {
-                <tr>
-                    <td>@exchangeHistory.Value</td>
-                    <td>@exchangeHistory.Currency</td>
-                    <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
-                    <td>
-                        <button class="btn btn-success btn-sm" @onclick="(() => EditExchangeHistory(exchangeHistory))"> Edit </button>
-                        <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
-                    </td>
-                </tr>
-            }
+        @foreach (var exchangeHistory in exchangeHistoryList)
+        {
+            <tr>
+                <td>@exchangeHistory.Value</td>
+                <td>@exchangeHistory.Currency</td>
+                <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
+                <td>
+                    <button class="btn btn-success btn-sm" @onclick="(() => EditExchangeHistory(exchangeHistory))"> Edit </button>
+                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
+                </td>
+            </tr>
+        }
         </tbody>
 
     </table>
+
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Exchange History deleted with success"/>
+    }
+
 </main>
 
 
@@ -46,12 +58,17 @@
     [CascadingParameter]
     public UserDTO userConnected { get; set; }
 
+    public string errorTxt { get; set; }
+
     public List<ExchangeHistoryDTO> exchangeHistoryList;
 
     protected override void OnInitialized()
     {
         exchangeHistoryList = ExchangeHistoryController.GetAllExchangeHistories(userConnected.UserId);
+        SuccesAlert.IsSucess = false;
+        ErrorAlert.isError = false;
     }
+
 
     private void EditExchangeHistory(ExchangeHistoryDTO exchangeToEdit)
     {
@@ -59,13 +76,36 @@
         NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeToEdit.ExchangeHistoryId}/Edit");
     }
 
-    private void DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
+    private async Task DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
     {
-        ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
-        
-        
-        OnInitialized();
+        try
+        {
+            ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
+            ResetValues();
+            
+            await Task.Delay(1);
+            SuccesAlert.ShowSucessAlert();
+            
+        }
+        catch (Exception ExceptionExchangeHistory)
+        {
+            errorTxt = ExceptionExchangeHistory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
+
+    private void ResetValues()
+    {
+    // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            OnInitialized();
+            StateHasChanged();
+        });
+    }
+
 
     string GetFormattedDate(DateTime date)
     {
