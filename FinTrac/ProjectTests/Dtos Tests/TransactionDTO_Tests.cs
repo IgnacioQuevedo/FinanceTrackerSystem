@@ -87,5 +87,16 @@ namespace BusinessLogicTests.Dtos_Tests
             transactionDTO.Type = typeEnumDTO;
             Assert.AreEqual(transactionDTO.Type, typeEnumDTO);
         }
+
+        [TestMethod]
+        public void GivenCategoryDTO_ShouldBeSetted()
+        {
+            CategoryDTO categoryOfTransaction = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+
+            transactionDTO.TransactionCategory = categoryOfTransaction;
+            
+            Assert.AreEqual(transactionDTO.TransactionCategory,categoryOfTransaction);
+
+        }
     }
 }
