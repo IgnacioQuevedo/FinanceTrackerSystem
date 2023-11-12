@@ -49,6 +49,7 @@ public abstract class MapperTransaction
 
     #endregion
 
+    #region To list of transactionsDTO
 
     public static List<TransactionDTO> ToListOfTransactionsDTO(List<Transaction> transactions)
     {
@@ -62,4 +63,8 @@ public abstract class MapperTransaction
 
         return listTransactionsDTO;
     }
+
+    #endregion
+
+
 }

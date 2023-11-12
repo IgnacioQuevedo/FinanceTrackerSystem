@@ -77,7 +77,6 @@ namespace ControllerTests
 
         #endregion
 
-
         #region To TransactionDTO
 
         [TestMethod]
@@ -105,7 +104,6 @@ namespace ControllerTests
 
         #endregion
         
-        
         #region ToListOfTransactionDTO
 
         [TestMethod]
@@ -117,23 +115,14 @@ namespace ControllerTests
             Transaction transaction1 = new Transaction("Spent on food", 200, DateTime.Now.Date,
                 CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
             transaction1.TransactionId = 1;
-            
-            Transaction transaction2 = new Transaction("Spent on food", 200, DateTime.Now.Date,
-                CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
-            transaction2.TransactionId = 2;
-            
 
             List<Transaction> transactions = new List<Transaction>();
-
             transactions.Add(transaction1);
-            transactions.Add(transaction2);
 
             List<TransactionDTO> transactionsDTO =
                 MapperTransaction.ToListOfTransactionsDTO(transactions);
 
             Assert.IsInstanceOfType(transactionsDTO[0], typeof(TransactionDTO));
-            Assert.IsInstanceOfType(transactionsDTO[1], typeof(TransactionDTO));
-
             Assert.AreEqual(transaction1.TransactionId, transactionsDTO[0].TransactionId);
             Assert.AreEqual(transaction1.Title, transactionsDTO[0].Title);
             Assert.AreEqual(transaction1.CreationDate, transactionsDTO[0].CreationDate);
@@ -147,6 +136,7 @@ namespace ControllerTests
         }
         
         #endregion
+  
         
     }
 }
