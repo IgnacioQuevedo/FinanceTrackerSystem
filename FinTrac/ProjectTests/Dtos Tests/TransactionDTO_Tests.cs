@@ -1,4 +1,5 @@
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
 
 namespace BusinessLogicTests.Dtos_Tests
 {
@@ -43,6 +44,18 @@ namespace BusinessLogicTests.Dtos_Tests
             transactionDTO.Amount = amount;
             
             Assert.AreEqual(transactionDTO.Amount,amount);
+        }
+
+        [TestMethod]
+        public void GivenCurrencyDTO_ShouldBeSetted()
+        {
+            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.USA;
+
+            transactionDTO.Currency = currencyEnumDTO;
+            
+            Assert.AreEqual(transactionDTO.Currency,currencyEnumDTO);
+
+
         }
         
         
