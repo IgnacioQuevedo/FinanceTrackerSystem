@@ -66,6 +66,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To ListOfCreditAccountDTO
+
         [TestMethod]
         public void GivenListOfCreditAccounts_ShouldConvertToListOfCreditAccountDTO()
         {
@@ -87,6 +89,8 @@ namespace ControllerTests
             Assert.AreEqual(creditAccounts[0].IssuingBank, listConverted[0].IssuingBank);
             Assert.AreEqual(creditAccounts[0].Last4Digits, listConverted[0].Last4Digits);
         }
+
+        #endregion
 
     }
 }

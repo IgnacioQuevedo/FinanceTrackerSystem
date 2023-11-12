@@ -24,7 +24,7 @@ public abstract class MapperCreditAccount
 
     #endregion
 
-    #region ToListOfMonetaryAccountDTO
+    #region ToListOfCreditAccountDTO
 
     public static List<CreditCardAccountDTO> ToListOfCreditAccountDTO(List<CreditCardAccount> myListOfCreditAccount)
     {
@@ -40,8 +40,4 @@ public abstract class MapperCreditAccount
     }
 
     #endregion
-
-
-
-
 }
