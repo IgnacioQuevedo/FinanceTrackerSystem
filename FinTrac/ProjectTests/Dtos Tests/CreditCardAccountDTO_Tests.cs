@@ -16,6 +16,7 @@ namespace TestProject1
         private CurrencyEnumDTO _currencyToSet;
         private DateTime _creationDateToSet;
         private string _issuingBankToSet;
+        private string _last4Digits;
 
         [TestInitialize]
         public void Initialize()
@@ -26,6 +27,7 @@ namespace TestProject1
             _currencyToSet = CurrencyEnumDTO.EUR;
             _creationDateToSet = DateTime.Now.Date;
             _issuingBankToSet = "Prex";
+            _last4Digits = "1234";
         }
 
         #endregion
@@ -91,13 +93,17 @@ namespace TestProject1
 
         #endregion
 
+        #region Last4Digits
+
         [TestMethod]
         public void GivenLast4Digits_ShouldBeSetted()
         {
-            _creditCardAccountDTO.Last4Digits = "1234";
+            _creditCardAccountDTO.Last4Digits = _last4Digits;
 
-            Assert.AreEqual(_creditCardAccountDTO.Last4Digits, "1234");
+            Assert.AreEqual(_creditCardAccountDTO.Last4Digits, _last4Digits);
         }
+
+        #endregion
 
 
     }
