@@ -41,6 +41,8 @@ public abstract class MapperMonetaryAccount
 
     #endregion
 
+    #region To MonetaryAccount
+
     public static MonetaryAccount ToMonetaryAccount(MonetaryAccountDTO myMonetaryAccountDTO)
     {
         MonetaryAccount monetaryAccount =
@@ -52,4 +54,5 @@ public abstract class MapperMonetaryAccount
         return monetaryAccount;
     }
 
+    #endregion
 }
