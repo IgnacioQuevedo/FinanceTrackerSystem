@@ -9,6 +9,7 @@ namespace BusinessLogic.Dtos_Components
 {
     public class MonetaryAccountDTO
     {
+        #region Properties
 
         public int MonetaryAccountId { get; set; }
         public string Name { get; set; }
@@ -16,6 +17,10 @@ namespace BusinessLogic.Dtos_Components
         public CurrencyEnumDTO Currency { get; set; }
         public DateTime CreationDate { get; set; }
         public int? UserId { get; set; }
+
+        #endregion
+
+        #region Constructors
 
         public MonetaryAccountDTO() { }
 
@@ -27,5 +32,7 @@ namespace BusinessLogic.Dtos_Components
             CreationDate = creationDate;
             UserId = userId;
         }
+
+        #endregion
     }
 }
