@@ -5,6 +5,7 @@ using BusinessLogic.Transaction_Components;
 using Controller;
 using Controller.Mappers;
 using DataManagers;
+using Mappers;
 
 namespace ControllerTests
 {
@@ -39,7 +40,7 @@ namespace ControllerTests
         }
 
         #endregion
-        
+
         #region ToTransaction
 
         [TestMethod]
@@ -62,9 +63,18 @@ namespace ControllerTests
             Assert.IsInstanceOfType(transactionGenerated.TransactionCategory, typeof(Category));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionMapper))]
+        public void GivenTransactionDTOWithIncorrectData_ShouldThrowException()
+        {
+            CategoryDTO exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+
+            TransactionDTO transactionDTO = new TransactionDTO("", DateTime.Now.Date, -200,
+                CurrencyEnumDTO.USA, TypeEnumDTO.Income, exampleCategory, 1);
+
+            Transaction transactionGenerated = MapperTransaction.ToTransaction(transactionDTO);
+        }
+
         #endregion
-        
-        
-        
     }
 }
