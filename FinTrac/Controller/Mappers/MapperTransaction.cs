@@ -34,6 +34,14 @@ public abstract class MapperTransaction
 
     public static TransactionDTO ToTransactionDTO(Transaction transactionToConvert)
     {
-        throw new NotImplementedException();
+        TransactionDTO transactionDTO =
+            new TransactionDTO(transactionToConvert.Title, transactionToConvert.CreationDate,
+                transactionToConvert.Amount
+                , (CurrencyEnumDTO)transactionToConvert.Currency, (TypeEnumDTO)transactionToConvert.Type,
+                MapperCategory.ToCategoryDTO(transactionToConvert.TransactionCategory), transactionToConvert.AccountId);
+
+        transactionDTO.TransactionId = transactionToConvert.TransactionId;
+        
+        return transactionDTO;
     }
 }
