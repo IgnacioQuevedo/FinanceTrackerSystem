@@ -138,7 +138,7 @@ namespace TestProject1
         {
             _creditCardAccountDTO.UserId = 1;
 
-            Assert.AreEqual(_creditCardAccountDTO.UserId, 0);
+            Assert.AreEqual(_creditCardAccountDTO.UserId, 1);
         }
 
     }
