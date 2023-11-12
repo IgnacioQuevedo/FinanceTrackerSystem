@@ -63,25 +63,29 @@ namespace ControllerTests
 
         #endregion
 
+        #region To ToListOfMonetaryAccountDTO
+
         [TestMethod]
         public void GivenListOfMonetaryAccount_ShouldConvertToListOfMonetaryAccountDTO()
         {
             MonetaryAccount givenMonetaryAccount1 = new MonetaryAccount("Brou", 1000, CurrencyEnum.UY, DateTime.Now.Date);
 
-            List<MonetaryAccount> givenListOfMonetaryAccounts = new List<MonetaryAccount>();
-            givenListOfMonetaryAccounts.Add(givenMonetaryAccount1);
+            List<MonetaryAccount> monetAccounts = new List<MonetaryAccount>();
+            monetAccounts.Add(givenMonetaryAccount1);
 
-            List<MonetaryAccountDTO> listConverted = MapperMonetaryAccount.ToListOfMonetaryAccountDTO(givenListOfMonetaryAccounts);
+            List<MonetaryAccountDTO> listConverted = MapperMonetaryAccount.ToListOfMonetaryAccountDTO(monetAccounts);
 
             Assert.AreEqual(1, listConverted.Count);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].Name, listConverted[0].Name);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].AccountId, listConverted[0].MonetaryAccountId);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].Amount, listConverted[0].Amount);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].UserId, listConverted[0].UserId);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].CreationDate, listConverted[0].CreationDate);
-            Assert.AreEqual(givenListOfMonetaryAccounts[0].Currency, (CurrencyEnum)listConverted[0].Currency);
+            Assert.AreEqual(monetAccounts[0].Name, listConverted[0].Name);
+            Assert.AreEqual(monetAccounts[0].AccountId, listConverted[0].MonetaryAccountId);
+            Assert.AreEqual(monetAccounts[0].Amount, listConverted[0].Amount);
+            Assert.AreEqual(monetAccounts[0].UserId, listConverted[0].UserId);
+            Assert.AreEqual(monetAccounts[0].CreationDate, listConverted[0].CreationDate);
+            Assert.AreEqual(monetAccounts[0].Currency, (CurrencyEnum)listConverted[0].Currency);
 
         }
+
+        #endregion
 
     }
 }

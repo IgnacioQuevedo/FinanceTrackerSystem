@@ -22,6 +22,10 @@ public abstract class MapperMonetaryAccount
         return monetaryAccountDTO;
     }
 
+    #endregion
+
+    #region ToListOfMonetaryAccountDTO
+
     public static List<MonetaryAccountDTO> ToListOfMonetaryAccountDTO(List<MonetaryAccount> myListOfMonetaryAccount)
     {
         List<MonetaryAccountDTO> listMonetaryAccountDTO = new List<MonetaryAccountDTO>();
@@ -35,8 +39,6 @@ public abstract class MapperMonetaryAccount
         return listMonetaryAccountDTO;
     }
 
-
-
-    #endregion  
+    #endregion
 
 }
