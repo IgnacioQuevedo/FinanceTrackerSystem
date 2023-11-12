@@ -44,14 +44,14 @@ namespace ControllerTests
 
 
             exchangeHistoryToCreate =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 39.5M, DateTime.Now, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 39.5M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryToCreate.UserId = 1;
             exchangeHistoryToCreate.ExchangeHistoryId = 1;
 
             creationDate = new DateTime(2023, 3, 2, 12, 12, 00);
 
             anotherExchangeHistory =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 2.5M, creationDate, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 2.5M, creationDate, _userConnected.UserId);
 
             anotherExchangeHistory.UserId = 1;
             anotherExchangeHistory.ExchangeHistoryId = 1;
@@ -84,11 +84,11 @@ namespace ControllerTests
 
             Assert.AreEqual(exchangeHistoryToCreate.ExchangeHistoryId, exchangeHistoryInDb.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryInDb.UserId);
-            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryInDb.Currency);
+            Assert.AreEqual((CurrencyEnum)exchangeHistoryToCreate.Currency, exchangeHistoryInDb.Currency);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryInDb.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryInDb.ValueDate);
 
-            Assert.AreEqual(anotherExchangeHistory.Currency, anotherExchangeHistoryInDb.Currency);
+            Assert.AreEqual((CurrencyEnum)anotherExchangeHistory.Currency, anotherExchangeHistoryInDb.Currency);
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFoundAndReturned.UserId);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFoundAndReturned.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFoundAndReturned.ValueDate);
-            Assert.AreEqual(exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
+            Assert.AreEqual((CurrencyEnum)exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
         }
 
         [TestMethod]
@@ -150,7 +150,7 @@ namespace ControllerTests
         public void GivenExchangeDTOWithCorrectDataToUpdate_ShouldBeUpdatedInDb()
         {
             ExchangeHistoryDTO exchangeHistoryWithUpdates =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, DateTime.Now, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 12.5M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
@@ -169,7 +169,7 @@ namespace ControllerTests
         public void GivenExchangeDTOWithIncorrectDataToUpdate_ShouldThrowException()
         {
             ExchangeHistoryDTO exchangeHistoryWithUpdates =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, -35.6M, DateTime.Now, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, -35.6M, DateTime.Now, _userConnected.UserId);
             exchangeHistoryWithUpdates.ExchangeHistoryId = 1;
 
             _controller.UpdateExchangeHistory(exchangeHistoryWithUpdates);
@@ -196,14 +196,14 @@ namespace ControllerTests
             _testDb.SaveChanges();
 
             ExchangeHistoryDTO exchangeHistoryDTOWithUpdates = exchangeHistoryToCreate;
-            exchangeHistoryDTOWithUpdates.Currency = CurrencyEnum.UY;
+            exchangeHistoryDTOWithUpdates.Currency = CurrencyEnumDTO.UY;
             exchangeHistoryDTOWithUpdates.Value = 3;
 
             _controller.UpdateExchangeHistory(exchangeHistoryDTOWithUpdates);
         }
 
         #endregion
-        
+
         #region Delete ExchangeHistory
 
         [TestMethod]
@@ -211,7 +211,7 @@ namespace ControllerTests
         {
             DateTime creationDate = new DateTime(2023, 12, 12, 0, 0, 0, 0);
             ExchangeHistoryDTO anotherExchangeHistory =
-                new ExchangeHistoryDTO(CurrencyEnum.USA, 12.5M, creationDate, _userConnected.UserId);
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 12.5M, creationDate, _userConnected.UserId);
 
             _controller.CreateExchangeHistory(anotherExchangeHistory);
             anotherExchangeHistory.ExchangeHistoryId = 2;
@@ -255,8 +255,8 @@ namespace ControllerTests
         {
 
             List<ExchangeHistoryDTO> exchangeHistoriesDTOInDb = _controller.GetAllExchangeHistories(_userConnected.UserId);
-            
-            Assert.AreEqual(2,exchangeHistoriesDTOInDb.Count);
+
+            Assert.AreEqual(2, exchangeHistoriesDTOInDb.Count);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].ExchangeHistoryId, exchangeHistoryToCreate.ExchangeHistoryId);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Currency, exchangeHistoryToCreate.Currency);
             Assert.AreEqual(exchangeHistoriesDTOInDb[0].Value, exchangeHistoryToCreate.Value);

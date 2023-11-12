@@ -11,6 +11,7 @@ namespace BusinessLogic.Account_Components
 {
     public class CreditCardAccount : Account
     {
+        private CurrencyEnum currency;
         #region Properties
 
         public string IssuingBank { get; set; }
