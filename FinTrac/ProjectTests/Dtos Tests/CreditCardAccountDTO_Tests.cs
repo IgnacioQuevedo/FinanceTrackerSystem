@@ -146,5 +146,21 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenValues_ShouldCreateCreditCardAccountDTO()
+        {
+            CreditCardAccountDTO myCreditCardAccountDTO = new CreditCardAccountDTO(_nameToSet, _currencyToSet, _creationDateToSet, _issuingBankToSet, _last4Digits, _availableCreditToSet, _closingDateToSet, _userId);
+
+            Assert.AreEqual(myCreditCardAccountDTO.Name, "");
+            Assert.AreEqual(myCreditCardAccountDTO.Currency, _currencyToSet);
+            Assert.AreEqual(myCreditCardAccountDTO.CreationDate, _creationDateToSet);
+            Assert.AreEqual(myCreditCardAccountDTO.IssuingBank, _issuingBankToSet);
+            Assert.AreEqual(myCreditCardAccountDTO.Last4Digits, _last4Digits);
+            Assert.AreEqual(myCreditCardAccountDTO.AvailableCredit, _availableCreditToSet);
+            Assert.AreEqual(myCreditCardAccountDTO.ClosingDate, _closingDateToSet);
+            Assert.AreEqual(myCreditCardAccountDTO.UserId, _userId);
+        }
+
+
     }
 }

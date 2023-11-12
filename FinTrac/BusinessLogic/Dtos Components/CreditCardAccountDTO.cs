@@ -19,12 +19,21 @@ namespace BusinessLogic.Dtos_Components
         public string Last4Digits { get; set; }
         public decimal AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
-        public int UserId { get; set; }
-
-
-
+        public int? UserId { get; set; }
 
         public CreditCardAccountDTO() { }
+
+        public CreditCardAccountDTO(string name, CurrencyEnumDTO currency, DateTime creationDate, string issuingBank, string last4digits, decimal availableCredit, DateTime closingDate, int? userId)
+        {
+            Name = name;
+            Currency = currency;
+            CreationDate = creationDate;
+            IssuingBank = issuingBank;
+            Last4Digits = last4digits;
+            AvailableCredit = availableCredit;
+            ClosingDate = closingDate;
+            UserId = userId;
+        }
 
 
     }
