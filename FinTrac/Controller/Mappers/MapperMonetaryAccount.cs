@@ -22,6 +22,13 @@ public abstract class MapperMonetaryAccount
         return monetaryAccountDTO;
     }
 
+    public static List<MonetaryAccountDTO> ToListOfMonetaryAccountDTO(List<MonetaryAccount> myListOfMonetaryAccount)
+    {
+        throw new NotImplementedException();
+    }
+
+
+
     #endregion  
 
 }
