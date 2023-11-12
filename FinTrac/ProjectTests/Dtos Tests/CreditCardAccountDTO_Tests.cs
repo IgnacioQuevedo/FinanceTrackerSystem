@@ -146,6 +146,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Constructor
+
         [TestMethod]
         public void GivenValues_ShouldCreateCreditCardAccountDTO()
         {
@@ -160,6 +162,8 @@ namespace TestProject1
             Assert.AreEqual(myCreditCardAccountDTO.ClosingDate, _closingDateToSet);
             Assert.AreEqual(myCreditCardAccountDTO.UserId, _userId);
         }
+
+        #endregion
 
 
     }
