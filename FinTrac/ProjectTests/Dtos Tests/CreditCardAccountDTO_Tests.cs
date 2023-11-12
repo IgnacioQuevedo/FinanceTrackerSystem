@@ -77,6 +77,14 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenIssuingBank_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.IssuingBank = "Prex";
+
+            Assert.AreEqual(_creditCardAccountDTO.CreationDate, "P");
+        }
+
 
     }
 }
