@@ -8,4 +8,5 @@ public class TransactionDTO
     public CurrencyEnumDTO Currency { get; set; }
     public TypeEnumDTO Type { get; set; }
     public CategoryDTO TransactionCategory { get; set; }
+    public int Id { get; set; }
 }
