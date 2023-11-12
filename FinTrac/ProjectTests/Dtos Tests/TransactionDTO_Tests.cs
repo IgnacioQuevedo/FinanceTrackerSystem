@@ -109,7 +109,7 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
-        #region Setting Id
+        #region Setting Transaction Id
 
         [TestMethod]
         public void GivenIdToSet_ShouldBeSetted()
@@ -121,15 +121,19 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region Setting Account Id
+
         [TestMethod]
         public void GivenAccountId_ShouldBeSetted()
         {
             int accountId = 1;
             transactionDTO.AccountId = accountId;
-            
-            Assert.AreEqual(transactionDTO.AccountId,accountId);
+
+            Assert.AreEqual(transactionDTO.AccountId, accountId);
         }
 
+        #endregion
+        
         #region Constructor
 
         [TestMethod]
@@ -145,7 +149,7 @@ namespace BusinessLogicTests.Dtos_Tests
             int accountId = 1;
 
             TransactionDTO transactionDTO = new TransactionDTO(transactionId, title, creationDate, amount, currency,
-                type, transactionCategory,1);
+                type, transactionCategory, 1);
 
             Assert.AreEqual(transactionDTO.TransactionId, transactionId);
             Assert.AreEqual(transactionDTO.Title, title);
