@@ -44,7 +44,7 @@ public abstract class MapperExchangeHistory
 
         foreach (ExchangeHistory exchangeHistory in exchangeHistoryList)
         {
-            ExchangeHistoryDTO exchangeHistoryDTO = MapperExchangeHistory.ToExchangeHistoryDTO(exchangeHistory);
+            ExchangeHistoryDTO exchangeHistoryDTO = ToExchangeHistoryDTO(exchangeHistory);
             listExchangeHistoryDTO.Add(exchangeHistoryDTO);
         }
 

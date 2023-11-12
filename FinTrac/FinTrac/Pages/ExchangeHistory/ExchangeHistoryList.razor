@@ -46,7 +46,7 @@
     [CascadingParameter]
     public UserDTO userConnected { get; set; }
 
-    public List<ExchangeHistoryDTO> exchangeHistoryList = new List<ExchangeHistoryDTO>();
+    public List<ExchangeHistoryDTO> exchangeHistoryList;
 
     protected override void OnInitialized()
     {
@@ -62,6 +62,9 @@
     private void DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
     {
         ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
+        
+        
+        OnInitialized();
     }
 
     string GetFormattedDate(DateTime date)

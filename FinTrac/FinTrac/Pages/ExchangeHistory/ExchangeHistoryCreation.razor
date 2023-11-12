@@ -78,6 +78,7 @@
         {
             ExchangeHistoryDTO exchangeHistoryValue = new ExchangeHistoryDTO(valueCurrency, value, valueDate, userConnected.UserId);
             ExchangeHistoryController.CreateExchangeHistory(exchangeHistoryValue);
+            
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             ResetValues();
