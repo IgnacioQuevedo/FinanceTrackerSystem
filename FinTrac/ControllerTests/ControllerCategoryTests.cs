@@ -181,12 +181,33 @@ namespace ControllerTests
             Assert.AreEqual(amountOfCategoriesInDb -2, amountOfCategoriesPostDelete);
         }
 
-        // [TestMethod]
-        // [ExpectedException(typeof(Exception))]
-        // public void GivenACategoryAssignedToATransaction_ShouldThrowException()
-        // {
-        //     //We will implement it in a near future when create methods of account and transaction are done.
-        // }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenACategoryAssignedToATransaction_WhenDeleting_ShouldThrowException()
+        {
+            
+            _controller.CreateCategory(categoryDTO);
+            _testDb.SaveChanges();
+            
+            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou",1000, CurrencyEnum.UY, DateTime.Now.Date);
+            monetaryAccount.AccountId = 0;
+            _testDb.Users.First().MyAccounts.Add(monetaryAccount);
+            _testDb.SaveChanges();
+
+            Transaction transaction = new Transaction("Wasted on food", 1000, DateTime.Now.Date, CurrencyEnum.UY,
+                TypeEnum.Income, _controller.FindCategoryInDb(categoryDTO));
+            transaction.TransactionId = 1;
+            transaction.CategoryId = 1;
+            transaction.AccountId = 1;
+            transaction.TransactionAccount = monetaryAccount;
+            transaction.TransactionCategory =  _controller.FindCategoryInDb(categoryDTO);
+            
+            _testDb.Users.First().MyAccounts[0].MyTransactions.Add(transaction);
+            _testDb.SaveChanges();
+            
+            _controller.DeleteCategory(categoryDTO);
+
+        }
 
         #endregion
 
