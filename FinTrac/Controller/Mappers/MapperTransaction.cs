@@ -48,8 +48,10 @@ public abstract class MapperTransaction
     }
 
     #endregion
-    
-    
-    
-    
+
+
+    public static List<TransactionDTO> ToListOfTransactionsDTO(List<Transaction> transactions)
+    {
+        throw new NotImplementedException();
+    }
 }

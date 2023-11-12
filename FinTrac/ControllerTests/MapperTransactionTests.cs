@@ -76,8 +76,8 @@ namespace ControllerTests
         }
 
         #endregion
-        
-        
+
+
         #region To TransactionDTO
 
         [TestMethod]
@@ -86,12 +86,11 @@ namespace ControllerTests
             Category exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
             exampleCategory.CategoryId = 1;
             
-            Transaction transactionToConvert = new Transaction("Spent on food", 200,DateTime.Now.Date, 
+            Transaction transactionToConvert = new Transaction("Spent on food", 200, DateTime.Now.Date,
                 CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
             transactionToConvert.TransactionId = 1;
-            
+
             TransactionDTO transactionDTO = MapperTransaction.ToTransactionDTO(transactionToConvert);
-            
             
             Assert.IsInstanceOfType(transactionDTO, typeof(TransactionDTO));
             Assert.AreEqual(transactionDTO.TransactionId, transactionToConvert.TransactionId);
@@ -99,15 +98,55 @@ namespace ControllerTests
             Assert.AreEqual(transactionDTO.Amount, transactionToConvert.Amount);
             Assert.AreEqual(transactionDTO.CreationDate, transactionToConvert.CreationDate);
             Assert.AreEqual((CurrencyEnum)transactionDTO.Currency, transactionToConvert.Currency);
-            Assert.AreEqual((TypeEnum) transactionDTO.Type, transactionToConvert.Type);
-            Assert.IsTrue(Helper.AreTheSameObject(transactionDTO.TransactionCategory, 
+            Assert.AreEqual((TypeEnum)transactionDTO.Type, transactionToConvert.Type);
+            Assert.IsTrue(Helper.AreTheSameObject(transactionDTO.TransactionCategory,
                 MapperCategory.ToCategoryDTO(transactionToConvert.TransactionCategory)));
         }
 
-        
         #endregion
         
         
+        #region ToListOfTransactionDTO
+
+        [TestMethod]
+        public void GivenTransactionList_ShouldConvertItToTransactionDTOList()
+        {
+            Category exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            exampleCategory.CategoryId = 1;
+            
+            Transaction transaction1 = new Transaction("Spent on food", 200, DateTime.Now.Date,
+                CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
+            transaction1.TransactionId = 1;
+            
+            Transaction transaction2 = new Transaction("Spent on food", 200, DateTime.Now.Date,
+                CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
+            transaction2.TransactionId = 2;
+            
+
+            List<Transaction> transactions = new List<Transaction>();
+
+            transactions.Add(transaction1);
+            transactions.Add(transaction2);
+
+            List<TransactionDTO> transactionsDTO =
+                MapperTransaction.ToListOfTransactionsDTO(transactions);
+
+            Assert.IsInstanceOfType(transactionsDTO[0], typeof(TransactionDTO));
+            Assert.IsInstanceOfType(transactionsDTO[1], typeof(TransactionDTO));
+
+            Assert.AreEqual(transaction1.TransactionId, transactionsDTO[0].TransactionId);
+            Assert.AreEqual(transaction1.Title, transactionsDTO[0].Title);
+            Assert.AreEqual(transaction1.CreationDate, transactionsDTO[0].CreationDate);
+            Assert.AreEqual(transaction1.Amount, transactionsDTO[0].Amount);
+            Assert.AreEqual((CurrencyEnumDTO)transaction1.Currency, transactionsDTO[0].Currency);
+            Assert.AreEqual((TypeEnumDTO)transaction1.Type, transactionsDTO[0].Type);
+            Assert.AreEqual(transaction1.AccountId,transactionsDTO[0].AccountId);
+            Assert.IsTrue(Helper.AreTheSameObject(MapperCategory.ToCategoryDTO(transaction1.TransactionCategory),
+                transactionsDTO[0].TransactionCategory));
+            
+        }
+        
+        #endregion
         
     }
 }
