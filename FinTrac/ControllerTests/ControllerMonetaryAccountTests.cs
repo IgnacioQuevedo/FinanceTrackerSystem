@@ -66,7 +66,7 @@ namespace ControllerTests
             Assert.AreEqual(myAccountsDb[0].UserId, monetToCreateDTO1.UserId);
             Assert.AreEqual(myAccountsDb[0].Name, monetToCreateDTO1.Name);
             Assert.AreEqual(myAccountsDb[0].AccountId, monetToCreateDTO1.MonetaryAccountId);
-            Assert.AreEqual(myAccountsDb[0].Currency, monetToCreateDTO1.Currency);
+            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)monetToCreateDTO1.Currency);
             Assert.AreEqual(typeof(MonetaryAccount), myAccountsDb[0].GetType());
             Assert.IsInstanceOfType(myAccountsDb[0], typeof(MonetaryAccount));
 
