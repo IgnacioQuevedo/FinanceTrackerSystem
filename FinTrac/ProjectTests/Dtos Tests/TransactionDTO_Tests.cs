@@ -6,6 +6,8 @@ namespace BusinessLogicTests.Dtos_Tests
     [TestClass]
     public class TransactionDTO_Tests
     {
+        #region Initialize
+
         private TransactionDTO transactionDTO;
 
         [TestInitialize]
@@ -14,6 +16,9 @@ namespace BusinessLogicTests.Dtos_Tests
             transactionDTO = new TransactionDTO();
         }
 
+        #endregion
+
+        #region Title
 
         [TestMethod]
         public void GivenTitleToSet_ShouldBeSetted()
@@ -23,6 +28,10 @@ namespace BusinessLogicTests.Dtos_Tests
 
             Assert.AreEqual(transactionDTO.Title, title);
         }
+
+        #endregion
+
+        #region Creation Date
 
         [TestMethod]
         public void GivenCreationDate_ShouldBeSetted()
@@ -34,6 +43,10 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.CreationDate, creationDate);
         }
 
+        #endregion
+
+        #region Amount
+
         [TestMethod]
         public void GivenAmount_ShouldBeSetted()
         {
@@ -43,6 +56,10 @@ namespace BusinessLogicTests.Dtos_Tests
 
             Assert.AreEqual(transactionDTO.Amount, amount);
         }
+
+        #endregion
+
+        #region Currency
 
         [TestMethod]
         public void GivenCurrencyDTO_ShouldBeSetted()
@@ -60,21 +77,9 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.Currency, currencyEnumDTO);
         }
 
-        [TestMethod]
-        public void GivenCurrency_ShouldBeSetted()
-        {
-            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.UY;
-            transactionDTO.Currency = currencyEnumDTO;
-            Assert.AreEqual(transactionDTO.Currency, currencyEnumDTO);
+        #endregion
 
-            currencyEnumDTO = CurrencyEnumDTO.USA;
-            transactionDTO.Currency = currencyEnumDTO;
-            Assert.AreEqual(transactionDTO.Currency, currencyEnumDTO);
-
-            currencyEnumDTO = CurrencyEnumDTO.EUR;
-            transactionDTO.Currency = currencyEnumDTO;
-            Assert.AreEqual(transactionDTO.Currency, currencyEnumDTO);
-        }
+        #region Type
 
         [TestMethod]
         public void GivenType_ShouldBeSetted()
@@ -88,25 +93,36 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(transactionDTO.Type, typeEnumDTO);
         }
 
+        #endregion
+
+        #region Category Of Transaction
+
         [TestMethod]
         public void GivenCategoryDTO_ShouldBeSetted()
         {
             CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
             transactionDTO.TransactionCategory = transactionCategory;
-            
-            Assert.AreEqual(transactionDTO.TransactionCategory,transactionCategory);
 
+            Assert.AreEqual(transactionDTO.TransactionCategory, transactionCategory);
         }
+
+        #endregion
+
+        #region Setting Id
 
         [TestMethod]
         public void GivenIdToSet_ShouldBeSetted()
         {
             int transactionId = 1;
             transactionDTO.TransactionId = 1;
-            Assert.AreEqual(transactionDTO.TransactionId,transactionId);
+            Assert.AreEqual(transactionDTO.TransactionId, transactionId);
         }
-        
+
+        #endregion
+
+        #region Constructor
+
         [TestMethod]
         public void GivenValuesToSet_ShouldBePossibleToDefineATransactionDTO()
         {
@@ -118,17 +134,18 @@ namespace BusinessLogicTests.Dtos_Tests
             TypeEnumDTO type = TypeEnumDTO.Income;
             CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-            TransactionDTO transactionDTO = new TransactionDTO(transactionId,title, creationDate, amount, currency,
+            TransactionDTO transactionDTO = new TransactionDTO(transactionId, title, creationDate, amount, currency,
                 type, transactionCategory);
-    
-            Assert.AreEqual(transactionDTO.TransactionId,transactionId);
-            Assert.AreEqual(transactionDTO.Title,title);
-            Assert.AreEqual(transactionDTO.CreationDate,creationDate);
-            Assert.AreEqual(transactionDTO.Amount,amount);
-            Assert.AreEqual(transactionDTO.Currency,currency);
-            Assert.AreEqual(transactionDTO.Type,type);
-            Assert.AreEqual(transactionDTO.TransactionCategory,transactionCategory);
+
+            Assert.AreEqual(transactionDTO.TransactionId, transactionId);
+            Assert.AreEqual(transactionDTO.Title, title);
+            Assert.AreEqual(transactionDTO.CreationDate, creationDate);
+            Assert.AreEqual(transactionDTO.Amount, amount);
+            Assert.AreEqual(transactionDTO.Currency, currency);
+            Assert.AreEqual(transactionDTO.Type, type);
+            Assert.AreEqual(transactionDTO.TransactionCategory, transactionCategory);
         }
-        
+
+        #endregion
     }
 }

@@ -4,7 +4,7 @@ public class TransactionDTO
 {
     public int TransactionId { get; set; }
     public string Title { get; set; }
-    public DateTime CreationDate { get; set; } = DateTime.Now.Date;
+    public DateTime CreationDate { get; set; }
     public decimal Amount { get; set; }
     public CurrencyEnumDTO Currency { get; set; }
     public TypeEnumDTO Type { get; set; }
