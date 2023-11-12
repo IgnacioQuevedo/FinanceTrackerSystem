@@ -48,6 +48,16 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenMonetaryAccountToCreate_ShouldBeCreated()
+        {
+            CreditCardAccountDTO creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+            creditToCreateDTO1.CreditCardAccountId = 1;
+
+            _controller.CreateCreditAccount(creditToCreateDTO1);
+
+            Assert.AreEqual(1, _testDb.Users.First().MyAccounts.Count);
+        }
 
     }
 }

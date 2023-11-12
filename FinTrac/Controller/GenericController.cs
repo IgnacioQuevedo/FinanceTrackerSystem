@@ -413,6 +413,11 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     #endregion
 
+    public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
+    {
+        throw new NotImplementedException();
+    }
+
 
 
 }
