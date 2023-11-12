@@ -43,6 +43,12 @@ public abstract class MapperCreditAccount
 
     public static CreditCardAccount ToCreditAccount(CreditCardAccountDTO myCreditAccountDTO)
     {
-        throw new NotImplementedException();
+        CreditCardAccount creditAccount =
+          new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, DateTime.Now.Date, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
+
+        creditAccount.AccountId = myCreditAccountDTO.CreditCardAccountId;
+        creditAccount.UserId = myCreditAccountDTO.UserId;
+
+        return creditAccount;
     }
 }

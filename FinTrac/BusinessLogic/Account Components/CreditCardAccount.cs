@@ -37,16 +37,6 @@ namespace BusinessLogic.Account_Components
             ValidateCreditCardAccount();
         }
 
-        public CreditCardAccount(string name, CurrencyEnum currency, string issuingBank, string last4Digits, decimal availableCredit, DateTime closingDate)
-        {
-            Name = name;
-            this.currency = currency;
-            IssuingBank = issuingBank;
-            Last4Digits = last4Digits;
-            AvailableCredit = availableCredit;
-            ClosingDate = closingDate;
-        }
-
         #endregion
 
         #region Validations of Credit Card

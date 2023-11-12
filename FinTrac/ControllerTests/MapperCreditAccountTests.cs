@@ -93,16 +93,16 @@ namespace ControllerTests
         #endregion
 
         [TestMethod]
-        public void GivenCreditCardAccount_ShouldConvertToCreditCardAccountDTO()
+        public void GivenCreditCardAccountDTO_ShouldConvertToCreditCardAccount()
         {
-            CreditCardAccountDTO givenCreditAccountDTO = new CreditCardAccountDTO("Brou", CurrencyEnumDTO.USA, DateTime.Now.Date, "Brou", "1233", 1000, new DateTime(2024, 11, 12), 1);
+            CreditCardAccountDTO givenCreditAccountDTO = new CreditCardAccountDTO("Brou", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Brou", "1233", 1000, new DateTime(2024, 11, 12), 1);
 
             CreditCardAccount accountConverted = MapperCreditAccount.ToCreditAccount(givenCreditAccountDTO);
 
             Assert.AreEqual(typeof(CreditCardAccount), accountConverted.GetType());
             Assert.AreEqual(givenCreditAccountDTO.Name, accountConverted.Name);
             Assert.AreEqual(givenCreditAccountDTO.AvailableCredit, accountConverted.AvailableCredit);
-            Assert.AreEqual((CurrencyEnum)givenCreditAccountDTO.Currency, accountConverted.Currency);
+            Assert.AreEqual(givenCreditAccountDTO.Currency, (CurrencyEnumDTO)accountConverted.Currency);
             Assert.AreEqual(givenCreditAccountDTO.CreditCardAccountId, accountConverted.AccountId);
             Assert.AreEqual(givenCreditAccountDTO.UserId, accountConverted.UserId);
             Assert.AreEqual(givenCreditAccountDTO.CreationDate, accountConverted.CreationDate);
