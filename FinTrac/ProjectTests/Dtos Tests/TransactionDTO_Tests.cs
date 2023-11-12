@@ -6,13 +6,18 @@ namespace BusinessLogicTests.Dtos_Tests
     public class TransactionDTO_Tests
     {
 
+        private TransactionDTO transactionDTO;
+        [TestInitialize]
+        public void Initialize()
+        {
+            transactionDTO = new TransactionDTO();
+        }
+        
+        
         [TestMethod]
         public void GivenTitleToSet_ShouldBeSetted()
         {
-
             string title = "Spent on popcorn";
-            TransactionDTO transactionDTO = new TransactionDTO();
-
             transactionDTO.Title = title;
             
             Assert.AreEqual(transactionDTO.Title,title);
