@@ -1,6 +1,6 @@
 ﻿@page "/ExchangeHistories"
-
-@using BusinessLogic.ExchangeHistory_Components;
+@layout MainLayout
+@inject IExchangeHistoryController ExchangeHistoryController
 
 
 <h3>Exchange History List</h3>
@@ -23,14 +23,14 @@
         </thead>
         <tbody>
 
-            @foreach (var exchangeHistory in exchangeHistoryList.Where(t => t != null))
+            @foreach (var exchangeHistory in exchangeHistoryList)
             {
                 <tr>
                     <td>@exchangeHistory.Value</td>
                     <td>@exchangeHistory.Currency</td>
                     <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
                     <td>
-                        <button class="btn btn-success btn-sm" @onclick="(() => ExchangeEdition(exchangeHistory))"> Edit </button>
+                        <button class="btn btn-success btn-sm" @onclick="(() => EditExchangeHistory(exchangeHistory))"> Edit </button>
                         <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
                     </td>
                 </tr>
@@ -44,25 +44,24 @@
 @code {
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO userConnected { get; set; }
 
-    public List<ExchangeHistory> exchangeHistoryList;
+    public List<ExchangeHistoryDTO> exchangeHistoryList = new List<ExchangeHistoryDTO>();
 
     protected override void OnInitialized()
     {
-        exchangeHistoryList = user.GetExchangesHistory();
+        exchangeHistoryList = ExchangeHistoryController.GetAllExchangeHistories(userConnected.UserId);
     }
 
-    private void ExchangeEdition(ExchangeHistory exchangeToEdit)
+    private void EditExchangeHistory(ExchangeHistoryDTO exchangeToEdit)
     {
-        exchangeToEdit.ValidateApplianceExchangeOnTransaction();
+        ExchangeHistoryController.UpdateExchangeHistory(exchangeToEdit);
         NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeToEdit.ExchangeHistoryId}/Edit");
     }
 
-    private void DeleteExchange(ExchangeHistory exchangeToEdit)
+    private void DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
     {
-        exchangeToEdit.ValidateApplianceExchangeOnTransaction();
-        user.DeleteExchangeHistory(user.MyExchangesHistory[exchangeToEdit.ExchangeHistoryId]);
+        ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
     }
 
     string GetFormattedDate(DateTime date)
