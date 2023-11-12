@@ -1,5 +1,5 @@
 ﻿@page "/ExchangeHistories/{ExchangeId:int}/Edit"
-@using BusinessLogic.ExchangeHistory_Components;
+@inject IExchangeHistoryController ExchangeHistoryController
 
 <h3>ExchangeHistoryEdit</h3>
 
@@ -23,19 +23,19 @@
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO userConnected { get; set; }
 
     [Parameter]
     public int ExchangeId { get; set; }
     public string errorTxt { get; set; }
 
-    private ExchangeHistory exchangeWithoutUpdate;
-    private ExchangeHistory exchangeUpdated;
+    private ExchangeHistoryDTO exchangeWithoutUpdate;
+    private ExchangeHistoryDTO exchangeUpdated;
     private decimal newValue;
 
     protected override void OnInitialized()
     {
-        exchangeWithoutUpdate = user.MyExchangesHistory[ExchangeId];
+        exchangeWithoutUpdate = ExchangeHistoryController.FindExchangeHistory(ExchangeId, userConnected.UserId);
         newValue = exchangeWithoutUpdate.Value;
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
@@ -45,10 +45,10 @@
     {
         try
         {
-            exchangeUpdated = new ExchangeHistory(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate);
+            exchangeUpdated = new ExchangeHistoryDTO(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate,userConnected.UserId);
             exchangeUpdated.ExchangeHistoryId = ExchangeId;
 
-            user.ModifyExchangeHistory(exchangeUpdated);
+            ExchangeHistoryController.UpdateExchangeHistory(exchangeUpdated);
             NavigationManager.NavigateTo("/ExchangeHistories");
         }
         catch(Exception ExceptionExchangeHistory)
