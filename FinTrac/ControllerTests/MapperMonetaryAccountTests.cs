@@ -87,5 +87,21 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenMonetaryAccountDTO_ShouldConvertToMonetaryAccount()
+        {
+            MonetaryAccountDTO givenMonetAccountDTO = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, 1);
+
+            MonetaryAccount accountConverted = MapperMonetaryAccount.ToMonetaryAccount(givenMonetAccountDTO);
+
+            Assert.AreEqual(typeof(MonetaryAccountDTO), accountConverted.GetType());
+            Assert.AreEqual(givenMonetAccountDTO.Name, accountConverted.Name);
+            Assert.AreEqual(givenMonetAccountDTO.Amount, accountConverted.Amount);
+            Assert.AreEqual((CurrencyEnumDTO)givenMonetAccountDTO.Currency, accountConverted.Currency);
+            Assert.AreEqual(givenMonetAccountDTO.MonetaryAccountId, accountConverted.AccountId);
+            Assert.AreEqual(givenMonetAccountDTO.UserId, accountConverted.UserId);
+            Assert.AreEqual(givenMonetAccountDTO.CreationDate, accountConverted.CreationDate);
+        }
+
     }
 }

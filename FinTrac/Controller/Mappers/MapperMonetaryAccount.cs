@@ -41,4 +41,9 @@ public abstract class MapperMonetaryAccount
 
     #endregion
 
+    public static MonetaryAccount ToMonetaryAccount(MonetaryAccountDTO myMonetaryAccount)
+    {
+        throw new NotImplementedException();
+    }
+
 }
