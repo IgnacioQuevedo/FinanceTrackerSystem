@@ -106,5 +106,27 @@ namespace BusinessLogicTests.Dtos_Tests
             transactionDTO.TransactionId = 1;
             Assert.AreEqual(transactionDTO.TransactionId,transactionId);
         }
+        
+        [TestMethod]
+        public void GivenValuesToSet_ShouldBePossibleToDefineATransactionDTO()
+        {
+            int transactionId = 1;
+            string title = "Spent on popcorn";
+            DateTime creationDate = DateTime.Now.Date;
+            decimal amount = 300.5M;
+            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.UY;
+            TypeEnumDTO typeEnumDTO = TypeEnumDTO.Income;
+            CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+
+            TransactionDTO transactionDTO = new TransactionDTO(transactionId,title, creationDate, amount, currencyEnumDTO,
+                typeEnumDTO, transactionCategory);
+    
+            Assert.AreEqual(transactionDTO.Title);
+            Assert.AreEqual(transactionDTO.Currency);
+            Assert.AreEqual(transactionDTO.Amount);
+            Assert.AreEqual(transactionDTO.);
+            Assert.AreEqual(transactionDTO.);
+        }
+        
     }
 }
