@@ -67,4 +67,8 @@ public abstract class MapperTransaction
     #endregion
 
 
+    public static List<Transaction> ToListOfTransactions(object exchangeHistoryDtoList)
+    {
+        throw new NotImplementedException();
+    }
 }

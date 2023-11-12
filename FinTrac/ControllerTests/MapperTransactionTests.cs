@@ -136,7 +136,30 @@ namespace ControllerTests
         }
         
         #endregion
-  
+        
+        #region ToListOfTransaction
+
+        [TestMethod]
+        public void GivenTransactionsDTO_ShouldConvertIntoTransactions()
+        {
+            CategoryDTO exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            exampleCategory.CategoryId = 1;
+            
+            TransactionDTO transaction1 = new TransactionDTO("Spent on food",DateTime.Now.Date, 200, 
+                CurrencyEnumDTO.USA, TypeEnumDTO.Income, exampleCategory,1);
+            transaction1.TransactionId = 1;
+
+            List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
+            transactionsDTO.Add(transaction1);
+
+            List<Transaction> transactions = MapperTransaction.ToListOfTransactions(exchangeHistoryDTOList);
+
+            Assert.IsTrue(Helper.AreTheSameObject(transactions[0],MapperTransaction.ToTransaction(transactionsDTO[0])));
+        }
+
+
+
+        #endregion
         
     }
 }
