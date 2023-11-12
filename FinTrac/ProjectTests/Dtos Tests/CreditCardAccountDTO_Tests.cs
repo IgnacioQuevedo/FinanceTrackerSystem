@@ -91,6 +91,14 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenLast4Digits_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.Last4Digits = "1234";
+
+            Assert.AreEqual(_creditCardAccountDTO.Last4Digits, "123");
+        }
+
 
     }
 }

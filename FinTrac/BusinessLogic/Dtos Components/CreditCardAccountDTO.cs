@@ -16,6 +16,8 @@ namespace BusinessLogic.Dtos_Components
         public CurrencyEnumDTO Currency { get; set; }
         public DateTime CreationDate { get; set; }
         public string IssuingBank { get; set; }
+        public string Last4Digits { get; set; }
+
 
 
 
