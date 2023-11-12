@@ -24,7 +24,15 @@ public abstract class MapperMonetaryAccount
 
     public static List<MonetaryAccountDTO> ToListOfMonetaryAccountDTO(List<MonetaryAccount> myListOfMonetaryAccount)
     {
-        throw new NotImplementedException();
+        List<MonetaryAccountDTO> listMonetaryAccountDTO = new List<MonetaryAccountDTO>();
+
+        foreach (MonetaryAccount monetAccount in myListOfMonetaryAccount)
+        {
+            MonetaryAccountDTO monetAccountDTO = ToMonetaryAccountDTO(monetAccount);
+            listMonetaryAccountDTO.Add(monetAccountDTO);
+        }
+
+        return listMonetaryAccountDTO;
     }
 
 
