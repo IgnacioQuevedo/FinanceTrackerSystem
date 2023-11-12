@@ -40,4 +40,9 @@ public abstract class MapperCreditAccount
     }
 
     #endregion
+
+    public static CreditCardAccount ToCreditAccount(CreditCardAccountDTO myCreditAccountDTO)
+    {
+        throw new NotImplementedException();
+    }
 }
