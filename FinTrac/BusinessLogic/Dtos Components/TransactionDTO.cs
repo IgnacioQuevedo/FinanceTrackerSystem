@@ -17,10 +17,9 @@ public class TransactionDTO
         
     }
     
-    public TransactionDTO(int transactionId,string title, DateTime creationDate, decimal amount, 
+    public TransactionDTO(string title, DateTime creationDate, decimal amount, 
         CurrencyEnumDTO currencyEnumDto, TypeEnumDTO typeEnumDto, CategoryDTO transactionCategory, int? accountId)
     {
-        TransactionId = transactionId;
         Title = title;
         CreationDate = creationDate;
         Amount = amount;
