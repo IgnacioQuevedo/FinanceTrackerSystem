@@ -196,7 +196,7 @@ namespace ControllerTests
 
             Transaction transaction = new Transaction("Wasted on food", 1000, DateTime.Now.Date, CurrencyEnum.UY,
                 TypeEnum.Income, _controller.FindCategoryInDb(categoryDTO));
-            transaction.TransactionId = 1;
+            transaction.TransactionId = 0;
             transaction.CategoryId = 1;
             transaction.AccountId = 1;
             transaction.TransactionAccount = monetaryAccount;
