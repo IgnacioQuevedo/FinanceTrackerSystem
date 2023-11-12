@@ -114,18 +114,20 @@ namespace BusinessLogicTests.Dtos_Tests
             string title = "Spent on popcorn";
             DateTime creationDate = DateTime.Now.Date;
             decimal amount = 300.5M;
-            CurrencyEnumDTO currencyEnumDTO = CurrencyEnumDTO.UY;
-            TypeEnumDTO typeEnumDTO = TypeEnumDTO.Income;
+            CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
+            TypeEnumDTO type = TypeEnumDTO.Income;
             CategoryDTO transactionCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-            TransactionDTO transactionDTO = new TransactionDTO(transactionId,title, creationDate, amount, currencyEnumDTO,
-                typeEnumDTO, transactionCategory);
+            TransactionDTO transactionDTO = new TransactionDTO(transactionId,title, creationDate, amount, currency,
+                type, transactionCategory);
     
-            Assert.AreEqual(transactionDTO.Title);
-            Assert.AreEqual(transactionDTO.Currency);
-            Assert.AreEqual(transactionDTO.Amount);
-            Assert.AreEqual(transactionDTO.);
-            Assert.AreEqual(transactionDTO.);
+            Assert.AreEqual(transactionDTO.TransactionId,transactionId);
+            Assert.AreEqual(transactionDTO.Title,title);
+            Assert.AreEqual(transactionDTO.CreationDate,creationDate);
+            Assert.AreEqual(transactionDTO.Amount,amount);
+            Assert.AreEqual(transactionDTO.Currency,currency);
+            Assert.AreEqual(transactionDTO.Type,type);
+            Assert.AreEqual(transactionDTO.TransactionCategory,transactionCategory);
         }
         
     }
