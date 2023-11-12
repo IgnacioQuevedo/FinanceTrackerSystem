@@ -133,5 +133,13 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenUserId_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.UserId = 1;
+
+            Assert.AreEqual(_creditCardAccountDTO.UserId, 0);
+        }
+
     }
 }
