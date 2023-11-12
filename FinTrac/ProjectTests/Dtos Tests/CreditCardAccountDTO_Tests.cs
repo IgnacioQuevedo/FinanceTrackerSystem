@@ -105,6 +105,13 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenAvailableCredit_ShouldBeSetted()
+        {
+            _creditCardAccountDTO.AvailableCredit = 2000;
+
+            Assert.AreEqual(_creditCardAccountDTO.AvailableCredit, 10);
+        }
 
     }
 }
