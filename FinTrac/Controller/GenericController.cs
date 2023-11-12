@@ -301,8 +301,6 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         }
     }
 
-    #endregion
-
     public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound, int idUserConnected)
     {
         SetUserConnected(idUserConnected);
@@ -390,6 +388,11 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
     }
 
+    #endregion
+
+
+    #region Monetary Account section
+
     public void CreateMonetaryAccount(MonetaryAccountDTO monetAccountDTOToAdd)
     {
         try
@@ -407,6 +410,9 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             throw new Exception(Exception.Message);
         }
     }
+
+    #endregion
+
 
 
 }
