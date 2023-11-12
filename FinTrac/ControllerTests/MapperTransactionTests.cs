@@ -72,7 +72,7 @@ namespace ControllerTests
             TransactionDTO transactionDTO = new TransactionDTO("", DateTime.Now.Date, -200,
                 CurrencyEnumDTO.USA, TypeEnumDTO.Income, exampleCategory, 1);
 
-            Transaction transactionGenerated = MapperTransaction.ToTransaction(transactionDTO);
+            MapperTransaction.ToTransaction(transactionDTO);
         }
 
         #endregion
