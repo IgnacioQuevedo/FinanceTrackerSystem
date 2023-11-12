@@ -41,9 +41,15 @@ public abstract class MapperMonetaryAccount
 
     #endregion
 
-    public static MonetaryAccount ToMonetaryAccount(MonetaryAccountDTO myMonetaryAccount)
+    public static MonetaryAccount ToMonetaryAccount(MonetaryAccountDTO myMonetaryAccountDTO)
     {
-        throw new NotImplementedException();
+        MonetaryAccount monetaryAccount =
+            new MonetaryAccount(myMonetaryAccountDTO.Name, myMonetaryAccountDTO.Amount, (CurrencyEnum)myMonetaryAccountDTO.Currency, myMonetaryAccountDTO.CreationDate);
+
+        monetaryAccount.AccountId = myMonetaryAccountDTO.MonetaryAccountId;
+        monetaryAccount.UserId = myMonetaryAccountDTO.UserId;
+
+        return monetaryAccount;
     }
 
 }

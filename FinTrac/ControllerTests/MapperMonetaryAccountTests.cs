@@ -94,10 +94,10 @@ namespace ControllerTests
 
             MonetaryAccount accountConverted = MapperMonetaryAccount.ToMonetaryAccount(givenMonetAccountDTO);
 
-            Assert.AreEqual(typeof(MonetaryAccountDTO), accountConverted.GetType());
+            Assert.AreEqual(typeof(MonetaryAccount), accountConverted.GetType());
             Assert.AreEqual(givenMonetAccountDTO.Name, accountConverted.Name);
             Assert.AreEqual(givenMonetAccountDTO.Amount, accountConverted.Amount);
-            Assert.AreEqual((CurrencyEnumDTO)givenMonetAccountDTO.Currency, accountConverted.Currency);
+            Assert.AreEqual((CurrencyEnum)givenMonetAccountDTO.Currency, accountConverted.Currency);
             Assert.AreEqual(givenMonetAccountDTO.MonetaryAccountId, accountConverted.AccountId);
             Assert.AreEqual(givenMonetAccountDTO.UserId, accountConverted.UserId);
             Assert.AreEqual(givenMonetAccountDTO.CreationDate, accountConverted.CreationDate);
