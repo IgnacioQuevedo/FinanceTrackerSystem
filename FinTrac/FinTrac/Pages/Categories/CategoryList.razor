@@ -27,46 +27,49 @@
     <ErrorAlert errorTxt="@errorTxt"/>
 }
 
-<table class="table table-striped table-bordered claseTabla">
-    <thead>
+<main>
+    <table class="table table-striped table-bordered claseTabla">
+        <thead>
 
 
-    <br/>
+        <br/>
 
-    <tr>
-        <th>Name</th>
-        <th>Creation Date</th>
-        <th>Status</th>
-        <th>Type</th>
-        <th>Possible Operations</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    @foreach (var category in categoryList)
-    {
         <tr>
-            <td>@category.Name</td>
-            <td>@GetFormattedDate(category.CreationDate)</td>
-            <td>@category.Status</td>
-            <td>@category.Type</td>
-            <td>
-
-                <button class="btn btn-success btn-sm button" onclick="@(() => NavigationManager.NavigateTo($"/Category/{@category.CategoryId}/Edit"))">Edit</button>
-                <button class="btn btn-danger btn-sm button" @onclick="(() => DeleteCategory(category.CategoryId))">Delete</button>
-            </td>
+            <th>Name</th>
+            <th>Creation Date</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Possible Operations</th>
         </tr>
-    }
-    </tbody>
-    <br/>
+        </thead>
+        <tbody>
+
+        @foreach (var category in categoryList)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@GetFormattedDate(category.CreationDate)</td>
+                <td>@category.Status</td>
+                <td>@category.Type</td>
+                <td>
+
+                    <button class="btn btn-success btn-sm button" onclick="@(() => NavigationManager.NavigateTo($"/Category/{@category.CategoryId}/Edit"))">Edit</button>
+                    <button class="btn btn-danger btn-sm button" @onclick="(() => DeleteCategory(category.CategoryId))">Delete</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <br/>
+
+    </table>
+
 
     @if (SuccesAlert.IsSucess)
     {
         <SuccesAlert errorTxt="Category delete with sucess"/>
     }
 
-
-</table>
+</main>
 
 @code {
     private List<CategoryDTO>? categoryList;
@@ -78,7 +81,6 @@
 
     protected override void OnInitialized()
     {
-        string nombre = userConnected.FirstName;
         categoryList = CategoryController.GetAllCategories(userConnected.UserId);
 
         SuccesAlert.IsSucess = false;
@@ -89,12 +91,11 @@
     {
         try
         {
-            CategoryController.DeleteCategory(categoryId);
-            
+            CategoryController.DeleteCategory(CategoryController.FindCategory(categoryId, userConnected.UserId));
+
             ResetValues();
             await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
-            
         }
         catch (Exception ExceptionCategory)
         {

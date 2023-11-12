@@ -113,7 +113,7 @@ namespace ControllerTests
             Assert.AreEqual(exchangeHistoryToCreate.UserId, exchangeHistoryFoundAndReturned.UserId);
             Assert.AreEqual(exchangeHistoryToCreate.Value, exchangeHistoryFoundAndReturned.Value);
             Assert.AreEqual(exchangeHistoryToCreate.ValueDate, exchangeHistoryFoundAndReturned.ValueDate);
-            Assert.AreEqual((CurrencyEnum)exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
+            Assert.AreEqual((CurrencyEnumDTO)exchangeHistoryToCreate.Currency, exchangeHistoryFoundAndReturned.Currency);
         }
 
         [TestMethod]

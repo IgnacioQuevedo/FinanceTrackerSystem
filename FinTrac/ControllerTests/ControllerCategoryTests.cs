@@ -173,20 +173,34 @@ namespace ControllerTests
             List<Category> categoryListsOfUser = _testDb.Users.First().MyCategories;
 
             int amountOfCategoriesInDb = categoryListsOfUser.Count;
-            _controller.DeleteCategory(categoryDTO.CategoryId);
-            _controller.DeleteCategory(categoryDTO2.CategoryId);
+            _controller.DeleteCategory(categoryDTO);
+            _controller.DeleteCategory(categoryDTO2);
 
             int amountOfCategoriesPostDelete = _testDb.Users.First().MyCategories.Count;
 
-            Assert.AreEqual(amountOfCategoriesInDb, amountOfCategoriesPostDelete);
+            Assert.AreEqual(amountOfCategoriesInDb -2, amountOfCategoriesPostDelete);
         }
 
-        // [TestMethod]
-        // [ExpectedException(typeof(Exception))]
-        // public void GivenACategoryAssignedToATransaction_ShouldThrowException()
-        // {
-        //     //We will implement it in a near future when create methods of account and transaction are done.
-        // }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenACategoryAssignedToATransaction_WhenDeleting_ShouldThrowException()
+        {
+            _controller.CreateCategory(categoryDTO);
+            _testDb.SaveChanges();
+            
+            MonetaryAccount monetaryAccount = new MonetaryAccount("Brou",1000, CurrencyEnum.UY, DateTime.Now.Date);
+            Transaction transaction = new Transaction("Wasted on food", 1000, DateTime.Now.Date, CurrencyEnum.UY,
+                TypeEnum.Income, _controller.FindCategoryInDb(categoryDTO));
+            
+            monetaryAccount.AccountId = 0;
+            transaction.TransactionId = 0;
+            
+            _testDb.Users.First().MyAccounts.Add(monetaryAccount);
+            _testDb.Users.First().MyAccounts[0].MyTransactions.Add(transaction);
+            
+            _testDb.SaveChanges();
+            _controller.DeleteCategory(categoryDTO);
+        }
 
         #endregion
 
