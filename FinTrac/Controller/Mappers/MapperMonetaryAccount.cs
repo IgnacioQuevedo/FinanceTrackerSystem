@@ -10,6 +10,8 @@ namespace Controller.Mappers;
 
 public abstract class MapperMonetaryAccount
 {
+    #region To MonetaryAccountDTO
+
     public static MonetaryAccountDTO ToMonetaryAccountDTO(MonetaryAccount myMonetaryAccount)
     {
         MonetaryAccountDTO monetaryAccountDTO =
@@ -19,5 +21,7 @@ public abstract class MapperMonetaryAccount
 
         return monetaryAccountDTO;
     }
+
+    #endregion  
 
 }

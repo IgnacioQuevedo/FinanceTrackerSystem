@@ -43,6 +43,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To MonetaryAccountDTO
+
         [TestMethod]
         public void GivenMonetaryAccount_ShouldConvertItToMonetaryAccountDTO()
         {
@@ -58,6 +60,8 @@ namespace ControllerTests
             Assert.AreEqual(givenMonetaryAccount.UserId, accountConverted.UserId);
             Assert.AreEqual(givenMonetaryAccount.CreationDate, accountConverted.CreationDate);
         }
+
+        #endregion
 
     }
 }
