@@ -151,7 +151,7 @@ namespace TestProject1
         {
             CreditCardAccountDTO myCreditCardAccountDTO = new CreditCardAccountDTO(_nameToSet, _currencyToSet, _creationDateToSet, _issuingBankToSet, _last4Digits, _availableCreditToSet, _closingDateToSet, _userId);
 
-            Assert.AreEqual(myCreditCardAccountDTO.Name, "");
+            Assert.AreEqual(myCreditCardAccountDTO.Name, _nameToSet);
             Assert.AreEqual(myCreditCardAccountDTO.Currency, _currencyToSet);
             Assert.AreEqual(myCreditCardAccountDTO.CreationDate, _creationDateToSet);
             Assert.AreEqual(myCreditCardAccountDTO.IssuingBank, _issuingBankToSet);
