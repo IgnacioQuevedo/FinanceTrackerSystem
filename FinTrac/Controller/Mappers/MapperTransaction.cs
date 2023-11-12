@@ -31,4 +31,9 @@ public abstract class MapperTransaction
     }
 
     #endregion
+
+    public static TransactionDTO ToTransactionDTO(Transaction transactionToConvert)
+    {
+        throw new NotImplementedException();
+    }
 }

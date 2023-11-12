@@ -41,7 +41,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region ToTransaction
+        #region To Transaction
 
         [TestMethod]
         public void GivenTransactionDTOWithCorrectData_ShouldBePossibleToConvertItToTransaction()
@@ -76,5 +76,38 @@ namespace ControllerTests
         }
 
         #endregion
+        
+        
+        #region To TransactionDTO
+
+        [TestMethod]
+        public void GivenTransaction_ShouldBePossibleToConvertToTransactionDTO()
+        {
+            Category exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            exampleCategory.CategoryId = 1;
+            
+            Transaction transactionToConvert = new Transaction("Spent on food", 200,DateTime.Now.Date, 
+                CurrencyEnum.USA, TypeEnum.Income, exampleCategory);
+            transactionToConvert.TransactionId = 1;
+            
+            TransactionDTO transactionDTO = MapperTransaction.ToTransactionDTO(transactionToConvert);
+            
+            
+            Assert.IsInstanceOfType(transactionDTO, typeof(TransactionDTO));
+            Assert.AreEqual(transactionDTO.TransactionId, transactionToConvert.TransactionId);
+            Assert.AreEqual(transactionDTO.Title, transactionToConvert.Title);
+            Assert.AreEqual(transactionDTO.Amount, transactionToConvert.Amount);
+            Assert.AreEqual(transactionDTO.CreationDate, transactionToConvert.CreationDate);
+            Assert.AreEqual((CurrencyEnum)transactionDTO.Currency, transactionToConvert.Currency);
+            Assert.AreEqual((TypeEnum) transactionDTO.Type, transactionToConvert.Type);
+            Assert.IsTrue(Helper.AreTheSameObject(transactionDTO.TransactionCategory, 
+                MapperCategory.ToCategoryDTO(transactionToConvert.TransactionCategory)));
+        }
+
+        
+        #endregion
+        
+        
+        
     }
 }
