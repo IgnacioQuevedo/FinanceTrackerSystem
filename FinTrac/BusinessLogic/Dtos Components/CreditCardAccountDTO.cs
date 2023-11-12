@@ -18,6 +18,7 @@ namespace BusinessLogic.Dtos_Components
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
         public decimal AvailableCredit { get; set; }
+        public DateTime ClosingDate { get; set; }
 
 
 

@@ -118,5 +118,15 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenClosingDate_ShouldBeSetted()
+        {
+            DateTime dateTimeToSet = new DateTime(2023, 11, 12);
+            _creditCardAccountDTO.ClosingDate = dateTimeToSet;
+
+            Assert.AreEqual(_creditCardAccountDTO.ClosingDate, 0);
+        }
+
     }
 }
