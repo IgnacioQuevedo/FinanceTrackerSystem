@@ -52,6 +52,14 @@ public abstract class MapperTransaction
 
     public static List<TransactionDTO> ToListOfTransactionsDTO(List<Transaction> transactions)
     {
-        throw new NotImplementedException();
+        List<TransactionDTO> listTransactionsDTO = new List<TransactionDTO>();
+
+        foreach (Transaction transaction in transactions)
+        {
+            TransactionDTO transactionDTO = ToTransactionDTO(transaction);
+            listTransactionsDTO.Add(transactionDTO);
+        }
+
+        return listTransactionsDTO;
     }
 }
