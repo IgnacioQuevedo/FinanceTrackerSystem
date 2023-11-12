@@ -50,7 +50,7 @@ namespace ControllerTests
 
             MonetaryAccountDTO accountConverted = MapperMonetaryAccount.ToMonetaryAccountDTO(givenMonetaryAccount);
 
-            Assert.AreEqual(givenMonetaryAccount, typeof(MonetaryAccountDTO));
+            Assert.AreEqual(typeof(MonetaryAccountDTO), accountConverted.GetType());
             Assert.AreEqual(givenMonetaryAccount.Name, accountConverted.Name);
             Assert.AreEqual(givenMonetaryAccount.Amount, accountConverted.Amount);
             Assert.AreEqual((CurrencyEnumDTO)givenMonetaryAccount.Currency, accountConverted.Currency);

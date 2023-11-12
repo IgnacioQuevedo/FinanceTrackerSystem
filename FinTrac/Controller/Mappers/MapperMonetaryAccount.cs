@@ -12,7 +12,12 @@ public abstract class MapperMonetaryAccount
 {
     public static MonetaryAccountDTO ToMonetaryAccountDTO(MonetaryAccount myMonetaryAccount)
     {
-        throw new NotImplementedException();
+        MonetaryAccountDTO monetaryAccountDTO =
+            new MonetaryAccountDTO(myMonetaryAccount.Name, myMonetaryAccount.Amount, (CurrencyEnumDTO)myMonetaryAccount.Currency, myMonetaryAccount.CreationDate, myMonetaryAccount.UserId);
+
+        monetaryAccountDTO.MonetaryAccountId = myMonetaryAccount.AccountId;
+
+        return monetaryAccountDTO;
     }
 
 }
