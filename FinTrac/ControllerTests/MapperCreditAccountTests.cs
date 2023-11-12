@@ -46,7 +46,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenMonetaryAccount_ShouldConvertItToMonetaryAccountDTO()
         {
-            CreditCardAccount givenCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.USA, DateTime.Now.Date, "Brou", "1233", 1000, DateTime.Now.Date);
+            CreditCardAccount givenCreditAccount = new CreditCardAccount("Brou", CurrencyEnum.USA, DateTime.Now.Date, "Brou", "1233", 1000, new DateTime(2024, 11, 12));
 
             CreditCardAccountDTO accountConverted = MapperCreditAccount.ToCreditAccountDTO(givenCreditAccount);
 
