@@ -74,13 +74,13 @@
         NavigationManager.NavigateTo($"/ExchangeHistories/{exchangeToEdit.ExchangeHistoryId}/Edit");
     }
 
-    private void DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
+    private async Task DeleteExchange(ExchangeHistoryDTO exchangeToDelete)
     {
         try
         {
             ExchangeHistoryController.DeleteExchangeHistory(exchangeToDelete);
             ResetValues();
-            
+            await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionExchangeHistory)
