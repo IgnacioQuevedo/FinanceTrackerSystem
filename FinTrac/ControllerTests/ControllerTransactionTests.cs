@@ -142,6 +142,24 @@ namespace ControllerTests
             _controller.FindTransactionInDb(-1, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
         }
 
+        [TestMethod]
+        public void GivenTransactionId_ShouldBePossibleToFindTransaction_AndReturnItDTO()
+        {
+            TransactionDTO transactionToCreate = new TransactionDTO("Spent on food", DateTime.Now.Date, 100,
+                CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            transactionToCreate.TransactionId = 1;
+
+            _controller.CreateTransaction(transactionToCreate);
+
+
+            TransactionDTO transactionFound = _controller.FindTransaction(
+                transactionToCreate.TransactionId,monetaryAccount.MonetaryAccountId,_userConnected.UserId);
+            
+            Assert.IsTrue(Helper.AreTheSameObject(transactionToCreate,transactionFound));
+            
+        }
+        
         #endregion
     }
 }

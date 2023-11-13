@@ -636,5 +636,10 @@ namespace Controller
 
             throw new Exception("Transaction was not found, seems to be an error on index");
         }
+
+        public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
