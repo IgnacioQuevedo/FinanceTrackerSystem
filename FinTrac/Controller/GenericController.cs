@@ -648,6 +648,8 @@ namespace Controller
 
         public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? userId)
         {
+            try
+            {
                 SetUserConnected(userId);
                 
                 Transaction transactionPreUpdate = 
@@ -665,6 +667,12 @@ namespace Controller
                 
                 accountOfTransaction.UpdateAccountAfterModify(transactionWithUpdates,transactionPreUpdate.Amount);
                 _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+                
                 
         }
     }
