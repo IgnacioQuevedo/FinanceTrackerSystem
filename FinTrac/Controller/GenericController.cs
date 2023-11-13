@@ -541,6 +541,11 @@ namespace Controller
             }
 
         }
+
+        public void DeleteCreditAccount(CreditCardAccountDTO accountToDelete)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

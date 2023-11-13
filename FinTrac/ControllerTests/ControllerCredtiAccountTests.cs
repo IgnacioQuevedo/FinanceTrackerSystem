@@ -130,5 +130,24 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenCreditAccountDTOToDelete_ShouldBeDeleted()
+        {
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+            _controller.CreateCreditAccount(_creditAccountDTO2);
+
+            List<Account> accountListOfUser = _testDb.Users.First().MyAccounts;
+
+            _creditAccountDTO1.CreditCardAccountId = 1;
+            _creditAccountDTO2.CreditCardAccountId = 2;
+            int amountOfAccountsInDb = accountListOfUser.Count;
+            _controller.DeleteCreditAccount(_creditAccountDTO1);
+            _controller.DeleteCreditAccount(_creditAccountDTO2);
+
+            int amountOfAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
+
+            Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
+        }
+
     }
 }
