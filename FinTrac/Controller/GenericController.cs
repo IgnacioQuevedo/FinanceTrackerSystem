@@ -490,6 +490,13 @@ namespace Controller
             SetUserConnected(userConnectedId);
             List<MonetaryAccountDTO> monetaryAccountList = new List<MonetaryAccountDTO>();
 
+            FindMonetariesAccountsAndMap(monetaryAccountList);
+
+            return monetaryAccountList;
+        }
+
+        private void FindMonetariesAccountsAndMap(List<MonetaryAccountDTO> monetaryAccountList)
+        {
             foreach (Account account in _userConnected.MyAccounts)
             {
                 if (account is MonetaryAccount)
@@ -497,8 +504,6 @@ namespace Controller
                     monetaryAccountList.Add(MapperMonetaryAccount.ToMonetaryAccountDTO((MonetaryAccount)account));
                 }
             }
-
-            return monetaryAccountList;
         }
 
         #endregion
