@@ -21,7 +21,6 @@ public abstract class MapperTransaction
             transactionToTransform.TransactionId = transactionDto.TransactionId;
             transactionToTransform.AccountId = transactionDto.AccountId;
             transactionToTransform.CategoryId = transactionDto.TransactionCategory.CategoryId;
-                
 
             return transactionToTransform;
         }

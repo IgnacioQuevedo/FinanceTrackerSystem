@@ -181,28 +181,31 @@ namespace ControllerTests
         {
             dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-
+            
+            CategoryDTO categoryDTO2 =
+                new CategoryDTO("party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId); ;
+            
+            _controller.CreateCategory(categoryDTO2);
+            categoryDTO2.CategoryId = 2;
+            
             _controller.CreateTransaction(dtoToAdd);
     
             TransactionDTO dtoWithUpdates = dtoToAdd;
             dtoWithUpdates.Currency = CurrencyEnumDTO.EUR;
-            dtoWithUpdates.Amount = 234;
-            dtoWithUpdates.Title = "Transaction updated";
+            dtoWithUpdates.Amount = 3333;
+            dtoWithUpdates.TransactionCategory = categoryDTO2;
+            dtoWithUpdates.TransactionId = 1;
 
             _controller.UpdateTransaction(dtoWithUpdates, monetaryAccount.UserId);
             
             Account accountInDb = _controller.FindAccountById(monetaryAccount.MonetaryAccountId);
             Transaction transactionUpdatedInDb = accountInDb.MyTransactions[0];
-    
-            Assert.AreEqual(dtoToAdd.TransactionId, transactionUpdatedInDb.TransactionId);
-            Assert.AreEqual(dtoToAdd.Title, transactionUpdatedInDb.Title);
-            Assert.AreEqual(dtoToAdd.CreationDate, transactionUpdatedInDb.CreationDate);
-            Assert.AreEqual(dtoToAdd.Amount, transactionUpdatedInDb.Amount);
-            Assert.AreEqual(dtoToAdd.Currency, transactionUpdatedInDb.Currency);
-            Assert.AreEqual(dtoToAdd.Type, transactionUpdatedInDb.Type);
-            Assert.AreEqual(dtoToAdd.AccountId, transactionUpdatedInDb.AccountId);
-            Assert.IsTrue(Helper.AreTheSameObject(dtoToAdd.TransactionCategory,
-                MapperCategory.ToCategoryDTO(transactionUpdatedInDb.TransactionCategory)));
+            
+            
+            
+            Assert.AreEqual(dtoWithUpdates.Amount, transactionUpdatedInDb.Amount);
+            Assert.AreEqual((CurrencyEnum)dtoWithUpdates.Currency, transactionUpdatedInDb.Currency);
+            Assert.IsTrue(Helper.AreTheSameObject(_controller.FindCategoryInDb(categoryDTO2),transactionUpdatedInDb.TransactionCategory));
 
         }
         

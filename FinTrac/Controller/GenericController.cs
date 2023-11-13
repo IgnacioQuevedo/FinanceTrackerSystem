@@ -647,9 +647,26 @@ namespace Controller
             return transactionFound;
         }
 
-        public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? monetaryAccountUserId)
+        public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? userId)
         {
-            throw new NotImplementedException();
+                SetUserConnected(userId);
+                
+                Transaction transactionPreUpdate = 
+                    FindTransactionInDb(dtoWithUpdates.TransactionId, dtoWithUpdates.AccountId, userId);
+                
+                
+                Account accountOfTransaction = transactionPreUpdate.TransactionAccount;
+
+                Transaction transactionWithUpdates = MapperTransaction.ToTransaction(dtoWithUpdates);
+
+                transactionWithUpdates.TransactionAccount = transactionPreUpdate.TransactionAccount;
+                transactionWithUpdates.TransactionCategory = FindCategoryInDb(dtoWithUpdates.TransactionCategory);
+                
+                accountOfTransaction.ModifyTransaction(transactionWithUpdates);
+                
+                accountOfTransaction.UpdateAccountAfterModify(transactionWithUpdates,transactionPreUpdate.Amount);
+                _userRepo.Update(_userConnected);
+                
         }
     }
 }
