@@ -22,7 +22,9 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
-        private CategoryDTO categoryDTO;
+        private CategoryDTO categoryOfTransactionDTO;
+        private MonetaryAccountDTO monetaryAccount;
+        private TransactionDTO dtoToAdd;
 
         [TestInitialize]
         public void Initialize()
@@ -36,6 +38,28 @@ namespace ControllerTests
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
+            
+             categoryOfTransactionDTO =
+                new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
+             monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, 
+                 DateTime.Now,_userConnected.UserId);
+             
+             monetaryAccount.MonetaryAccountId = 1;
+            _controller.CreateCategory(categoryOfTransactionDTO);
+            
+            
+            
+            
+            
+            
+             
+
+            _controller.CreateMonetaryAccount(monetaryAccount);
+            
+           
+            
+            
+            
         }
 
         #endregion
@@ -53,30 +77,19 @@ namespace ControllerTests
         [TestMethod]
         public void CreateMethodWithCorrectData_ShouldAddTransactionToDb()
         {
-            CategoryDTO categoryOfTransactionDTO =
-                new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
-
-            _controller.CreateCategory(categoryOfTransactionDTO);
             
-            
-            MonetaryAccountDTO monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, 
-                DateTime.Now,_userConnected.UserId);
-            
-            monetaryAccount.MonetaryAccountId = 1;
-            
-            TransactionDTO dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+            dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-
-            _controller.CreateMonetaryAccount(monetaryAccount);
             
             dtoToAdd.TransactionId = 0;
             dtoToAdd.AccountId = monetaryAccount.MonetaryAccountId;
-
-            _controller.CreateTransaction(dtoToAdd);
-
-            Transaction transactionInDb = _testDb.Users.First().MyAccounts.First().MyTransactions.First();
-            categoryOfTransactionDTO.CategoryId = 2;
             
+            _controller.CreateTransaction(dtoToAdd);
+            
+            Transaction transactionInDb = _testDb.Users.First().MyAccounts.First().MyTransactions.First();
+            
+            
+            categoryOfTransactionDTO.CategoryId = 2;
             Assert.AreEqual(dtoToAdd.Title, transactionInDb.Title);
             Assert.AreEqual(dtoToAdd.Amount, transactionInDb.Amount);
             Assert.AreEqual(dtoToAdd.CreationDate, transactionInDb.CreationDate);
