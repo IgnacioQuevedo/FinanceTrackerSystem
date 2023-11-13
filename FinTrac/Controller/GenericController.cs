@@ -14,7 +14,7 @@ using Mappers;
 namespace Controller
 {
 
-    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController, IMonetaryAccount
+    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController, IMonetaryAccount, ICreditAccount
     {
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }

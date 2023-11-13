@@ -153,6 +153,7 @@ namespace ControllerTests
 
         #endregion
 
+        #region Get All Credit Accounts
 
         [TestMethod]
         public void GivenUserId_ShouldReturnListOfMonetaryAccountDTO()
@@ -172,6 +173,8 @@ namespace ControllerTests
 
             Assert.AreEqual(previousLength - 1, lengthOfListReturned);
         }
+
+        #endregion
 
     }
 }
