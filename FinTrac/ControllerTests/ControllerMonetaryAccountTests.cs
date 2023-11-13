@@ -172,7 +172,7 @@ namespace ControllerTests
 
             int lengthOfListReturned = listOfMonetaryAccounts.Count;
 
-            Assert.AreEqual(previousLength, lengthOfListReturned);
+            Assert.AreEqual(previousLength - 1, lengthOfListReturned);
         }
     }
 
