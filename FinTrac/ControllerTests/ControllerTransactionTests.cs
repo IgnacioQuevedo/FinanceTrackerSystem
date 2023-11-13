@@ -24,8 +24,9 @@ namespace ControllerTests
 
         private CategoryDTO categoryOfTransactionDTO;
         private MonetaryAccountDTO monetaryAccount;
-        private TransactionDTO dtoToAdd;
-
+        private TransactionDTO transactionDtoToAdd;
+        
+        
         [TestInitialize]
         public void Initialize()
         {
@@ -41,15 +42,22 @@ namespace ControllerTests
 
             categoryOfTransactionDTO =
                 new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
-            categoryOfTransactionDTO.CategoryId = 1;
             
             monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY,
                 DateTime.Now, _userConnected.UserId);
+            
+            categoryOfTransactionDTO.CategoryId = 1;
             monetaryAccount.MonetaryAccountId = 1;
 
             _controller.CreateCategory(categoryOfTransactionDTO);
             _controller.CreateMonetaryAccount(monetaryAccount);
             
+            transactionDtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            
+            _controller.CreateTransaction(transactionDtoToAdd);
+            transactionDtoToAdd.TransactionId = 1;
+
         }
 
         #endregion
@@ -70,16 +78,12 @@ namespace ControllerTests
         [TestMethod]
         public void CreateMethodWithCorrectData_ShouldAddTransactionToDb()
         {
-            dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
-                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            
 
             TransactionDTO dtoToAdd2 = new TransactionDTO("Spent on party", DateTime.Now.Date, 500, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-
-            _controller.CreateTransaction(dtoToAdd);
+            
             _controller.CreateTransaction(dtoToAdd2);
-
-            dtoToAdd.TransactionId = 1;
             dtoToAdd2.TransactionId = 2;
 
 
@@ -88,26 +92,27 @@ namespace ControllerTests
             
             Assert.AreEqual(dtoToAdd2.TransactionId, transaction2InDb.TransactionId);
             Assert.AreEqual((CurrencyEnum)dtoToAdd2.Currency, transaction2InDb.Currency);
-
-            Assert.AreEqual(dtoToAdd.TransactionId, transactionInDb.TransactionId);
-            Assert.AreEqual(dtoToAdd.Title, transactionInDb.Title);
-            Assert.AreEqual(dtoToAdd.Amount, transactionInDb.Amount);
-            Assert.AreEqual(dtoToAdd.CreationDate, transactionInDb.CreationDate);
-            Assert.AreEqual((CurrencyEnum)dtoToAdd.Currency, transactionInDb.Currency);
-            Assert.AreEqual((TypeEnum)dtoToAdd.Type, transactionInDb.Type);
-            Assert.IsTrue(Helper.AreTheSameObject(dtoToAdd.TransactionCategory,
+            Assert.AreEqual(transactionDtoToAdd.TransactionId, transactionInDb.TransactionId);
+            Assert.AreEqual(transactionDtoToAdd.Title, transactionInDb.Title);
+            Assert.AreEqual(transactionDtoToAdd.Amount, transactionInDb.Amount);
+            Assert.AreEqual(transactionDtoToAdd.CreationDate, transactionInDb.CreationDate);
+            Assert.AreEqual((CurrencyEnum)transactionDtoToAdd.Currency, transactionInDb.Currency);
+            Assert.AreEqual((TypeEnum)transactionDtoToAdd.Type, transactionInDb.Type);
+            Assert.AreEqual(transactionDtoToAdd.AccountId, transactionInDb.AccountId);
+            
+            Assert.IsTrue(Helper.AreTheSameObject(transactionDtoToAdd.TransactionCategory,
                 MapperCategory.ToCategoryDTO(transactionInDb.TransactionCategory)));
-            Assert.AreEqual(dtoToAdd.AccountId, transactionInDb.AccountId);
+            
         }
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void CreateMethodWithIncorrectData_ShouldAddTransactionToDb()
         {
-            dtoToAdd = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+            TransactionDTO transactionWithBadData = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
 
-            _controller.CreateTransaction(dtoToAdd);
+            _controller.CreateTransaction(transactionWithBadData);
         }
 
         #endregion
@@ -117,22 +122,23 @@ namespace ControllerTests
         [TestMethod]
         public void GivenTransactionDTO_ShouldBePossibleToFindItOnDb()
         {
-            TransactionDTO transactionToFind = new TransactionDTO("Spent on food", DateTime.Now.Date, 100,
-                CurrencyEnumDTO.UY,
-                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            transactionToFind.TransactionId = 1;
-
-            _controller.CreateTransaction(transactionToFind);
-
-            Transaction transactionFound = _controller.FindTransactionInDb(transactionToFind.TransactionId,
+            TransactionDTO transactionDtoToFind = transactionDtoToAdd;
+            
+            Transaction transactionFound = _controller.FindTransactionInDb(transactionDtoToFind.TransactionId,
                 monetaryAccount.MonetaryAccountId, _userConnected.UserId);
 
-            Assert.AreEqual(transactionToFind.TransactionId, transactionFound.TransactionId);
-            Assert.AreEqual(transactionToFind.Title, transactionFound.Title);
-            Assert.AreEqual(transactionToFind.CreationDate, transactionFound.CreationDate);
-            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
-            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
-            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
+            Assert.AreEqual(transactionDtoToFind.TransactionId, transactionFound.TransactionId);
+            Assert.AreEqual(transactionDtoToFind.Title, transactionFound.Title);
+            Assert.AreEqual(transactionDtoToFind.CreationDate, transactionFound.CreationDate);
+            Assert.AreEqual(transactionDtoToFind.Amount, transactionFound.Amount);
+            Assert.AreEqual(transactionDtoToFind.AccountId, transactionFound.AccountId);
+            Assert.AreEqual((CurrencyEnum) transactionDtoToFind.Currency, transactionFound.Currency);
+            Assert.AreEqual( (TypeEnum) transactionDtoToFind.Type, transactionFound.Type);
+            
+            Assert.AreEqual(_controller.FindCategoryInDb(categoryOfTransactionDTO),
+                transactionFound.TransactionCategory);
+            
+            Assert.AreEqual(_controller.FindAccountById(monetaryAccount.MonetaryAccountId),transactionFound.TransactionAccount);
         }
 
         [TestMethod]
@@ -145,25 +151,18 @@ namespace ControllerTests
         [TestMethod]
         public void GivenTransactionId_ShouldBePossibleToFindTransaction_AndReturnItDTO()
         {
-            TransactionDTO transactionToCreate = new TransactionDTO("Spent on food", DateTime.Now.Date, 100,
-                CurrencyEnumDTO.UY,
-                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            
-            _controller.CreateTransaction(transactionToCreate);
-            transactionToCreate.TransactionId = 1;
-
             TransactionDTO transactionFound = _controller.FindTransaction(
-                transactionToCreate.TransactionId,monetaryAccount.MonetaryAccountId,_userConnected.UserId);
+                transactionDtoToAdd.TransactionId,monetaryAccount.MonetaryAccountId,_userConnected.UserId);
             
-            Assert.AreEqual(transactionToCreate.TransactionId,transactionFound.TransactionId);
-            Assert.AreEqual(transactionToCreate.Title,transactionFound.Title);
-            Assert.AreEqual(transactionToCreate.CreationDate,transactionFound.CreationDate);
-            Assert.AreEqual(transactionToCreate.Amount,transactionFound.Amount);
-            Assert.AreEqual(transactionToCreate.Currency,transactionFound.Currency);
-            Assert.AreEqual(transactionToCreate.Type,transactionFound.Type);
-            Assert.AreEqual(transactionToCreate.AccountId,transactionFound.AccountId);
+            Assert.AreEqual(transactionDtoToAdd.TransactionId,transactionFound.TransactionId);
+            Assert.AreEqual(transactionDtoToAdd.Title,transactionFound.Title);
+            Assert.AreEqual(transactionDtoToAdd.CreationDate,transactionFound.CreationDate);
+            Assert.AreEqual(transactionDtoToAdd.Amount,transactionFound.Amount);
+            Assert.AreEqual(transactionDtoToAdd.Currency,transactionFound.Currency);
+            Assert.AreEqual(transactionDtoToAdd.Type,transactionFound.Type);
+            Assert.AreEqual(transactionDtoToAdd.AccountId,transactionFound.AccountId);
             
-            Assert.IsTrue(Helper.AreTheSameObject(transactionToCreate.TransactionCategory,transactionFound.TransactionCategory));
+            Assert.IsTrue(Helper.AreTheSameObject(transactionDtoToAdd.TransactionCategory,transactionFound.TransactionCategory));
             
         }
         
@@ -179,35 +178,39 @@ namespace ControllerTests
         [TestMethod]
         public void GivenTransactionDTOWithCorrectUpdates_ShouldUpdateItInDb()
         {
-            dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
-                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            
             CategoryDTO categoryDTO2 =
                 new CategoryDTO("party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId); ;
             
             _controller.CreateCategory(categoryDTO2);
             categoryDTO2.CategoryId = 2;
             
-            _controller.CreateTransaction(dtoToAdd);
+            
+            TransactionDTO transactionToUpd = new TransactionDTO("Spent on party", DateTime.Now.Date, 500, CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryDTO2, 1);
+            _controller.CreateTransaction(transactionToUpd);
+            transactionToUpd.TransactionId = 2;
     
-            TransactionDTO dtoWithUpdates = dtoToAdd;
-            dtoWithUpdates.Currency = CurrencyEnumDTO.EUR;
-            dtoWithUpdates.Amount = 3333;
-            dtoWithUpdates.TransactionCategory = categoryDTO2;
-            dtoWithUpdates.TransactionId = 1;
-
-            _controller.UpdateTransaction(dtoWithUpdates, monetaryAccount.UserId);
+            TransactionDTO transactionDtoWithUpdates = transactionDtoToAdd;
+            transactionDtoWithUpdates.Currency = CurrencyEnumDTO.EUR;
+            transactionDtoWithUpdates.Amount = 3333;
+            transactionDtoWithUpdates.TransactionCategory = categoryDTO2;
+            
+            transactionDtoWithUpdates.TransactionId = 1;
+            _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
             
             Account accountInDb = _controller.FindAccountById(monetaryAccount.MonetaryAccountId);
-            Transaction transactionUpdatedInDb = accountInDb.MyTransactions[0];
+            Transaction transactionUpdatedInDb = _controller.FindTransactionInDb(
+                transactionDtoWithUpdates.TransactionId, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
             
-            
-            
-            Assert.AreEqual(dtoWithUpdates.Amount, transactionUpdatedInDb.Amount);
-            Assert.AreEqual((CurrencyEnum)dtoWithUpdates.Currency, transactionUpdatedInDb.Currency);
-            Assert.IsTrue(Helper.AreTheSameObject(_controller.FindCategoryInDb(categoryDTO2),transactionUpdatedInDb.TransactionCategory));
+            Assert.AreEqual(transactionDtoWithUpdates.Amount, transactionUpdatedInDb.Amount);
+            Assert.AreEqual((CurrencyEnum)transactionDtoWithUpdates.Currency, transactionUpdatedInDb.Currency);
+            Assert.IsTrue(Helper.AreTheSameObject(
+                _controller.FindCategoryInDb(transactionDtoWithUpdates.TransactionCategory),transactionUpdatedInDb.TransactionCategory));
 
         }
+        
+        
+        
         
         
         

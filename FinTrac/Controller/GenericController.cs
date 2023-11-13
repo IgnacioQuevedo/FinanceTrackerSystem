@@ -640,7 +640,6 @@ namespace Controller
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId)
         {
-            
             SetUserConnected(userId);
             TransactionDTO transactionFound =
                 MapperTransaction.ToTransactionDTO(FindTransactionInDb(idToFound, accountId, userId));
