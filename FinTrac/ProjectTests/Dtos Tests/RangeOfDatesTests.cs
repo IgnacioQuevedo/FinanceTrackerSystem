@@ -18,7 +18,7 @@ namespace BusinessLogicTests.Dtos_Tests
 
             myRange.InitialDate = new DateTime(2023, 5, 12);
 
-            Assert.AreEqual(myRange.InitialDate, new DateTime(2023, 5, 11));
+            Assert.AreEqual(myRange.InitialDate, new DateTime(2023, 5, 12));
 
         }
     }
