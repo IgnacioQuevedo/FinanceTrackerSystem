@@ -104,6 +104,27 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenCreditDTOToUpdate_ShouldBeUpdatedInDb()
+        {
+            _controller.CreateCreditAccount(_creditToCreateDTO1);
+
+            CreditCardAccountDTO accountDTOWithUpdates = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
+            accountDTOWithUpdates.CreditCardAccountId = 1;
+
+            _controller.UpdateCreditAccount(accountDTOWithUpdates);
+
+            CreditCardAccount accountInDbWithSupossedChanges = _controller.FindCreditAccountInDb(_creditToCreateDTO1);
+
+            Assert.AreEqual(accountInDbWithSupossedChanges.AccountId, accountDTOWithUpdates.CreditCardAccountId);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Name, accountDTOWithUpdates.Name);
+            Assert.AreEqual(accountInDbWithSupossedChanges.IssuingBank, accountDTOWithUpdates.IssuingBank);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Last4Digits, accountDTOWithUpdates.Last4Digits);
+            Assert.AreEqual(accountInDbWithSupossedChanges.ClosingDate, accountDTOWithUpdates.ClosingDate);
+            Assert.AreEqual(accountInDbWithSupossedChanges.AvailableCredit, accountDTOWithUpdates.AvailableCredit);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
+            Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
+        }
 
     }
 }

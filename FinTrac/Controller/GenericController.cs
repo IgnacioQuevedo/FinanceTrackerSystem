@@ -11,503 +11,509 @@ using Controller.Mappers;
 using DataManagers;
 using Mappers;
 
-namespace Controller;
-
-public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController
+namespace Controller
 {
-    private UserRepositorySql _userRepo;
-    private User _userConnected { get; set; }
 
-    public GenericController(UserRepositorySql userRepo)
+    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController
     {
-        _userRepo = userRepo;
-    }
+        private UserRepositorySql _userRepo;
+        private User _userConnected { get; set; }
 
-    public void SetUserConnected(int userIdToConnect)
-    {
-        if (_userConnected == null)
+        public GenericController(UserRepositorySql userRepo)
         {
-            _userConnected = _userRepo.FindUserInDb(userIdToConnect);
-            _userRepo.InstanceLists(_userConnected);
+            _userRepo = userRepo;
         }
-    }
 
-    #region User Repo
-
-    #region FindUser
-
-    public UserDTO FindUser(int userId)
-    {
-        User userFound = _userRepo.FindUserInDb(userId);
-
-        if (userFound != null)
+        public void SetUserConnected(int userIdToConnect)
         {
-            return MapperUser.ToUserDTO(userFound);
-        }
-        else
-        {
-            throw new Exception("User not found.");
-        }
-    }
-
-    #endregion
-
-    #region Register
-
-    public void RegisterUser(UserDTO userDtoToCreate)
-    {
-        try
-        {
-            _userRepo.EmailUsed(userDtoToCreate.Email);
-            User userToAdd = MapperUser.ToUser(userDtoToCreate);
-
-            _userRepo.Create(userToAdd);
-        }
-        catch (Exception ExceptionType) when (
-            ExceptionType is ExceptionUserRepository ||
-            ExceptionType is ExceptionMapper
-        )
-        {
-            throw new Exception(ExceptionType.Message);
-        }
-    }
-
-    public void PasswordMatch(string password, string passwordRepeated)
-    {
-        bool passwordMatch = Helper.AreTheSameObject(password, passwordRepeated);
-
-        if (!passwordMatch)
-        {
-            throw new Exception("Passwords are not the same, try again.");
-        }
-    }
-
-    #endregion
-
-    #region UpdateUser
-
-    public void UpdateUser(UserDTO userDtoUpdated)
-    {
-        int userConnectedId = _userRepo.GetUserViaEmail(userDtoUpdated.Email).UserId;
-        userDtoUpdated.UserId = userConnectedId;
-
-        SetUserConnected(userConnectedId);
-        try
-        {
-            User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
-
-            if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
+            if (_userConnected == null)
             {
-                throw new Exception("You need to change at least one value.");
-            }
-
-            _userRepo.Update(userWithUpdates);
-        }
-        catch (ExceptionMapper Exception)
-        {
-            throw new Exception(Exception.Message);
-        }
-    }
-
-    #endregion
-
-    #region LoginUser
-
-    public bool LoginUser(UserLoginDTO userToLogin)
-    {
-        userToLogin.Email = userToLogin.Email.ToLower();
-        bool logged = _userRepo.Login(userToLogin);
-
-        if (!logged)
-        {
-            throw new Exception("User not exists, maybe you have an error on the email or password?");
-        }
-
-        return true;
-    }
-
-    #endregion
-
-    #endregion
-
-    #region Category Section
-
-    public void CreateCategory(CategoryDTO dtoToAdd)
-    {
-        try
-        {
-            SetUserConnected(dtoToAdd.UserId);
-            Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
-            categoryToAdd.CategoryId = 0;
-
-            _userConnected.AddCategory(categoryToAdd);
-
-            _userRepo.Update(_userConnected);
-        }
-        catch (ExceptionMapper Exception)
-        {
-            throw new Exception(Exception.Message);
-        }
-    }
-
-    //Only controller 
-    public Category FindCategoryInDb(CategoryDTO categoryToFind)
-    {
-        SetUserConnected(categoryToFind.UserId);
-
-        return SearchCategoryInDb(categoryToFind.CategoryId);
-    }
-
-    private Category SearchCategoryInDb(int idCategoryToFind)
-    {
-        foreach (var category in _userConnected.MyCategories)
-        {
-            if (category.CategoryId == idCategoryToFind)
-            {
-                return category;
+                _userConnected = _userRepo.FindUserInDb(userIdToConnect);
+                _userRepo.InstanceLists(_userConnected);
             }
         }
 
-        throw new Exception("Category was not found, an error on index must be somewhere.");
-    }
+        #region User Repo
 
-    //For UI
-    public CategoryDTO FindCategory(int idCategoryToFind, int userId)
-    {
-        SetUserConnected(userId);
-        Category categoryFound = SearchCategoryInDb(idCategoryToFind);
-        CategoryDTO categoryFoundDTO = MapperCategory.ToCategoryDTO(categoryFound);
+        #region FindUser
 
-        return categoryFoundDTO;
-    }
-
-
-    public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
-    {
-        SetUserConnected(categoryDtoWithUpdates.UserId);
-        Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
-        Category categoryWithoutUpd = FindCategoryInDb(categoryDtoWithUpdates);
-
-        categoryToUpd.CategoryUser = _userConnected;
-        if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
+        public UserDTO FindUser(int userId)
         {
-            throw new Exception("There are non existential changes, change at least one please.");
-        }
-        else
-        {
-            _userConnected.ModifyCategory(categoryToUpd);
-            _userRepo.Update(_userConnected);
-        }
-    }
+            User userFound = _userRepo.FindUserInDb(userId);
 
-    public void DeleteCategory(CategoryDTO categoryDtoToDelete)
-    {
-        try
-        {
-            SetUserConnected(categoryDtoToDelete.UserId);
-            _userConnected.DeleteCategory(FindCategoryInDb(categoryDtoToDelete));
-            _userRepo.Update(_userConnected);
-        }
-        catch (ExceptionCategoryManagement Exception)
-        {
-            throw new Exception(Exception.Message);
-        }
-    }
-
-    public List<CategoryDTO> GetAllCategories(int userConnectedId)
-    {
-        SetUserConnected(userConnectedId);
-        List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
-
-        listCategoryDTO = MapperCategory.ToListOfCategoryDTO(_userConnected.MyCategories);
-
-        return listCategoryDTO;
-    }
-
-    public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
-    {
-        SetUserConnected(userConnectedId);
-        return _userConnected.MyCategories;
-    }
-
-    #endregion
-
-    #region Goal Section
-
-    public void CreateGoal(GoalDTO goalDtoToCreate)
-    {
-        SetUserConnected((int)goalDtoToCreate.UserId);
-
-        try
-        {
-            List<Category> categoriesOfGoal = SetListOfCategories(goalDtoToCreate);
-            Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate, categoriesOfGoal);
-            goalToAdd.GoalId = 0;
-
-            _userConnected.AddGoal(goalToAdd);
-            _userRepo.Update(_userConnected);
-        }
-        catch (Exception ExceptionType) when (
-            ExceptionType is ExceptionUserRepository ||
-            ExceptionType is ExceptionMapper
-        )
-        {
-            throw new Exception(ExceptionType.Message);
-        }
-    }
-
-    public List<GoalDTO> GetAllGoalsDTO(int userConnectedId)
-    {
-        SetUserConnected(userConnectedId);
-        List<GoalDTO> listGoalDTO = new List<GoalDTO>();
-
-        listGoalDTO = MapperGoal.ToListOfGoalDTO(_userConnected.MyGoals);
-
-        return listGoalDTO;
-    }
-
-    public List<Goal> ReceiveGoalListFromUser(int userConnectedId)
-    {
-        SetUserConnected(userConnectedId);
-        return _userConnected.MyGoals;
-    }
-
-    private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
-    {
-        List<Category> result = new List<Category>();
-        foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
-        {
-            result.Add(FindCategoryInDb(categoryDTO));
-        }
-
-        return result;
-    }
-
-    #endregion
-
-    #region Exchange History Section
-
-    public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
-    {
-        try
-        {
-            SetUserConnected((int)exchangeDTO.UserId);
-
-            ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
-            exchangeHistoryToCreate.ExchangeHistoryId = 0;
-            _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
-            _userRepo.Update(_userConnected);
-        }
-        catch (ExceptionMapper Exception)
-        {
-            throw new Exception(Exception.Message);
-        }
-    }
-
-    public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound, int idUserConnected)
-    {
-        SetUserConnected(idUserConnected);
-
-        ExchangeHistoryDTO exchangeHistoryDTOFound =
-            MapperExchangeHistory.ToExchangeHistoryDTO(searchInDbForAnExchange(IdOfExchangeToFound));
-
-        return exchangeHistoryDTOFound;
-    }
-
-
-    #region ExchangeHistory Find method specifically for controller section.
-
-    //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
-    public ExchangeHistory FindExchangeHistoryInDB(ExchangeHistoryDTO exchangeToFound)
-    {
-        SetUserConnected((int)exchangeToFound.UserId);
-        return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
-    }
-
-    private ExchangeHistory searchInDbForAnExchange(int idOfExchangeToSearch)
-    {
-        foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
-        {
-            if (exchangeHistory.ExchangeHistoryId == idOfExchangeToSearch)
+            if (userFound != null)
             {
+                return MapperUser.ToUserDTO(userFound);
+            }
+            else
+            {
+                throw new Exception("User not found.");
+            }
+        }
+
+        #endregion
+
+        #region Register
+
+        public void RegisterUser(UserDTO userDtoToCreate)
+        {
+            try
+            {
+                _userRepo.EmailUsed(userDtoToCreate.Email);
+                User userToAdd = MapperUser.ToUser(userDtoToCreate);
+
+                _userRepo.Create(userToAdd);
+            }
+            catch (Exception ExceptionType) when (
+                ExceptionType is ExceptionUserRepository ||
+                ExceptionType is ExceptionMapper
+            )
+            {
+                throw new Exception(ExceptionType.Message);
+            }
+        }
+
+        public void PasswordMatch(string password, string passwordRepeated)
+        {
+            bool passwordMatch = Helper.AreTheSameObject(password, passwordRepeated);
+
+            if (!passwordMatch)
+            {
+                throw new Exception("Passwords are not the same, try again.");
+            }
+        }
+
+        #endregion
+
+        #region UpdateUser
+
+        public void UpdateUser(UserDTO userDtoUpdated)
+        {
+            int userConnectedId = _userRepo.GetUserViaEmail(userDtoUpdated.Email).UserId;
+            userDtoUpdated.UserId = userConnectedId;
+
+            SetUserConnected(userConnectedId);
+            try
+            {
+                User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
+
+                if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
                 {
-                    return exchangeHistory;
+                    throw new Exception("You need to change at least one value.");
+                }
+
+                _userRepo.Update(userWithUpdates);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+        }
+
+        #endregion
+
+        #region LoginUser
+
+        public bool LoginUser(UserLoginDTO userToLogin)
+        {
+            userToLogin.Email = userToLogin.Email.ToLower();
+            bool logged = _userRepo.Login(userToLogin);
+
+            if (!logged)
+            {
+                throw new Exception("User not exists, maybe you have an error on the email or password?");
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Category Section
+
+        public void CreateCategory(CategoryDTO dtoToAdd)
+        {
+            try
+            {
+                SetUserConnected(dtoToAdd.UserId);
+                Category categoryToAdd = MapperCategory.ToCategory(dtoToAdd);
+                categoryToAdd.CategoryId = 0;
+
+                _userConnected.AddCategory(categoryToAdd);
+
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+        }
+
+        //Only controller 
+        public Category FindCategoryInDb(CategoryDTO categoryToFind)
+        {
+            SetUserConnected(categoryToFind.UserId);
+
+            return SearchCategoryInDb(categoryToFind.CategoryId);
+        }
+
+        private Category SearchCategoryInDb(int idCategoryToFind)
+        {
+            foreach (var category in _userConnected.MyCategories)
+            {
+                if (category.CategoryId == idCategoryToFind)
+                {
+                    return category;
                 }
             }
+
+            throw new Exception("Category was not found, an error on index must be somewhere.");
         }
 
-        throw new Exception("Exchange History was not found, an error on index must be somewhere.");
-    }
-
-    #endregion
-
-
-    public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates)
-    {
-        try
+        //For UI
+        public CategoryDTO FindCategory(int idCategoryToFind, int userId)
         {
-            SetUserConnected((int)dtoWithUpdates.UserId);
+            SetUserConnected(userId);
+            Category categoryFound = SearchCategoryInDb(idCategoryToFind);
+            CategoryDTO categoryFoundDTO = MapperCategory.ToCategoryDTO(categoryFound);
 
-            ExchangeHistory exchangeHistoryToUpdate = FindExchangeHistoryInDB(dtoWithUpdates);
-            exchangeHistoryToUpdate.ValidateApplianceExchangeOnTransaction();
-
-            ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
-            _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
-            _userRepo.Update(_userConnected);
+            return categoryFoundDTO;
         }
 
-        catch (Exception ExceptionType)
-            when (
-                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
-            )
+
+        public void UpdateCategory(CategoryDTO categoryDtoWithUpdates)
         {
-            throw new Exception(ExceptionType.Message);
-        }
-    }
+            SetUserConnected(categoryDtoWithUpdates.UserId);
+            Category categoryToUpd = MapperCategory.ToCategory(categoryDtoWithUpdates);
+            Category categoryWithoutUpd = FindCategoryInDb(categoryDtoWithUpdates);
 
-    public void DeleteExchangeHistory(ExchangeHistoryDTO dtoToDelete)
-    {
-        try
-        {
-            SetUserConnected((int)dtoToDelete.UserId);
-            ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
-            exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
-            _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
-
-            _userRepo.UpdateDbWhenDeleting(_userConnected, exchangeHistoryToDelete);
-        }
-        catch (Exception ExceptionType)
-            when (
-                ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
-            )
-        {
-            throw new Exception(ExceptionType.Message);
-        }
-    }
-
-    public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedId)
-    {
-        SetUserConnected(userConnectedId);
-        return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
-    }
-
-    #endregion
-
-    #region Monetary Account section
-
-    public void CreateMonetaryAccount(MonetaryAccountDTO monetAccountDTOToAdd)
-    {
-        try
-        {
-            SetUserConnected((int)monetAccountDTOToAdd.UserId);
-            MonetaryAccount monetAccountToAdd = MapperMonetaryAccount.ToMonetaryAccount(monetAccountDTOToAdd);
-            monetAccountToAdd.AccountId = 0;
-
-            _userConnected.AddMonetaryAccount(monetAccountToAdd);
-
-            _userRepo.Update(_userConnected);
-        }
-        catch (ExceptionMapper Exception)
-        {
-            throw new Exception(Exception.Message);
-        }
-    }
-
-
-    public MonetaryAccountDTO FindMonetaryAccount(int idMonetToFind, int userId)
-    {
-        SetUserConnected(userId);
-        MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountById(idMonetToFind);
-        MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
-
-        return monetAccountFoundDTO;
-    }
-
-    public MonetaryAccount FindMonetaryAccountInDb(MonetaryAccountDTO monetDTO)
-    {
-        SetUserConnected((int)monetDTO.UserId);
-
-        return (MonetaryAccount)FindAccountById(monetDTO.MonetaryAccountId);
-    }
-
-
-    public Account FindAccountById(int idAccountToFind)
-    {
-        bool isFound = false;
-        Account accountFound = new MonetaryAccount();
-
-        foreach (var account in _userConnected.MyAccounts)
-        {
-            if (account.AccountId == idAccountToFind)
+            categoryToUpd.CategoryUser = _userConnected;
+            if (Helper.AreTheSameObject(categoryToUpd, categoryWithoutUpd))
             {
-                accountFound = account;
-                isFound = true;
+                throw new Exception("There are non existential changes, change at least one please.");
+            }
+            else
+            {
+                _userConnected.ModifyCategory(categoryToUpd);
+                _userRepo.Update(_userConnected);
             }
         }
-        if (!isFound)
+
+        public void DeleteCategory(CategoryDTO categoryDtoToDelete)
         {
-            throw new Exception("Account was not found, an error on index must be somewhere.");
+            try
+            {
+                SetUserConnected(categoryDtoToDelete.UserId);
+                _userConnected.DeleteCategory(FindCategoryInDb(categoryDtoToDelete));
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionCategoryManagement Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
-        return accountFound;
-    }
-
-    public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
-    {
-        SetUserConnected((int)monetaryDtoWithUpdates.UserId);
-        MonetaryAccount monetaryToUpd = MapperMonetaryAccount.ToMonetaryAccount(monetaryDtoWithUpdates);
-        MonetaryAccount monetaryWithoutUpd = FindMonetaryAccountInDb(monetaryDtoWithUpdates);
-
-        monetaryToUpd.AccountUser = _userConnected;
-        if (Helper.AreTheSameObject(monetaryToUpd, monetaryWithoutUpd))
+        public List<CategoryDTO> GetAllCategories(int userConnectedId)
         {
-            throw new Exception("There are non existential changes, change at least one please.");
+            SetUserConnected(userConnectedId);
+            List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
+
+            listCategoryDTO = MapperCategory.ToListOfCategoryDTO(_userConnected.MyCategories);
+
+            return listCategoryDTO;
         }
-        else
+
+        public List<Category> ReceiveCategoryListFromUser(int userConnectedId)
         {
-            _userConnected.ModifyMonetaryAccount(monetaryToUpd);
-            _userRepo.Update(_userConnected);
+            SetUserConnected(userConnectedId);
+            return _userConnected.MyCategories;
         }
-    }
 
-    #endregion
+        #endregion
 
+        #region Goal Section
 
-    #region Credit Card Account Section
-
-    public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
-    {
-        try
+        public void CreateGoal(GoalDTO goalDtoToCreate)
         {
-            SetUserConnected((int)creditAccountDTOToAdd.UserId);
-            CreditCardAccount creditAccountToAdd = MapperCreditAccount.ToCreditAccount(creditAccountDTOToAdd);
-            creditAccountToAdd.AccountId = 0;
+            SetUserConnected((int)goalDtoToCreate.UserId);
 
-            _userConnected.AddCreditAccount(creditAccountToAdd);
+            try
+            {
+                List<Category> categoriesOfGoal = SetListOfCategories(goalDtoToCreate);
+                Goal goalToAdd = MapperGoal.ToGoal(goalDtoToCreate, categoriesOfGoal);
+                goalToAdd.GoalId = 0;
 
-            _userRepo.Update(_userConnected);
+                _userConnected.AddGoal(goalToAdd);
+                _userRepo.Update(_userConnected);
+            }
+            catch (Exception ExceptionType) when (
+                ExceptionType is ExceptionUserRepository ||
+                ExceptionType is ExceptionMapper
+            )
+            {
+                throw new Exception(ExceptionType.Message);
+            }
         }
-        catch (ExceptionMapper Exception)
+
+        public List<GoalDTO> GetAllGoalsDTO(int userConnectedId)
         {
-            throw new Exception(Exception.Message);
+            SetUserConnected(userConnectedId);
+            List<GoalDTO> listGoalDTO = new List<GoalDTO>();
+
+            listGoalDTO = MapperGoal.ToListOfGoalDTO(_userConnected.MyGoals);
+
+            return listGoalDTO;
         }
+
+        public List<Goal> ReceiveGoalListFromUser(int userConnectedId)
+        {
+            SetUserConnected(userConnectedId);
+            return _userConnected.MyGoals;
+        }
+
+        private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
+        {
+            List<Category> result = new List<Category>();
+            foreach (CategoryDTO categoryDTO in goalDtoToCreate.CategoriesOfGoalDTO)
+            {
+                result.Add(FindCategoryInDb(categoryDTO));
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Exchange History Section
+
+        public void CreateExchangeHistory(ExchangeHistoryDTO exchangeDTO)
+        {
+            try
+            {
+                SetUserConnected((int)exchangeDTO.UserId);
+
+                ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
+                exchangeHistoryToCreate.ExchangeHistoryId = 0;
+                _userConnected.AddExchangeHistory(exchangeHistoryToCreate);
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+        }
+
+        public ExchangeHistoryDTO FindExchangeHistory(int IdOfExchangeToFound, int idUserConnected)
+        {
+            SetUserConnected(idUserConnected);
+
+            ExchangeHistoryDTO exchangeHistoryDTOFound =
+                MapperExchangeHistory.ToExchangeHistoryDTO(searchInDbForAnExchange(IdOfExchangeToFound));
+
+            return exchangeHistoryDTOFound;
+        }
+
+
+        #region ExchangeHistory Find method specifically for controller section.
+
+        //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
+        public ExchangeHistory FindExchangeHistoryInDB(ExchangeHistoryDTO exchangeToFound)
+        {
+            SetUserConnected((int)exchangeToFound.UserId);
+            return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
+        }
+
+        private ExchangeHistory searchInDbForAnExchange(int idOfExchangeToSearch)
+        {
+            foreach (var exchangeHistory in _userConnected.MyExchangesHistory)
+            {
+                if (exchangeHistory.ExchangeHistoryId == idOfExchangeToSearch)
+                {
+                    {
+                        return exchangeHistory;
+                    }
+                }
+            }
+
+            throw new Exception("Exchange History was not found, an error on index must be somewhere.");
+        }
+
+        #endregion
+
+
+        public void UpdateExchangeHistory(ExchangeHistoryDTO dtoWithUpdates)
+        {
+            try
+            {
+                SetUserConnected((int)dtoWithUpdates.UserId);
+
+                ExchangeHistory exchangeHistoryToUpdate = FindExchangeHistoryInDB(dtoWithUpdates);
+                exchangeHistoryToUpdate.ValidateApplianceExchangeOnTransaction();
+
+                ExchangeHistory exchangeHistoryWithUpdates = MapperExchangeHistory.ToExchangeHistory(dtoWithUpdates);
+                _userConnected.ModifyExchangeHistory(exchangeHistoryWithUpdates);
+                _userRepo.Update(_userConnected);
+            }
+
+            catch (Exception ExceptionType)
+                when (
+                    ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+                )
+            {
+                throw new Exception(ExceptionType.Message);
+            }
+        }
+
+        public void DeleteExchangeHistory(ExchangeHistoryDTO dtoToDelete)
+        {
+            try
+            {
+                SetUserConnected((int)dtoToDelete.UserId);
+                ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
+                exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
+                _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
+
+                _userRepo.UpdateDbWhenDeleting(_userConnected, exchangeHistoryToDelete);
+            }
+            catch (Exception ExceptionType)
+                when (
+                    ExceptionType is ExceptionExchangeHistoryManagement or ExceptionMapper
+                )
+            {
+                throw new Exception(ExceptionType.Message);
+            }
+        }
+
+        public List<ExchangeHistoryDTO> GetAllExchangeHistories(int userConnectedId)
+        {
+            SetUserConnected(userConnectedId);
+            return MapperExchangeHistory.ToListOfExchangeHistoryDTO(_userConnected.MyExchangesHistory);
+        }
+
+        #endregion
+
+        #region Monetary Account section
+
+        public void CreateMonetaryAccount(MonetaryAccountDTO monetAccountDTOToAdd)
+        {
+            try
+            {
+                SetUserConnected((int)monetAccountDTOToAdd.UserId);
+                MonetaryAccount monetAccountToAdd = MapperMonetaryAccount.ToMonetaryAccount(monetAccountDTOToAdd);
+                monetAccountToAdd.AccountId = 0;
+
+                _userConnected.AddMonetaryAccount(monetAccountToAdd);
+
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+        }
+
+
+        public MonetaryAccountDTO FindMonetaryAccount(int idMonetToFind, int userId)
+        {
+            SetUserConnected(userId);
+            MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountById(idMonetToFind);
+            MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
+
+            return monetAccountFoundDTO;
+        }
+
+        public MonetaryAccount FindMonetaryAccountInDb(MonetaryAccountDTO monetDTO)
+        {
+            SetUserConnected((int)monetDTO.UserId);
+
+            return (MonetaryAccount)FindAccountById(monetDTO.MonetaryAccountId);
+        }
+
+
+        public Account FindAccountById(int idAccountToFind)
+        {
+            bool isFound = false;
+            Account accountFound = new MonetaryAccount();
+
+            foreach (var account in _userConnected.MyAccounts)
+            {
+                if (account.AccountId == idAccountToFind)
+                {
+                    accountFound = account;
+                    isFound = true;
+                }
+            }
+            if (!isFound)
+            {
+                throw new Exception("Account was not found, an error on index must be somewhere.");
+            }
+
+            return accountFound;
+        }
+
+        public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
+        {
+            SetUserConnected((int)monetaryDtoWithUpdates.UserId);
+            MonetaryAccount monetaryToUpd = MapperMonetaryAccount.ToMonetaryAccount(monetaryDtoWithUpdates);
+            MonetaryAccount monetaryWithoutUpd = FindMonetaryAccountInDb(monetaryDtoWithUpdates);
+
+            monetaryToUpd.AccountUser = _userConnected;
+            if (Helper.AreTheSameObject(monetaryToUpd, monetaryWithoutUpd))
+            {
+                throw new Exception("There are non existential changes, change at least one please.");
+            }
+            else
+            {
+                _userConnected.ModifyMonetaryAccount(monetaryToUpd);
+                _userRepo.Update(_userConnected);
+            }
+        }
+
+        #endregion
+
+
+        #region Credit Card Account Section
+
+        public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
+        {
+            try
+            {
+                SetUserConnected((int)creditAccountDTOToAdd.UserId);
+                CreditCardAccount creditAccountToAdd = MapperCreditAccount.ToCreditAccount(creditAccountDTOToAdd);
+                creditAccountToAdd.AccountId = 0;
+
+                _userConnected.AddCreditAccount(creditAccountToAdd);
+
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+        }
+
+        public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
+        {
+            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountById(idCreditAccountToFind);
+
+            CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
+
+            return creditAccountFoundDTO;
+        }
+
+        public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
+        {
+            SetUserConnected((int)creditAccount.UserId);
+            return (CreditCardAccount)FindAccountById(creditAccount.CreditCardAccountId);
+        }
+
+        public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
+        {
+            throw new NotImplementedException();
+
+        }
+        #endregion
     }
-
-    public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
-    {
-        CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountById(idCreditAccountToFind);
-
-        CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
-
-        return creditAccountFoundDTO;
-    }
-
-    public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
-    {
-        SetUserConnected((int)creditAccount.UserId);
-        return (CreditCardAccount)FindAccountById(creditAccount.CreditCardAccountId);
-    }
-
-    #endregion
-
 }
