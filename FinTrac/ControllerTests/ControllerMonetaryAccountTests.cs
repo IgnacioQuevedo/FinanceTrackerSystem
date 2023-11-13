@@ -7,6 +7,7 @@ using BusinessLogic.User_Components;
 using Controller;
 using Controller.Mappers;
 using DataManagers;
+using System.Xml.Schema;
 
 namespace ControllerTests
 {
@@ -83,7 +84,6 @@ namespace ControllerTests
 
         #endregion
 
-
         #region Find Monetary Account
 
         [TestMethod]
@@ -155,6 +155,25 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenUserId_ShouldReturnListOfMonetaryAccountDTO()
+        {
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
+            _controller.CreateMonetaryAccount(_monetToCreateDTO2);
+
+            CreditCardAccountDTO creditAccountDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+
+            _controller.CreateCreditAccount(creditAccountDTO1);
+
+            int previousLength = _testDb.Users.FirstOrDefault().MyAccounts.Count;
+
+            List<MonetaryAccountDTO> listOfMonetaryAccounts = _controller.GetAllMonetaryAccounts(_userConnected.UserId);
+
+            int lengthOfListReturned = listOfMonetaryAccounts.Count;
+
+            Assert.AreEqual(previousLength, lengthOfListReturned);
+        }
     }
 
 }

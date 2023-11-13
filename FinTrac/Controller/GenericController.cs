@@ -14,7 +14,7 @@ using Mappers;
 namespace Controller
 {
 
-    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController
+    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController, IMonetaryAccount
     {
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
@@ -485,8 +485,23 @@ namespace Controller
             }
         }
 
-        #endregion
+        public List<MonetaryAccountDTO> GetAllMonetaryAccounts(int userConnectedId)
+        {
+            SetUserConnected(userConnectedId);
+            List<MonetaryAccountDTO> monetaryAccountList = new List<MonetaryAccountDTO>();
 
+            foreach (Account account in _userConnected.MyAccounts)
+            {
+                if (account is MonetaryAccount)
+                {
+                    monetaryAccountList.Add(MapperMonetaryAccount.ToMonetaryAccountDTO((MonetaryAccount)account));
+                }
+            }
+
+            return monetaryAccountList;
+        }
+
+        #endregion
 
         #region Credit Card Account Section
 
