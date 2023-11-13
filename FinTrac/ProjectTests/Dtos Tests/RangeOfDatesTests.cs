@@ -31,7 +31,7 @@ namespace BusinessLogicTests.Dtos_Tests
         {
             RangeOfDatesDTO myRange = new RangeOfDatesDTO();
 
-            myRange.InitialDate = new DateTime(2023, 5, 11);
+            myRange.InitialDate = new DateTime(2023, 5, 12);
 
             Assert.AreEqual(myRange.InitialDate, new DateTime(2023, 5, 12));
         }
