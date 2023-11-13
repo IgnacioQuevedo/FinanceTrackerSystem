@@ -22,7 +22,8 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
-        private CreditCardAccountDTO _creditToCreateDTO1;
+        private CreditCardAccountDTO _creditAccountDTO1;
+        private CreditCardAccountDTO _creditAccountDTO2;
 
         [TestInitialize]
         public void Initialize()
@@ -37,8 +38,10 @@ namespace ControllerTests
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
 
-            _creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
-            _creditToCreateDTO1.CreditCardAccountId = 1;
+            _creditAccountDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+            _creditAccountDTO1.CreditCardAccountId = 1;
+
+            _creditAccountDTO2 = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
         }
 
         #endregion
@@ -58,19 +61,16 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCreditAccountDTOToCreate_ShouldBeCreated()
         {
-            CreditCardAccountDTO creditToCreateDTO2 = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
-            creditToCreateDTO2.CreditCardAccountId = 2;
-
-            _controller.CreateCreditAccount(_creditToCreateDTO1);
-            _controller.CreateCreditAccount(creditToCreateDTO2);
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+            _controller.CreateCreditAccount(_creditAccountDTO2);
 
             List<Account> myAccountsDb = _testDb.Users.First().MyAccounts;
 
             Assert.IsNotNull(myAccountsDb[0].AccountUser);
-            Assert.AreEqual(myAccountsDb[0].UserId, _creditToCreateDTO1.UserId);
-            Assert.AreEqual(myAccountsDb[0].Name, _creditToCreateDTO1.Name);
-            Assert.AreEqual(myAccountsDb[0].AccountId, _creditToCreateDTO1.CreditCardAccountId);
-            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)_creditToCreateDTO1.Currency);
+            Assert.AreEqual(myAccountsDb[0].UserId, _creditAccountDTO1.UserId);
+            Assert.AreEqual(myAccountsDb[0].Name, _creditAccountDTO1.Name);
+            Assert.AreEqual(myAccountsDb[0].AccountId, _creditAccountDTO1.CreditCardAccountId);
+            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)_creditAccountDTO1.Currency);
             Assert.AreEqual(typeof(CreditCardAccount), myAccountsDb[0].GetType());
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
@@ -83,38 +83,40 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCreditAccountIdAndUserId_ShouldReturnCreditAccountDTOFound_OnDb()
         {
-            _controller.CreateCreditAccount(_creditToCreateDTO1);
+            _controller.CreateCreditAccount(_creditAccountDTO1);
 
-            CreditCardAccountDTO CreditAccountFound = _controller.FindCreditAccount(_creditToCreateDTO1.CreditCardAccountId, _userConnected.UserId);
+            CreditCardAccountDTO CreditAccountFound = _controller.FindCreditAccount(_creditAccountDTO1.CreditCardAccountId, _userConnected.UserId);
 
-            Assert.AreEqual(CreditAccountFound.CreditCardAccountId, _creditToCreateDTO1.CreditCardAccountId);
-            Assert.AreEqual(CreditAccountFound.UserId, _creditToCreateDTO1.UserId);
+            Assert.AreEqual(CreditAccountFound.CreditCardAccountId, _creditAccountDTO1.CreditCardAccountId);
+            Assert.AreEqual(CreditAccountFound.UserId, _creditAccountDTO1.UserId);
         }
 
         [TestMethod]
         public void GivenCreditAccountDTO_ShouldReturnExactlyTheCreditAccountFound_OnDb()
         {
-            _controller.CreateCreditAccount(_creditToCreateDTO1);
+            _controller.CreateCreditAccount(_creditAccountDTO1);
 
-            CreditCardAccount creditAccountFound = _controller.FindCreditAccountInDb(_creditToCreateDTO1);
+            CreditCardAccount creditAccountFound = _controller.FindCreditAccountInDb(_creditAccountDTO1);
 
-            Assert.AreEqual(creditAccountFound.AccountId, _creditToCreateDTO1.CreditCardAccountId);
-            Assert.AreEqual(creditAccountFound.UserId, _creditToCreateDTO1.UserId);
+            Assert.AreEqual(creditAccountFound.AccountId, _creditAccountDTO1.CreditCardAccountId);
+            Assert.AreEqual(creditAccountFound.UserId, _creditAccountDTO1.UserId);
         }
 
         #endregion
 
+        #region Update Credit Account
+
         [TestMethod]
         public void GivenCreditDTOToUpdate_ShouldBeUpdatedInDb()
         {
-            _controller.CreateCreditAccount(_creditToCreateDTO1);
+            _controller.CreateCreditAccount(_creditAccountDTO1);
 
-            CreditCardAccountDTO accountDTOWithUpdates = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
+            CreditCardAccountDTO accountDTOWithUpdates = _creditAccountDTO2;
             accountDTOWithUpdates.CreditCardAccountId = 1;
 
             _controller.UpdateCreditAccount(accountDTOWithUpdates);
 
-            CreditCardAccount accountInDbWithSupossedChanges = _controller.FindCreditAccountInDb(_creditToCreateDTO1);
+            CreditCardAccount accountInDbWithSupossedChanges = _controller.FindCreditAccountInDb(_creditAccountDTO1);
 
             Assert.AreEqual(accountInDbWithSupossedChanges.AccountId, accountDTOWithUpdates.CreditCardAccountId);
             Assert.AreEqual(accountInDbWithSupossedChanges.Name, accountDTOWithUpdates.Name);
@@ -125,6 +127,8 @@ namespace ControllerTests
             Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
             Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
         }
+
+        #endregion
 
     }
 }
