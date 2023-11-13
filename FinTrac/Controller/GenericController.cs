@@ -601,24 +601,24 @@ namespace Controller
 
         #region Report Section
 
-        public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
             RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
 
-            listOfTransactions = Report.FilterListOfSpendingsByRangeOfDate(listOfTransactions, myRangeOfDates);
+            listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
 
             listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 
             return listOfSpendingsDTO;
         }
 
-        public List<TransactionDTO> FilterListOfSpendingsByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
+        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
-            listOfTransactions = Report.FilterListOfSpendingsByNameOfCategory(listOfTransactions, nameOfCategory);
+            listOfTransactions = Report.FilterListByNameOfCategory(listOfTransactions, nameOfCategory);
 
             listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 

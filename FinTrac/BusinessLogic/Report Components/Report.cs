@@ -132,7 +132,7 @@ namespace BusinessLogic.Report_Components
 
         #region  Filtering Lists of spendings
 
-        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -149,7 +149,7 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
+        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -161,17 +161,17 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListOfSpendingsByAccount(List<Transaction> listOfSpendings,
+        public static List<Transaction> FilterListByAccount(List<Transaction> listOfSpendings,
             Account accountSelected, User userLogged)
         {
-            List<Transaction> accountSpendings = AccountSpendings(accountSelected, userLogged);
+            List<Transaction> accountSpendings = FilterAccountSpendings(accountSelected, userLogged);
             List<Transaction> filteredListOfSpending = listOfSpendings;
             filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
 
             return filteredListOfSpending;
         }
 
-        private static List<Transaction> AccountSpendings(Account accountSelected, User userLogged)
+        private static List<Transaction> FilterAccountSpendings(Account accountSelected, User userLogged)
         {
             List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
                 .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)

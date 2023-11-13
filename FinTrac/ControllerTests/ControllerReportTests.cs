@@ -82,7 +82,7 @@ namespace ControllerTests
 
             RangeOfDatesDTO myRangeDTO = new RangeOfDatesDTO(new DateTime(2023, 01, 01), new DateTime(2024, 01, 01));
 
-            List<TransactionDTO> filteredListDTO = _controller.FilterListOfSpendingsByRangeOfDate(transactionUserListDTO, myRangeDTO);
+            List<TransactionDTO> filteredListDTO = _controller.FilterListByRangeOfDate(transactionUserListDTO, myRangeDTO);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO.Count, 1);
@@ -104,13 +104,11 @@ namespace ControllerTests
 
             List<TransactionDTO> transactionUserListDTO = MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
 
-            List<TransactionDTO> filteredListDTO = _controller.FilterListOfSpendingsByNameOfCategory(transactionUserListDTO, categoryName);
+            List<TransactionDTO> filteredListDTO = _controller.FilterListByNameOfCategory(transactionUserListDTO, categoryName);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
             Assert.AreEqual(filteredListDTO.Count, 2);
-
-
 
         }
 
