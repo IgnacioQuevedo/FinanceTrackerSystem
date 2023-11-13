@@ -390,7 +390,6 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     #endregion
 
-
     #region Monetary Account section
 
     public void CreateMonetaryAccount(MonetaryAccountDTO monetAccountDTOToAdd)
@@ -410,10 +409,14 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             throw new Exception(Exception.Message);
         }
     }
+    public MonetaryAccountDTO FindMonetaryAccount(int idMonetAccountToFind, int userId)
+    {
+        throw new NotImplementedException();
+    }
 
     #endregion
 
-    #region Credit Card Account
+    #region Credit Card Account Section
 
     public void CreateCreditAccount(CreditCardAccountDTO creditAccountDTOToAdd)
     {
@@ -434,7 +437,5 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
     }
 
     #endregion
-
-
 
 }

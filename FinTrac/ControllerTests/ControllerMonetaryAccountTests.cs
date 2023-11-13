@@ -22,6 +22,8 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
+        private MonetaryAccountDTO _monetToCreateDTO1;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -34,6 +36,9 @@ namespace ControllerTests
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
+
+            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
+            _monetToCreateDTO1.MonetaryAccountId = 1;
         }
 
         #endregion
@@ -53,22 +58,22 @@ namespace ControllerTests
         [TestMethod]
         public void GivenMonetaryAccountToCreate_ShouldBeCreated()
         {
-            MonetaryAccountDTO monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
-            monetToCreateDTO1.MonetaryAccountId = 1;
+            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
+            _monetToCreateDTO1.MonetaryAccountId = 1;
 
             MonetaryAccountDTO monetToCreateDTO2 = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
             monetToCreateDTO2.MonetaryAccountId = 2;
 
-            _controller.CreateMonetaryAccount(monetToCreateDTO1);
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
             _controller.CreateMonetaryAccount(monetToCreateDTO2);
 
             List<Account> myAccountsDb = _testDb.Users.First().MyAccounts;
 
             Assert.IsNotNull(myAccountsDb[0].AccountUser);
-            Assert.AreEqual(myAccountsDb[0].UserId, monetToCreateDTO1.UserId);
-            Assert.AreEqual(myAccountsDb[0].Name, monetToCreateDTO1.Name);
-            Assert.AreEqual(myAccountsDb[0].AccountId, monetToCreateDTO1.MonetaryAccountId);
-            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)monetToCreateDTO1.Currency);
+            Assert.AreEqual(myAccountsDb[0].UserId, _monetToCreateDTO1.UserId);
+            Assert.AreEqual(myAccountsDb[0].Name, _monetToCreateDTO1.Name);
+            Assert.AreEqual(myAccountsDb[0].AccountId, _monetToCreateDTO1.MonetaryAccountId);
+            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)_monetToCreateDTO1.Currency);
             Assert.AreEqual(typeof(MonetaryAccount), myAccountsDb[0].GetType());
             Assert.IsInstanceOfType(myAccountsDb[0], typeof(MonetaryAccount));
 
@@ -76,6 +81,17 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenMonetaryAccountDTOAndUserId_ShouldReturnMonetaryAccountDTO_OnDb()
+        {
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
+
+            MonetaryAccountDTO monetAccountFound = _controller.FindMonetaryAccount(_monetToCreateDTO1.MonetaryAccountId, _userConnected.UserId);
+
+            Assert.AreEqual(_monetToCreateDTO1.MonetaryAccountId, monetAccountFound.MonetaryAccountId);
+            Assert.AreEqual(_monetToCreateDTO1.UserId, monetAccountFound.UserId);
+        }
 
     }
 }
