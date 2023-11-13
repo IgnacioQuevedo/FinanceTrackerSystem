@@ -109,6 +109,7 @@ namespace ControllerTests
 
         #endregion
 
+        #region  Update Monetary Account
 
         [TestMethod]
         public void GivenMonetaryDTOToUpdate_ShouldBeUpdatedInDb()
@@ -128,6 +129,8 @@ namespace ControllerTests
             Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
             Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
         }
+
+        #endregion
     }
 
 }
