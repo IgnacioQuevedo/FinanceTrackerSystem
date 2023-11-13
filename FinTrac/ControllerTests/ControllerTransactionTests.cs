@@ -41,7 +41,7 @@ namespace ControllerTests
 
             categoryOfTransactionDTO =
                 new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
-            
+
             monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY,
                 DateTime.Now, _userConnected.UserId);
             monetaryAccount.MonetaryAccountId = 1;
@@ -112,28 +112,29 @@ namespace ControllerTests
 
         #endregion
 
+        #region Find Methods
+
         [TestMethod]
         public void GivenTransactionDTO_ShouldBePossibleToFindItOnDb()
         {
-            TransactionDTO transactionToFind = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+            TransactionDTO transactionToFind = new TransactionDTO("Spent on food", DateTime.Now.Date, 100,
+                CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
             transactionToFind.TransactionId = 1;
-            
+
             _controller.CreateTransaction(transactionToFind);
-            
+
             Transaction transactionFound = _controller.FindTransactionInDb(transactionToFind.TransactionId,
                 monetaryAccount.MonetaryAccountId, _userConnected.UserId);
-            
-            Assert.AreEqual(transactionToFind.TransactionId,transactionFound.TransactionId);
-            Assert.AreEqual(transactionToFind.Title,transactionFound.Title);
-            Assert.AreEqual(transactionToFind.CreationDate,transactionFound.CreationDate);
-            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
-            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
-            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
+
+            Assert.AreEqual(transactionToFind.TransactionId, transactionFound.TransactionId);
+            Assert.AreEqual(transactionToFind.Title, transactionFound.Title);
+            Assert.AreEqual(transactionToFind.CreationDate, transactionFound.CreationDate);
+            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
+            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
+            Assert.AreEqual(transactionToFind.Amount, transactionFound.Amount);
         }
-        
-        
-        
-        
+
+        #endregion
     }
 }
