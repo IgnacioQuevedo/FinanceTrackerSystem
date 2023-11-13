@@ -26,6 +26,8 @@ namespace BusinessLogicTests.Dtos_Tests
 
         #endregion
 
+        #region Final Date
+
         [TestMethod]
         public void GivenFinalDate_ShouldBeSetted()
         {
@@ -35,5 +37,7 @@ namespace BusinessLogicTests.Dtos_Tests
 
             Assert.AreEqual(myRange.InitialDate, new DateTime(2023, 5, 12));
         }
+
+        #endregion
     }
 }
