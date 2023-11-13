@@ -620,5 +620,10 @@ namespace Controller
         }
 
         #endregion
+
+        public Transaction FindTransaction(int transactionId, int accountId, int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

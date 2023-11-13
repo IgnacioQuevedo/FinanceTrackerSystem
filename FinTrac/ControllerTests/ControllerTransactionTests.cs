@@ -109,6 +109,28 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenTransactionDTO_ShouldBePossibleToFindItOnDb()
+        {
+            TransactionDTO transactionToFind = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            _controller.CreateTransaction(transactionToFind);
+
+            Transaction transactionFound = _controller.FindTransaction(transactionToFind.TransactionId,
+                monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+            
+            transactionToFind.TransactionId = 1;
+            
+            Assert.AreEqual(transactionToFind.TransactionId,transactionFound.TransactionId);
+            Assert.AreEqual(transactionToFind.Title,transactionFound.Title);
+            Assert.AreEqual(transactionToFind.CreationDate,transactionFound.CreationDate);
+            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
+            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
+            Assert.AreEqual(transactionToFind.Amount,transactionFound.Amount);
+        }
+        
+        
         
         
     }
