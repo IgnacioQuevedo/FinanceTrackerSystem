@@ -672,13 +672,17 @@ namespace Controller
             {
                 throw new Exception(Exception.Message);
             }
-                
-                
         }
 
-        public void DeleteTransaction(TransactionDTO transactionToDelete)
+        public void DeleteTransaction(TransactionDTO transactionDtoToDelete)
         {
-            throw new NotImplementedException();
+            Account accountWhereIsTransaction = FindAccountById(transactionDtoToDelete.AccountId);
+            SetUserConnected(accountWhereIsTransaction.UserId);
+            Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
+                transactionDtoToDelete.AccountId,accountWhereIsTransaction.UserId);
+            
+            accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
+            _userRepo.Update(_userConnected);
         }
     }
 }
