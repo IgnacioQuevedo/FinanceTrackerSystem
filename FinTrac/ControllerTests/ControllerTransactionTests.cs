@@ -94,5 +94,17 @@ namespace ControllerTests
             Assert.IsTrue(Helper.AreTheSameObject(dtoToAdd.TransactionCategory,MapperCategory.ToCategoryDTO(transactionInDb.TransactionCategory)));
             Assert.AreEqual(dtoToAdd.AccountId, transactionInDb.AccountId);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void CreateMethodWithIncorrectData_ShouldAddTransactionToDb()
+        {
+            dtoToAdd = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+       
+            
+            _controller.CreateTransaction(dtoToAdd);
+            
+        }
     }
 }
