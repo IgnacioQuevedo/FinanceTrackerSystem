@@ -5,6 +5,7 @@ using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -432,7 +433,7 @@ namespace Controller
         }
 
 
-        public Account FindAccountById(int idAccountToFind)
+        public Account FindAccountById(int? idAccountToFind)
         {
             bool isFound = false;
             Account accountFound = new MonetaryAccount();

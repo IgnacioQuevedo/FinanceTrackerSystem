@@ -50,11 +50,15 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
         public void CreateMethodWithCorrectData_ShouldAddTransactionToDb()
         {
             CategoryDTO categoryOfTransactionDTO =
                 new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
 
+            _controller.CreateCategory(categoryOfTransactionDTO);
+            
+            
             MonetaryAccountDTO monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, 
                 DateTime.Now,_userConnected.UserId);
             
@@ -68,17 +72,17 @@ namespace ControllerTests
             dtoToAdd.TransactionId = 0;
             dtoToAdd.AccountId = monetaryAccount.MonetaryAccountId;
 
-
             _controller.CreateTransaction(dtoToAdd);
 
             Transaction transactionInDb = _testDb.Users.First().MyAccounts.First().MyTransactions.First();
-
+            categoryOfTransactionDTO.CategoryId = 2;
+            
             Assert.AreEqual(dtoToAdd.Title, transactionInDb.Title);
             Assert.AreEqual(dtoToAdd.Amount, transactionInDb.Amount);
             Assert.AreEqual(dtoToAdd.CreationDate, transactionInDb.CreationDate);
-            Assert.AreEqual(dtoToAdd.Currency, transactionInDb.Currency);
-            Assert.AreEqual(dtoToAdd.Type, transactionInDb.Type);
-            Assert.AreEqual(dtoToAdd.TransactionCategory, transactionInDb.TransactionCategory);
+            Assert.AreEqual((CurrencyEnum)dtoToAdd.Currency, transactionInDb.Currency);
+            Assert.AreEqual((TypeEnum)dtoToAdd.Type, transactionInDb.Type);
+            Assert.IsTrue(Helper.AreTheSameObject(dtoToAdd.TransactionCategory,MapperCategory.ToCategoryDTO(transactionInDb.TransactionCategory)));
             Assert.AreEqual(dtoToAdd.AccountId, transactionInDb.AccountId);
         }
     }
