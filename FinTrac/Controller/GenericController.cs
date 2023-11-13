@@ -634,7 +634,7 @@ namespace Controller
                 }
             }
 
-            return null;
+            throw new Exception("Transaction was not found, seems to be an error on index");
         }
     }
 }

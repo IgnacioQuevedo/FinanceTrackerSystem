@@ -138,7 +138,7 @@ namespace ControllerTests
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenTransactionDTONotInDb_ShouldThrowException()
-        {
+        {g
             Transaction transactionFound = _controller.FindTransactionInDb(-1,
                 monetaryAccount.MonetaryAccountId, _userConnected.UserId);
         }
