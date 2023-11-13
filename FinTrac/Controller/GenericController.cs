@@ -621,9 +621,20 @@ namespace Controller
 
         #endregion
 
-        public Transaction FindTransaction(int transactionId, int accountId, int userId)
+        public Transaction FindTransactionInDb(int transactionId, int accountId, int userId)
         {
-            throw new NotImplementedException();
+            SetUserConnected(userId);
+            Account accountAssigned = FindAccountById(accountId);
+
+            foreach (var transaction in accountAssigned.MyTransactions)
+            {
+                if (transaction.TransactionId == transactionId)
+                {
+                    return transaction;
+                }
+            }
+
+            throw new Exception("Transaction was not found, seems to be an error on index");
         }
     }
 }
