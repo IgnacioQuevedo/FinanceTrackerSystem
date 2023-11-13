@@ -39,8 +39,7 @@ public abstract class MapperTransaction
     {
         TransactionDTO transactionDTO =
             new TransactionDTO(transactionToConvert.Title, transactionToConvert.CreationDate,
-                transactionToConvert.Amount
-                , (CurrencyEnumDTO)transactionToConvert.Currency, (TypeEnumDTO)transactionToConvert.Type,
+                transactionToConvert.Amount, (CurrencyEnumDTO)transactionToConvert.Currency, (TypeEnumDTO)transactionToConvert.Type,
                 MapperCategory.ToCategoryDTO(transactionToConvert.TransactionCategory), transactionToConvert.AccountId);
 
         transactionDTO.TransactionId = transactionToConvert.TransactionId;

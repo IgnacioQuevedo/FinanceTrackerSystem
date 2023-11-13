@@ -640,6 +640,7 @@ namespace Controller
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId)
         {
+            
             SetUserConnected(userId);
             Account accountAssigned = FindAccountById(accountId);
             TransactionDTO transactionFound =
