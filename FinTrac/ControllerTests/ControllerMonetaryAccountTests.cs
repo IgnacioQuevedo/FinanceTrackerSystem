@@ -23,6 +23,7 @@ namespace ControllerTests
         private UserDTO _userConnected;
 
         private MonetaryAccountDTO _monetToCreateDTO1;
+        private MonetaryAccountDTO _monetToCreateDTO2;
 
         [TestInitialize]
         public void Initialize()
@@ -39,6 +40,8 @@ namespace ControllerTests
 
             _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
             _monetToCreateDTO1.MonetaryAccountId = 1;
+
+            _monetToCreateDTO2 = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
         }
 
         #endregion
@@ -60,12 +63,10 @@ namespace ControllerTests
         {
             _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
             _monetToCreateDTO1.MonetaryAccountId = 1;
-
-            MonetaryAccountDTO monetToCreateDTO2 = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
-            monetToCreateDTO2.MonetaryAccountId = 2;
+            _monetToCreateDTO2.MonetaryAccountId = 2;
 
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
-            _controller.CreateMonetaryAccount(monetToCreateDTO2);
+            _controller.CreateMonetaryAccount(_monetToCreateDTO2);
 
             List<Account> myAccountsDb = _testDb.Users.First().MyAccounts;
 
@@ -116,7 +117,7 @@ namespace ControllerTests
         {
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 
-            MonetaryAccountDTO accountDTOWithUpdates = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
+            MonetaryAccountDTO accountDTOWithUpdates = _monetToCreateDTO2;
             accountDTOWithUpdates.MonetaryAccountId = 1;
 
             _controller.UpdateMonetaryAccount(accountDTOWithUpdates);
@@ -131,6 +132,25 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenAMonetaryAccountDTOToDelete_ShouldBeDeletedOnDb()
+        {
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
+            _controller.CreateMonetaryAccount(_monetToCreateDTO2);
+
+            List<Account> accountListOfUser = _testDb.Users.First().MyAccounts;
+
+            _monetToCreateDTO1.MonetaryAccountId = 1;
+            _monetToCreateDTO2.MonetaryAccountId = 2;
+            int amountOfAccountsInDb = accountListOfUser.Count;
+            _controller.DeleteMonetaryAccount(_monetToCreateDTO1);
+            _controller.DeleteMonetaryAccount(_monetToCreateDTO2);
+
+            int amountOfAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
+
+            Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
+        }
     }
 
 }

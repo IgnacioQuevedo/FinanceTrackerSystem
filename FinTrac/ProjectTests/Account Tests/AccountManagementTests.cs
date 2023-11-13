@@ -222,11 +222,11 @@ namespace BusinessLogicTests
         public void GivenAccountToDelete_ShouldBeDeleted()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
-            int idOfAccountDeleted = genericMonetaryAccount.AccountId;
-
+            int previousLength = genericUser.MyAccounts.Count;
             genericUser.DeleteAccount(genericMonetaryAccount);
 
-            Assert.IsNull(genericUser.MyAccounts[idOfAccountDeleted]);
+            int lengthAfterDelete = genericUser.MyAccounts.Count;
+            Assert.AreEqual(previousLength - 1, lengthAfterDelete);
         }
 
         [TestMethod]

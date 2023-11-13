@@ -471,6 +471,11 @@ namespace Controller
             }
         }
 
+        public void DeleteMonetaryAccount(MonetaryAccountDTO monetaryDtoToDelete)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 

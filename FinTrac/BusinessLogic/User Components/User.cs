@@ -432,7 +432,6 @@ namespace BusinessLogic.User_Components
             if (ThereIsNoTransactions(accountToDelete))
             {
                 MyAccounts.Remove(accountToDelete);
-                MyAccounts.Insert(accountToDelete.AccountId, null);
             }
             else
             {
