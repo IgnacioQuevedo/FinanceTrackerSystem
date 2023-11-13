@@ -130,6 +130,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Delete Credit Account
+
         [TestMethod]
         public void GivenCreditAccountDTOToDelete_ShouldBeDeleted()
         {
@@ -149,5 +151,6 @@ namespace ControllerTests
             Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
         }
 
+        #endregion
     }
 }
