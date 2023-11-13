@@ -473,7 +473,16 @@ namespace Controller
 
         public void DeleteMonetaryAccount(MonetaryAccountDTO monetaryDtoToDelete)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SetUserConnected((int)monetaryDtoToDelete.UserId);
+                _userConnected.DeleteAccount(FindMonetaryAccountInDb(monetaryDtoToDelete));
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionCategoryManagement Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         #endregion
