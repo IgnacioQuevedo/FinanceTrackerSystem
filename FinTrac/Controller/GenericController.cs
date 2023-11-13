@@ -484,6 +484,10 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         return creditAccountFoundDTO;
     }
 
+    public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
+    {
+        throw new NotImplementedException();
+    }
 
     #endregion
 
