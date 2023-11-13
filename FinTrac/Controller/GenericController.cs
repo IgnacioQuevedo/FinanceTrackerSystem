@@ -24,7 +24,7 @@ namespace Controller
             _userRepo = userRepo;
         }
 
-        public void SetUserConnected(int userIdToConnect)
+        public void SetUserConnected(int? userIdToConnect)
         {
             if (_userConnected == null)
             {
@@ -237,7 +237,7 @@ namespace Controller
 
         public void CreateGoal(GoalDTO goalDtoToCreate)
         {
-            SetUserConnected((int)goalDtoToCreate.UserId);
+            SetUserConnected(goalDtoToCreate.UserId);
 
             try
             {
@@ -292,7 +292,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)exchangeDTO.UserId);
+                SetUserConnected(exchangeDTO.UserId);
 
                 ExchangeHistory exchangeHistoryToCreate = MapperExchangeHistory.ToExchangeHistory(exchangeDTO);
                 exchangeHistoryToCreate.ExchangeHistoryId = 0;
@@ -321,7 +321,7 @@ namespace Controller
         //This method will only be used in the controller section. Is necessary for some methods like update,delete,etc
         public ExchangeHistory FindExchangeHistoryInDB(ExchangeHistoryDTO exchangeToFound)
         {
-            SetUserConnected((int)exchangeToFound.UserId);
+            SetUserConnected(exchangeToFound.UserId);
             return searchInDbForAnExchange(exchangeToFound.ExchangeHistoryId);
         }
 
@@ -347,7 +347,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)dtoWithUpdates.UserId);
+                SetUserConnected(dtoWithUpdates.UserId);
 
                 ExchangeHistory exchangeHistoryToUpdate = FindExchangeHistoryInDB(dtoWithUpdates);
                 exchangeHistoryToUpdate.ValidateApplianceExchangeOnTransaction();
@@ -370,7 +370,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)dtoToDelete.UserId);
+                SetUserConnected(dtoToDelete.UserId);
                 ExchangeHistory exchangeHistoryToDelete = FindExchangeHistoryInDB(dtoToDelete);
                 exchangeHistoryToDelete.ValidateApplianceExchangeOnTransaction();
                 _userConnected.DeleteExchangeHistory(exchangeHistoryToDelete);
@@ -400,7 +400,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)monetAccountDTOToAdd.UserId);
+                SetUserConnected(monetAccountDTOToAdd.UserId);
                 MonetaryAccount monetAccountToAdd = MapperMonetaryAccount.ToMonetaryAccount(monetAccountDTOToAdd);
                 monetAccountToAdd.AccountId = 0;
 
@@ -426,7 +426,7 @@ namespace Controller
 
         public MonetaryAccount FindMonetaryAccountInDb(MonetaryAccountDTO monetDTO)
         {
-            SetUserConnected((int)monetDTO.UserId);
+            SetUserConnected(monetDTO.UserId);
 
             return (MonetaryAccount)FindAccountById(monetDTO.MonetaryAccountId);
         }
@@ -456,7 +456,7 @@ namespace Controller
 
         public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
         {
-            SetUserConnected((int)monetaryDtoWithUpdates.UserId);
+            SetUserConnected(monetaryDtoWithUpdates.UserId);
             MonetaryAccount monetaryToUpd = MapperMonetaryAccount.ToMonetaryAccount(monetaryDtoWithUpdates);
             MonetaryAccount monetaryWithoutUpd = FindMonetaryAccountInDb(monetaryDtoWithUpdates);
 
@@ -476,7 +476,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)monetaryDtoToDelete.UserId);
+                SetUserConnected(monetaryDtoToDelete.UserId);
                 _userConnected.DeleteAccount(FindMonetaryAccountInDb(monetaryDtoToDelete));
                 _userRepo.Update(_userConnected);
             }
@@ -515,7 +515,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)creditAccountDTOToAdd.UserId);
+                SetUserConnected(creditAccountDTOToAdd.UserId);
                 CreditCardAccount creditAccountToAdd = MapperCreditAccount.ToCreditAccount(creditAccountDTOToAdd);
                 creditAccountToAdd.AccountId = 0;
 
@@ -540,13 +540,13 @@ namespace Controller
 
         public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
         {
-            SetUserConnected((int)creditAccount.UserId);
+            SetUserConnected(creditAccount.UserId);
             return (CreditCardAccount)FindAccountById(creditAccount.CreditCardAccountId);
         }
 
         public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
         {
-            SetUserConnected((int)creditDtoWithUpdates.UserId);
+            SetUserConnected(creditDtoWithUpdates.UserId);
             CreditCardAccount creditToUpd = MapperCreditAccount.ToCreditAccount(creditDtoWithUpdates);
             CreditCardAccount creditWithoutUpd = FindCreditAccountInDb(creditDtoWithUpdates);
 
@@ -566,7 +566,7 @@ namespace Controller
         {
             try
             {
-                SetUserConnected((int)accountToDelete.UserId);
+                SetUserConnected(accountToDelete.UserId);
                 _userConnected.DeleteAccount(FindCreditAccountInDb(accountToDelete));
                 _userRepo.Update(_userConnected);
             }
@@ -599,7 +599,15 @@ namespace Controller
 
         public void CreateTransaction(TransactionDTO dtoToAdd)
         {
-            throw new NotImplementedException();
+            Account transactionAccount = FindAccountById(dtoToAdd.AccountId);
+            SetUserConnected(transactionAccount.UserId);
+
+            Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
+            transactionToCreate.TransactionId = 0;
+
+            transactionAccount.AddTransaction(transactionToCreate);
+            transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
+            _userRepo.Update(_userConnected);
         }
 
         #endregion
