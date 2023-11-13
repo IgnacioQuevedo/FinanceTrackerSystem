@@ -409,9 +409,19 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             throw new Exception(Exception.Message);
         }
     }
+
+
     public MonetaryAccountDTO FindMonetaryAccount(int idMonetAccountToFind, int userId)
     {
+        MonetaryAccount monetAccountFound = SearchAccountById(idMonetAccountToFind);
 
+        MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
+
+        return monetAccountFoundDTO;
+    }
+
+    private MonetaryAccount SearchAccountById(int idMonetAccountToFind)
+    {
         bool isFound = false;
         MonetaryAccount monetAccountFound = new MonetaryAccount();
 
@@ -428,12 +438,11 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
             throw new Exception("Account was not found, an error on index must be somewhere.");
         }
 
-        MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
-
-        return monetAccountFoundDTO;
+        return monetAccountFound;
     }
 
     #endregion
+
 
     #region Credit Card Account Section
 

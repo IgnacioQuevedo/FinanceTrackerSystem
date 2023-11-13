@@ -82,8 +82,11 @@ namespace ControllerTests
 
         #endregion
 
+
+        #region Find Monetary Account
+
         [TestMethod]
-        public void GivenMonetaryAccountDTOAndUserId_ShouldReturnMonetaryAccountDTO_OnDb()
+        public void GivenMonetaryAccountDTOAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
         {
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 
@@ -92,6 +95,8 @@ namespace ControllerTests
             Assert.AreEqual(_monetToCreateDTO1.MonetaryAccountId, monetAccountFound.MonetaryAccountId);
             Assert.AreEqual(_monetToCreateDTO1.UserId, monetAccountFound.UserId);
         }
+
+        #endregion
 
     }
 }
