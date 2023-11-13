@@ -511,7 +511,20 @@ namespace Controller
 
         public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
         {
-            throw new NotImplementedException();
+            SetUserConnected((int)creditDtoWithUpdates.UserId);
+            CreditCardAccount creditToUpd = MapperCreditAccount.ToCreditAccount(creditDtoWithUpdates);
+            CreditCardAccount creditWithoutUpd = FindCreditAccountInDb(creditDtoWithUpdates);
+
+            creditToUpd.AccountUser = _userConnected;
+            if (Helper.AreTheSameObject(creditToUpd, creditWithoutUpd))
+            {
+                throw new Exception("There are non existential changes, change at least one please.");
+            }
+            else
+            {
+                _userConnected.ModifyCreditAccount(creditToUpd);
+                _userRepo.Update(_userConnected);
+            }
 
         }
         #endregion
