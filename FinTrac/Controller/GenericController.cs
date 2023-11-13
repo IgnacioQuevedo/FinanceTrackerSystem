@@ -476,8 +476,9 @@ namespace Controller
             try
             {
                 SetUserConnected((int)monetaryDtoToDelete.UserId);
-                _userConnected.DeleteAccount(FindMonetaryAccountInDb(monetaryDtoToDelete));
-                _userRepo.Update(_userConnected);
+                MonetaryAccount monetaryAccountToDelete = FindMonetaryAccountInDb(monetaryDtoToDelete);
+                _userConnected.DeleteAccount(monetaryAccountToDelete);
+                _userRepo.UpdateDbWhenDeleting(_userConnected, monetaryAccountToDelete);
             }
             catch (ExceptionCategoryManagement Exception)
             {
@@ -567,8 +568,9 @@ namespace Controller
             try
             {
                 SetUserConnected((int)accountToDelete.UserId);
-                _userConnected.DeleteAccount(FindCreditAccountInDb(accountToDelete));
-                _userRepo.Update(_userConnected);
+                CreditCardAccount creditAccountToDelete = FindCreditAccountInDb(accountToDelete);
+                _userConnected.DeleteAccount(creditAccountToDelete);
+                _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
             }
             catch (ExceptionCategoryManagement Exception)
             {
