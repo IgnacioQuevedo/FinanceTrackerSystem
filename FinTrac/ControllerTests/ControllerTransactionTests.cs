@@ -195,7 +195,7 @@ namespace ControllerTests
             transactionDtoWithUpdates.Amount = 3333;
             transactionDtoWithUpdates.TransactionCategory = categoryDTO2;
             
-            transactionDtoWithUpdates.TransactionId = 1;
+            transactionDtoWithUpdates.TransactionId = 2;
             _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
             
             Account accountInDb = _controller.FindAccountById(monetaryAccount.MonetaryAccountId);
@@ -208,6 +208,9 @@ namespace ControllerTests
                 _controller.FindCategoryInDb(transactionDtoWithUpdates.TransactionCategory),transactionUpdatedInDb.TransactionCategory));
 
         }
+        
+        
+        
         
         
         
