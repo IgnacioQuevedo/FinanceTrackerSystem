@@ -133,6 +133,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Delete Monetary Account
+
         [TestMethod]
         public void GivenAMonetaryAccountDTOToDelete_ShouldBeDeletedOnDb()
         {
@@ -151,6 +153,8 @@ namespace ControllerTests
 
             Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
         }
+
+        #endregion
     }
 
 }
