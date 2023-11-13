@@ -72,15 +72,10 @@ namespace BusinessLogic.Account_Components
 
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            SetTransactionId(transactionToBeAdded);
+            
             MyTransactions.Add(transactionToBeAdded);
         }
-
-        private void SetTransactionId(Transaction transactionToBeAdded)
-        {
-            transactionToBeAdded.TransactionId = MyTransactions.Count;
-        }
-
+        
         #endregion
 
         #region Modify Transaction

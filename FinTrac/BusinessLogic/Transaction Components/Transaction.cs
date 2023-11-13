@@ -3,6 +3,7 @@ using BusinessLogic.Enums;
 using BusinessLogic.ExchangeHistory_Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Authentication;
 using System.Text;
@@ -15,6 +16,7 @@ namespace BusinessLogic.Transaction_Components
     public class Transaction
     {
         #region Properties
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionId { get; set; }
         public string Title { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now.Date;
