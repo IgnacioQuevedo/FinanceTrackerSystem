@@ -88,7 +88,6 @@ namespace ControllerTests
             Assert.AreEqual(filteredListDTO.Count, 1);
         }
 
-        #endregion
 
         [TestMethod]
         public void GivenListOfTransactionAndCategoryName_ShouldBeFiltered()
@@ -114,5 +113,7 @@ namespace ControllerTests
 
 
         }
+
+        #endregion
     }
 }

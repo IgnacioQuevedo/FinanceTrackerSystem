@@ -614,8 +614,6 @@ namespace Controller
             return listOfSpendingsDTO;
         }
 
-        #endregion
-
         public List<TransactionDTO> FilterListOfSpendingsByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
@@ -627,5 +625,7 @@ namespace Controller
             return listOfSpendingsDTO;
 
         }
+
+        #endregion
     }
 }
