@@ -13,8 +13,8 @@ using Mappers;
 
 namespace Controller
 {
-
-    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController, IMonetaryAccount, ICreditAccount
+    public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
+        IMonetaryAccount, ICreditAccount
     {
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
@@ -445,6 +445,7 @@ namespace Controller
                     isFound = true;
                 }
             }
+
             if (!isFound)
             {
                 throw new Exception("Account was not found, an error on index must be somewhere.");
@@ -559,7 +560,6 @@ namespace Controller
                 _userConnected.ModifyCreditAccount(creditToUpd);
                 _userRepo.Update(_userConnected);
             }
-
         }
 
         public void DeleteCreditAccount(CreditCardAccountDTO accountToDelete)
@@ -591,21 +591,17 @@ namespace Controller
 
             return creditAccountList;
         }
+
         #endregion
 
 
         #region Transaction Section
 
-        
+        public void CreateTransaction(TransactionDTO dtoToAdd)
+        {
+            throw new NotImplementedException();
+        }
 
-        
-        
-        
-        
-        
         #endregion
-        
-        
-        
     }
 }
