@@ -209,7 +209,18 @@ namespace ControllerTests
 
         }
         
-        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenTransactionDTOWithIncorrectDataToUpdate_ShouldThrowException()
+        {
+            TransactionDTO transactionToUpd = new TransactionDTO("", DateTime.Now.Date, 500, CurrencyEnumDTO.UY,
+                TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            transactionToUpd.TransactionId = 1;
+            
+            
+            _controller.UpdateTransaction(transactionToUpd,_userConnected.UserId);
+
+        }
         
         
         
