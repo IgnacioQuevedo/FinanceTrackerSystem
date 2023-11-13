@@ -11,14 +11,9 @@ namespace BusinessLogic.Account_Components
 {
     public class MonetaryAccount : Account
     {
-        #region Attributes
-
-        private decimal _initialAmount;
-
-        #endregion
-
         #region Properties
 
+        public decimal InitialAmount;
         public decimal Amount { get; set; }
 
         #endregion
@@ -33,7 +28,7 @@ namespace BusinessLogic.Account_Components
             base(accountName, currencyType, creationDate)
         {
             Amount = amount;
-            _initialAmount = amount;
+            InitialAmount = amount;
             ValidateMonetaryAccount();
         }
 
@@ -116,13 +111,5 @@ namespace BusinessLogic.Account_Components
 
         #endregion
 
-        #region Method to Return Initial Amount
-
-        public decimal ReturnInitialAmount()
-        {
-            return _initialAmount;
-        }
-
-        #endregion
     }
 }

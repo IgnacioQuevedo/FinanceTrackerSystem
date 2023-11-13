@@ -109,5 +109,25 @@ namespace ControllerTests
 
         #endregion
 
+
+        [TestMethod]
+        public void GivenMonetaryDTOToUpdate_ShouldBeUpdatedInDb()
+        {
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
+
+            MonetaryAccountDTO accountDTOWithUpdates = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
+            accountDTOWithUpdates.MonetaryAccountId = 1;
+
+            _controller.UpdateMonetaryAccount(accountDTOWithUpdates);
+
+            MonetaryAccount accountInDbWithSupossedChanges = _controller.FindMonetaryAccountInDb(_monetToCreateDTO1);
+
+            Assert.AreEqual(accountInDbWithSupossedChanges.AccountId, accountDTOWithUpdates.MonetaryAccountId);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Name, accountDTOWithUpdates.Name);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Amount, accountDTOWithUpdates.Amount);
+            Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
+            Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
+        }
     }
+
 }

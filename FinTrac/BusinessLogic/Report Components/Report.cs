@@ -32,7 +32,7 @@ namespace BusinessLogic.Report_Components
                 goalAchieved = true;
                 foreach (var category in myGoal.CategoriesOfGoal)
                 {
-                    totalSpent += spendingsPerCategory[category.CategoryId -1];
+                    totalSpent += spendingsPerCategory[category.CategoryId - 1];
                 }
                 if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
                 ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
@@ -54,7 +54,7 @@ namespace BusinessLogic.Report_Components
 
             foreach (var category in loggedUser.MyCategories.Where(t => t != null))
             {
-                totalSpentPerCategory = spendingsPerCategory[category.CategoryId -1];
+                totalSpentPerCategory = spendingsPerCategory[category.CategoryId - 1];
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
 
@@ -67,7 +67,7 @@ namespace BusinessLogic.Report_Components
 
         private static decimal CalulatePercent(decimal[] spendingsPerCategory, decimal totalSpentPerCategory)
         {
-            if(spendingsPerCategory[spendingsPerCategory.Length - 1] == 0)
+            if (spendingsPerCategory[spendingsPerCategory.Length - 1] == 0)
             {
                 return 0;
             }
@@ -131,11 +131,11 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region  Filtering Lists of spendings
-        
+
         public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
-            
+
             if (rangeOfDates.InitialDate <= rangeOfDates.FinalDate)
             {
                 filteredListOfSpending = filteredListOfSpending.Where(x =>
@@ -145,14 +145,14 @@ namespace BusinessLogic.Report_Components
             {
                 throw new ExceptionReport("Error: Initial date is bigger than final date");
             }
-            
+
             return filteredListOfSpending;
         }
-        
+
         public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
-            
+
             if (!String.IsNullOrEmpty(nameOfCategory))
             {
                 filteredListOfSpending = filteredListOfSpending.Where(x => x.TransactionCategory.Name.StartsWith(nameOfCategory, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -167,7 +167,7 @@ namespace BusinessLogic.Report_Components
             List<Transaction> accountSpendings = AccountSpendings(accountSelected, userLogged);
             List<Transaction> filteredListOfSpending = listOfSpendings;
             filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
-            
+
             return filteredListOfSpending;
         }
 
@@ -185,7 +185,7 @@ namespace BusinessLogic.Report_Components
 
         public static decimal GiveAccountBalance(MonetaryAccount account)
         {
-            decimal initialMoney = account.ReturnInitialAmount();
+            decimal initialMoney = account.InitialAmount;
             decimal actualBalance = 0;
             decimal accountBalance = 0;
             actualBalance = SummationOfTransactions(account, actualBalance);
@@ -290,7 +290,7 @@ namespace BusinessLogic.Report_Components
 
         private static void LoadPerCategory(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
         {
-            arrayToLoad[transaction.TransactionCategory.CategoryId -1] += amountToAdd;
+            arrayToLoad[transaction.TransactionCategory.CategoryId - 1] += amountToAdd;
         }
         #endregion
     }

@@ -38,7 +38,7 @@ namespace BusinessLogic.User_Components
             Email = email;
             Password = password;
         }
-        
+
         public User(string firstName, string lastName, string email, string password, string? address)
         {
             FirstName = firstName;
@@ -161,7 +161,7 @@ namespace BusinessLogic.User_Components
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
-            
+
         }
 
         private void ValidatePasswordUppercase(string posiblePassword)
@@ -232,7 +232,7 @@ namespace BusinessLogic.User_Components
             {
                 if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
-                    
+
                     MyCategories[i].Name = categoryToUpdate.Name;
                     MyCategories[i].Status = categoryToUpdate.Status;
                     MyCategories[i].Type = categoryToUpdate.Type;
@@ -336,7 +336,7 @@ namespace BusinessLogic.User_Components
                 }
             }
 
-            UpdateValues(accountToUpdate, indexOfUpdate);
+            UpdateMonetaryValues(accountToUpdate, indexOfUpdate);
         }
 
         public void ModifyCreditAccount(CreditCardAccount accountToUpdate)
@@ -357,7 +357,7 @@ namespace BusinessLogic.User_Components
                 }
             }
 
-            UpdateValues(accountToUpdate, indexOfUpdate);
+            UpdateCreditValues(accountToUpdate, indexOfUpdate);
         }
 
         #region Auxiliary Methods for Modify
@@ -380,10 +380,26 @@ namespace BusinessLogic.User_Components
             return false;
         }
 
-        private void UpdateValues(Account accountToUpdate, int index)
+        private void UpdateMonetaryValues(MonetaryAccount accountToUpdate, int index)
         {
             accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
-            MyAccounts[index] = accountToUpdate;
+            ((MonetaryAccount)MyAccounts[index]).Amount = accountToUpdate.Amount;
+            ((MonetaryAccount)MyAccounts[index]).Name = accountToUpdate.Name;
+            ((MonetaryAccount)MyAccounts[index]).Currency = accountToUpdate.Currency;
+            ((MonetaryAccount)MyAccounts[index]).CreationDate = accountToUpdate.CreationDate;
+            ((MonetaryAccount)MyAccounts[index]).InitialAmount = accountToUpdate.Amount;
+        }
+
+        private void UpdateCreditValues(CreditCardAccount accountToUpdate, int index)
+        {
+            accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
+            ((CreditCardAccount)MyAccounts[index]).AvailableCredit = accountToUpdate.AvailableCredit;
+            ((CreditCardAccount)MyAccounts[index]).Name = accountToUpdate.Name;
+            ((CreditCardAccount)MyAccounts[index]).Currency = accountToUpdate.Currency;
+            ((CreditCardAccount)MyAccounts[index]).CreationDate = accountToUpdate.CreationDate;
+            ((CreditCardAccount)MyAccounts[index]).ClosingDate = accountToUpdate.ClosingDate;
+            ((CreditCardAccount)MyAccounts[index]).Last4Digits = accountToUpdate.Last4Digits;
+            ((CreditCardAccount)MyAccounts[index]).IssuingBank = accountToUpdate.IssuingBank;
         }
 
         private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate,

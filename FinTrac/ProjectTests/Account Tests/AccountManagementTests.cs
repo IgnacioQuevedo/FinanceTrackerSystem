@@ -122,7 +122,10 @@ namespace BusinessLogicTests
 
             genericUser.ModifyMonetaryAccount(accountToUpdate);
 
-            Assert.AreEqual(accountToUpdate, genericUser.MyAccounts[genericMonetaryAccount.AccountId]);
+            Assert.AreEqual(accountToUpdate.Name, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Name);
+            Assert.AreEqual(accountToUpdate.Amount, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Amount);
+            Assert.AreEqual(accountToUpdate.CreationDate, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).CreationDate);
+            Assert.AreEqual(accountToUpdate.Currency, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Currency);
         }
 
         [TestMethod]
@@ -150,9 +153,8 @@ namespace BusinessLogicTests
             accountToUpdate.AccountId = idAccount;
             genericUser.ModifyMonetaryAccount(accountToUpdate);
 
-
             MonetaryAccount accountUpdated = (MonetaryAccount)genericUser.MyAccounts[idAccount];
-            Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
+            Assert.AreEqual(accountToUpdate.InitialAmount, accountUpdated.InitialAmount);
         }
 
         #endregion
@@ -176,7 +178,13 @@ namespace BusinessLogicTests
             accountToUpdate.AccountId = genericCreditCardAccount.AccountId;
             genericUser.ModifyCreditAccount(accountToUpdate);
 
-            Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId], accountToUpdate);
+            Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId].Name, accountToUpdate.Name);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).AvailableCredit, accountToUpdate.AvailableCredit);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).IssuingBank, accountToUpdate.IssuingBank);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).Last4Digits, accountToUpdate.Last4Digits);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).Currency, accountToUpdate.Currency);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).CreationDate, accountToUpdate.CreationDate);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).ClosingDate, accountToUpdate.ClosingDate);
         }
 
         [TestMethod]

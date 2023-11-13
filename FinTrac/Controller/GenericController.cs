@@ -452,6 +452,11 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         return accountFound;
     }
 
+    public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 
 
