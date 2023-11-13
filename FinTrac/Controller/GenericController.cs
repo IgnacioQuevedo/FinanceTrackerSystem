@@ -5,6 +5,7 @@ using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
+using BusinessLogic.Report_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -595,5 +596,10 @@ namespace Controller
         }
 
         #endregion
+
+        public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendings, RangeOfDates rangeOfDates)
+        {
+            return null;
+        }
     }
 }
