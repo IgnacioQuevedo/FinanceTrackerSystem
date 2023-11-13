@@ -544,7 +544,16 @@ namespace Controller
 
         public void DeleteCreditAccount(CreditCardAccountDTO accountToDelete)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SetUserConnected((int)accountToDelete.UserId);
+                _userConnected.DeleteAccount(FindCreditAccountInDb(accountToDelete));
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionCategoryManagement Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
         #endregion
     }
