@@ -675,5 +675,10 @@ namespace Controller
                 
                 
         }
+
+        public void DeleteTransaction(TransactionDTO transactionToDelete)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

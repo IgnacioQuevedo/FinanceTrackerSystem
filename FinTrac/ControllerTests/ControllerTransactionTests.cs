@@ -223,5 +223,18 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenTransactionDTOToDelete_ShouldDeleteItFromDb()
+        {
+            int amountOfTransactionsPreDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
+
+            _controller.DeleteTransaction(transactionDtoToAdd);
+            
+            int amountOfTransactionsPostDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
+                
+            Assert.AreEqual(amountOfTransactionsPostDelete, amountOfTransactionsPreDelete -1);
+
+        }
     }
 }
