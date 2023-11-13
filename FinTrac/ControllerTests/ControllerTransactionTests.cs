@@ -174,8 +174,8 @@ namespace ControllerTests
             _controller.FindTransaction(-1, monetaryAccount.UserId,monetaryAccount.MonetaryAccountId);
         }
         
-        
-        
         #endregion
+        
+        
     }
 }

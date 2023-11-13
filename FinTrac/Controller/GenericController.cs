@@ -642,7 +642,6 @@ namespace Controller
         {
             
             SetUserConnected(userId);
-            Account accountAssigned = FindAccountById(accountId);
             TransactionDTO transactionFound =
                 MapperTransaction.ToTransactionDTO(FindTransactionInDb(idToFound, accountId, userId));
             return transactionFound;
