@@ -43,22 +43,11 @@ namespace ControllerTests
                 new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
              monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, 
                  DateTime.Now,_userConnected.UserId);
-             
-             monetaryAccount.MonetaryAccountId = 1;
-            _controller.CreateCategory(categoryOfTransactionDTO);
-            
-            
-            
-            
-            
-            
-             
 
+             categoryOfTransactionDTO.CategoryId = 0;
+             monetaryAccount.MonetaryAccountId = 0;
+            _controller.CreateCategory(categoryOfTransactionDTO);
             _controller.CreateMonetaryAccount(monetaryAccount);
-            
-           
-            
-            
             
         }
 
@@ -77,17 +66,13 @@ namespace ControllerTests
         [TestMethod]
         public void CreateMethodWithCorrectData_ShouldAddTransactionToDb()
         {
-            
             dtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            
             dtoToAdd.TransactionId = 0;
-            dtoToAdd.AccountId = monetaryAccount.MonetaryAccountId;
             
             _controller.CreateTransaction(dtoToAdd);
             
             Transaction transactionInDb = _testDb.Users.First().MyAccounts.First().MyTransactions.First();
-            
             
             categoryOfTransactionDTO.CategoryId = 2;
             Assert.AreEqual(dtoToAdd.Title, transactionInDb.Title);
