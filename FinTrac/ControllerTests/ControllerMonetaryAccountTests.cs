@@ -96,6 +96,17 @@ namespace ControllerTests
             Assert.AreEqual(_monetToCreateDTO1.UserId, monetAccountFound.UserId);
         }
 
+        [TestMethod]
+        public void GivenMonetaryAccountDTO_ShouldReturnMonetaryAccountFound_OnDb()
+        {
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
+
+            MonetaryAccount monetFound = _controller.FindMonetaryAccountInDb(_monetToCreateDTO1);
+
+            Assert.AreEqual(_monetToCreateDTO1.MonetaryAccountId, monetFound.AccountId);
+            Assert.AreEqual(_monetToCreateDTO1.UserId, monetFound.UserId);
+        }
+
         #endregion
 
     }

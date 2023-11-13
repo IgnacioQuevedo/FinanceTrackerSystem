@@ -423,14 +423,21 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
         return monetAccountFoundDTO;
     }
 
-    private Account FindAccountById(int idMonetAccountToFind)
+    public MonetaryAccount FindMonetaryAccountInDb(MonetaryAccountDTO monetDTO)
+    {
+        throw new NotImplementedException();
+    }
+
+
+
+    public Account FindAccountById(int idAccountToFind)
     {
         bool isFound = false;
         Account accountFound = new MonetaryAccount();
 
         foreach (var account in _userConnected.MyAccounts)
         {
-            if (account.AccountId == idMonetAccountToFind)
+            if (account.AccountId == idAccountToFind)
             {
                 accountFound = account;
                 isFound = true;
