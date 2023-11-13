@@ -425,7 +425,9 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     public MonetaryAccount FindMonetaryAccountInDb(MonetaryAccountDTO monetDTO)
     {
-        throw new NotImplementedException();
+        SetUserConnected((int)monetDTO.UserId);
+
+        return (MonetaryAccount)FindAccountById(monetDTO.MonetaryAccountId);
     }
 
 
