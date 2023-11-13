@@ -487,7 +487,6 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
     public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
     {
         SetUserConnected((int)creditAccount.UserId);
-
         return (CreditCardAccount)FindAccountById(creditAccount.CreditCardAccountId);
     }
 
