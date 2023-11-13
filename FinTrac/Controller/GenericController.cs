@@ -618,7 +618,13 @@ namespace Controller
 
         public List<TransactionDTO> FilterListOfSpendingsByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
         {
-            throw new NotImplementedException();
+            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+
+            listOfTransactions = Report.FilterListOfSpendingsByNameOfCategory(listOfTransactions, nameOfCategory);
+
+            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+
+            return listOfSpendingsDTO;
 
         }
     }
