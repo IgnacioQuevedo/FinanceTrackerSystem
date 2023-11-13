@@ -11,6 +11,8 @@ namespace BusinessLogicTests.Dtos_Tests
     [TestClass]
     public class RangeOfDatesTests
     {
+        #region Initial Date
+
         [TestMethod]
         public void GivenInitialDate_ShouldBeSetted()
         {
@@ -21,5 +23,8 @@ namespace BusinessLogicTests.Dtos_Tests
             Assert.AreEqual(myRange.InitialDate, new DateTime(2023, 5, 12));
 
         }
+
+        #endregion
+
     }
 }
