@@ -53,6 +53,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Filtering Lists
+
         [TestMethod]
         public void GivenListOfTransactionAndRangeOfDates_ShouldBeFiltered()
         {
@@ -85,5 +87,7 @@ namespace ControllerTests
             Assert.AreEqual(filteredListDTO[0].Title, transaction1.Title);
             Assert.AreEqual(filteredListDTO.Count, 1);
         }
+
+        #endregion
     }
 }
