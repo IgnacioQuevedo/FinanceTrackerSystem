@@ -603,10 +603,13 @@ namespace Controller
             try
             {
                 Account transactionAccount = FindAccountById(dtoToAdd.AccountId);
+                Category categoryOfTransaction = FindCategoryInDb(dtoToAdd.TransactionCategory);
                 SetUserConnected(transactionAccount.UserId);
 
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
                 transactionToCreate.TransactionId = 0;
+                transactionToCreate.TransactionCategory = categoryOfTransaction;
+
 
                 transactionAccount.AddTransaction(transactionToCreate);
                 transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
@@ -616,12 +619,11 @@ namespace Controller
             {
                 throw new Exception(Exception.Message);
             }
-            
         }
 
         #endregion
 
-        public Transaction FindTransactionInDb(int transactionId, int accountId, int userId)
+        public Transaction FindTransactionInDb(int transactionId, int? accountId, int? userId)
         {
             SetUserConnected(userId);
             Account accountAssigned = FindAccountById(accountId);
@@ -639,7 +641,11 @@ namespace Controller
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId)
         {
-            throw new NotImplementedException();
+            SetUserConnected(userId);
+            Account accountAssigned = FindAccountById(accountId);
+            TransactionDTO transactionFound =
+                MapperTransaction.ToTransactionDTO(FindTransactionInDb(idToFound, accountId, userId));
+            return transactionFound;
         }
     }
 }

@@ -41,13 +41,15 @@ namespace ControllerTests
 
             categoryOfTransactionDTO =
                 new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
-
+            categoryOfTransactionDTO.CategoryId = 1;
+            
             monetaryAccount = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY,
                 DateTime.Now, _userConnected.UserId);
             monetaryAccount.MonetaryAccountId = 1;
 
             _controller.CreateCategory(categoryOfTransactionDTO);
             _controller.CreateMonetaryAccount(monetaryAccount);
+            
         }
 
         #endregion
@@ -83,9 +85,7 @@ namespace ControllerTests
 
             Transaction transactionInDb = _testDb.Users.First().MyAccounts.First().MyTransactions.First();
             Transaction transaction2InDb = _testDb.Users.First().MyAccounts.First().MyTransactions[1];
-
-            categoryOfTransactionDTO.CategoryId = 2;
-
+            
             Assert.AreEqual(dtoToAdd2.TransactionId, transaction2InDb.TransactionId);
             Assert.AreEqual((CurrencyEnum)dtoToAdd2.Currency, transaction2InDb.Currency);
 
@@ -148,15 +148,22 @@ namespace ControllerTests
             TransactionDTO transactionToCreate = new TransactionDTO("Spent on food", DateTime.Now.Date, 100,
                 CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            transactionToCreate.TransactionId = 1;
-
+            
             _controller.CreateTransaction(transactionToCreate);
-
+            transactionToCreate.TransactionId = 1;
 
             TransactionDTO transactionFound = _controller.FindTransaction(
                 transactionToCreate.TransactionId,monetaryAccount.MonetaryAccountId,_userConnected.UserId);
             
-            Assert.IsTrue(Helper.AreTheSameObject(transactionToCreate,transactionFound));
+            Assert.AreEqual(transactionToCreate.TransactionId,transactionFound.TransactionId);
+            Assert.AreEqual(transactionToCreate.Title,transactionFound.Title);
+            Assert.AreEqual(transactionToCreate.CreationDate,transactionFound.CreationDate);
+            Assert.AreEqual(transactionToCreate.Amount,transactionFound.Amount);
+            Assert.AreEqual(transactionToCreate.Currency,transactionFound.Currency);
+            Assert.AreEqual(transactionToCreate.Type,transactionFound.Type);
+            Assert.AreEqual(transactionToCreate.AccountId,transactionFound.AccountId);
+            
+            Assert.IsTrue(Helper.AreTheSameObject(transactionToCreate.TransactionCategory,transactionFound.TransactionCategory));
             
         }
         
