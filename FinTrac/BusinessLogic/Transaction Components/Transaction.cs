@@ -43,7 +43,7 @@ namespace BusinessLogic.Transaction_Components
             Currency = currency;
             Type = type;
             TransactionCategory = transactionCategory;
-            CreationDate = date;
+            CreationDate = date.Date;
             ValidateTransaction();
         }
 

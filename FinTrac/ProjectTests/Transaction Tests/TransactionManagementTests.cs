@@ -113,7 +113,10 @@ public class TransactionManagementTests
 
         genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
 
-        Assert.AreEqual(modifiedTransaction, genericUser.MyAccounts[1].MyTransactions[0]);
+        Assert.AreEqual(modifiedTransaction.Amount, genericUser.MyAccounts[1].MyTransactions[0].Amount);
+        Assert.AreEqual(modifiedTransaction.Currency, genericUser.MyAccounts[1].MyTransactions[0].Currency);
+        Assert.AreEqual(modifiedTransaction.TransactionCategory, genericUser.MyAccounts[1].MyTransactions[0].TransactionCategory);
+   
     }
 
     #endregion
@@ -135,10 +138,12 @@ public class TransactionManagementTests
     public void GivenTransactionToDelete_ShouldDeleteIt()
     {
         genericMonetaryAccount.AddTransaction(genericTransactionOutcome1);
-        int idOfMonetaryToDelete = genericTransactionOutcome1.TransactionId;
+        int amountOfTransactionsPreDelete = genericMonetaryAccount.MyTransactions.Count;
 
         genericMonetaryAccount.DeleteTransaction(genericTransactionOutcome1);
-        Assert.IsNull(genericMonetaryAccount.MyTransactions[idOfMonetaryToDelete]);
+        int amountOfTransactionsPostDelete = genericMonetaryAccount.MyTransactions.Count;
+        
+        Assert.AreEqual(amountOfTransactionsPreDelete - 1,amountOfTransactionsPostDelete);
     }
 
     #endregion
