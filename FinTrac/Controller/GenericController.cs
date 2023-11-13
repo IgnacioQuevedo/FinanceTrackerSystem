@@ -646,5 +646,10 @@ namespace Controller
                 MapperTransaction.ToTransactionDTO(FindTransactionInDb(idToFound, accountId, userId));
             return transactionFound;
         }
+
+        public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? monetaryAccountUserId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
