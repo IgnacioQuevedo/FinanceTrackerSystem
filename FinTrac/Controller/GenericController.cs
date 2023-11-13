@@ -411,7 +411,26 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
     }
     public MonetaryAccountDTO FindMonetaryAccount(int idMonetAccountToFind, int userId)
     {
-        throw new NotImplementedException();
+
+        bool isFound = false;
+        MonetaryAccount monetAccountFound = new MonetaryAccount();
+
+        foreach (var account in _userConnected.MyAccounts)
+        {
+            if (account.AccountId == idMonetAccountToFind)
+            {
+                monetAccountFound = (MonetaryAccount)account;
+                isFound = true;
+            }
+        }
+        if (!isFound)
+        {
+            throw new Exception("Account was not found, an error on index must be somewhere.");
+        }
+
+        MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
+
+        return monetAccountFoundDTO;
     }
 
     #endregion
