@@ -168,7 +168,7 @@ namespace ControllerTests
 
             List<CreditCardAccountDTO> listOfCreditAccounts = _controller.GetAllCreditAccounts(_userConnected.UserId);
 
-            int lengthOfListReturned = listOfMonetaryAccounts.Count;
+            int lengthOfListReturned = listOfCreditAccounts.Count;
 
             Assert.AreEqual(previousLength - 1, lengthOfListReturned);
         }

@@ -578,7 +578,18 @@ namespace Controller
 
         public List<CreditCardAccountDTO> GetAllCreditAccounts(int userId)
         {
-            throw new NotImplementedException();
+            SetUserConnected(userId);
+            List<CreditCardAccountDTO> creditAccountList = new List<CreditCardAccountDTO>();
+
+            foreach (Account account in _userConnected.MyAccounts)
+            {
+                if (account is CreditCardAccount)
+                {
+                    creditAccountList.Add(MapperCreditAccount.ToCreditAccountDTO((CreditCardAccount)account));
+                }
+            }
+
+            return creditAccountList;
         }
 
         #endregion
