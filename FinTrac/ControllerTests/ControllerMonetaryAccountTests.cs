@@ -97,7 +97,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        public void GivenMonetaryAccountDTO_ShouldReturnMonetaryAccountFound_OnDb()
+        public void GivenMonetaryAccountDTO_ShouldReturnExactlyTheMonetaryAccountFound_OnDb()
         {
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 

@@ -431,7 +431,6 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
     }
 
 
-
     public Account FindAccountById(int idAccountToFind)
     {
         bool isFound = false;
@@ -484,6 +483,7 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
         return creditAccountFoundDTO;
     }
+
 
     #endregion
 

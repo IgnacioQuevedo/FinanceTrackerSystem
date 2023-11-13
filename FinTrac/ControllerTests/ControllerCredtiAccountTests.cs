@@ -81,7 +81,7 @@ namespace ControllerTests
         #region Find Credit Account
 
         [TestMethod]
-        public void GivenCreditAccountIdAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
+        public void GivenCreditAccountIdAndUserId_ShouldReturnCreditAccountDTOFound_OnDb()
         {
             _controller.CreateCreditAccount(_creditToCreateDTO1);
 
@@ -89,6 +89,17 @@ namespace ControllerTests
 
             Assert.AreEqual(CreditAccountFound.CreditCardAccountId, _creditToCreateDTO1.CreditCardAccountId);
             Assert.AreEqual(CreditAccountFound.UserId, _creditToCreateDTO1.UserId);
+        }
+
+        [TestMethod]
+        public void GivenCreditAccountDTO_ShouldReturnExactlyTheCreditAccountFound_OnDb()
+        {
+            _controller.CreateCreditAccount(_creditToCreateDTO1);
+
+            CreditCardAccount creditAccountFound = _controller.FindCreditAccountInDb(_creditToCreateDTO1);
+
+            Assert.AreEqual(creditAccountFound.AccountId, _creditToCreateDTO1.CreditCardAccountId);
+            Assert.AreEqual(creditAccountFound.UserId, _creditToCreateDTO1.UserId);
         }
 
         #endregion
