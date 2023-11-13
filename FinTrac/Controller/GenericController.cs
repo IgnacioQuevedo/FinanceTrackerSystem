@@ -600,7 +600,15 @@ namespace Controller
 
         public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
-            throw new NotImplementedException();
+            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+
+            RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
+
+            listOfTransactions = Report.FilterListOfSpendingsByRangeOfDate(listOfTransactions, myRangeOfDates);
+
+            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+
+            return listOfSpendingsDTO;
         }
     }
 }
