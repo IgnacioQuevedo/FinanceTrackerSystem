@@ -76,5 +76,19 @@ namespace ControllerTests
 
         #endregion  
 
+        [TestMethod]
+        public void GivenCreditAccountIdAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
+        {
+            CreditCardAccountDTO creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+            creditToCreateDTO1.CreditCardAccountId = 1;
+
+            _controller.CreateCreditAccount(creditToCreateDTO1);
+
+            CreditCardAccountDTO CreditAccountFound = _controller.FindCreditAccount(creditToCreateDTO1.CreditCardAccountId, _userConnected.UserId);
+
+            Assert.AreEqual(CreditAccountFound.CreditCardAccountId, creditToCreateDTO1.CreditCardAccountId);
+            Assert.AreEqual(CreditAccountFound.UserId, creditToCreateDTO1.UserId);
+        }
+
     }
 }

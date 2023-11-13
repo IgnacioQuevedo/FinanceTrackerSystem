@@ -86,7 +86,7 @@ namespace ControllerTests
         #region Find Monetary Account
 
         [TestMethod]
-        public void GivenMonetaryAccountDTOAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
+        public void GivenMonetaryAccountIdAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
         {
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 
