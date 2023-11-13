@@ -454,7 +454,20 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
     {
-        throw new NotImplementedException();
+        SetUserConnected((int)monetaryDtoWithUpdates.UserId);
+        MonetaryAccount monetaryToUpd = MapperMonetaryAccount.ToMonetaryAccount(monetaryDtoWithUpdates);
+        MonetaryAccount monetaryWithoutUpd = FindMonetaryAccountInDb(monetaryDtoWithUpdates);
+
+        monetaryToUpd.AccountUser = _userConnected;
+        if (Helper.AreTheSameObject(monetaryToUpd, monetaryWithoutUpd))
+        {
+            throw new Exception("There are non existential changes, change at least one please.");
+        }
+        else
+        {
+            _userConnected.ModifyMonetaryAccount(monetaryToUpd);
+            _userRepo.Update(_userConnected);
+        }
     }
 
     #endregion

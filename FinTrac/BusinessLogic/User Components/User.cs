@@ -380,26 +380,28 @@ namespace BusinessLogic.User_Components
             return false;
         }
 
-        private void UpdateMonetaryValues(MonetaryAccount accountToUpdate, int index)
+        private void UpdateMonetaryValues(MonetaryAccount accountWithChanges, int index)
         {
-            accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
-            ((MonetaryAccount)MyAccounts[index]).Amount = accountToUpdate.Amount;
-            ((MonetaryAccount)MyAccounts[index]).Name = accountToUpdate.Name;
-            ((MonetaryAccount)MyAccounts[index]).Currency = accountToUpdate.Currency;
-            ((MonetaryAccount)MyAccounts[index]).CreationDate = accountToUpdate.CreationDate;
-            ((MonetaryAccount)MyAccounts[index]).InitialAmount = accountToUpdate.Amount;
+            accountWithChanges.MyTransactions = MyAccounts[index].MyTransactions;
+            MonetaryAccount accountToBeUpdated = (MonetaryAccount)MyAccounts[index];
+            accountToBeUpdated.Amount = accountWithChanges.Amount;
+            accountToBeUpdated.Name = accountWithChanges.Name;
+            accountToBeUpdated.Currency = accountWithChanges.Currency;
+            accountToBeUpdated.CreationDate = accountWithChanges.CreationDate;
+            accountToBeUpdated.InitialAmount = accountWithChanges.Amount;
         }
 
         private void UpdateCreditValues(CreditCardAccount accountToUpdate, int index)
         {
             accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
-            ((CreditCardAccount)MyAccounts[index]).AvailableCredit = accountToUpdate.AvailableCredit;
-            ((CreditCardAccount)MyAccounts[index]).Name = accountToUpdate.Name;
-            ((CreditCardAccount)MyAccounts[index]).Currency = accountToUpdate.Currency;
-            ((CreditCardAccount)MyAccounts[index]).CreationDate = accountToUpdate.CreationDate;
-            ((CreditCardAccount)MyAccounts[index]).ClosingDate = accountToUpdate.ClosingDate;
-            ((CreditCardAccount)MyAccounts[index]).Last4Digits = accountToUpdate.Last4Digits;
-            ((CreditCardAccount)MyAccounts[index]).IssuingBank = accountToUpdate.IssuingBank;
+            CreditCardAccount accountToBeUpdated = (CreditCardAccount)MyAccounts[index];
+            accountToBeUpdated.AvailableCredit = accountToUpdate.AvailableCredit;
+            accountToBeUpdated.Name = accountToUpdate.Name;
+            accountToBeUpdated.Currency = accountToUpdate.Currency;
+            accountToBeUpdated.CreationDate = accountToUpdate.CreationDate;
+            accountToBeUpdated.ClosingDate = accountToUpdate.ClosingDate;
+            accountToBeUpdated.Last4Digits = accountToUpdate.Last4Digits;
+            accountToBeUpdated.IssuingBank = accountToUpdate.IssuingBank;
         }
 
         private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate,
