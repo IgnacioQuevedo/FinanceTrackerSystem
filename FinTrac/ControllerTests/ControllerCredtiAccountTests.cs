@@ -22,6 +22,8 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
+        private CreditCardAccountDTO _creditToCreateDTO1;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -34,6 +36,9 @@ namespace ControllerTests
 
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
+
+            _creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+            _creditToCreateDTO1.CreditCardAccountId = 1;
         }
 
         #endregion
@@ -53,42 +58,41 @@ namespace ControllerTests
         [TestMethod]
         public void GivenCreditAccountDTOToCreate_ShouldBeCreated()
         {
-            CreditCardAccountDTO creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
-            creditToCreateDTO1.CreditCardAccountId = 1;
-
             CreditCardAccountDTO creditToCreateDTO2 = new CreditCardAccountDTO("Itau Volar", CurrencyEnumDTO.EUR, DateTime.Now.Date, "Itau", "1235", 2000, new DateTime(2024, 12, 12), _userConnected.UserId);
             creditToCreateDTO2.CreditCardAccountId = 2;
 
-            _controller.CreateCreditAccount(creditToCreateDTO1);
+            _controller.CreateCreditAccount(_creditToCreateDTO1);
             _controller.CreateCreditAccount(creditToCreateDTO2);
 
             List<Account> myAccountsDb = _testDb.Users.First().MyAccounts;
 
             Assert.IsNotNull(myAccountsDb[0].AccountUser);
-            Assert.AreEqual(myAccountsDb[0].UserId, creditToCreateDTO1.UserId);
-            Assert.AreEqual(myAccountsDb[0].Name, creditToCreateDTO1.Name);
-            Assert.AreEqual(myAccountsDb[0].AccountId, creditToCreateDTO1.CreditCardAccountId);
-            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)creditToCreateDTO1.Currency);
+            Assert.AreEqual(myAccountsDb[0].UserId, _creditToCreateDTO1.UserId);
+            Assert.AreEqual(myAccountsDb[0].Name, _creditToCreateDTO1.Name);
+            Assert.AreEqual(myAccountsDb[0].AccountId, _creditToCreateDTO1.CreditCardAccountId);
+            Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)_creditToCreateDTO1.Currency);
             Assert.AreEqual(typeof(CreditCardAccount), myAccountsDb[0].GetType());
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
 
-        #endregion  
+        #endregion
+
+        #region Find Credit Account
 
         [TestMethod]
         public void GivenCreditAccountIdAndUserId_ShouldReturnMonetaryAccountDTOFound_OnDb()
         {
-            CreditCardAccountDTO creditToCreateDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
-            creditToCreateDTO1.CreditCardAccountId = 1;
+            _controller.CreateCreditAccount(_creditToCreateDTO1);
 
-            _controller.CreateCreditAccount(creditToCreateDTO1);
+            CreditCardAccountDTO CreditAccountFound = _controller.FindCreditAccount(_creditToCreateDTO1.CreditCardAccountId, _userConnected.UserId);
 
-            CreditCardAccountDTO CreditAccountFound = _controller.FindCreditAccount(creditToCreateDTO1.CreditCardAccountId, _userConnected.UserId);
-
-            Assert.AreEqual(CreditAccountFound.CreditCardAccountId, creditToCreateDTO1.CreditCardAccountId);
-            Assert.AreEqual(CreditAccountFound.UserId, creditToCreateDTO1.UserId);
+            Assert.AreEqual(CreditAccountFound.CreditCardAccountId, _creditToCreateDTO1.CreditCardAccountId);
+            Assert.AreEqual(CreditAccountFound.UserId, _creditToCreateDTO1.UserId);
         }
+
+        #endregion
+
 
     }
 }
