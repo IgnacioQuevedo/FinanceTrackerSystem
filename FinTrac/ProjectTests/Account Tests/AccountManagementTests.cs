@@ -102,20 +102,6 @@ namespace BusinessLogicTests
         }
         #endregion
 
-        #region Asignation of Id
-
-        [TestMethod]
-        public void GivenAccountToAdd_ShouldAssignId()
-        {
-            genericUser.AddMonetaryAccount(genericMonetaryAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericMonetaryAccount.AccountId);
-
-            genericUser.AddCreditAccount(genericCreditCardAccount);
-            Assert.AreEqual(genericUser.MyAccounts.Count - 1, genericCreditCardAccount.AccountId);
-        }
-
-        #endregion
-
         #region Return Accounts
 
         [TestMethod]
@@ -136,7 +122,10 @@ namespace BusinessLogicTests
 
             genericUser.ModifyMonetaryAccount(accountToUpdate);
 
-            Assert.AreEqual(accountToUpdate, genericUser.MyAccounts[genericMonetaryAccount.AccountId]);
+            Assert.AreEqual(accountToUpdate.Name, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Name);
+            Assert.AreEqual(accountToUpdate.Amount, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Amount);
+            Assert.AreEqual(accountToUpdate.CreationDate, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).CreationDate);
+            Assert.AreEqual(accountToUpdate.Currency, ((MonetaryAccount)genericUser.MyAccounts[genericMonetaryAccount.AccountId]).Currency);
         }
 
         [TestMethod]
@@ -144,8 +133,8 @@ namespace BusinessLogicTests
         public void GivenMonetaryAccountToUpdateButNameIsAlreadyUsedByOtherAccount_ShouldThrowException()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
-
             MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
+            accountToUpdate.AccountId = 1;
             genericUser.AddMonetaryAccount(accountToUpdate);
 
             MonetaryAccount accountWithChanges = new MonetaryAccount("Itau Saving Bank", 10000, CurrencyEnum.USA, DateTime.Now);
@@ -164,9 +153,8 @@ namespace BusinessLogicTests
             accountToUpdate.AccountId = idAccount;
             genericUser.ModifyMonetaryAccount(accountToUpdate);
 
-
             MonetaryAccount accountUpdated = (MonetaryAccount)genericUser.MyAccounts[idAccount];
-            Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
+            Assert.AreEqual(accountToUpdate.InitialAmount, accountUpdated.InitialAmount);
         }
 
         #endregion
@@ -190,7 +178,13 @@ namespace BusinessLogicTests
             accountToUpdate.AccountId = genericCreditCardAccount.AccountId;
             genericUser.ModifyCreditAccount(accountToUpdate);
 
-            Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId], accountToUpdate);
+            Assert.AreEqual(genericUser.GetAccounts()[genericCreditCardAccount.AccountId].Name, accountToUpdate.Name);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).AvailableCredit, accountToUpdate.AvailableCredit);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).IssuingBank, accountToUpdate.IssuingBank);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).Last4Digits, accountToUpdate.Last4Digits);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).Currency, accountToUpdate.Currency);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).CreationDate, accountToUpdate.CreationDate);
+            Assert.AreEqual(((CreditCardAccount)genericUser.MyAccounts[genericCreditCardAccount.AccountId]).ClosingDate, accountToUpdate.ClosingDate);
         }
 
         [TestMethod]
@@ -209,6 +203,7 @@ namespace BusinessLogicTests
 
             CreditCardAccount accountforUpdate = new CreditCardAccount(nameToBeSetted, currencyToBeSetted, DateTime.Now, issuingBankToBeSetted, last4DigitsToBeSetted, availableCreditToBeSetted, closingDateToBeSetted);
             genericUser.AddCreditAccount(accountforUpdate);
+            accountforUpdate.AccountId = 1;
 
             issuingBankToBeSetted = "Santander";
             last4DigitsToBeSetted = "1234";
@@ -227,11 +222,11 @@ namespace BusinessLogicTests
         public void GivenAccountToDelete_ShouldBeDeleted()
         {
             genericUser.AddMonetaryAccount(genericMonetaryAccount);
-            int idOfAccountDeleted = genericMonetaryAccount.AccountId;
-
+            int previousLength = genericUser.MyAccounts.Count;
             genericUser.DeleteAccount(genericMonetaryAccount);
 
-            Assert.IsNull(genericUser.MyAccounts[idOfAccountDeleted]);
+            int lengthAfterDelete = genericUser.MyAccounts.Count;
+            Assert.AreEqual(previousLength - 1, lengthAfterDelete);
         }
 
         [TestMethod]

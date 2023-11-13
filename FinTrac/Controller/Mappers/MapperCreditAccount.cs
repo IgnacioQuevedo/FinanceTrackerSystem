@@ -45,13 +45,20 @@ public abstract class MapperCreditAccount
 
     public static CreditCardAccount ToCreditAccount(CreditCardAccountDTO myCreditAccountDTO)
     {
-        CreditCardAccount creditAccount =
-          new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, DateTime.Now.Date, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
+        try
+        {
+            CreditCardAccount creditAccount =
+              new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, DateTime.Now.Date, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
 
-        creditAccount.AccountId = myCreditAccountDTO.CreditCardAccountId;
-        creditAccount.UserId = myCreditAccountDTO.UserId;
+            creditAccount.AccountId = myCreditAccountDTO.CreditCardAccountId;
+            creditAccount.UserId = myCreditAccountDTO.UserId;
 
-        return creditAccount;
+            return creditAccount;
+        }
+        catch (ExceptionValidateAccount Exception)
+        {
+            throw new ExceptionMapper(Exception.Message);
+        }
     }
 
     #endregion

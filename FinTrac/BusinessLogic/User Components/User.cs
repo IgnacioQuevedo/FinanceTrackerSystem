@@ -38,7 +38,7 @@ namespace BusinessLogic.User_Components
             Email = email;
             Password = password;
         }
-        
+
         public User(string firstName, string lastName, string email, string password, string? address)
         {
             FirstName = firstName;
@@ -161,7 +161,7 @@ namespace BusinessLogic.User_Components
             {
                 throw new ExceptionValidateUser("ERROR ON PASSWORD");
             }
-            
+
         }
 
         private void ValidatePasswordUppercase(string posiblePassword)
@@ -232,7 +232,7 @@ namespace BusinessLogic.User_Components
             {
                 if (MyCategories[i].CategoryId == categoryToUpdate.CategoryId)
                 {
-                    
+
                     MyCategories[i].Name = categoryToUpdate.Name;
                     MyCategories[i].Status = categoryToUpdate.Status;
                     MyCategories[i].Type = categoryToUpdate.Type;
@@ -290,8 +290,6 @@ namespace BusinessLogic.User_Components
                     ValidateNameIsNotRegistered(accountToAdd, MyAccounts[i]);
                 }
             }
-
-            SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
         }
 
@@ -304,14 +302,7 @@ namespace BusinessLogic.User_Components
                     ValidateIssuingBankAnd4LastDigits(accountToAdd, (CreditCardAccount)MyAccounts[i]);
                 }
             }
-
-            SetAccountId(accountToAdd);
             MyAccounts.Add(accountToAdd);
-        }
-
-        private void SetAccountId(Account accountToAdd)
-        {
-            accountToAdd.AccountId = MyAccounts.Count;
         }
 
         #endregion
@@ -345,7 +336,7 @@ namespace BusinessLogic.User_Components
                 }
             }
 
-            UpdateValues(accountToUpdate, indexOfUpdate);
+            UpdateMonetaryValues(accountToUpdate, indexOfUpdate);
         }
 
         public void ModifyCreditAccount(CreditCardAccount accountToUpdate)
@@ -366,7 +357,7 @@ namespace BusinessLogic.User_Components
                 }
             }
 
-            UpdateValues(accountToUpdate, indexOfUpdate);
+            UpdateCreditValues(accountToUpdate, indexOfUpdate);
         }
 
         #region Auxiliary Methods for Modify
@@ -389,10 +380,28 @@ namespace BusinessLogic.User_Components
             return false;
         }
 
-        private void UpdateValues(Account accountToUpdate, int index)
+        private void UpdateMonetaryValues(MonetaryAccount accountWithChanges, int index)
+        {
+            accountWithChanges.MyTransactions = MyAccounts[index].MyTransactions;
+            MonetaryAccount accountToBeUpdated = (MonetaryAccount)MyAccounts[index];
+            accountToBeUpdated.Amount = accountWithChanges.Amount;
+            accountToBeUpdated.Name = accountWithChanges.Name;
+            accountToBeUpdated.Currency = accountWithChanges.Currency;
+            accountToBeUpdated.CreationDate = accountWithChanges.CreationDate;
+            accountToBeUpdated.InitialAmount = accountWithChanges.Amount;
+        }
+
+        private void UpdateCreditValues(CreditCardAccount accountToUpdate, int index)
         {
             accountToUpdate.MyTransactions = MyAccounts[index].MyTransactions;
-            MyAccounts[index] = accountToUpdate;
+            CreditCardAccount accountToBeUpdated = (CreditCardAccount)MyAccounts[index];
+            accountToBeUpdated.AvailableCredit = accountToUpdate.AvailableCredit;
+            accountToBeUpdated.Name = accountToUpdate.Name;
+            accountToBeUpdated.Currency = accountToUpdate.Currency;
+            accountToBeUpdated.CreationDate = accountToUpdate.CreationDate;
+            accountToBeUpdated.ClosingDate = accountToUpdate.ClosingDate;
+            accountToBeUpdated.Last4Digits = accountToUpdate.Last4Digits;
+            accountToBeUpdated.IssuingBank = accountToUpdate.IssuingBank;
         }
 
         private void ValidateIssuingBankAnd4LastDigits(CreditCardAccount accountToUpdate,
@@ -423,7 +432,6 @@ namespace BusinessLogic.User_Components
             if (ThereIsNoTransactions(accountToDelete))
             {
                 MyAccounts.Remove(accountToDelete);
-                MyAccounts.Insert(accountToDelete.AccountId, null);
             }
             else
             {
