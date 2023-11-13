@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
@@ -597,9 +598,9 @@ namespace Controller
 
         #endregion
 
-        public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendings, RangeOfDates rangeOfDates)
+        public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

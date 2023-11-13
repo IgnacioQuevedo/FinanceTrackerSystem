@@ -13,5 +13,11 @@ namespace BusinessLogic.Dtos_Components
 
         public RangeOfDatesDTO() { }
 
+        public RangeOfDatesDTO(DateTime initialDate, DateTime finalDate)
+        {
+            InitialDate = initialDate;
+            FinalDate = finalDate;
+        }
+
     }
 }
