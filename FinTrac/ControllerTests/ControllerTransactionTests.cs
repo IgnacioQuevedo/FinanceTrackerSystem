@@ -101,7 +101,6 @@ namespace ControllerTests
         {
             dtoToAdd = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-       
             
             _controller.CreateTransaction(dtoToAdd);
             

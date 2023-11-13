@@ -600,15 +600,23 @@ namespace Controller
 
         public void CreateTransaction(TransactionDTO dtoToAdd)
         {
-            Account transactionAccount = FindAccountById(dtoToAdd.AccountId);
-            SetUserConnected(transactionAccount.UserId);
+            try
+            {
+                Account transactionAccount = FindAccountById(dtoToAdd.AccountId);
+                SetUserConnected(transactionAccount.UserId);
 
-            Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
-            transactionToCreate.TransactionId = 0;
+                Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
+                transactionToCreate.TransactionId = 0;
 
-            transactionAccount.AddTransaction(transactionToCreate);
-            transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
-            _userRepo.Update(_userConnected);
+                transactionAccount.AddTransaction(transactionToCreate);
+                transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
+                _userRepo.Update(_userConnected);
+            }
+            catch (ExceptionMapper Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+            
         }
 
         #endregion
