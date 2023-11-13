@@ -575,6 +575,12 @@ namespace Controller
                 throw new Exception(Exception.Message);
             }
         }
+
+        public List<CreditCardAccountDTO> GetAllCreditAccounts(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

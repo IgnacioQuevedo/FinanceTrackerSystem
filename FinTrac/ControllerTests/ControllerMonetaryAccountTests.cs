@@ -156,6 +156,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Get All Monetary Accounts
+
         [TestMethod]
         public void GivenUserId_ShouldReturnListOfMonetaryAccountDTO()
         {
@@ -174,6 +176,8 @@ namespace ControllerTests
 
             Assert.AreEqual(previousLength - 1, lengthOfListReturned);
         }
+
+        #endregion
     }
 
 }

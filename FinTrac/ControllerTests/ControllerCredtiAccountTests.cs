@@ -152,5 +152,26 @@ namespace ControllerTests
         }
 
         #endregion
+
+
+        [TestMethod]
+        public void GivenUserId_ShouldReturnListOfMonetaryAccountDTO()
+        {
+            MonetaryAccountDTO monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
+            monetToCreateDTO1.MonetaryAccountId = 1;
+
+            _controller.CreateMonetaryAccount(monetToCreateDTO1);
+
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+
+            int previousLength = _testDb.Users.FirstOrDefault().MyAccounts.Count;
+
+            List<CreditCardAccountDTO> listOfCreditAccounts = _controller.GetAllCreditAccounts(_userConnected.UserId);
+
+            int lengthOfListReturned = listOfMonetaryAccounts.Count;
+
+            Assert.AreEqual(previousLength - 1, lengthOfListReturned);
+        }
+
     }
 }
