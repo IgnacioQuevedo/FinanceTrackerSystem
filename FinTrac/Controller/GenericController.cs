@@ -469,7 +469,11 @@ public class GenericController : IUserController, ICategoryController, IGoalCont
 
     public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
     {
-        throw new NotImplementedException();
+        CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountById(idCreditAccountToFind);
+
+        CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
+
+        return creditAccountFoundDTO;
     }
 
     #endregion
