@@ -17,6 +17,7 @@ namespace Controller
 {
 
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController, IMonetaryAccount, ICreditAccount
+
     {
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
@@ -598,6 +599,8 @@ namespace Controller
 
         #endregion
 
+        #region Report Section
+
         public List<TransactionDTO> FilterListOfSpendingsByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
@@ -610,5 +613,8 @@ namespace Controller
 
             return listOfSpendingsDTO;
         }
+
+
+        #endregion
     }
 }
