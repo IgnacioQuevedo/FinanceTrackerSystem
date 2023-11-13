@@ -167,6 +167,15 @@ namespace ControllerTests
             
         }
         
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenTransactionIdThatIsNotInDbToFind_ShouldThrowException()
+        {
+            _controller.FindTransaction(-1, monetaryAccount.UserId,monetaryAccount.MonetaryAccountId);
+        }
+        
+        
+        
         #endregion
     }
 }

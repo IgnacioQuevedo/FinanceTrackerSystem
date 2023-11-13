@@ -609,8 +609,7 @@ namespace Controller
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
-
-
+                
                 transactionAccount.AddTransaction(transactionToCreate);
                 transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
                 _userRepo.Update(_userConnected);
