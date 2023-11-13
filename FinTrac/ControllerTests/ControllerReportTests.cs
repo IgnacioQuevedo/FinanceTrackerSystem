@@ -41,7 +41,7 @@ namespace ControllerTests
             _controller.SetUserConnected(_userConnected.UserId);
 
             _exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
-            _exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
+            _exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
 
             _transaction1 = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
                 _exampleCategory);
@@ -89,5 +89,30 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenListOfTransactionAndCategoryName_ShouldBeFiltered()
+        {
+            Category unWantedCategory = new Category("Party", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            string categoryName = "Food";
+
+            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome,
+                unWantedCategory);
+
+            _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction3);
+            _testDb.SaveChanges();
+
+            List<TransactionDTO> transactionUserListDTO = MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
+
+            List<TransactionDTO> filteredListDTO = _controller.FilterListOfSpendingsByNameOfCategory(transactionUserListDTO, categoryName);
+
+            Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
+            Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
+            Assert.AreEqual(filteredListDTO.Count, 2);
+
+
+
+        }
     }
 }

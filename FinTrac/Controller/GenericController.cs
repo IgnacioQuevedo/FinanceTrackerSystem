@@ -614,7 +614,12 @@ namespace Controller
             return listOfSpendingsDTO;
         }
 
-
         #endregion
+
+        public List<TransactionDTO> FilterListOfSpendingsByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
+        {
+            throw new NotImplementedException();
+
+        }
     }
 }
