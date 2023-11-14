@@ -39,7 +39,7 @@
     </thead>
     <tbody>
 
-    @foreach (var transaction in transactionList.Where(t => t != null))
+    @foreach (var transaction in transactions)
     {
         <tr>
             <td>@transaction.Title</td>
@@ -79,8 +79,7 @@
 <br/>
 
 @code {
-    private List<TransactionDTO>? transactionList;
-    private AccountDTO accountSelected;
+    private List<TransactionDTO>? transactions;
     private TransactionDTO transactionBeforeDelete;
     private TransactionDTO transactionDuplicated;
     private bool showDuplicateScreen;
@@ -96,8 +95,7 @@
 
     protected override void OnInitialized()
     {
-        accountSelected = TransactionController.FindAccountById(accountId,userConnected.UserId);
-        transactionList = TransactionController.GetAllTransactions(accountId);
+        transactions = TransactionController.GetAllTransactions(accountId);
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
         showDuplicateScreen = false;
@@ -130,13 +128,13 @@
 
     private void DuplicateTransaction(int transactionId)
     {
-        TransactionDTO transactionToDuplicate = 
-            TransactionController.FindTransaction(transactionId,accountId,userConnected.UserId);
-        
-        transactionDuplicated = new TransactionDTO(transactionToDuplicate.Title, transactionToDuplicate.CreationDate, 
-            transactionToDuplicate.Amount, transactionToDuplicate.Currency, 
+        TransactionDTO transactionToDuplicate =
+            TransactionController.FindTransaction(transactionId, accountId, userConnected.UserId);
+
+        transactionDuplicated = new TransactionDTO(transactionToDuplicate.Title, transactionToDuplicate.CreationDate,
+            transactionToDuplicate.Amount, transactionToDuplicate.Currency,
             transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory, accountId);
-        
+
         showDuplicateScreen = true;
     }
 
@@ -144,7 +142,7 @@
     {
         return date.ToString("dd/MM/yyyy");
     }
-    
+
     private void ResetValues()
     {
     // Helps prevent threading-related issues and ensures that UI updates are done

@@ -65,7 +65,18 @@
             <option disabled selected> Select a category for your transaction</option>
             @foreach (var category in allCategories)
             {
-                <option value="@category.CategoryId">@category.Name</option>
+                if (accountSelected is MonetaryAccountDTO)
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
+                else
+                {
+                    if (category.Type == TypeEnumDTO.Outcome)
+                    {
+                        <option value="@category.CategoryId">@category.Name</option>
+                    }
+                }
+                
             }
         </select>
     </div>
