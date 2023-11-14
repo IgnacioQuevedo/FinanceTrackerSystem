@@ -626,11 +626,11 @@ namespace Controller
 
         }
 
-        public List<TransactionDTO> FilterByMonetaryAccountAndType(MonetaryAccountDTO accountSelected, int userId)
+        public List<TransactionDTO> FilterByAccountAndType(AccountDTO accountSelected, int userId)
         {
             SetUserConnected(userId);
 
-            Account account = (Account)(MapperMonetaryAccount.ToMonetaryAccount(accountSelected));
+            Account account = (Account)(MapperMonetaryAccount.ToMonetaryAccount(accountSelected));//aldope
 
             List<Transaction> myTransactions = Report.FilterListByAccountAndType(account, _userConnected);
 
