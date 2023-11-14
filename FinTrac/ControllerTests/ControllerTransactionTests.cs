@@ -187,7 +187,13 @@ namespace ControllerTests
         public void GivenAnAccountId_ShouldBePossibleToFindIt()
         {
 
-        
+            AccountDTO accountDtoToFound = _controller.FindAccountById(monetaryAccount.MonetaryAccountId,_userConnected.UserId);
+            
+            Assert.AreEqual(monetaryAccount.AccountId,accountDtoToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate,accountDtoToFound.CreationDate);
+            Assert.AreEqual(monetaryAccount.Currency,accountDtoToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name,accountDtoToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId,accountDtoToFound.UserId);
         }
         
 
