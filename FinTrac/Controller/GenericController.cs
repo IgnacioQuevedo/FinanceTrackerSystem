@@ -609,7 +609,7 @@ namespace Controller
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
-                
+
                 transactionAccount.AddTransaction(transactionToCreate);
                 transactionAccount.UpdateAccountMoneyAfterAdd(transactionToCreate);
                 _userRepo.Update(_userConnected);
@@ -620,7 +620,6 @@ namespace Controller
             }
         }
 
-        #endregion
 
         public Transaction FindTransactionInDb(int transactionId, int? accountId, int? userId)
         {
@@ -651,21 +650,21 @@ namespace Controller
             try
             {
                 SetUserConnected(userId);
-                
-                Transaction transactionPreUpdate = 
+
+                Transaction transactionPreUpdate =
                     FindTransactionInDb(dtoWithUpdates.TransactionId, dtoWithUpdates.AccountId, userId);
-                
-                
+
+
                 Account accountOfTransaction = transactionPreUpdate.TransactionAccount;
 
                 Transaction transactionWithUpdates = MapperTransaction.ToTransaction(dtoWithUpdates);
 
                 transactionWithUpdates.TransactionAccount = transactionPreUpdate.TransactionAccount;
                 transactionWithUpdates.TransactionCategory = FindCategoryInDb(dtoWithUpdates.TransactionCategory);
-                
+
                 accountOfTransaction.ModifyTransaction(transactionWithUpdates);
-                
-                accountOfTransaction.UpdateAccountAfterModify(transactionWithUpdates,transactionPreUpdate.Amount);
+
+                accountOfTransaction.UpdateAccountAfterModify(transactionWithUpdates, transactionPreUpdate.Amount);
                 _userRepo.Update(_userConnected);
             }
             catch (ExceptionMapper Exception)
@@ -679,8 +678,8 @@ namespace Controller
             Account accountWhereIsTransaction = FindAccountById(transactionDtoToDelete.AccountId);
             SetUserConnected(accountWhereIsTransaction.UserId);
             Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
-                transactionDtoToDelete.AccountId,accountWhereIsTransaction.UserId);
-            
+                transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
+
             accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
             _userRepo.Update(_userConnected);
         }
@@ -689,11 +688,13 @@ namespace Controller
         {
             Account accountToGetTransactions = FindAccountById(accountId);
             SetUserConnected(accountToGetTransactions.UserId);
-            
+
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
             transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
             return transactionsDTO;
         }
+
+        #endregion
     }
 }

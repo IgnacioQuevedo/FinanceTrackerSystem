@@ -30,8 +30,8 @@ public abstract class MapperExchangeHistory
     public static ExchangeHistoryDTO ToExchangeHistoryDTO(ExchangeHistory exchangeHistory)
     {
         ExchangeHistoryDTO exchangeHistoryDTO =
-            new ExchangeHistoryDTO( (CurrencyEnumDTO)exchangeHistory.Currency, exchangeHistory.Value, exchangeHistory.ValueDate,
-                exchangeHistory.UserId);
+            new ExchangeHistoryDTO((CurrencyEnumDTO)exchangeHistory.Currency, exchangeHistory.Value,
+                exchangeHistory.ValueDate, exchangeHistory.UserId);
 
         exchangeHistoryDTO.ExchangeHistoryId = exchangeHistory.ExchangeHistoryId;
 
