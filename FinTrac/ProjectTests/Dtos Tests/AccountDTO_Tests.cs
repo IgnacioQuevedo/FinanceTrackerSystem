@@ -37,7 +37,7 @@ namespace TestProject1
         public void GivenBoolThatDeterminesIfTheAccountIsMonetary_ShouldBeSetted()
         {
             bool isMonetary = false;
-            accountDTO.isMonetary = isMonetary;
+            accountDTO.IsMonetary = isMonetary;
 
             Assert.IsFalse(isMonetary);
         }
