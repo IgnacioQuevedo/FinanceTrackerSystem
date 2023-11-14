@@ -41,11 +41,11 @@ namespace ControllerTests
             _controller.SetUserConnected(_userConnected.UserId);
 
             _exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
-            _exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
+            _exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
 
-            _transaction1 = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
+            _transaction1 = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome,
                 _exampleCategory);
-            _transaction2 = new Transaction("Nueva", 500, new DateTime(2020, 05, 20), CurrencyEnum.USA, TypeEnum.Income,
+            _transaction2 = new Transaction("Nueva", 500, new DateTime(2020, 05, 20), CurrencyEnum.USA, TypeEnum.Outcome,
                 _exampleCategory);
 
             _exampleCategory.CategoryId = 0;
@@ -112,6 +112,30 @@ namespace ControllerTests
 
         }
 
+        [TestMethod]
+        public void GivenListAndMonetaryAccountDTOAndUserLoggedDTO_ShouldFilterList()
+        {
+            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, _exampleCategory);
+
+            MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
+
+            MonetaryAccountDTO exampleAccountDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
+
+            exampleAccount2.AccountId = 0;
+            transaction3.TransactionId = 0;
+
+            _testDb.Users.First().MyAccounts.Add(exampleAccount2);
+            _testDb.Users.First().MyAccounts[1].MyTransactions.Add(transaction3);
+            _testDb.SaveChanges();
+
+            List<TransactionDTO> filteredListDTO = _controller.FilterByMonetaryAccountAndType(exampleAccountDTO, _userConnected.UserId);
+
+            Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
+            Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
+            Assert.AreEqual(filteredListDTO.Count, 0);
+        }
+
         #endregion
+
     }
 }

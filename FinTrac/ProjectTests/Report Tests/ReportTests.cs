@@ -247,10 +247,6 @@ public class ReportTests
     public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
     {
         List<Transaction> listOfSpendings = new List<Transaction>();
-        listOfSpendings.Add(transactionWanted1);
-        listOfSpendings.Add(transactionWanted2);
-        listOfSpendings.Add(transactionUnWanted1);
-
         List<Transaction> expectedList = new List<Transaction>();
         expectedList.Add(transactionWanted1);
         expectedList.Add(transactionWanted2);
@@ -259,7 +255,9 @@ public class ReportTests
         loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
         loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
 
-        listOfSpendings = Report.FilterListByAccount(listOfSpendings, loggedUser.MyAccounts[0], loggedUser);
+        expectedList = loggedUser.MyAccounts[0].GetAllTransactions();
+
+        listOfSpendings = Report.FilterListByAccountAndType(loggedUser.MyAccounts[0], loggedUser);
 
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);

@@ -626,6 +626,18 @@ namespace Controller
 
         }
 
+        public List<TransactionDTO> FilterByMonetaryAccountAndType(MonetaryAccountDTO accountSelected, int userId)
+        {
+            SetUserConnected(userId);
+
+            Account account = (Account)(MapperMonetaryAccount.ToMonetaryAccount(accountSelected));
+
+            List<Transaction> myTransactions = Report.FilterListByAccountAndType(account, _userConnected);
+
+            return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
+
+        }
+
         #endregion
     }
 }

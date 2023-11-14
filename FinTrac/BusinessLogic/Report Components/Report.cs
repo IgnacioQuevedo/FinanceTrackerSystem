@@ -161,14 +161,11 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListByAccount(List<Transaction> listOfSpendings,
-            Account accountSelected, User userLogged)
+        public static List<Transaction> FilterListByAccountAndType(Account accountSelected, User userLogged)
         {
             List<Transaction> accountSpendings = FilterAccountSpendings(accountSelected, userLogged);
-            List<Transaction> filteredListOfSpending = listOfSpendings;
-            filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
 
-            return filteredListOfSpending;
+            return accountSpendings;
         }
 
         private static List<Transaction> FilterAccountSpendings(Account accountSelected, User userLogged)
