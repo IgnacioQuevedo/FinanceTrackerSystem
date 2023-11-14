@@ -328,6 +328,25 @@ public class ReportTests
         movements.Spendings = spendings;
         Assert.AreEqual(spendings, movements.Spendings);
     }
+    
+    public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
+    {
+        int[] incomes = new int [5];
+        MovementInXDays movements = new MovementInXDays();
 
+        movements.Incomes = incomes;
+        Assert.AreEqual(incomes, movements.Spendings);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     #endregion
+    
+    
 }
