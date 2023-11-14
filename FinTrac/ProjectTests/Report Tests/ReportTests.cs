@@ -336,7 +336,7 @@ public class ReportTests
         MovementInXDays movements = new MovementInXDays();
 
         movements.Incomes = incomes;
-        Assert.AreEqual(incomes, movements.Spendings);
+        Assert.AreEqual(incomes, movements.Incomes);
     }
 
     [TestMethod]
@@ -349,7 +349,7 @@ public class ReportTests
         MovementInXDays movements = new MovementInXDays();
         movements.RangeOfDates = rangeOfDates;
         
-        Assert.AreEqual(rangeOfDates,MovementInXDays.RangeOfDates);
+        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
 
     }
     
