@@ -44,14 +44,26 @@ namespace TestProject1
 
         #endregion
 
+        #region Name
+
         [TestMethod]
         public void GivenName_ShouldBeSetted()
         {
             string name = "Brou";
             accountDTO.Name = name;
 
-            Assert.AreEqual(accountDTO.Name,name);
+            Assert.AreEqual(accountDTO.Name, name);
+        }
 
+        #endregion
+        
+        [TestMethod]
+        public void GivenCurrencyy_ShouldBeSetted()
+        {
+            CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
+            accountDTO.Currency = currency;
+
+            Assert.AreEqual(accountDTO.Currency, currency);
         }
     }
 }
