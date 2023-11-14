@@ -3,7 +3,7 @@ namespace BusinessLogic.Dtos_Components;
 public class AccountDTO 
 {
     public int AccountId { get; set; }
-    public bool isMonetary { get; set; }
+    public bool IsMonetary { get; set; }
     public string Name { get; set; }
     public CurrencyEnumDTO Currency { get; set; }
     public DateTime CreationDate { get; set; }
@@ -14,10 +14,10 @@ public class AccountDTO
     {
         
     }
-    public AccountDTO(int accountId, bool b, string name, CurrencyEnumDTO currency, DateTime creationDate, int userId)
+    public AccountDTO(int accountId, bool isMonetary, string name, CurrencyEnumDTO currency, DateTime creationDate, int userId)
     {
         AccountId = accountId;
-        isMonetary = b;
+        IsMonetary = isMonetary;
         Name = name;
         Currency = currency;
         CreationDate = creationDate;

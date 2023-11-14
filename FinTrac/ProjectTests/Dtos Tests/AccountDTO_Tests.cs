@@ -108,7 +108,7 @@ namespace TestProject1
             AccountDTO accountDTO = new AccountDTO(accountId, isMonetary, name, currency, creationDate, userId);
             
             Assert.AreEqual(accountDTO.AccountId,accountId);
-            Assert.AreEqual(accountDTO.isMonetary,isMonetary);
+            Assert.AreEqual(accountDTO.IsMonetary,isMonetary);
             Assert.AreEqual(accountDTO.Name,name);
             Assert.AreEqual(accountDTO.Currency,currency);
             Assert.AreEqual(accountDTO.CreationDate,creationDate);
