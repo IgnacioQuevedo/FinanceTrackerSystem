@@ -31,10 +31,17 @@
     <br />
     <div>
         <label for="title">Category</label>
-        <select class="form-select" aria-label="Default select example" @bind="categoryId">
+        <select class="form-select" aria-label="Default select example" @onchange="onChangeCategories">
             @foreach (var category in allCategories)
             {
-                <option value="@category.CategoryId">@category.Name</option>
+                if (category.CategoryId == categoryOfTransaction.CategoryId)
+                {
+                    <option value="@category.CategoryId" selected>@category.Name</option>
+                }
+                else
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
             }
         </select>
     </div>
@@ -56,14 +63,13 @@
     private CurrencyEnumDTO currencyType;
     private TypeEnumDTO transactionType;
     private DateTime creationDate;
-    private int categoryId;
     private AccountDTO accountOfTransaction;
 
     private decimal oldAmount;
 
     private List<CategoryDTO> allCategories;
     
-    private CategoryDTO category;
+    private CategoryDTO categoryOfTransaction;
 
     private AccountDTO accountSelected;
 
@@ -91,8 +97,8 @@
         type = transactionUpdated.Type;
         creationDate = transactionUpdated.CreationDate;
         currencyType = transactionUpdated.Currency;
-        category = transactionUpdated.TransactionCategory;
-        accountSelected = accountOfTransaction;
+        
+        categoryOfTransaction = transactionUpdated.TransactionCategory;
         
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
@@ -103,8 +109,7 @@
     {
         try
         {
-            category = TransactionController.FindCategory(categoryId,userConnected.UserId);
-            transactionUpdated = new TransactionDTO(title, creationDate, amount, currencyType, type, category,accountId);
+            transactionUpdated = new TransactionDTO(title, creationDate, amount, currencyType, type, categoryOfTransaction,accountId);
             transactionUpdated.TransactionId = transactionId;
             
             TransactionController.UpdateTransaction(transactionUpdated,userConnected.UserId);
@@ -116,7 +121,12 @@
             errorTxt = ExceptionTransaction.Message;
             ErrorAlert.ShowErrorAlert();
         }
-
+    }
+    
+    private void onChangeCategories(ChangeEventArgs elementSelected)
+    {
+        string stringValue = elementSelected.Value.ToString();
+        categoryOfTransaction = TransactionController.FindCategory(int.Parse(stringValue), userConnected.UserId);
     }
 
 }
