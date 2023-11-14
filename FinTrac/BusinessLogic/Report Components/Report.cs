@@ -343,8 +343,7 @@ namespace BusinessLogic.Report_Components
 
     public class MovementInXDays
     {
-        
-        
+        public int[] Spendings { get; set; }
     }
     
     
