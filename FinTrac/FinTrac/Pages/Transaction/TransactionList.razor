@@ -25,39 +25,52 @@
 
 <br/>
 <br/>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Creation Date</th>
-        <th>Amount</th>
-        <th>Currency</th>
-        <th>Type</th>
-        <th>Category</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    @foreach (var transaction in transactions)
-    {
+@if (transactions != null && transactions.Count > 0)
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@transaction.Title</td>
-            <td>@GetFormattedDate(@transaction.CreationDate)</td>
-            <td>@transaction.Amount</td>
-            <td>@transaction.Currency</td>
-            <td>@transaction.Type</td>
-            <td>@transaction.TransactionCategory.Name</td>
-            <td>
-                <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
-                <button class="btn btn-danger" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
-                <button class=" btn btn-warning" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
-            </td>
+            <th>Title</th>
+            <th>Creation Date</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Type</th>
+            <th>Category</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
 
+        @foreach (var transaction in transactions)
+        {
+            <tr>
+                <td>@transaction.Title</td>
+                <td>@GetFormattedDate(@transaction.CreationDate)</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Currency</td>
+                <td>@transaction.Type</td>
+                <td>@transaction.TransactionCategory.Name</td>
+                <td>
+                    <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
+                    <button class="btn btn-danger" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
+                    <button class=" btn btn-warning" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    {
+        <table class="table table-striped table-bordered claseTabla">
+            <tbody>
+            <tr>
+                <td>There are no transactions to show, click the above button to create one</td>
+            </tr>
+            </tbody>
+        </table>
+    }
+}
 
 @if (showDuplicateScreen)
 {
@@ -82,6 +95,7 @@
     private List<TransactionDTO>? transactions;
     private TransactionDTO transactionBeforeDelete;
     private TransactionDTO transactionDuplicated;
+    private AccountDTO accountWithTransactions;
     private bool showDuplicateScreen;
 
     [CascadingParameter]
@@ -95,7 +109,8 @@
 
     protected override void OnInitialized()
     {
-        transactions = TransactionController.GetAllTransactions(accountId);
+        accountWithTransactions = TransactionController.FindAccountById(accountId, userConnected.UserId);
+        transactions = TransactionController.GetAllTransactions(accountWithTransactions);
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
         showDuplicateScreen = false;

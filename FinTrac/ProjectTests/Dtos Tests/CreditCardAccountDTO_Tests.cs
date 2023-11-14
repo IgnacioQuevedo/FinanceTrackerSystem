@@ -42,9 +42,9 @@ namespace TestProject1
         [TestMethod]
         public void GivenCredtiCardAccountId_ShouldBeSetted()
         {
-            _creditCardAccountDTO.CreditCardAccountId = _creditCardAccountId;
+            _creditCardAccountDTO.AccountId = _creditCardAccountId;
 
-            Assert.AreEqual(_creditCardAccountDTO.CreditCardAccountId, _creditCardAccountId);
+            Assert.AreEqual(_creditCardAccountDTO.AccountId, _creditCardAccountId);
 
         }
 

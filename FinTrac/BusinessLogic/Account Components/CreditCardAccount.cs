@@ -33,7 +33,7 @@ namespace BusinessLogic.Account_Components
             IssuingBank = issuingBank;
             Last4Digits = last4Digits;
             AvailableCredit = availableCredit;
-            ClosingDate = closingDate;
+            ClosingDate = closingDate.Date;
             ValidateCreditCardAccount();
         }
 

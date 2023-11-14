@@ -37,9 +37,9 @@ namespace TestProject1
         [TestMethod]
         public void GivenMonetaryId_ShouldBeSetted()
         {
-            _monetaryAccountDTO.MonetaryAccountId = _idToSet;
+            _monetaryAccountDTO.AccountId = _idToSet;
 
-            Assert.AreEqual(_monetaryAccountDTO.MonetaryAccountId, _idToSet);
+            Assert.AreEqual(_monetaryAccountDTO.AccountId, _idToSet);
         }
 
         #endregion

@@ -17,7 +17,7 @@ public abstract class MapperCreditAccount
         CreditCardAccountDTO creditAccountDTO =
           new CreditCardAccountDTO(myCreditAccount.Name, (CurrencyEnumDTO)myCreditAccount.Currency, myCreditAccount.CreationDate, myCreditAccount.IssuingBank, myCreditAccount.Last4Digits, myCreditAccount.AvailableCredit, myCreditAccount.ClosingDate, myCreditAccount.UserId);
 
-        creditAccountDTO.CreditCardAccountId = myCreditAccount.AccountId;
+        creditAccountDTO.AccountId = myCreditAccount.AccountId;
 
         return creditAccountDTO;
     }
@@ -50,7 +50,7 @@ public abstract class MapperCreditAccount
             CreditCardAccount creditAccount =
               new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, DateTime.Now.Date, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
 
-            creditAccount.AccountId = myCreditAccountDTO.CreditCardAccountId;
+            creditAccount.AccountId = myCreditAccountDTO.AccountId;
             creditAccount.UserId = myCreditAccountDTO.UserId;
 
             return creditAccount;

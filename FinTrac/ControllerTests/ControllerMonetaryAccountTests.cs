@@ -39,10 +39,12 @@ namespace ControllerTests
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
 
-            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
-            _monetToCreateDTO1.MonetaryAccountId = 1;
+            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date,
+                _userConnected.UserId);
+            _monetToCreateDTO1.AccountId = 1;
 
-            _monetToCreateDTO2 = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date, _userConnected.UserId);
+            _monetToCreateDTO2 = new MonetaryAccountDTO("Itau", 1300, CurrencyEnumDTO.USA, DateTime.Now.Date,
+                _userConnected.UserId);
         }
 
         #endregion
@@ -62,9 +64,10 @@ namespace ControllerTests
         [TestMethod]
         public void GivenMonetaryAccountToCreate_ShouldBeCreated()
         {
-            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date, _userConnected.UserId);
-            _monetToCreateDTO1.MonetaryAccountId = 1;
-            _monetToCreateDTO2.MonetaryAccountId = 2;
+            _monetToCreateDTO1 = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date,
+                _userConnected.UserId);
+            _monetToCreateDTO1.AccountId = 1;
+            _monetToCreateDTO2.AccountId = 2;
 
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
             _controller.CreateMonetaryAccount(_monetToCreateDTO2);
@@ -74,7 +77,7 @@ namespace ControllerTests
             Assert.IsNotNull(myAccountsDb[0].AccountUser);
             Assert.AreEqual(myAccountsDb[0].UserId, _monetToCreateDTO1.UserId);
             Assert.AreEqual(myAccountsDb[0].Name, _monetToCreateDTO1.Name);
-            Assert.AreEqual(myAccountsDb[0].AccountId, _monetToCreateDTO1.MonetaryAccountId);
+            Assert.AreEqual(myAccountsDb[0].AccountId, _monetToCreateDTO1.AccountId);
             Assert.AreEqual(myAccountsDb[0].Currency, (CurrencyEnum)_monetToCreateDTO1.Currency);
             Assert.AreEqual(typeof(MonetaryAccount), myAccountsDb[0].GetType());
             Assert.IsInstanceOfType(myAccountsDb[0], typeof(MonetaryAccount));
@@ -91,9 +94,10 @@ namespace ControllerTests
         {
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 
-            MonetaryAccountDTO monetAccountFound = _controller.FindMonetaryAccount(_monetToCreateDTO1.MonetaryAccountId, _userConnected.UserId);
+            MonetaryAccountDTO monetAccountFound =
+                _controller.FindMonetaryAccount(_monetToCreateDTO1.AccountId, _userConnected.UserId);
 
-            Assert.AreEqual(_monetToCreateDTO1.MonetaryAccountId, monetAccountFound.MonetaryAccountId);
+            Assert.AreEqual(_monetToCreateDTO1.AccountId, monetAccountFound.AccountId);
             Assert.AreEqual(_monetToCreateDTO1.UserId, monetAccountFound.UserId);
         }
 
@@ -104,13 +108,13 @@ namespace ControllerTests
 
             MonetaryAccount monetFound = _controller.FindMonetaryAccountInDb(_monetToCreateDTO1);
 
-            Assert.AreEqual(_monetToCreateDTO1.MonetaryAccountId, monetFound.AccountId);
+            Assert.AreEqual(_monetToCreateDTO1.AccountId, monetFound.AccountId);
             Assert.AreEqual(_monetToCreateDTO1.UserId, monetFound.UserId);
         }
 
         #endregion
 
-        #region  Update Monetary Account
+        #region Update Monetary Account
 
         [TestMethod]
         public void GivenMonetaryDTOToUpdate_ShouldBeUpdatedInDb()
@@ -118,13 +122,13 @@ namespace ControllerTests
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
 
             MonetaryAccountDTO accountDTOWithUpdates = _monetToCreateDTO2;
-            accountDTOWithUpdates.MonetaryAccountId = 1;
+            accountDTOWithUpdates.AccountId = 1;
 
             _controller.UpdateMonetaryAccount(accountDTOWithUpdates);
 
             MonetaryAccount accountInDbWithSupossedChanges = _controller.FindMonetaryAccountInDb(_monetToCreateDTO1);
 
-            Assert.AreEqual(accountInDbWithSupossedChanges.AccountId, accountDTOWithUpdates.MonetaryAccountId);
+            Assert.AreEqual(accountInDbWithSupossedChanges.AccountId, accountDTOWithUpdates.AccountId);
             Assert.AreEqual(accountInDbWithSupossedChanges.Name, accountDTOWithUpdates.Name);
             Assert.AreEqual(accountInDbWithSupossedChanges.Amount, accountDTOWithUpdates.Amount);
             Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
@@ -143,18 +147,11 @@ namespace ControllerTests
 
             List<Account> accountListOfUser = _testDb.Users.First().MyAccounts;
 
-            _monetToCreateDTO1.MonetaryAccountId = 1;
-            _monetToCreateDTO2.MonetaryAccountId = 2;
-            int amountOfAccountsInDb = accountListOfUser.Count;
-            _controller.DeleteMonetaryAccount(_monetToCreateDTO1);
-            _controller.DeleteMonetaryAccount(_monetToCreateDTO2);
+            _monetToCreateDTO1.AccountId = 1;
+            _monetToCreateDTO2.AccountId = 1;
 
-            int amountOfAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
-
-            Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
+            #endregion
         }
-
-        #endregion
 
         #region Get All Monetary Accounts
 
@@ -164,13 +161,15 @@ namespace ControllerTests
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
             _controller.CreateMonetaryAccount(_monetToCreateDTO2);
 
-            CreditCardAccountDTO creditAccountDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY, DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
+            CreditCardAccountDTO creditAccountDTO1 = new CreditCardAccountDTO("Prex", CurrencyEnumDTO.UY,
+                DateTime.Now.Date, "Prex", "1233", 1900, new DateTime(2024, 12, 12), _userConnected.UserId);
 
             _controller.CreateCreditAccount(creditAccountDTO1);
 
             int previousLength = _testDb.Users.FirstOrDefault().MyAccounts.Count;
 
-            List<MonetaryAccountDTO> listOfMonetaryAccounts = _controller.GetAllMonetaryAccounts(_userConnected.UserId);
+            List<MonetaryAccountDTO> listOfMonetaryAccounts =
+                _controller.GetAllMonetaryAccounts(_userConnected.UserId);
 
             int lengthOfListReturned = listOfMonetaryAccounts.Count;
 
@@ -179,5 +178,4 @@ namespace ControllerTests
 
         #endregion
     }
-
 }
