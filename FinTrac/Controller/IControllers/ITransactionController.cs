@@ -15,7 +15,7 @@ namespace Controller.IControllers
         
         public List<TransactionDTO> GetAllTransactions(int accountId);
 
-    
+        public AccountDTO FindAccountById(int? accountId, int? userId);
 
     }
 }

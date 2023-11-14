@@ -455,6 +455,26 @@ namespace Controller
             return accountFound;
         }
 
+        public AccountDTO FindAccountById(int? idAccountToFind, int? userId)
+        {
+            SetUserConnected(userId);
+            
+            Account accountFound = FindAccountByIdInDb(idAccountToFind);
+            MonetaryAccount possibleMonetaryAccount = new MonetaryAccount();
+            CreditCardAccount possibleCreditCardAccount = new CreditCardAccount();
+            
+            if (accountFound is MonetaryAccount)
+            {
+                possibleMonetaryAccount = accountFound as MonetaryAccount;
+                return MapperMonetaryAccount.ToMonetaryAccountDTO(possibleMonetaryAccount);
+            }
+            else
+            {
+                possibleCreditCardAccount = accountFound as CreditCardAccount;
+                return MapperCreditAccount.ToCreditAccountDTO(possibleCreditCardAccount);
+            }
+        }
+
         public void UpdateMonetaryAccount(MonetaryAccountDTO monetaryDtoWithUpdates)
         {
             SetUserConnected(monetaryDtoWithUpdates.UserId);

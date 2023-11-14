@@ -170,6 +170,23 @@ namespace ControllerTests
             _controller.FindTransaction(-1, monetaryAccount.UserId, monetaryAccount.MonetaryAccountId);
         }
 
+
+        [TestMethod]
+        public void GivenAnAccountId_ShouldBePossibleToFindHisDTOInDb()
+        {
+
+            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
+            monetaryAccount.AccountId = 1;
+            
+            Assert.AreEqual(monetaryAccount.AccountId,accountToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate,accountToFound.CreationDate);
+            Assert.AreEqual(monetaryAccount.Currency,accountToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name,accountToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId,accountToFound.UserId);
+    
+
+        }
+
         #endregion
 
         #region Update Transaction

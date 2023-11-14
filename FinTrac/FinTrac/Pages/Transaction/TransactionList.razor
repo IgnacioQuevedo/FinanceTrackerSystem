@@ -1,19 +1,15 @@
-﻿@inject ITransactionController TransactionController
-@inject ICategoryController CategoryController
-@inject GenericController Controller
+﻿@page "/Transactions/{accountId:int}";
 
-
-
-@page "/Transactions/{accountId:int}";
-@using DataManagers
+@using BusinessLogic.Transaction_Components;
+@using BusinessLogic.Account_Components;
 
 <PageTitle>Accounts</PageTitle>
 <h3>AccountList</h3>
 
-C
+
 @if (ErrorAlert.isError)
 {
-    <ErrorAlert errorTxt="@errorTxt"/>
+    <ErrorAlert errorTxt="@errorTxt" />
 }
 
 <h1>
@@ -24,38 +20,39 @@ C
     </a>
 </h1>
 
-<br/>
-<br/>
+<br />
+<br />
 
 <table class="table">
     <thead>
-    <tr>
-        <th>Title</th>
-        <th>Creation Date</th>
-        <th>Amount</th>
-        <th>Currency</th>
-        <th>Type</th>
-        <th>Category</th>
-    </tr>
+        <tr>
+            <th>Title</th>
+            <th>Creation Date</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Type</th>
+            <th>Category</th>
+        </tr>
     </thead>
     <tbody>
 
-    @foreach (var transaction in transactionList.Where(t => t != null))
-    {
-        <tr>
-            <td>@transaction.Title</td>
-            <td>@GetFormattedDate(@transaction.CreationDate)</td>
-            <td>@transaction.Amount</td>
-            <td>@transaction.Currency</td>
-            <td>@transaction.Type</td>
-            <td>@transaction.TransactionCategory.Name</td>
-            <td>
-                <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
-                <button class="btn btn-danger" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
-                <button class=" btn btn-warning" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
-            </td>
-        </tr>
-    }
+        @foreach (var transaction in transactionList.Where(t => t != null))
+        {
+            <tr>
+                <td>@transaction.Title</td>
+                <td>@GetFormattedDate(@transaction.CreationDate)</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Currency</td>
+                <td>@transaction.Type</td>
+                <td>@transaction.TransactionCategory.Name</td>
+                <td>
+                    <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/EditTransaction/{@transaction.TransactionId}"))"> Edit</button>
+                    <button class="btn btn-danger" @onclick="(() => DeleteTransaction(transaction.TransactionId))">Delete -</button>
+                    <button class=" btn btn-warning" @onclick="(() => DuplicateTransaction(transaction.TransactionId))">Duplicate +</button>
+                </td>
+            </tr>
+
+        }
     </tbody>
 </table>
 
@@ -65,44 +62,44 @@ C
     <label>To duplicate this transaction just select a new date from below</label>
     <div>
         <label for="title">Creation Date</label>
-        <input type="date" class="form-control" id="creationDate" @bind="transactionDuplicated.CreationDate"/>
+        <input type="date" class="form-control" id="creationDate" @bind="transactionDuplicated.CreationDate" />
         <button class="btn btn-danger btn-sm" @onclick="(() => createCopy())">Create Duplication</button>
     </div>
+
 }
 
 @if (SuccesAlert.IsSucess)
 {
-    <SuccesAlert errorTxt="Transaction deleted successfully"/>
+    <SuccesAlert errorTxt="Transaction deleted successfully" />
 }
 
 
-<br/>
-<br/>
+<br />
+<br />
 
 @code {
-    private List<TransactionDTO>? transactionList;
-    private AccountDTO accountSelected;
-    private TransactionDTO transactionBeforeDelete;
+    private List<Transaction>? transactionList;
+    private Account accountSelected;
+    private Transaction transactionBeforeDelete;
     private DateTime dateOfDuplicate;
     private int duplicateId;
-    private TransactionDTO transactionDuplicated;
+    private Transaction transactionDuplicated;
     private bool showDuplicateScreen;
 
     [CascadingParameter]
-    public UserDTO userConnected { get; set; }
+    public User user { get; set; }
 
     [Parameter]
     public int accountId { get; set; }
-
     public string errorTxt { get; set; }
+
+
 
 
     protected override void OnInitialized()
     {
-        
-        accountSelected = Controller.FindAccountById();
-        transactionList = TransactionController.GetAllTransactions(userConnected.UserId);
-
+        accountSelected = user.MyAccounts[accountId];
+        transactionList = accountSelected.MyTransactions;
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
         dateOfDuplicate = DateTime.Now.Date;
@@ -114,11 +111,9 @@ C
     {
         try
         {
-            TransactionDTO transactionDtoToDelete = TransactionController.FindTransaction(transactionId, accountId, userConnected.UserId);
-            TransactionController.DeleteTransaction(transactionDtoToDelete);
-    //transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
-
-    //accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
+            transactionBeforeDelete = user.MyAccounts[accountId].MyTransactions[transactionId];
+            user.MyAccounts[accountId].DeleteTransaction(user.MyAccounts[accountId].MyTransactions[transactionId]);
+            accountSelected.UpdateAccountAfterDelete(transactionBeforeDelete);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionTransaction)
@@ -130,20 +125,15 @@ C
 
     private void createCopy()
     {
-        TransactionController.CreateTransaction(transactionDuplicated);
+        accountSelected.AddTransaction(transactionDuplicated);
         showDuplicateScreen = false;
     }
 
     private void DuplicateTransaction(int transactionId)
     {
-        TransactionDTO transactionToDuplicate = 
-            TransactionController.FindTransaction(transactionId,accountId,userConnected.UserId);
-        //Transaction transactionToDuplicate = transactionList[transactionId];
-
-        transactionDuplicated = new TransactionDTO(transactionToDuplicate.Title, transactionToDuplicate.CreationDate, 
-            transactionToDuplicate.Amount, transactionToDuplicate.Currency, 
-            transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory, userConnected.UserId);
-       
+        Transaction transactionToDuplicate = transactionList[transactionId];
+        transactionDuplicated = new Transaction(transactionToDuplicate.Title, transactionToDuplicate.Amount, transactionToDuplicate.CreationDate,
+         transactionToDuplicate.Currency, transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory);
         duplicateId = transactionId;
         showDuplicateScreen = true;
     }
@@ -155,3 +145,7 @@ C
 
 
 }
+
+
+
+
