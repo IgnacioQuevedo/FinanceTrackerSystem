@@ -27,6 +27,18 @@ namespace TestProject1
 
             Assert.AreEqual(accountDTO.AccountId, accountId);
         }
-
         #endregion
+
+        [TestMethod]
+        public void GivenBoolThatDeterminesIfTheAccountIsMonetary_ShouldBeSetted()
+        {
+
+            bool isMonetary = false;
+            AccountDTO accountDTO = new AccountDTO();
+            accountDTO.isMonetary = isMonetary;
+            
+            Assert.IsFalse(isMonetary);
+
+        }
     }
+}
