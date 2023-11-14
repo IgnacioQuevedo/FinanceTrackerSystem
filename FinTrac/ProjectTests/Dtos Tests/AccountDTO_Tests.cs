@@ -82,6 +82,7 @@ namespace TestProject1
 
         #endregion
 
+        #region Constructor
         [TestMethod]
         public void GivenValuesToCreate_AccountDTOShouldBeCreated()
         {
@@ -92,12 +93,14 @@ namespace TestProject1
             int userId = 1;
 
             AccountDTO accountDTO = new AccountDTO(name, currency, creationDate, userId);
+            accountDTO.AccountId = 1;
             
             Assert.AreEqual(accountDTO.AccountId,accountId);
             Assert.AreEqual(accountDTO.Name,name);
             Assert.AreEqual(accountDTO.Currency,currency);
             Assert.AreEqual(accountDTO.CreationDate,creationDate);
         }
+        #endregion
 
         [TestMethod]
         public void GivenAMonetaryAccount_ValidateThatItCanBeAppliedAsAPolimorficObject()
