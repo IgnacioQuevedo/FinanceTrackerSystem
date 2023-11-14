@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace BusinessLogic.Dtos_Components
 {
-    public class MonetaryAccountDTO
+    public class MonetaryAccountDTO : AccountDTO
     {
         #region Properties
 
@@ -24,7 +24,7 @@ namespace BusinessLogic.Dtos_Components
 
         public MonetaryAccountDTO() { }
 
-        public MonetaryAccountDTO(string name, decimal amount, CurrencyEnumDTO currency, DateTime creationDate, int? userId)
+        public MonetaryAccountDTO(string name, decimal amount, CurrencyEnumDTO currency, DateTime creationDate, int? userId) : base(name,currency,creationDate,userId)
         {
             Name = name;
             Amount = amount;
