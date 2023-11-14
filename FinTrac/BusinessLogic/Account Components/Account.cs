@@ -72,15 +72,10 @@ namespace BusinessLogic.Account_Components
 
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            SetTransactionId(transactionToBeAdded);
+            
             MyTransactions.Add(transactionToBeAdded);
         }
-
-        private void SetTransactionId(Transaction transactionToBeAdded)
-        {
-            transactionToBeAdded.TransactionId = MyTransactions.Count;
-        }
-
+        
         #endregion
 
         #region Modify Transaction
@@ -93,8 +88,11 @@ namespace BusinessLogic.Account_Components
             {
                 if (HaveSameId(transactionToUpdate, i))
                 {
-                    MyTransactions[i] = transactionToUpdate;
+                    MyTransactions[i].Amount = transactionToUpdate.Amount;
+                    MyTransactions[i].Currency = transactionToUpdate.Currency;
+                    MyTransactions[i].TransactionCategory = transactionToUpdate.TransactionCategory;
                     flag = true;
+                    
                 }
             }
         }
@@ -120,7 +118,6 @@ namespace BusinessLogic.Account_Components
         public void DeleteTransaction(Transaction transactionToDelete)
         {
             MyTransactions.Remove(transactionToDelete);
-            MyTransactions.Insert(transactionToDelete.TransactionId, null);
         }
 
         #endregion
