@@ -155,6 +155,10 @@ namespace Controller
         //Only controller 
         public Category FindCategoryInDb(CategoryDTO categoryToFind)
         {
+            if (categoryToFind == null)
+            {
+                throw new Exception("Must select a category, otherwise there would not be changes");
+            }
             SetUserConnected(categoryToFind.UserId);
 
             return SearchCategoryInDb(categoryToFind.CategoryId);
