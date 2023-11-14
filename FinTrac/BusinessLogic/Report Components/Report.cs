@@ -163,16 +163,10 @@ namespace BusinessLogic.Report_Components
 
         public static List<Transaction> FilterListByAccountAndType(Account accountSelected, User userLogged)
         {
-            List<Transaction> accountSpendings = FilterAccountSpendings(accountSelected, userLogged);
-
-            return accountSpendings;
-        }
-
-        private static List<Transaction> FilterAccountSpendings(Account accountSelected, User userLogged)
-        {
             List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
                 .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)
                 .ToList();
+
             return accountSpendings;
         }
 

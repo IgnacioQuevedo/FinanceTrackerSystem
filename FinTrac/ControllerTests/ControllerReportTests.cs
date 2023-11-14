@@ -22,10 +22,10 @@ namespace ControllerTests
         private UserRepositorySql _userRepo;
         private UserDTO _userConnected;
 
-        private Transaction _transaction1;
-        private Transaction _transaction2;
-        private MonetaryAccount _exampleAccount;
-        private Category _exampleCategory;
+        private TransactionDTO _transaction1;
+        private TransactionDTO _transaction2;
+        private MonetaryAccountDTO _exampleAccount;
+        private CategoryDTO _exampleCategory;
 
         [TestInitialize]
         public void Initialize()
@@ -40,25 +40,24 @@ namespace ControllerTests
             _controller.RegisterUser(_userConnected);
             _controller.SetUserConnected(_userConnected.UserId);
 
-            _exampleAccount = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
-            _exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
-
-            _transaction1 = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome,
-                _exampleCategory);
-            _transaction2 = new Transaction("Nueva", 500, new DateTime(2020, 05, 20), CurrencyEnum.USA, TypeEnum.Outcome,
-                _exampleCategory);
+            _exampleAccount = new MonetaryAccountDTO("Brou", 3000, CurrencyEnumDTO.USA, DateTime.Now, 1);
+            _exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
             _exampleCategory.CategoryId = 0;
+
+            _transaction1 = new TransactionDTO("hola", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
+                _exampleCategory, 1);
+            _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
+                _exampleCategory, 1);
+
             _exampleAccount.AccountId = 0;
             _transaction1.TransactionId = 0;
             _transaction2.TransactionId = 0;
 
-            _testDb.Users.First().MyCategories.Add(_exampleCategory);
-            _testDb.Users.First().MyAccounts.Add(_exampleAccount);
-            _testDb.Users.First().MyAccounts.First().MyTransactions.Add(_transaction1);
-            _testDb.Users.First().MyAccounts.First().MyTransactions.Add(_transaction2);
-
-            _testDb.SaveChanges();
+            _controller.CreateCategory(_exampleCategory);
+            _controller.CreateMonetaryAccount(_exampleAccount);
+            _controller.CreateTransaction(_transaction1);
+            _controller.CreateTransaction(_transaction2);
         }
 
         #endregion
@@ -113,22 +112,25 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        public void GivenListAndMonetaryAccountDTOAndUserLoggedDTO_ShouldFilterList()
+        public void GivenListAndMonetaryAccountDTOAndUserLoggedDTO_ShouldFilterListByAccount()
         {
-            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, _exampleCategory);
+            TransactionDTO transaction3 = new TransactionDTO("Losses", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 2);
+
+            CategoryDTO myCategory2 = new CategoryDTO("Sugars", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+
+            _controller.CreateCategory(myCategory2);
+
+            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, _exampleCategory, 1);
 
             MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
 
-            MonetaryAccountDTO exampleAccountDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
+            MonetaryAccountDTO exampleAccountDTO2 = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
 
-            exampleAccount2.AccountId = 0;
-            transaction3.TransactionId = 0;
+            _controller.CreateMonetaryAccount(exampleAccountDTO2);
+            _controller.CreateTransaction(transaction3);
+            _controller.CreateTransaction(transaction4);
 
-            _testDb.Users.First().MyAccounts.Add(exampleAccount2);
-            _testDb.Users.First().MyAccounts[1].MyTransactions.Add(transaction3);
-            _testDb.SaveChanges();
-
-            List<TransactionDTO> filteredListDTO = _controller.FilterByMonetaryAccountAndType(exampleAccountDTO, _userConnected.UserId);
+            List<TransactionDTO> filteredListDTO = _controller.FilterByMonetaryAccountAndTypeIncome(exampleAccountDTO2, _userConnected.UserId);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
