@@ -1,7 +1,7 @@
 ﻿@page "/Account/CreditCardCreation"
 
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Enums;
+@inject ICreditAccount CreditController;
+
 
 <h3>Credit Card Creation</h3>
 
@@ -36,8 +36,9 @@
     <div>
         <label for="title">Currency Type</label>
         <select class="form-select" aria-label="Default select example" @bind="currencyType">
-            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
-            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+            <option value="@CurrencyEnumDTO.UY">@CurrencyEnumDTO.UY</option>
+            <option value="@CurrencyEnumDTO.USA">@CurrencyEnumDTO.USA</option>
+            <option value="@CurrencyEnumDTO.USA">@CurrencyEnumDTO.EUR</option>
         </select>
     </div>
 
@@ -81,21 +82,21 @@
     private string name;
     private string issuingBank;
     private string last4Digits;
-    private CurrencyEnum currencyType;
+    private CurrencyEnumDTO currencyType;
     private decimal availableCredit;
     private DateTime creationDate;
     private DateTime closingDate;
 
-    private CreditCardAccount accountToAdd;
+    private CreditCardAccountDTO accountToAdd;
     public string errorTxt { get; set; }
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO UserConnected { get; set; }
 
     protected override void OnInitialized()
     {
 
-        currencyType = CurrencyEnum.UY;
+        currencyType = CurrencyEnumDTO.UY;
         creationDate = DateTime.Now.Date;
         closingDate = DateTime.Now.Date;
         SuccesAlert.IsSucess = false;
@@ -106,8 +107,8 @@
     {
         try
         {
-            accountToAdd = new CreditCardAccount(name, currencyType, creationDate, issuingBank, last4Digits, availableCredit, closingDate);
-            mainUser.AddCreditAccount(accountToAdd);
+            accountToAdd = new CreditCardAccountDTO(name, currencyType, creationDate, issuingBank, last4Digits, availableCredit, closingDate, UserConnected.UserId);
+            CreditController.CreateCreditAccount(accountToAdd);
             SuccesAlert.ShowSucessAlert();
         }
         catch (Exception ExceptionAccount)
@@ -115,6 +116,20 @@
             errorTxt = ExceptionAccount.Message;
             ErrorAlert.ShowErrorAlert();
         }
+    }
+
+    private void ResetValues()
+    {
+        currencyType = CurrencyEnumDTO.UY;
+        creationDate = DateTime.Now.Date;
+        closingDate = DateTime.Now.Date;
+
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
 }

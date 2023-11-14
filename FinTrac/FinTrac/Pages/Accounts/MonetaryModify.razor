@@ -1,6 +1,6 @@
 ﻿@page "/Accounts/{accountId:int}/ModifyMonetary"
 
-@using BusinessLogic.Account_Components;
+@inject IMonetaryAccount MonetaryController;
 
 <h3>Monetary Modification</h3>
 
@@ -33,18 +33,19 @@
     private string name;
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO UserConnected { get; set; }
 
     [Parameter]
     public int accountId { get; set; }
+
     public string errorTxt{ get; set; }
 
-    private MonetaryAccount accountToUpdate;
-    private MonetaryAccount accountUpdated;
+    private MonetaryAccountDTO accountToUpdate;
+    private MonetaryAccountDTO accountUpdated;
 
     protected override void OnInitialized()
     {
-        accountToUpdate = mainUser.MyAccounts[accountId] as MonetaryAccount;
+        accountToUpdate = MonetaryController.FindMonetaryAccount(accountId, UserConnected.UserId);
         name = accountToUpdate.Name;
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
@@ -54,10 +55,10 @@
     {
         try
         {
-            accountUpdated = new MonetaryAccount(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate);
-            accountUpdated.AccountId = accountId;
+            accountUpdated = new MonetaryAccountDTO(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate, UserConnected.UserId);
+            accountUpdated.MonetaryAccountId = accountId;
 
-            mainUser.ModifyMonetaryAccount(accountUpdated);
+            MonetaryController.UpdateMonetaryAccount(accountUpdated);
             NavigationManager.NavigateTo("/Accounts");
         }
         catch(Exception ExceptionAccount)
