@@ -17,7 +17,7 @@ public class AccountDTO
     {
         Name = name;
         Currency = currency;
-        CreationDate = creationDate;
+        CreationDate = creationDate.Date;
         UserId = userId;
 
     }

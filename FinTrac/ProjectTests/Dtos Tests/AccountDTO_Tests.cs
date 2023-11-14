@@ -98,5 +98,27 @@ namespace TestProject1
             Assert.AreEqual(accountDTO.Currency,currency);
             Assert.AreEqual(accountDTO.CreationDate,creationDate);
         }
+
+        [TestMethod]
+        public void GivenAMonetaryAccount_ValidateThatItCanBeAppliedAsAPolimorficObject()
+        {
+            bool isASubClassFromAccount = false;
+            
+            MonetaryAccountDTO monetaryPolimorfed = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY,
+                DateTime.Now, 1);
+
+            if (monetaryPolimorfed is AccountDTO)
+            {
+                isASubClassFromAccount = false;
+            }
+            else
+            {
+                isASubClassFromAccount = false;
+            }
+            
+            Assert.IsTrue(isASubClassFromAccount);
+
+
+        }
     }
 }
