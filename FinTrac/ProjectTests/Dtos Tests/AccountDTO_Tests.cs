@@ -82,5 +82,13 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenUserIdToSet_ShouldBeSetted()
+        {
+            int userId = 1;
+            accountDTO.UserId = userId;
+            Assert.AreEqual(accountDTO.UserId, userId);
+        }
     }
 }
