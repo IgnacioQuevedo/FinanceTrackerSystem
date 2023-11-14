@@ -30,7 +30,7 @@ namespace TestProject1
         }
 
         #endregion
-        
+
         #region Name
 
         [TestMethod]
@@ -83,6 +83,7 @@ namespace TestProject1
         #endregion
 
         #region Constructor
+
         [TestMethod]
         public void GivenValuesToCreate_AccountDTOShouldBeCreated()
         {
@@ -94,19 +95,22 @@ namespace TestProject1
 
             AccountDTO accountDTO = new AccountDTO(name, currency, creationDate, userId);
             accountDTO.AccountId = 1;
-            
-            Assert.AreEqual(accountDTO.AccountId,accountId);
-            Assert.AreEqual(accountDTO.Name,name);
-            Assert.AreEqual(accountDTO.Currency,currency);
-            Assert.AreEqual(accountDTO.CreationDate,creationDate);
+
+            Assert.AreEqual(accountDTO.AccountId, accountId);
+            Assert.AreEqual(accountDTO.Name, name);
+            Assert.AreEqual(accountDTO.Currency, currency);
+            Assert.AreEqual(accountDTO.CreationDate, creationDate);
         }
+
         #endregion
+
+        #region MonetaryAccountDTO used as a polimorfic object
 
         [TestMethod]
         public void GivenAMonetaryAccount_ValidateThatItCanBeAppliedAsAPolimorficObject()
         {
             bool isASubClassFromAccount = false;
-            
+
             MonetaryAccountDTO monetaryPolimorfed = new MonetaryAccountDTO("Brou", 1000, CurrencyEnumDTO.UY,
                 DateTime.Now, 1);
 
@@ -114,8 +118,14 @@ namespace TestProject1
             {
                 isASubClassFromAccount = true;
             }
+
             Assert.IsTrue(isASubClassFromAccount);
         }
+
+        #endregion
+
+        #region MonetaryAccountDTO used as a polimorfic object
+
         [TestMethod]
         public void GivenACreditCardAccount_ValidateThatItCanBeAppliedAsAPolimorficObject()
         {
@@ -128,7 +138,10 @@ namespace TestProject1
             {
                 isASubClassFromAccount = true;
             }
+
             Assert.IsTrue(isASubClassFromAccount);
         }
+
+        #endregion
     }
 }
