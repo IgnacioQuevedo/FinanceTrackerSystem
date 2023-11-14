@@ -691,13 +691,8 @@ namespace Controller
             SetUserConnected(accountToGetTransactions.UserId);
             
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
-            List<Transaction> transactions = accountToGetTransactions.GetAllTransactions();
 
-            foreach (var transaction in transactions)
-            {
-                transactionsDTO.Add(MapperTransaction.ToTransactionDTO(transaction));
-            }
-
+            transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
             return transactionsDTO;
         }
     }

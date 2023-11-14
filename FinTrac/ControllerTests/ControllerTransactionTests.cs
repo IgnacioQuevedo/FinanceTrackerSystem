@@ -240,6 +240,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region GetAllTransactions
+
         [TestMethod]
         public void GetAllTransactionsMethod_ShouldReturnTransactionFromAnAccount()
         {
@@ -259,8 +261,10 @@ namespace ControllerTests
             Assert.AreEqual(transactions[1].Currency, transaction2.Currency);
             Assert.AreEqual(transactions[1].Type, transaction2.Type);
             Assert.AreEqual(transactions[1].AccountId, transaction2.AccountId);
-            Assert.IsTrue(Helper.AreTheSameObject(transactions[1].TransactionCategory, transaction2.TransactionCategory));
-
+            Assert.IsTrue(
+                Helper.AreTheSameObject(transactions[1].TransactionCategory, transaction2.TransactionCategory));
         }
+
+        #endregion
     }
 }
