@@ -8,4 +8,5 @@ public class AccountDTO
     public string Name { get; set; }
     public CurrencyEnumDTO Currency { get; set; }
     public DateTime CreationDate { get; set; }
+    public int UserId { get; set; }
 }
