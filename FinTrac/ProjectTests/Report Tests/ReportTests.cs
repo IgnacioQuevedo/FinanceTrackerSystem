@@ -329,6 +329,7 @@ public class ReportTests
         Assert.AreEqual(spendings, movements.Spendings);
     }
     
+    [TestMethod]
     public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
     {
         int[] incomes = new int [5];
