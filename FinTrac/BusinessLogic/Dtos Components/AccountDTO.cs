@@ -7,4 +7,5 @@ public class AccountDTO
     public bool isMonetary { get; set; }
     public string Name { get; set; }
     public CurrencyEnumDTO Currency { get; set; }
+    public DateTime CreationDate { get; set; }
 }
