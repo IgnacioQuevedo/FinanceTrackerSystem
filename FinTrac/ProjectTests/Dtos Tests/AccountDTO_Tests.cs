@@ -111,10 +111,6 @@ namespace TestProject1
             {
                 isASubClassFromAccount = true;
             }
-            else
-            {
-                isASubClassFromAccount = false;
-            }
             
             Assert.IsTrue(isASubClassFromAccount);
 
