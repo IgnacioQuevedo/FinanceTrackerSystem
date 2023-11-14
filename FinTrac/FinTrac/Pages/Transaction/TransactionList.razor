@@ -82,6 +82,7 @@
     private List<TransactionDTO>? transactions;
     private TransactionDTO transactionBeforeDelete;
     private TransactionDTO transactionDuplicated;
+    private AccountDTO accountWithTransactions;
     private bool showDuplicateScreen;
 
     [CascadingParameter]
@@ -95,7 +96,8 @@
 
     protected override void OnInitialized()
     {
-        transactions = TransactionController.GetAllTransactions(accountId);
+        accountWithTransactions = TransactionController.FindAccountById(accountId,userConnected.UserId);
+        transactions = TransactionController.GetAllTransactions(accountWithTransactions);
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
         showDuplicateScreen = false;

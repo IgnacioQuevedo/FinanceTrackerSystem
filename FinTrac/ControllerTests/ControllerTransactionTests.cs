@@ -282,7 +282,7 @@ namespace ControllerTests
 
             transaction2.TransactionId = 2;
             List<TransactionDTO> transactions =
-                _controller.GetAllTransactions(monetaryAccount.MonetaryAccountId);
+                _controller.GetAllTransactions(monetaryAccount);
 
             Assert.AreEqual(2, transactions.Count);
             Assert.AreEqual(transactions[1].TransactionId, transaction2.TransactionId);

@@ -10,15 +10,14 @@ namespace BusinessLogic.Dtos_Components
 {
     public class CreditCardAccountDTO : AccountDTO
     {
-        public int CreditCardAccountId { get; set; }
-        public string Name { get; set; }
-        public CurrencyEnumDTO Currency { get; set; }
-        public DateTime CreationDate { get; set; }
+        #region Properties
+
         public string IssuingBank { get; set; }
         public string Last4Digits { get; set; }
         public decimal AvailableCredit { get; set; }
         public DateTime ClosingDate { get; set; }
-        public int? UserId { get; set; }
+
+        #endregion
 
         public CreditCardAccountDTO()
         {
@@ -29,14 +28,10 @@ namespace BusinessLogic.Dtos_Components
             : base(name, currency, creationDate, userId)
 
         {
-            Name = name;
-            Currency = currency;
-            CreationDate = creationDate;
             IssuingBank = issuingBank;
             Last4Digits = last4digits;
             AvailableCredit = availableCredit;
             ClosingDate = closingDate;
-            UserId = userId;
         }
     }
 }

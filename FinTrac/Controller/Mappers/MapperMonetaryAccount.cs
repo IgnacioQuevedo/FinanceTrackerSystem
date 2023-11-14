@@ -17,7 +17,7 @@ public abstract class MapperMonetaryAccount
         MonetaryAccountDTO monetaryAccountDTO =
             new MonetaryAccountDTO(myMonetaryAccount.Name, myMonetaryAccount.Amount, (CurrencyEnumDTO)myMonetaryAccount.Currency, myMonetaryAccount.CreationDate, myMonetaryAccount.UserId);
 
-        monetaryAccountDTO.MonetaryAccountId = myMonetaryAccount.AccountId;
+        monetaryAccountDTO.AccountId = myMonetaryAccount.AccountId;
 
         return monetaryAccountDTO;
     }
@@ -50,7 +50,7 @@ public abstract class MapperMonetaryAccount
             MonetaryAccount monetaryAccount =
                 new MonetaryAccount(myMonetaryAccountDTO.Name, myMonetaryAccountDTO.Amount, (CurrencyEnum)myMonetaryAccountDTO.Currency, myMonetaryAccountDTO.CreationDate);
 
-            monetaryAccount.AccountId = myMonetaryAccountDTO.MonetaryAccountId;
+            monetaryAccount.AccountId = myMonetaryAccountDTO.AccountId;
             monetaryAccount.UserId = myMonetaryAccountDTO.UserId;
 
             return monetaryAccount;
