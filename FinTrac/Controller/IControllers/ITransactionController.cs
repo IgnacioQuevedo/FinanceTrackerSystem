@@ -13,7 +13,12 @@ namespace Controller.IControllers
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId);
         
-        public List<TransactionDTO> GetALlTransactions(int accountId);
+        public List<TransactionDTO> GetAllTransactions(int accountId);
+
+        public AccountDTO FindAccountById(int? accountId, int? userId);
         
+        public List<CategoryDTO> GetAllCategories(int userConnectedId);
+        public CategoryDTO FindCategory(int idOfCategoryToFind, int idUserConnected);
+
     }
 }

@@ -1,9 +1,9 @@
-﻿@page "/Transactions/{accountId:int}/EditTransaction/{transactionId:int}"
+﻿@inject ITransactionController TransactionController
 
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Transaction_Components;
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
+
+@page "/Transactions/{accountId:int}/EditTransaction/{transactionId:int}"
+
+
 
 <h3>Transaction Creation</h3>
 
@@ -22,26 +22,34 @@
     <div>
         <label for="title">Currency Type</label>
         <select class="form-select" aria-label="Default select example" @bind="currencyType">
-            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
-            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+            <option value="@CurrencyEnumDTO.UY">@CurrencyEnumDTO.UY</option>
+            <option value="@CurrencyEnumDTO.USA">@CurrencyEnumDTO.USA</option>
+            <option value="@CurrencyEnumDTO.EUR">@CurrencyEnumDTO.EUR</option>
         </select>
     </div>
 
     <br />
     <div>
         <label for="title">Category</label>
-        <select class="form-select" aria-label="Default select example" @bind="categoryId">
-            @foreach (var category in myCategories)
+        <select class="form-select" aria-label="Default select example" @onchange="onChangeCategories">
+            @foreach (var category in allCategories)
             {
-                <option value="@category.CategoryId">@category.Name</option>
+                if (category.CategoryId == categoryOfTransaction.CategoryId)
+                {
+                    <option value="@category.CategoryId" selected>@category.Name</option>
+                }
+                else
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
             }
         </select>
     </div>
 
     <br />
 
-    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/Transactions">Cancelar</a>
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Save Changes</button>
+    <button type="button" class="btn btn-danger" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@accountId}"))">Cancel</button>
 </form>
 
 <br />
@@ -51,20 +59,21 @@
 {
     private string title;
     private decimal amount;
-    private TypeEnum type;
-    private CurrencyEnum currencyType;
-    private TypeEnum transactionType;
+    private TypeEnumDTO type;
+    private CurrencyEnumDTO currencyType;
+    private TypeEnumDTO transactionType;
     private DateTime creationDate;
-    private int categoryId;
+    private AccountDTO accountOfTransaction;
 
     private decimal oldAmount;
 
-    private List<Category> myCategories;
-    private Category category;
+    private List<CategoryDTO> allCategories;
+    
+    private CategoryDTO categoryOfTransaction;
 
-    private Account accountSelected;
+    private AccountDTO accountSelected;
 
-    private Transaction transactionUpdated;
+    private TransactionDTO transactionUpdated;
 
     [Parameter]
     public int accountId { get; set; }
@@ -73,21 +82,24 @@
     public int transactionId { get; set; }
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO userConnected { get; set; }
 
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        title = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Title;
-        oldAmount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
-        amount = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Amount;
-        type = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Type;
-        creationDate = mainUser.MyAccounts[accountId].MyTransactions[transactionId].CreationDate;
-        currencyType = mainUser.MyAccounts[accountId].MyTransactions[transactionId].Currency;
-        category = mainUser.MyAccounts[accountId].MyTransactions[transactionId].TransactionCategory;
-        accountSelected = mainUser.MyAccounts[accountId];
-        myCategories = mainUser.GetCategories();
+        transactionUpdated = TransactionController.FindTransaction(transactionId, accountId, userConnected.UserId);
+        accountOfTransaction = TransactionController.FindAccountById(accountId,userConnected.UserId);
+        allCategories = TransactionController.GetAllCategories(userConnected.UserId);
+        
+        title = transactionUpdated.Title;
+        amount = transactionUpdated.Amount;
+        type = transactionUpdated.Type;
+        creationDate = transactionUpdated.CreationDate;
+        currencyType = transactionUpdated.Currency;
+        
+        categoryOfTransaction = transactionUpdated.TransactionCategory;
+        
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
 
@@ -97,10 +109,10 @@
     {
         try
         {
-            transactionUpdated = new Transaction(title, amount, creationDate, currencyType, type, category);
+            transactionUpdated = new TransactionDTO(title, creationDate, amount, currencyType, type, categoryOfTransaction,accountId);
             transactionUpdated.TransactionId = transactionId;
-            accountSelected.ModifyTransaction(transactionUpdated);
-            accountSelected.UpdateAccountAfterModify(transactionUpdated, oldAmount);
+            
+            TransactionController.UpdateTransaction(transactionUpdated,userConnected.UserId);
             NavigationManager.NavigateTo($"/Transactions/{accountId}");
         }
 
@@ -109,7 +121,12 @@
             errorTxt = ExceptionTransaction.Message;
             ErrorAlert.ShowErrorAlert();
         }
-
+    }
+    
+    private void onChangeCategories(ChangeEventArgs elementSelected)
+    {
+        string stringValue = elementSelected.Value.ToString();
+        categoryOfTransaction = TransactionController.FindCategory(int.Parse(stringValue), userConnected.UserId);
     }
 
 }

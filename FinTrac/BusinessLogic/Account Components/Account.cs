@@ -72,7 +72,6 @@ namespace BusinessLogic.Account_Components
 
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            
             MyTransactions.Add(transactionToBeAdded);
         }
         

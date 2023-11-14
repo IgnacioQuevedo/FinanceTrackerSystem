@@ -113,7 +113,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region Find Methods
+        #region Find Transaction Methods
 
         [TestMethod]
         public void GivenTransactionDTO_ShouldBePossibleToFindTheTransactionOnDb()
@@ -134,7 +134,7 @@ namespace ControllerTests
             Assert.AreEqual(_controller.FindCategoryInDb(categoryOfTransactionDTO),
                 transactionFound.TransactionCategory);
 
-            Assert.AreEqual(_controller.FindAccountById(monetaryAccount.MonetaryAccountId),
+            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId),
                 transactionFound.TransactionAccount);
         }
 
@@ -172,6 +172,37 @@ namespace ControllerTests
 
         #endregion
 
+        #region Find Account Methods
+
+        [TestMethod]
+        public void GivenAnAccountId_ShouldBePossibleToFindHimInDb()
+        {
+            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
+            monetaryAccount.AccountId = 1;
+
+            Assert.AreEqual(monetaryAccount.AccountId, accountToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate, accountToFound.CreationDate);
+            Assert.AreEqual((CurrencyEnum)monetaryAccount.Currency, accountToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name, accountToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId, accountToFound.UserId);
+        }
+
+        [TestMethod]
+        public void GivenAnAccountId_ShouldBePossibleToFindIt()
+        {
+            AccountDTO accountDtoToFound =
+                _controller.FindAccountById(monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+
+            Assert.AreEqual(monetaryAccount.AccountId, accountDtoToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate, accountDtoToFound.CreationDate);
+            Assert.AreEqual(monetaryAccount.Currency, accountDtoToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name, accountDtoToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId, accountDtoToFound.UserId);
+        }
+
+        #endregion
+
+
         #region Update Transaction
 
         [TestMethod]
@@ -199,7 +230,7 @@ namespace ControllerTests
             transactionDtoWithUpdates.TransactionId = 2;
             _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
 
-            Account accountInDb = _controller.FindAccountById(monetaryAccount.MonetaryAccountId);
+            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
             Transaction transactionUpdatedInDb = _controller.FindTransactionInDb(
                 transactionDtoWithUpdates.TransactionId, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
 

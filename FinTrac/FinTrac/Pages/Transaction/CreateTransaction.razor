@@ -1,11 +1,6 @@
-﻿@page "/Transactions/{accountId:int}/CreateTransaction"
+﻿@inject ITransactionController TransactionController
 
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Transaction_Components;
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.ExchangeHistory_Components;
-@using BusinessLogic.Enums;
-@using BusinessLogic.Exceptions;
+@page "/Transactions/{accountId:int}/CreateTransaction"
 
 <h3>Transaction Creation</h3>
 
@@ -49,15 +44,15 @@
         <label for="title">Type</label>
         <select class="form-select" aria-label="Default select example" @bind="transactionType">
 
-            @if(accountSelected is MonetaryAccount)
+            @if(accountSelected is MonetaryAccountDTO)
             {
-                <option value="@TypeEnum.Income">@TypeEnum.Income</option>
-                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+                <option value="@TypeEnumDTO.Income">@TypeEnumDTO.Income</option>
+                <option value="@TypeEnumDTO.Outcome">@TypeEnumDTO.Outcome</option>
             }
 
             else
             {
-                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+                <option value="@TypeEnumDTO.Outcome">@TypeEnumDTO.Outcome</option>
             }
 
         </select>
@@ -66,18 +61,30 @@
     <br />
     <div>
         <label for="title">Category</label>
-        <select class="form-select" aria-label="Default select example" @bind="categoryId">
-            @foreach (var category in myCategories)
+        <select class="form-select" aria-label="Default select example" @onchange="OnChangeCategories">
+            <option disabled selected> Select a category for your transaction</option>
+            @foreach (var category in allCategories)
             {
-                <option value="@category.CategoryId">@category.Name</option>
+                if (accountSelected is MonetaryAccountDTO)
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
+                else
+                {
+                    if (category.Type == TypeEnumDTO.Outcome)
+                    {
+                        <option value="@category.CategoryId">@category.Name</option>
+                    }
+                }
+                
             }
         </select>
     </div>
 
     <br />
 
-    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/Accounts">Cancelar</a>
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Save Changes</button>
+    <a href="/Accounts" class="btn btn-danger">Cancelar</a>
 </form>
 
 @if (SuccesAlert.IsSucess)
@@ -91,25 +98,27 @@
     private string title;
     private decimal amount;
     private DateTime creationDate;
-    private CurrencyEnum currencyType;
-    private TypeEnum transactionType;
-    private int categoryId;
+    private CurrencyEnumDTO currencyType;
+    private TypeEnumDTO transactionType;
+    private string categoryName;
 
-    private Category category;
-    private Account accountSelected;
-    private List<Category> myCategories;
-    private Transaction transactionToAdd;
+    private CategoryDTO categoryToAdd;
+    private AccountDTO accountSelected;
+    private List<CategoryDTO> allCategories;
+    private TransactionDTO transactionToAdd;
 
+    
+    [CascadingParameter]
+    public UserDTO userConnected { get; set; }
+    
     [Parameter]
     public int accountId { get; set; }
     public string errorTxt {get;set;}
-
-    [CascadingParameter]
-    public User mainUser { get; set; }
-
+    
     protected override void OnInitialized()
     {
         ResetValues();
+        
     }
 
     private void ResetValues()
@@ -117,14 +126,13 @@
         title = "";
         amount = 0;
         creationDate = DateTime.Now.Date;
-        transactionType = TypeEnum.Outcome;
-        currencyType = CurrencyEnum.UY;
-        accountSelected = mainUser.MyAccounts[accountId];
-        myCategories = mainUser.GetCategories();
-        category = new Category();
-        if (myCategories.Count == 0) { categoryId = -1; }
-        else { categoryId = myCategories[0].CategoryId; }
-
+        transactionType = TypeEnumDTO.Outcome;
+        currencyType = CurrencyEnumDTO.UY;
+        
+        
+        accountSelected = TransactionController.FindAccountById(accountId,userConnected.UserId);
+        allCategories = TransactionController.GetAllCategories(userConnected.UserId);
+        
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
    
@@ -137,20 +145,12 @@
     {
         try
         {
-            if (accountSelected.Currency == CurrencyEnum.USA)
-            {
-                Transaction.CheckExistenceOfExchange(creationDate, mainUser.GetExchangesHistory());
-            }
-            if(categoryId == -1)
-            {
-                throw new ExceptionAccountManagement("ERROR - Must select a category");
-            }
-            category = myCategories[categoryId];
-            transactionToAdd = new Transaction(title, amount, creationDate, accountSelected.Currency, transactionType, category);
-            accountSelected.AddTransaction(transactionToAdd);
-            accountSelected.UpdateAccountMoneyAfterAdd(transactionToAdd);
+            transactionToAdd = new TransactionDTO(title,creationDate,amount, accountSelected.Currency, transactionType, 
+                categoryToAdd,accountId);
+            
+            TransactionController.CreateTransaction(transactionToAdd);
             SuccesAlert.ShowSucessAlert();
-            await Task.Delay(2000);
+            await Task.Delay(1500);
             ResetValues();
 
         }
@@ -161,13 +161,11 @@
             ErrorAlert.ShowErrorAlert();
         }
     }
-
-    string GetFormattedDate(DateTime date)
+    
+    private void OnChangeCategories(ChangeEventArgs elementSelected)
     {
-        return date.ToString("dd/MM/yyyy");
+        string stringValue = elementSelected.Value.ToString();
+        categoryToAdd = TransactionController.FindCategory(int.Parse(stringValue), userConnected.UserId);
     }
-
-
-
-
+    
 }
