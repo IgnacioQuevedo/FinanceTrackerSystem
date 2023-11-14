@@ -69,7 +69,9 @@ namespace TestProject1
         }
 
         #endregion
-        
+
+        #region CreationDate
+
         [TestMethod]
         public void GivenCreationDate_ShouldBeSetted()
         {
@@ -78,5 +80,7 @@ namespace TestProject1
 
             Assert.AreEqual(accountDTO.CreationDate, creationDate);
         }
+
+        #endregion
     }
 }
