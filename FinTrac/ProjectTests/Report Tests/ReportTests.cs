@@ -33,6 +33,7 @@ public class ReportTests
     private Transaction transactionWanted2;
     private Transaction transactionUnWanted1;
     private Transaction transactionUnWanted2;
+    private MovementInXDays movements; 
 
     [TestInitialize]
     public void Initialize()
@@ -95,6 +96,9 @@ public class ReportTests
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
         transactionUnWanted2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+        
+        
+        movements = new MovementInXDays();
     }
 
     #endregion
@@ -323,7 +327,6 @@ public class ReportTests
     public void GivenArrayOfSpendings_ShouldBeSetToMovementInXDays()
     {
         int[] spendings = new int [5];
-        MovementInXDays movements = new MovementInXDays();
 
         movements.Spendings = spendings;
         Assert.AreEqual(spendings, movements.Spendings);
@@ -333,7 +336,6 @@ public class ReportTests
     public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
     {
         int[] incomes = new int [5];
-        MovementInXDays movements = new MovementInXDays();
 
         movements.Incomes = incomes;
         Assert.AreEqual(incomes, movements.Incomes);
@@ -342,24 +344,16 @@ public class ReportTests
     [TestMethod]
     public void GivenRangeOfDates_ShouldBeSetToMovementInXDays()
     {
-
         RangeOfDates rangeOfDates = 
-            new RangeOfDates(new DateTime(2023, 11, 14).Date, new DateTime(2023, 11, 28).Date);
+            new RangeOfDates
+                (new DateTime(2023, 11, 14).Date,
+                    new DateTime(2023, 11, 28).Date);
         
-        MovementInXDays movements = new MovementInXDays();
         movements.RangeOfDates = rangeOfDates;
         
         Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
     #endregion
     
     
