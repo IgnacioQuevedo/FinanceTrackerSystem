@@ -113,7 +113,7 @@ namespace ControllerTests
 
         #endregion
 
-        #region Find Methods
+        #region Find Transaction Methods
 
         [TestMethod]
         public void GivenTransactionDTO_ShouldBePossibleToFindTheTransactionOnDb()
@@ -170,35 +170,38 @@ namespace ControllerTests
             _controller.FindTransaction(-1, monetaryAccount.UserId, monetaryAccount.MonetaryAccountId);
         }
 
+        #endregion
+
+        #region Find Account Methods
 
         [TestMethod]
         public void GivenAnAccountId_ShouldBePossibleToFindHimInDb()
         {
-
             Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
             monetaryAccount.AccountId = 1;
-            
-            Assert.AreEqual(monetaryAccount.AccountId,accountToFound.AccountId);
-            Assert.AreEqual(monetaryAccount.CreationDate,accountToFound.CreationDate);
-            Assert.AreEqual((CurrencyEnum) monetaryAccount.Currency,accountToFound.Currency);
-            Assert.AreEqual(monetaryAccount.Name,accountToFound.Name);
-            Assert.AreEqual(monetaryAccount.UserId,accountToFound.UserId);
+
+            Assert.AreEqual(monetaryAccount.AccountId, accountToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate, accountToFound.CreationDate);
+            Assert.AreEqual((CurrencyEnum)monetaryAccount.Currency, accountToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name, accountToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId, accountToFound.UserId);
         }
+
         [TestMethod]
         public void GivenAnAccountId_ShouldBePossibleToFindIt()
         {
+            AccountDTO accountDtoToFound =
+                _controller.FindAccountById(monetaryAccount.MonetaryAccountId, _userConnected.UserId);
 
-            AccountDTO accountDtoToFound = _controller.FindAccountById(monetaryAccount.MonetaryAccountId,_userConnected.UserId);
-            
-            Assert.AreEqual(monetaryAccount.AccountId,accountDtoToFound.AccountId);
-            Assert.AreEqual(monetaryAccount.CreationDate,accountDtoToFound.CreationDate);
-            Assert.AreEqual(monetaryAccount.Currency,accountDtoToFound.Currency);
-            Assert.AreEqual(monetaryAccount.Name,accountDtoToFound.Name);
-            Assert.AreEqual(monetaryAccount.UserId,accountDtoToFound.UserId);
+            Assert.AreEqual(monetaryAccount.AccountId, accountDtoToFound.AccountId);
+            Assert.AreEqual(monetaryAccount.CreationDate, accountDtoToFound.CreationDate);
+            Assert.AreEqual(monetaryAccount.Currency, accountDtoToFound.Currency);
+            Assert.AreEqual(monetaryAccount.Name, accountDtoToFound.Name);
+            Assert.AreEqual(monetaryAccount.UserId, accountDtoToFound.UserId);
         }
-        
 
         #endregion
+
 
         #region Update Transaction
 
