@@ -16,6 +16,12 @@ public class AccountDTO
     }
     public AccountDTO(int accountId, bool b, string name, CurrencyEnumDTO currency, DateTime creationDate, int userId)
     {
-        throw new NotImplementedException();
+        AccountId = accountId;
+        isMonetary = b;
+        Name = name;
+        Currency = currency;
+        CreationDate = creationDate;
+        UserId = userId;
+
     }
 }
