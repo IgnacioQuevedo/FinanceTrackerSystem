@@ -98,7 +98,20 @@ namespace TestProject1
         [TestMethod]
         public void GivenValuesToCreate_AccountDTOShouldBeCreated()
         {
+            int accountId = 1;
+            bool isMonetary = true;
+            string name = "Brou";
+            CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
+            DateTime creationDate = DateTime.Now.Date;
+            int userId = 1;
+
+            AccountDTO accountDTO = new AccountDTO(accountId, isMonetary, name, currency, creationDate, userId);
             
+            Assert.AreEqual(accountDTO.AccountId,accountId);
+            Assert.AreEqual(accountDTO.isMonetary,isMonetary);
+            Assert.AreEqual(accountDTO.Name,name);
+            Assert.AreEqual(accountDTO.Currency,currency);
+            Assert.AreEqual(accountDTO.CreationDate,creationDate);
         }
     }
 }
