@@ -30,20 +30,7 @@ namespace TestProject1
         }
 
         #endregion
-
-        #region IsMonetary or not
-
-        [TestMethod]
-        public void GivenBoolThatDeterminesIfTheAccountIsMonetary_ShouldBeSetted()
-        {
-            bool isMonetary = false;
-            accountDTO.IsMonetary = isMonetary;
-
-            Assert.IsFalse(isMonetary);
-        }
-
-        #endregion
-
+        
         #region Name
 
         [TestMethod]
@@ -99,16 +86,14 @@ namespace TestProject1
         public void GivenValuesToCreate_AccountDTOShouldBeCreated()
         {
             int accountId = 1;
-            bool isMonetary = true;
             string name = "Brou";
             CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
             DateTime creationDate = DateTime.Now.Date;
             int userId = 1;
 
-            AccountDTO accountDTO = new AccountDTO(accountId, isMonetary, name, currency, creationDate, userId);
+            AccountDTO accountDTO = new AccountDTO(name, currency, creationDate, userId);
             
             Assert.AreEqual(accountDTO.AccountId,accountId);
-            Assert.AreEqual(accountDTO.IsMonetary,isMonetary);
             Assert.AreEqual(accountDTO.Name,name);
             Assert.AreEqual(accountDTO.Currency,currency);
             Assert.AreEqual(accountDTO.CreationDate,creationDate);
