@@ -184,6 +184,7 @@ namespace ControllerTests
             Assert.AreEqual(monetaryAccount.Name,accountToFound.Name);
             Assert.AreEqual(monetaryAccount.UserId,accountToFound.UserId);
         }
+        [TestMethod]
         public void GivenAnAccountId_ShouldBePossibleToFindIt()
         {
 

@@ -29,7 +29,7 @@ namespace BusinessLogic.Dtos_Components
             Name = name;
             Amount = amount;
             Currency = currency;
-            CreationDate = creationDate;
+            CreationDate = creationDate.Date;
             UserId = userId;
         }
 
