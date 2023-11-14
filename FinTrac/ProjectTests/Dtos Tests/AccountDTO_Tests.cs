@@ -111,10 +111,21 @@ namespace TestProject1
             {
                 isASubClassFromAccount = true;
             }
-            
             Assert.IsTrue(isASubClassFromAccount);
+        }
+        [TestMethod]
+        public void GivenACreditCardAccount_ValidateThatItCanBeAppliedAsAPolimorficObject()
+        {
+            bool isASubClassFromAccount = false;
+            DateTime closingDate = DateTime.MaxValue;
+            CreditCardAccountDTO creditCardAccountDTO = new CreditCardAccountDTO("Itau volar", CurrencyEnumDTO.UY,
+                DateTime.Now, "Itau", "1234", 1000, closingDate, 1);
 
-
+            if (creditCardAccountDTO is AccountDTO)
+            {
+                isASubClassFromAccount = true;
+            }
+            Assert.IsFalse(isASubClassFromAccount);
         }
     }
 }
