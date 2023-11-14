@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Transaction_Components;
@@ -145,7 +146,6 @@ namespace BusinessLogic.Report_Components
             {
                 throw new ExceptionReport("Error: Initial date is bigger than final date");
             }
-
             return filteredListOfSpending;
         }
 
@@ -339,6 +339,17 @@ namespace BusinessLogic.Report_Components
 
     }
 
+
+
+    public class MovementInXDays
+    {
+        
+        
+    }
+    
+    
+    
+    
     #endregion
 }
 

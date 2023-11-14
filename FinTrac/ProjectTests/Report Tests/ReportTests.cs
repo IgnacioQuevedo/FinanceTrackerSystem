@@ -310,4 +310,21 @@ public class ReportTests
     }
 
     #endregion
+
+
+    [TestMethod]
+    public void GivenArrayOfSpendings_ShouldBeSetToMovementInXDays()
+    {
+        MovementInXDays movements = new MovementInXDays();
+        int[] spendings = new int [5];
+        movements.Spendings = spendings;
+        
+        Assert.AreEqual(spendings,movements.Spendings);
+
+
+    }
+    
+    
+    
+    
 }
