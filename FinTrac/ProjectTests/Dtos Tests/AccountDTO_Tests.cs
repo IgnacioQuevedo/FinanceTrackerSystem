@@ -31,6 +31,8 @@ namespace TestProject1
 
         #endregion
 
+        #region IsMonetary or not
+
         [TestMethod]
         public void GivenBoolThatDeterminesIfTheAccountIsMonetary_ShouldBeSetted()
         {
@@ -39,5 +41,7 @@ namespace TestProject1
 
             Assert.IsFalse(isMonetary);
         }
+
+        #endregion
     }
 }
