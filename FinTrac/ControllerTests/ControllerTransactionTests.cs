@@ -116,7 +116,7 @@ namespace ControllerTests
         #region Find Methods
 
         [TestMethod]
-        public void GivenTransactionDTO_ShouldBePossibleToFindItOnDb()
+        public void GivenTransactionDTO_ShouldBePossibleToFindTheTransactionOnDb()
         {
             TransactionDTO transactionDtoToFind = transactionDtoToAdd;
 
@@ -224,6 +224,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Delete Transaction
+
         [TestMethod]
         public void GivenTransactionDTOToDelete_ShouldDeleteItFromDb()
         {
@@ -236,5 +238,11 @@ namespace ControllerTests
             Assert.AreEqual(amountOfTransactionsPostDelete, amountOfTransactionsPreDelete -1);
 
         }
+
+        #endregion
+        
+        
+        
+        
     }
 }
