@@ -82,8 +82,6 @@
     private List<TransactionDTO>? transactionList;
     private AccountDTO accountSelected;
     private TransactionDTO transactionBeforeDelete;
-    private DateTime dateOfDuplicate;
-    private int duplicateId;
     private TransactionDTO transactionDuplicated;
     private bool showDuplicateScreen;
 
@@ -103,20 +101,18 @@
 
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
-        dateOfDuplicate = DateTime.Now.Date;
-        duplicateId = -1;
         showDuplicateScreen = false;
     }
 
-    private void DeleteTransaction(int transactionId)
+    private async Task DeleteTransaction(int transactionId)
     {
         try
         {
             TransactionDTO transactionDtoToDelete = TransactionController.FindTransaction(transactionId, accountId, userConnected.UserId);
             TransactionController.DeleteTransaction(transactionDtoToDelete);
-;
+            ResetValues();
+            await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
-            OnInitialized();
         }
         catch (Exception ExceptionTransaction)
         {
@@ -129,7 +125,8 @@
     {
         TransactionController.CreateTransaction(transactionDuplicated);
         showDuplicateScreen = false;
-        OnInitialized();
+        SuccesAlert.ShowSucessAlert();
+        ResetValues();
     }
 
     private void DuplicateTransaction(int transactionId)
@@ -140,14 +137,25 @@
         transactionDuplicated = new TransactionDTO(transactionToDuplicate.Title, transactionToDuplicate.CreationDate, 
             transactionToDuplicate.Amount, transactionToDuplicate.Currency, 
             transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory, userConnected.UserId);
-       
-        duplicateId = transactionId;
+        
         showDuplicateScreen = true;
     }
 
     string GetFormattedDate(DateTime date)
     {
         return date.ToString("dd/MM/yyyy");
+    }
+    
+    private void ResetValues()
+    {
+    // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            OnInitialized();
+            StateHasChanged();
+        });
     }
 
 

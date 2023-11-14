@@ -704,7 +704,8 @@ namespace Controller
                 transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
 
             accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
-            _userRepo.Update(_userConnected);
+            accountWhereIsTransaction.UpdateAccountAfterDelete(transactionToDelete);
+            _userRepo.UpdateDbWhenDeleting(_userConnected,transactionToDelete);
         }
 
         public List<TransactionDTO> GetAllTransactions(int accountId)
