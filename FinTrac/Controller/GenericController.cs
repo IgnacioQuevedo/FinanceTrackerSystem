@@ -600,7 +600,6 @@ namespace Controller
 
         #endregion
 
-
         #region Transaction Section
 
         public void CreateTransaction(TransactionDTO dtoToAdd)
