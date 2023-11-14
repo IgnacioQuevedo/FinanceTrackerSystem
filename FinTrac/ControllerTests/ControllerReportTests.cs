@@ -132,7 +132,7 @@ namespace ControllerTests
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
-            Assert.AreEqual(filteredListDTO.Count, 0);
+            Assert.AreEqual(filteredListDTO.Count, 2);
         }
 
         #endregion
