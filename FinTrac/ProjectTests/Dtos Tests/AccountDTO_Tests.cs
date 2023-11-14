@@ -44,6 +44,7 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
         public void GivenName_ShouldBeSetted()
         {
             string name = "Brou";
