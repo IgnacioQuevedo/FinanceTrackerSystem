@@ -125,7 +125,7 @@ namespace TestProject1
             {
                 isASubClassFromAccount = true;
             }
-            Assert.IsFalse(isASubClassFromAccount);
+            Assert.IsTrue(isASubClassFromAccount);
         }
     }
 }
