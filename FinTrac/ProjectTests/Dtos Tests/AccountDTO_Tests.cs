@@ -60,7 +60,7 @@ namespace TestProject1
         #region Currency
 
         [TestMethod]
-        public void GivenCurrencyy_ShouldBeSetted()
+        public void GivenCurrency_ShouldBeSetted()
         {
             CurrencyEnumDTO currency = CurrencyEnumDTO.UY;
             accountDTO.Currency = currency;
@@ -69,5 +69,14 @@ namespace TestProject1
         }
 
         #endregion
+        
+        [TestMethod]
+        public void GivenCreationDate_ShouldBeSetted()
+        {
+            DateTime creationDate = DateTime.Now;
+            accountDTO.CreationDate = creationDate;
+
+            Assert.AreEqual(accountDTO.CreationDate, creationDate);
+        }
     }
 }
