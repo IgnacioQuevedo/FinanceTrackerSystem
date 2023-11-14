@@ -43,5 +43,14 @@ namespace TestProject1
         }
 
         #endregion
+
+        public void GivenName_ShouldBeSetted()
+        {
+            string name = "Brou";
+            accountDTO.Name = name;
+
+            Assert.AreEqual(accountDTO.Name,name);
+
+        }
     }
 }
