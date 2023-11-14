@@ -61,7 +61,7 @@
     <br />
     <div>
         <label for="title">Category</label>
-        <select class="form-select" aria-label="Default select example" @bind="categoryId">
+        <select class="form-select" aria-label="Default select example" @onchange="OnChangeCategories">
             @foreach (var category in allCategories)
             {
                 <option value="@category.CategoryId">@category.Name</option>
@@ -88,7 +88,7 @@
     private DateTime creationDate;
     private CurrencyEnumDTO currencyType;
     private TypeEnumDTO transactionType;
-    private int categoryId;
+    private string categoryName;
 
     private CategoryDTO categoryToAdd;
     private AccountDTO accountSelected;
@@ -106,6 +106,7 @@
     protected override void OnInitialized()
     {
         ResetValues();
+        
     }
 
     private void ResetValues()
@@ -115,6 +116,7 @@
         creationDate = DateTime.Now.Date;
         transactionType = TypeEnumDTO.Outcome;
         currencyType = CurrencyEnumDTO.UY;
+        
         
         accountSelected = TransactionController.FindAccountById(accountId,userConnected.UserId);
         allCategories = TransactionController.GetAllCategories(userConnected.UserId);
@@ -131,7 +133,6 @@
     {
         try
         {
-            categoryToAdd = TransactionController.FindCategory(categoryId,userConnected.UserId);
             transactionToAdd = new TransactionDTO(title,creationDate,amount, accountSelected.Currency, transactionType, 
                 categoryToAdd,accountId);
             
@@ -148,5 +149,14 @@
             ErrorAlert.ShowErrorAlert();
         }
     }
+    
+    private void OnChangeCategories(ChangeEventArgs elementSelected)
+    {
+        string stringValue = elementSelected.Value.ToString();
+        categoryToAdd = TransactionController.FindCategory(int.Parse(stringValue), userConnected.UserId);
+    }
+}
+
+
     
 }
