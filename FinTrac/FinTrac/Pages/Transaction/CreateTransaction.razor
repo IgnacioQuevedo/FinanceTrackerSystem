@@ -133,7 +133,7 @@
         {
             categoryToAdd = TransactionController.FindCategory(categoryId,userConnected.UserId);
             transactionToAdd = new TransactionDTO(title,creationDate,amount, accountSelected.Currency, transactionType, 
-                categoryToAdd,userConnected.UserId);
+                categoryToAdd,accountId);
             
             TransactionController.CreateTransaction(transactionToAdd);
             SuccesAlert.ShowSucessAlert();

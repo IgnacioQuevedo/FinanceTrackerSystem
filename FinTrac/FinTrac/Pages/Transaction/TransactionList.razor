@@ -97,8 +97,7 @@
     protected override void OnInitialized()
     {
         accountSelected = TransactionController.FindAccountById(accountId,userConnected.UserId);
-        transactionList = TransactionController.GetAllTransactions(userConnected.UserId);
-
+        transactionList = TransactionController.GetAllTransactions(accountId);
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
         showDuplicateScreen = false;
@@ -136,7 +135,7 @@
         
         transactionDuplicated = new TransactionDTO(transactionToDuplicate.Title, transactionToDuplicate.CreationDate, 
             transactionToDuplicate.Amount, transactionToDuplicate.Currency, 
-            transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory, userConnected.UserId);
+            transactionToDuplicate.Type, transactionToDuplicate.TransactionCategory, accountId);
         
         showDuplicateScreen = true;
     }

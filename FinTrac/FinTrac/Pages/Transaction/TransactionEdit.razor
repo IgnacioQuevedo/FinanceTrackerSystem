@@ -104,7 +104,7 @@
         try
         {
             category = TransactionController.FindCategory(categoryId,userConnected.UserId);
-            transactionUpdated = new TransactionDTO(title, creationDate, amount, currencyType, type, category,userConnected.UserId);
+            transactionUpdated = new TransactionDTO(title, creationDate, amount, currencyType, type, category,accountId);
             transactionUpdated.TransactionId = transactionId;
             
             TransactionController.UpdateTransaction(transactionUpdated,userConnected.UserId);
