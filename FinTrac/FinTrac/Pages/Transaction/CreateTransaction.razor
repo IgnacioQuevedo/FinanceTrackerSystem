@@ -62,6 +62,7 @@
     <div>
         <label for="title">Category</label>
         <select class="form-select" aria-label="Default select example" @onchange="OnChangeCategories">
+            <option disabled selected> Select a category for your transaction</option>
             @foreach (var category in allCategories)
             {
                 <option value="@category.CategoryId">@category.Name</option>
