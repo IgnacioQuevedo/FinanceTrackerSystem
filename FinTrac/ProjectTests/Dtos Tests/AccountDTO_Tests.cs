@@ -109,7 +109,7 @@ namespace TestProject1
 
             if (monetaryPolimorfed is AccountDTO)
             {
-                isASubClassFromAccount = false;
+                isASubClassFromAccount = true;
             }
             else
             {
