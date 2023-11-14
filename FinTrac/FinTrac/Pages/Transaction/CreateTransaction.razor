@@ -71,8 +71,8 @@
 
     <br />
 
-    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Guardar cambios</button>
-    <a href="/Accounts">Cancelar</a>
+    <button type="button" class="btn btn-primary" @onclick="SaveChanges">Save Changes</button>
+    <a href="/Accounts" class="btn btn-danger">Cancelar</a>
 </form>
 
 @if (SuccesAlert.IsSucess)
@@ -155,8 +155,5 @@
         string stringValue = elementSelected.Value.ToString();
         categoryToAdd = TransactionController.FindCategory(int.Parse(stringValue), userConnected.UserId);
     }
-}
-
-
     
 }
