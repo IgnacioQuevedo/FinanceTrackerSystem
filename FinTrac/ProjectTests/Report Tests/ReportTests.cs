@@ -338,7 +338,20 @@ public class ReportTests
         movements.Incomes = incomes;
         Assert.AreEqual(incomes, movements.Spendings);
     }
-    
+
+    [TestMethod]
+    public void GivenRangeOfDates_ShouldBeSetToMovementInXDays()
+    {
+
+        RangeOfDates rangeOfDates = 
+            new RangeOfDates(new DateTime(2023, 11, 14).Date, new DateTime(2023, 11, 28).Date);
+        
+        MovementInXDays movements = new MovementInXDays();
+        movements.RangeOfDates = rangeOfDates;
+        
+        Assert.AreEqual(rangeOfDates,MovementInXDays.RangeOfDates);
+
+    }
     
     
     
