@@ -6,9 +6,9 @@ namespace TestProject1
     [TestClass]
     public class AccountDTO_Tests
     {
-        private AccountDTO accountDTO;
-
         #region Initialize
+
+        private AccountDTO accountDTO;
 
         [TestInitialize]
         public void Initialize()
@@ -83,12 +83,22 @@ namespace TestProject1
 
         #endregion
 
+        #region Setting User id
+
         [TestMethod]
         public void GivenUserIdToSet_ShouldBeSetted()
         {
             int userId = 1;
             accountDTO.UserId = userId;
             Assert.AreEqual(accountDTO.UserId, userId);
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void GivenValuesToCreate_AccountDTOShouldBeCreated()
+        {
+            
         }
     }
 }
