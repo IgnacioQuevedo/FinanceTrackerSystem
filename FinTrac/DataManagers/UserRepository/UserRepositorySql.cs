@@ -75,7 +75,7 @@ public class UserRepositorySql
     }
 
 
-    public User FindUserInDb(int userId)
+    public User FindUserInDb(int? userId)
     {
         return _database.Users.FirstOrDefault(u => u.UserId == userId);
     }

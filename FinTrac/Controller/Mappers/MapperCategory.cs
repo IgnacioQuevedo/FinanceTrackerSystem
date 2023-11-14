@@ -28,7 +28,6 @@ public abstract class MapperCategory
                 new Category(categoryDTO_ToConvert.Name, (StatusEnum)categoryDTO_ToConvert.Status, (TypeEnum)categoryDTO_ToConvert.Type);
 
             categoryConverted.UserId = categoryDTO_ToConvert.UserId;
-
             categoryConverted.CategoryId = categoryDTO_ToConvert.CategoryId;
             
             return categoryConverted;

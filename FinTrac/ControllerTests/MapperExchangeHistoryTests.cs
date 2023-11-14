@@ -139,10 +139,10 @@ namespace ControllerTests
             exchangeHistoryDTOList.Add(exchangeHistory1);
             exchangeHistoryDTOList.Add(exchangeHistory2);
 
-            List<ExchangeHistory> categoryList = MapperExchangeHistory.ToListOfExchangeHistory(exchangeHistoryDTOList);
+            List<ExchangeHistory> exchangeHistories = MapperExchangeHistory.ToListOfExchangeHistory(exchangeHistoryDTOList);
 
-            Assert.IsInstanceOfType(categoryList[0], typeof(ExchangeHistory));
-            Assert.IsInstanceOfType(categoryList[1], typeof(ExchangeHistory));
+            Assert.IsInstanceOfType(exchangeHistories[0], typeof(ExchangeHistory));
+            Assert.IsInstanceOfType(exchangeHistories[1], typeof(ExchangeHistory));
         }
 
 
