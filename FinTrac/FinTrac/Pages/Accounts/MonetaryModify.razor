@@ -56,7 +56,7 @@
         try
         {
             accountUpdated = new MonetaryAccountDTO(name, accountToUpdate.Amount, accountToUpdate.Currency, accountToUpdate.CreationDate, UserConnected.UserId);
-            accountUpdated.MonetaryAccountId = accountId;
+            accountUpdated.AccountId = accountId;
 
             MonetaryController.UpdateMonetaryAccount(accountUpdated);
             NavigationManager.NavigateTo("/Accounts");

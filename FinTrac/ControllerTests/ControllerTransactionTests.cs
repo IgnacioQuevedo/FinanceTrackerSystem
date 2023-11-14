@@ -47,7 +47,7 @@ namespace ControllerTests
                 DateTime.Now, _userConnected.UserId);
 
             categoryOfTransactionDTO.CategoryId = 1;
-            monetaryAccount.MonetaryAccountId = 1;
+            monetaryAccount.AccountId = 1;
 
             _controller.CreateCategory(categoryOfTransactionDTO);
             _controller.CreateMonetaryAccount(monetaryAccount);
@@ -121,7 +121,7 @@ namespace ControllerTests
             TransactionDTO transactionDtoToFind = transactionDtoToAdd;
 
             Transaction transactionFound = _controller.FindTransactionInDb(transactionDtoToFind.TransactionId,
-                monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+                monetaryAccount.AccountId, _userConnected.UserId);
 
             Assert.AreEqual(transactionDtoToFind.TransactionId, transactionFound.TransactionId);
             Assert.AreEqual(transactionDtoToFind.Title, transactionFound.Title);
@@ -134,7 +134,7 @@ namespace ControllerTests
             Assert.AreEqual(_controller.FindCategoryInDb(categoryOfTransactionDTO),
                 transactionFound.TransactionCategory);
 
-            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId),
+            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.AccountId),
                 transactionFound.TransactionAccount);
         }
 
@@ -142,14 +142,14 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenTransactionDTONotInDb_ShouldThrowException()
         {
-            _controller.FindTransactionInDb(-1, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+            _controller.FindTransactionInDb(-1, monetaryAccount.AccountId, _userConnected.UserId);
         }
 
         [TestMethod]
         public void GivenTransactionId_ShouldBePossibleToFindTransaction_AndReturnItDTO()
         {
             TransactionDTO transactionFound = _controller.FindTransaction(
-                transactionDtoToAdd.TransactionId, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+                transactionDtoToAdd.TransactionId, monetaryAccount.AccountId, _userConnected.UserId);
 
             Assert.AreEqual(transactionDtoToAdd.TransactionId, transactionFound.TransactionId);
             Assert.AreEqual(transactionDtoToAdd.Title, transactionFound.Title);
@@ -167,7 +167,7 @@ namespace ControllerTests
         [ExpectedException(typeof(Exception))]
         public void GivenTransactionIdThatIsNotInDbToFind_ShouldThrowException()
         {
-            _controller.FindTransaction(-1, monetaryAccount.UserId, monetaryAccount.MonetaryAccountId);
+            _controller.FindTransaction(-1, monetaryAccount.UserId, monetaryAccount.AccountId);
         }
 
         #endregion
@@ -177,7 +177,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenAnAccountId_ShouldBePossibleToFindHimInDb()
         {
-            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
+            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.AccountId);
             monetaryAccount.AccountId = 1;
 
             Assert.AreEqual(monetaryAccount.AccountId, accountToFound.AccountId);
@@ -191,7 +191,7 @@ namespace ControllerTests
         public void GivenAnAccountId_ShouldBePossibleToFindIt()
         {
             AccountDTO accountDtoToFound =
-                _controller.FindAccountById(monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+                _controller.FindAccountById(monetaryAccount.AccountId, _userConnected.UserId);
 
             Assert.AreEqual(monetaryAccount.AccountId, accountDtoToFound.AccountId);
             Assert.AreEqual(monetaryAccount.CreationDate, accountDtoToFound.CreationDate);
@@ -230,9 +230,9 @@ namespace ControllerTests
             transactionDtoWithUpdates.TransactionId = 2;
             _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
 
-            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
+            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.AccountId);
             Transaction transactionUpdatedInDb = _controller.FindTransactionInDb(
-                transactionDtoWithUpdates.TransactionId, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
+                transactionDtoWithUpdates.TransactionId, monetaryAccount.AccountId, _userConnected.UserId);
 
             Assert.AreEqual(transactionDtoWithUpdates.Amount, transactionUpdatedInDb.Amount);
             Assert.AreEqual((CurrencyEnum)transactionDtoWithUpdates.Currency, transactionUpdatedInDb.Currency);
@@ -282,7 +282,7 @@ namespace ControllerTests
 
             transaction2.TransactionId = 2;
             List<TransactionDTO> transactions =
-                _controller.GetAllTransactions(monetaryAccount.MonetaryAccountId);
+                _controller.GetAllTransactions(monetaryAccount);
 
             Assert.AreEqual(2, transactions.Count);
             Assert.AreEqual(transactions[1].TransactionId, transaction2.TransactionId);

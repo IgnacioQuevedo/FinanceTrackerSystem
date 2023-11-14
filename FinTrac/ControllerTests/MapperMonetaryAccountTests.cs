@@ -56,7 +56,7 @@ namespace ControllerTests
             Assert.AreEqual(givenMonetaryAccount.Name, accountConverted.Name);
             Assert.AreEqual(givenMonetaryAccount.Amount, accountConverted.Amount);
             Assert.AreEqual((CurrencyEnumDTO)givenMonetaryAccount.Currency, accountConverted.Currency);
-            Assert.AreEqual(givenMonetaryAccount.AccountId, accountConverted.MonetaryAccountId);
+            Assert.AreEqual(givenMonetaryAccount.AccountId, accountConverted.AccountId);
             Assert.AreEqual(givenMonetaryAccount.UserId, accountConverted.UserId);
             Assert.AreEqual(givenMonetaryAccount.CreationDate, accountConverted.CreationDate);
         }
@@ -77,7 +77,7 @@ namespace ControllerTests
 
             Assert.AreEqual(1, listConverted.Count);
             Assert.AreEqual(monetAccounts[0].Name, listConverted[0].Name);
-            Assert.AreEqual(monetAccounts[0].AccountId, listConverted[0].MonetaryAccountId);
+            Assert.AreEqual(monetAccounts[0].AccountId, listConverted[0].AccountId);
             Assert.AreEqual(monetAccounts[0].Amount, listConverted[0].Amount);
             Assert.AreEqual(monetAccounts[0].UserId, listConverted[0].UserId);
             Assert.AreEqual(monetAccounts[0].CreationDate, listConverted[0].CreationDate);
@@ -100,7 +100,7 @@ namespace ControllerTests
             Assert.AreEqual(givenMonetAccountDTO.Name, accountConverted.Name);
             Assert.AreEqual(givenMonetAccountDTO.Amount, accountConverted.Amount);
             Assert.AreEqual((CurrencyEnum)givenMonetAccountDTO.Currency, accountConverted.Currency);
-            Assert.AreEqual(givenMonetAccountDTO.MonetaryAccountId, accountConverted.AccountId);
+            Assert.AreEqual(givenMonetAccountDTO.AccountId, accountConverted.AccountId);
             Assert.AreEqual(givenMonetAccountDTO.UserId, accountConverted.UserId);
             Assert.AreEqual(givenMonetAccountDTO.CreationDate, accountConverted.CreationDate);
         }

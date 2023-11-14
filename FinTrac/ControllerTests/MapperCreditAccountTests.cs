@@ -56,7 +56,7 @@ namespace ControllerTests
             Assert.AreEqual(givenCreditAccount.Name, accountConverted.Name);
             Assert.AreEqual(givenCreditAccount.AvailableCredit, accountConverted.AvailableCredit);
             Assert.AreEqual((CurrencyEnumDTO)givenCreditAccount.Currency, accountConverted.Currency);
-            Assert.AreEqual(givenCreditAccount.AccountId, accountConverted.CreditCardAccountId);
+            Assert.AreEqual(givenCreditAccount.AccountId, accountConverted.AccountId);
             Assert.AreEqual(givenCreditAccount.UserId, accountConverted.UserId);
             Assert.AreEqual(givenCreditAccount.CreationDate, accountConverted.CreationDate);
             Assert.AreEqual(givenCreditAccount.ClosingDate, accountConverted.ClosingDate);
@@ -80,7 +80,7 @@ namespace ControllerTests
 
             Assert.AreEqual(1, listConverted.Count);
             Assert.AreEqual(creditAccounts[0].Name, listConverted[0].Name);
-            Assert.AreEqual(creditAccounts[0].AccountId, listConverted[0].CreditCardAccountId);
+            Assert.AreEqual(creditAccounts[0].AccountId, listConverted[0].AccountId);
             Assert.AreEqual(creditAccounts[0].AvailableCredit, listConverted[0].AvailableCredit);
             Assert.AreEqual(creditAccounts[0].UserId, listConverted[0].UserId);
             Assert.AreEqual(creditAccounts[0].CreationDate, listConverted[0].CreationDate);
@@ -105,7 +105,7 @@ namespace ControllerTests
             Assert.AreEqual(givenCreditAccountDTO.Name, accountConverted.Name);
             Assert.AreEqual(givenCreditAccountDTO.AvailableCredit, accountConverted.AvailableCredit);
             Assert.AreEqual(givenCreditAccountDTO.Currency, (CurrencyEnumDTO)accountConverted.Currency);
-            Assert.AreEqual(givenCreditAccountDTO.CreditCardAccountId, accountConverted.AccountId);
+            Assert.AreEqual(givenCreditAccountDTO.AccountId, accountConverted.AccountId);
             Assert.AreEqual(givenCreditAccountDTO.UserId, accountConverted.UserId);
             Assert.AreEqual(givenCreditAccountDTO.CreationDate, accountConverted.CreationDate);
             Assert.AreEqual(givenCreditAccountDTO.ClosingDate, accountConverted.ClosingDate);

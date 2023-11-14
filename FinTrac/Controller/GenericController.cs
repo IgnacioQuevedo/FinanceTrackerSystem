@@ -435,7 +435,7 @@ namespace Controller
         {
             SetUserConnected(monetDTO.UserId);
 
-            return (MonetaryAccount)FindAccountByIdInDb(monetDTO.MonetaryAccountId);
+            return (MonetaryAccount)FindAccountByIdInDb(monetDTO.AccountId);
         }
 
 
@@ -569,7 +569,7 @@ namespace Controller
         public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
         {
             SetUserConnected(creditAccount.UserId);
-            return (CreditCardAccount)FindAccountByIdInDb(creditAccount.CreditCardAccountId);
+            return (CreditCardAccount)FindAccountByIdInDb(creditAccount.AccountId);
         }
 
         public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
@@ -713,11 +713,11 @@ namespace Controller
             _userRepo.UpdateDbWhenDeleting(_userConnected,transactionToDelete);
         }
 
-        public List<TransactionDTO> GetAllTransactions(int accountId)
+        public List<TransactionDTO> GetAllTransactions(AccountDTO accountWithTransactions)
         {
-            Account accountToGetTransactions = FindAccountByIdInDb(accountId);
-            SetUserConnected(accountToGetTransactions.UserId);
-
+            SetUserConnected(accountWithTransactions.UserId);
+            
+            Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId);
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
             transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());

@@ -43,21 +43,19 @@ namespace ControllerTests
             _exampleAccount = new MonetaryAccountDTO("Brou", 3000, CurrencyEnumDTO.USA, DateTime.Now, 1);
             _exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
-            _exampleCategory.CategoryId = 0;
-
             _transaction1 = new TransactionDTO("hola", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
             _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
 
-            _exampleAccount.AccountId = 0;
-            _transaction1.TransactionId = 0;
-            _transaction2.TransactionId = 0;
-
             _controller.CreateCategory(_exampleCategory);
+            _exampleCategory.CategoryId = 1;
             _controller.CreateMonetaryAccount(_exampleAccount);
+            _exampleAccount.AccountId = 1;
             _controller.CreateTransaction(_transaction1);
+            _transaction1.TransactionId = 1;
             _controller.CreateTransaction(_transaction2);
+            _transaction1.TransactionId = 2;
         }
 
         #endregion
@@ -119,10 +117,11 @@ namespace ControllerTests
             CategoryDTO myCategory2 = new CategoryDTO("Sugars", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
             _controller.CreateCategory(myCategory2);
+            myCategory2.CategoryId = 2;
 
-            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, _exampleCategory, 1);
+            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, myCategory2, 1);
 
-            MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou", 3000, CurrencyEnum.USA, DateTime.Now);
+            MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou2", 3000, CurrencyEnum.USA, DateTime.Now);
 
             MonetaryAccountDTO exampleAccountDTO2 = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
 

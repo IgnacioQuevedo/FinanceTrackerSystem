@@ -147,14 +147,18 @@ public class ReportTests
     [TestMethod]
     public void GivenCreditCardAccount_ShouldGiveAReportOfSpendingsInTheRangeOfBalance()
     {
-        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, DateTime.Now, "Brou", "1234", 1000, DateTime.Now);
+        DateTime genericDate = DateTime.MaxValue;
+        DateTime startingDate = new DateTime(2023, 10, 16).Date;
+        DateTime closingDate = new DateTime(2023, 11, 15).Date;
+
+        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, startingDate, "Brou", "1234", 1000, closingDate);
 
         genericCategory.CategoryId = 1;
         genericCategory2.CategoryId = 2;
 
-        Transaction myTransaction = new Transaction("Payment for party", 200, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
+        Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
-        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 9, 9), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 10, 25), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
 
         loggedUser.AddCreditAccount(credit);
 
