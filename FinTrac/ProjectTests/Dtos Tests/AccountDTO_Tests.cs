@@ -56,7 +56,9 @@ namespace TestProject1
         }
 
         #endregion
-        
+
+        #region Currency
+
         [TestMethod]
         public void GivenCurrencyy_ShouldBeSetted()
         {
@@ -65,5 +67,7 @@ namespace TestProject1
 
             Assert.AreEqual(accountDTO.Currency, currency);
         }
+
+        #endregion
     }
 }
