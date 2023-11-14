@@ -180,7 +180,7 @@ namespace ControllerTests
             
             Assert.AreEqual(monetaryAccount.AccountId,accountToFound.AccountId);
             Assert.AreEqual(monetaryAccount.CreationDate,accountToFound.CreationDate);
-            Assert.AreEqual(monetaryAccount.Currency,accountToFound.Currency);
+            Assert.AreEqual((CurrencyEnum) monetaryAccount.Currency,accountToFound.Currency);
             Assert.AreEqual(monetaryAccount.Name,accountToFound.Name);
             Assert.AreEqual(monetaryAccount.UserId,accountToFound.UserId);
     
