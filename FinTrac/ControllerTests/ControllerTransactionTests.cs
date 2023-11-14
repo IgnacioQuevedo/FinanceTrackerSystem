@@ -172,7 +172,7 @@ namespace ControllerTests
 
 
         [TestMethod]
-        public void GivenAnAccountId_ShouldBePossibleToFindHisDTOInDb()
+        public void GivenAnAccountId_ShouldBePossibleToFindHimInDb()
         {
 
             Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
@@ -183,9 +183,13 @@ namespace ControllerTests
             Assert.AreEqual((CurrencyEnum) monetaryAccount.Currency,accountToFound.Currency);
             Assert.AreEqual(monetaryAccount.Name,accountToFound.Name);
             Assert.AreEqual(monetaryAccount.UserId,accountToFound.UserId);
-    
-
         }
+        public void GivenAnAccountId_ShouldBePossibleToFindIt()
+        {
+
+        
+        }
+        
 
         #endregion
 
