@@ -687,7 +687,18 @@ namespace Controller
 
         public List<TransactionDTO> GetAllTransactions(int accountId)
         {
-            throw new NotImplementedException();
+            Account accountToGetTransactions = FindAccountById(accountId);
+            SetUserConnected(accountToGetTransactions.UserId);
+            
+            List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
+            List<Transaction> transactions = accountToGetTransactions.GetAllTransactions();
+
+            foreach (var transaction in transactions)
+            {
+                transactionsDTO.Add(MapperTransaction.ToTransactionDTO(transaction));
+            }
+
+            return transactionsDTO;
         }
     }
 }
