@@ -74,7 +74,7 @@
         try
         {
             accountUpdated = new CreditCardAccountDTO(accountToUpdate.Name, accountToUpdate.Currency, creationDate, issuingBank, last4Digits, accountToUpdate.AvailableCredit, closingDate, UserConnected.UserId);
-            accountUpdated.CreditCardAccountId = accountId;
+            accountUpdated.AccountId = accountId;
             CreditController.UpdateCreditAccount(accountUpdated);
             NavigationManager.NavigateTo("/Accounts");
         }

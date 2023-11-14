@@ -48,9 +48,9 @@
                         <td>@monetAccount.Currency</td>
                         <td>@GetFormattedDate(monetAccount.CreationDate)</td>
                         <td>
-                            <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@monetAccount.MonetaryAccountId}/ModifyMonetary"))"> Edit</button>
+                            <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@monetAccount.AccountId}/ModifyMonetary"))"> Edit</button>
                             <button class="btn btn-danger" @onclick="(() => DeleteMonetaryAccountUI(monetAccount))">Delete</button>
-                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@monetAccount.MonetaryAccountId}"))">View Transactions</button>
+                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@monetAccount.AccountId}"))">View Transactions</button>
                         </td>
                     </tr>
                 }
@@ -111,9 +111,9 @@
                         <td>@GetFormattedDate(creditAccount.ClosingDate)</td>
 
                         <td>
-                            <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@creditAccount.CreditCardAccountId}/CreditCardModification"))"> Edit</button>
+                            <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@creditAccount.AccountId}/CreditCardModification"))"> Edit</button>
                             <button class="btn btn-danger" @onclick="(() => DeleteCreditAccountUI(creditAccount))">Delete</button>
-                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@creditAccount.CreditCardAccountId}"))">View Transactions</button>
+                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@creditAccount.AccountId}"))">View Transactions</button>
                         </td>
                     </tr>
 
