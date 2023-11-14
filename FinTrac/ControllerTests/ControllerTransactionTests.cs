@@ -134,7 +134,7 @@ namespace ControllerTests
             Assert.AreEqual(_controller.FindCategoryInDb(categoryOfTransactionDTO),
                 transactionFound.TransactionCategory);
 
-            Assert.AreEqual(_controller.FindAccountById(monetaryAccount.MonetaryAccountId),
+            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId),
                 transactionFound.TransactionAccount);
         }
 
@@ -199,7 +199,7 @@ namespace ControllerTests
             transactionDtoWithUpdates.TransactionId = 2;
             _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
 
-            Account accountInDb = _controller.FindAccountById(monetaryAccount.MonetaryAccountId);
+            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.MonetaryAccountId);
             Transaction transactionUpdatedInDb = _controller.FindTransactionInDb(
                 transactionDtoWithUpdates.TransactionId, monetaryAccount.MonetaryAccountId, _userConnected.UserId);
 

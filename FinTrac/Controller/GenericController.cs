@@ -419,7 +419,7 @@ namespace Controller
         public MonetaryAccountDTO FindMonetaryAccount(int idMonetToFind, int userId)
         {
             SetUserConnected(userId);
-            MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountById(idMonetToFind);
+            MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountByIdInDb(idMonetToFind);
             MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
 
             return monetAccountFoundDTO;
@@ -429,11 +429,11 @@ namespace Controller
         {
             SetUserConnected(monetDTO.UserId);
 
-            return (MonetaryAccount)FindAccountById(monetDTO.MonetaryAccountId);
+            return (MonetaryAccount)FindAccountByIdInDb(monetDTO.MonetaryAccountId);
         }
 
 
-        public Account FindAccountById(int? idAccountToFind)
+        public Account FindAccountByIdInDb(int? idAccountToFind)
         {
             bool isFound = false;
             Account accountFound = new MonetaryAccount();
@@ -533,7 +533,7 @@ namespace Controller
 
         public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
         {
-            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountById(idCreditAccountToFind);
+            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountByIdInDb(idCreditAccountToFind);
 
             CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
 
@@ -543,7 +543,7 @@ namespace Controller
         public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
         {
             SetUserConnected(creditAccount.UserId);
-            return (CreditCardAccount)FindAccountById(creditAccount.CreditCardAccountId);
+            return (CreditCardAccount)FindAccountByIdInDb(creditAccount.CreditCardAccountId);
         }
 
         public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
@@ -605,7 +605,7 @@ namespace Controller
         {
             try
             {
-                Account transactionAccount = FindAccountById(dtoToAdd.AccountId);
+                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId);
                 Category categoryOfTransaction = FindCategoryInDb(dtoToAdd.TransactionCategory);
                 SetUserConnected(transactionAccount.UserId);
 
@@ -627,7 +627,7 @@ namespace Controller
         public Transaction FindTransactionInDb(int transactionId, int? accountId, int? userId)
         {
             SetUserConnected(userId);
-            Account accountAssigned = FindAccountById(accountId);
+            Account accountAssigned = FindAccountByIdInDb(accountId);
 
             foreach (var transaction in accountAssigned.MyTransactions)
             {
@@ -678,7 +678,7 @@ namespace Controller
 
         public void DeleteTransaction(TransactionDTO transactionDtoToDelete)
         {
-            Account accountWhereIsTransaction = FindAccountById(transactionDtoToDelete.AccountId);
+            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId);
             SetUserConnected(accountWhereIsTransaction.UserId);
             Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
                 transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
@@ -689,7 +689,7 @@ namespace Controller
 
         public List<TransactionDTO> GetAllTransactions(int accountId)
         {
-            Account accountToGetTransactions = FindAccountById(accountId);
+            Account accountToGetTransactions = FindAccountByIdInDb(accountId);
             SetUserConnected(accountToGetTransactions.UserId);
 
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
