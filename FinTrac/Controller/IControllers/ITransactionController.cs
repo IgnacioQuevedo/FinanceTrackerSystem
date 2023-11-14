@@ -12,10 +12,8 @@ namespace Controller.IControllers
         public void DeleteTransaction(TransactionDTO dtoToDelete);
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId);
-
-        public List<TransactionDTO> GetAllTransactions(int userId);
-
-        public List<TransactionDTO> GetALlTransactions(Account accountWithTransactions);
+        
+        public List<TransactionDTO> GetALlTransactions(int accountId);
         
     }
 }

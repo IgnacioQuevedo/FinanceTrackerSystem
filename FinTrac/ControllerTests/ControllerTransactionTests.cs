@@ -179,7 +179,7 @@ namespace ControllerTests
         {
             CategoryDTO categoryDTO2 =
                 new CategoryDTO("party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
-            ;
+
 
             _controller.CreateCategory(categoryDTO2);
             categoryDTO2.CategoryId = 2;
@@ -232,17 +232,34 @@ namespace ControllerTests
             int amountOfTransactionsPreDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
 
             _controller.DeleteTransaction(transactionDtoToAdd);
-            
-            int amountOfTransactionsPostDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
-                
-            Assert.AreEqual(amountOfTransactionsPostDelete, amountOfTransactionsPreDelete -1);
 
+            int amountOfTransactionsPostDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
+
+            Assert.AreEqual(amountOfTransactionsPostDelete, amountOfTransactionsPreDelete - 1);
         }
 
         #endregion
-        
-        
-        
-        
+
+        [TestMethod]
+        public void GetAllTransactionsMethod_ShouldReturnTransactionFromAnAccount()
+        {
+            TransactionDTO transaction2 = new TransactionDTO("Spent on dancing", DateTime.Now.Date, 1000,
+                CurrencyEnumDTO.UY, TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
+            _controller.CreateTransaction(transaction2);
+
+            List<TransactionDTO> transactions =
+                _controller.GetAllTransactions(monetaryAccount.MonetaryAccountId);
+
+            Assert.AreEqual(2, transactions.Count);
+            Assert.AreEqual(transactions[0].TransactionId, transaction2.TransactionId);
+            Assert.AreEqual(transactions[0].Title, transaction2.Title);
+            Assert.AreEqual(transactions[0].CreationDate, transaction2.CreationDate);
+            Assert.AreEqual(transactions[0].Amount, transaction2.Amount);
+            Assert.AreEqual(transactions[0].Currency, transaction2.Currency);
+            Assert.AreEqual(transactions[0].Type, transaction2.Type);
+            Assert.AreEqual(transactions[0].AccountId, transaction2.AccountId);
+            Assert.IsTrue(Helper.AreTheSameObject(transactions[0].TransactionCategory, transaction2.TransactionCategory));
+
+        }
     }
 }

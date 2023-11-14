@@ -684,5 +684,10 @@ namespace Controller
             accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
             _userRepo.Update(_userConnected);
         }
+
+        public List<TransactionDTO> GetAllTransactions(int accountId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
