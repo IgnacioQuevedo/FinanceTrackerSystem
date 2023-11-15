@@ -39,16 +39,15 @@
 
     <br/>
     <br/>
-
-    @if (ConfirmedMonth)
-    {
-        <div class="form-group">
-            <label for="title">Confirm Selection Of Month Report</label>
-            <button type="button" class="btn btn-outline-danger" @onclick="ShowGraphic"># Show Graphic # </button>
-        </div>
-    }
-
-
+    <div>
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Category created successfully" />
+        }
+    </div>
+    <br/>
+    <br/>
+    
     <td>
         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
     </td>
@@ -86,14 +85,19 @@
         ConfirmedMonth = false;
     }
 
-    private void GenerateReport()
+    private async Task GenerateReport()
     {
         try
         {
             rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
             movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates);
             ConfirmedMonth = true;
+
+            ShowGraphic();
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
             ResetValues();
+            
         }
         catch (Exception ExceptionReport)
         {
@@ -114,8 +118,6 @@
         });
     }
     
-    
-
     public async Task ShowGraphic()
     {
         
@@ -127,56 +129,6 @@
         StateHasChanged();
     }
 }
-
-
-protected override void OnInitialized()
-    {
-        ResetValues();
-    }
-
-    private async void SaveChanges()
-    {
-        try
-        {
-            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
-            CategoryController.CreateCategory(newCategory);
-
-            SuccesAlert.ShowSucessAlert();
-
-            await Task.Delay(2000);
-            ResetValues();
-        }
-        catch (Exception ExceptionCategory)
-        {
-            errorTxt = ExceptionCategory.Message;
-            ErrorAlert.ShowErrorAlert();
-        }
-    }
-
-    private void ResetValues()
-    {
-        name = "";
-        status = StatusEnumDTO.Enabled;
-        type = TypeEnumDTO.Income;  
-        
-        // Helps prevent threading-related issues and ensures that UI updates are done
-        InvokeAsync(() =>
-        {
-            SuccesAlert.IsSucess = false;
-            ErrorAlert.isError = false;
-            StateHasChanged();
-        });
-    }
-
-
-
-
-
-
-
-
-
-
 
 <script suppress-error="BL9992">
 
