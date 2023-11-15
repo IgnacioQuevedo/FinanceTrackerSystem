@@ -10,6 +10,7 @@ namespace Controller.Mappers;
 
 public abstract class MapperAccount
 {
+    #region To List Account
     public static List<Account> ToListAccount(List<AccountDTO> myAccountsDTO)
     {
         List<Account> myAccounts = new List<Account>();
@@ -32,4 +33,6 @@ public abstract class MapperAccount
 
         return myAccounts;
     }
+
+    #endregion
 }
