@@ -408,8 +408,8 @@ namespace BusinessLogic.Report_Components
             _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
             ValidateDates();
             
-            Incomes = new decimal[_amountOfDays];
-            Spendings = new decimal[_amountOfDays];
+            Incomes = new decimal[31];
+            Spendings = new decimal[31];
             RangeOfDates = rangeOfDates;
         }
         

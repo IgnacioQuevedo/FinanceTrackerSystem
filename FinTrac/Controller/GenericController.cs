@@ -161,6 +161,7 @@ namespace Controller
             {
                 throw new Exception("Must select a category, otherwise there would not be changes");
             }
+
             SetUserConnected(categoryToFind.UserId);
 
             return SearchCategoryInDb(categoryToFind.CategoryId);
@@ -598,7 +599,6 @@ namespace Controller
                 CreditCardAccount creditAccountToDelete = FindCreditAccountInDb(accountToDelete);
                 _userConnected.DeleteAccount(creditAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
-
             }
             catch (ExceptionCategoryManagement Exception)
             {
@@ -728,7 +728,8 @@ namespace Controller
 
         #region Report Section
 
-        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO,
+            RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
@@ -741,7 +742,8 @@ namespace Controller
             return listOfSpendingsDTO;
         }
 
-        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
+        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO,
+            string nameOfCategory)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
@@ -750,7 +752,6 @@ namespace Controller
             listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 
             return listOfSpendingsDTO;
-
         }
 
         public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected)
@@ -762,7 +763,6 @@ namespace Controller
             List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
 
             return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
-
         }
 
         #endregion
@@ -780,5 +780,23 @@ namespace Controller
         }
 
         #endregion
+
+        public MovementInXDays GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO)
+        {
+            try
+            {
+                SetUserConnected(userId);
+                MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
+                RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
+            
+                movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
+                return movementsOfTransactionsPerDay;
+            }
+            catch(ExceptionReport Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+           
+        }
     }
 }
