@@ -7,59 +7,65 @@ using BusinessLogic.Report_Components;
 using Mappers;
 using System.Collections.Generic;
 
-namespace Controller.Mappers;
-
-public abstract class MapperResumeOfGoalReport
+namespace Controller.Mappers
 {
-    #region To Resume Of Goal Report DTO
 
-    public static ResumeOfGoalReportDTO ToResumeOfGoalReportDTO(ResumeOfGoalReport resumeToConvert)
+    public abstract class MapperResumeOfGoalReport
     {
-        ResumeOfGoalReportDTO resumeDTO =
-            new ResumeOfGoalReportDTO(resumeToConvert.AmountDefined, resumeToConvert.TotalSpent, resumeToConvert.GoalAchieved);
+        #region To Resume Of Goal Report DTO
 
-        return resumeDTO;
-    }
-
-    #endregion
-
-    #region To resume of goal report
-
-    public static ResumeOfGoalReport ToResumeOfGoalReport(ResumeOfGoalReportDTO resumeDTO_ToConvert)
-    {
-        ResumeOfGoalReport resume = new ResumeOfGoalReport(resumeDTO_ToConvert.AmountDefined, resumeDTO_ToConvert.TotalSpent, resumeDTO_ToConvert.GoalAchieved);
-
-        return resume;
-    }
-
-    #endregion
-
-    #region To List of Resume of goal report
-
-    public static List<ResumeOfGoalReport> ToListResumeOfGoalReport(List<ResumeOfGoalReportDTO> listOfResumeDTO)
-    {
-        List<ResumeOfGoalReport> resultResumeList = new List<ResumeOfGoalReport>();
-
-        foreach (ResumeOfGoalReportDTO myResumeDTO in listOfResumeDTO)
+        public static ResumeOfGoalReportDTO ToResumeOfGoalReportDTO(ResumeOfGoalReport resumeToConvert)
         {
-            resultResumeList.Add(ToResumeOfGoalReport(myResumeDTO));
+            ResumeOfGoalReportDTO resumeDTO =
+                new ResumeOfGoalReportDTO(resumeToConvert.AmountDefined, resumeToConvert.TotalSpent, resumeToConvert.GoalAchieved);
+
+            return resumeDTO;
         }
 
-        return resultResumeList;
-    }
+        #endregion
 
-    #endregion
+        #region To resume of goal report
 
-    public static List<ResumeOfGoalReportDTO> ToListResumeOfGoalReportDTO(List<ResumeOfGoalReport> listOfResume)
-    {
-        List<ResumeOfGoalReportDTO> resultResumeList = new List<ResumeOfGoalReportDTO>();
-
-        foreach (ResumeOfGoalReport myResume in listOfResume)
+        public static ResumeOfGoalReport ToResumeOfGoalReport(ResumeOfGoalReportDTO resumeDTO_ToConvert)
         {
-            resultResumeList.Add(ToResumeOfGoalReportDTO(myResume));
+            ResumeOfGoalReport resume = new ResumeOfGoalReport(resumeDTO_ToConvert.AmountDefined, resumeDTO_ToConvert.TotalSpent, resumeDTO_ToConvert.GoalAchieved);
+
+            return resume;
         }
 
-        return resultResumeList;
+        #endregion
 
+        #region To List of Resume of goal report
+
+        public static List<ResumeOfGoalReport> ToListResumeOfGoalReport(List<ResumeOfGoalReportDTO> listOfResumeDTO)
+        {
+            List<ResumeOfGoalReport> resultResumeList = new List<ResumeOfGoalReport>();
+
+            foreach (ResumeOfGoalReportDTO myResumeDTO in listOfResumeDTO)
+            {
+                resultResumeList.Add(ToResumeOfGoalReport(myResumeDTO));
+            }
+
+            return resultResumeList;
+        }
+
+        #endregion
+
+        #region To List Resume Of Goal Report DTO
+
+        public static List<ResumeOfGoalReportDTO> ToListResumeOfGoalReportDTO(List<ResumeOfGoalReport> listOfResume)
+        {
+            List<ResumeOfGoalReportDTO> resultResumeList = new List<ResumeOfGoalReportDTO>();
+
+            foreach (ResumeOfGoalReport myResume in listOfResume)
+            {
+                resultResumeList.Add(ToResumeOfGoalReportDTO(myResume));
+            }
+
+            return resultResumeList;
+
+        }
+
+        #endregion
     }
 }
