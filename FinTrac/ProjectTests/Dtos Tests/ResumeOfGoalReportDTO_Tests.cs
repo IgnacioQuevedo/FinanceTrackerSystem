@@ -35,7 +35,7 @@ namespace TestProject1
         public void GivenTotalSpent_ShouldBeSetted()
         {
             resumeOfGoalReportDTO.TotalSpent = 100;
-            Assert.AreEqual(resumeOfGoalReportDTO.TotalSpent, 0);
+            Assert.AreEqual(resumeOfGoalReportDTO.TotalSpent, 100);
         }
 
     }
