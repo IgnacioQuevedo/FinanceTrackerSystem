@@ -13,7 +13,7 @@ namespace BusinessLogic.Account_Components
     {
         #region Properties
 
-        public decimal InitialAmount;
+        private decimal _initialAmount;
         public decimal Amount { get; set; }
 
         #endregion
@@ -28,7 +28,7 @@ namespace BusinessLogic.Account_Components
             base(accountName, currencyType, creationDate)
         {
             Amount = amount;
-            InitialAmount = amount;
+            _initialAmount = amount;
             ValidateMonetaryAccount();
         }
 
@@ -39,6 +39,11 @@ namespace BusinessLogic.Account_Components
         public void ValidateMonetaryAccount()
         {
             ValidateAmmount();
+        }
+
+        public decimal ReturnInitialAmount()
+        {
+            return _initialAmount;
         }
 
         private void ValidateAmmount()

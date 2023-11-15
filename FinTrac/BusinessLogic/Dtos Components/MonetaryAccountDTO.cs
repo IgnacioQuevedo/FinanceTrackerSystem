@@ -11,14 +11,14 @@ namespace BusinessLogic.Dtos_Components
     {
         #region Properties
         public decimal Amount { get; set; }
-   
+
         #endregion
 
         #region Constructors
 
         public MonetaryAccountDTO() { }
 
-        public MonetaryAccountDTO(string name, decimal amount, CurrencyEnumDTO currency, DateTime creationDate, int? userId) : base(name,currency,creationDate,userId)
+        public MonetaryAccountDTO(string name, decimal amount, CurrencyEnumDTO currency, DateTime creationDate, int? userId) : base(name, currency, creationDate, userId)
         {
             Amount = amount;
         }

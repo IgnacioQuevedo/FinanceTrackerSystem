@@ -388,7 +388,6 @@ namespace BusinessLogic.User_Components
             accountToBeUpdated.Name = accountWithChanges.Name;
             accountToBeUpdated.Currency = accountWithChanges.Currency;
             accountToBeUpdated.CreationDate = accountWithChanges.CreationDate;
-            accountToBeUpdated.InitialAmount = accountWithChanges.Amount;
         }
 
         private void UpdateCreditValues(CreditCardAccount accountToUpdate, int index)

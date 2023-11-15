@@ -1,11 +1,13 @@
 using System.Security.Cryptography;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Transaction_Components;
+using BusinessLogic.Report_Components;
 using BusinessLogic.User_Components;
 using Controller.IControllers;
 using Controller.Mappers;
@@ -462,11 +464,11 @@ namespace Controller
         public AccountDTO FindAccountById(int? idAccountToFind, int? userId)
         {
             SetUserConnected(userId);
-            
+
             Account accountFound = FindAccountByIdInDb(idAccountToFind);
             MonetaryAccount possibleMonetaryAccount = new MonetaryAccount();
             CreditCardAccount possibleCreditCardAccount = new CreditCardAccount();
-            
+
             if (accountFound is MonetaryAccount)
             {
                 possibleMonetaryAccount = accountFound as MonetaryAccount;
@@ -622,7 +624,6 @@ namespace Controller
 
         #endregion
 
-
         #region Transaction Section
 
         public void CreateTransaction(TransactionDTO dtoToAdd)
@@ -709,18 +710,73 @@ namespace Controller
 
             accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
             accountWhereIsTransaction.UpdateAccountAfterDelete(transactionToDelete);
-            _userRepo.UpdateDbWhenDeleting(_userConnected,transactionToDelete);
+            _userRepo.UpdateDbWhenDeleting(_userConnected, transactionToDelete);
         }
 
         public List<TransactionDTO> GetAllTransactions(AccountDTO accountWithTransactions)
         {
             SetUserConnected(accountWithTransactions.UserId);
-            
+
             Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId);
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
             transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
             return transactionsDTO;
+        }
+
+        #endregion
+
+        #region Report Section
+
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
+        {
+            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+
+            RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
+
+            listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
+
+            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+
+            return listOfSpendingsDTO;
+        }
+
+        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
+        {
+            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+
+            listOfTransactions = Report.FilterListByNameOfCategory(listOfTransactions, nameOfCategory);
+
+            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+
+            return listOfSpendingsDTO;
+
+        }
+
+        public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected)
+        {
+            SetUserConnected(accountSelected.UserId);
+
+            Account myAccount = FindAccountByIdInDb(accountSelected.AccountId);
+
+            List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
+
+            return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
+
+        }
+
+        #endregion
+
+        #region Balance of Monetary account
+
+        public decimal GiveAccountBalance(MonetaryAccountDTO account)
+        {
+            MonetaryAccount monetGiven = ((MonetaryAccount)(FindAccountByIdInDb(account.AccountId)));
+            decimal initialMoney = monetGiven.ReturnInitialAmount();
+
+            decimal accountBalance = Report.GiveAccountBalance(monetGiven, initialMoney);
+
+            return accountBalance;
         }
 
         #endregion
