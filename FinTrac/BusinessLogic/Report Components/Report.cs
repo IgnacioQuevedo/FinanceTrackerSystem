@@ -254,6 +254,40 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
+
+        #region Report Of Movements In X Days
+
+        public static MovementInXDays GetMovementInXDays(List<Account> accounts,RangeOfDates rangeOfDates)
+        {
+
+            MovementInXDays movements = new MovementInXDays(rangeOfDates);
+            int month = rangeOfDates.InitialDate.Month;
+            
+            foreach (var account in accounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if (transaction.CreationDate.Month == month &&
+                        transaction.CreationDate.Day >= rangeOfDates.InitialDate.Day &&
+                        transaction.CreationDate.Day <= rangeOfDates.FinalDate.Day)
+                    {
+                        if (transaction.Type == TypeEnum.Income)
+                        {
+                            movements.Incomes[transaction.CreationDate.Day -1] += transaction.Amount;
+                        }
+                        else
+                        {
+                            movements.Spendings[transaction.CreationDate.Day -1] += transaction.Amount;
+                        }
+                        
+                    }
+                }
+            }
+            return movements;
+        }
+
+        #endregion
+        
         #region Methods used by reports
 
         public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
@@ -322,6 +356,9 @@ namespace BusinessLogic.Report_Components
         }
 
         #endregion
+        
+        
+        
     }
 
     #region Class for reports
@@ -368,19 +405,31 @@ namespace BusinessLogic.Report_Components
 
     public class MovementInXDays
     {
-        public int[] Spendings { get; set; }
-        public int[] Incomes { get; set; }
-        public RangeOfDates RangeOfDates { get; set; }
+        private int _amountOfDays;
+        public decimal[] Spendings { get; set; }
+        public decimal[] Incomes { get; set; }
 
+        public RangeOfDates RangeOfDates { get; set; }
         public MovementInXDays()
         {
         }
 
-        public MovementInXDays(int[] incomes, int[] spendings, RangeOfDates rangeOfDates)
+        public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            Incomes = incomes;
-            Spendings = spendings;
+            
+            _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
+            ValidateDates();
+            
+            Incomes = new decimal[_amountOfDays];
+            Spendings = new decimal[_amountOfDays];
             RangeOfDates = rangeOfDates;
+        }
+        private void ValidateDates()
+        {
+            if (_amountOfDays < 0)
+            {
+                throw new ExceptionReport("Final date must be greater than Initial date");
+            }
         }
     }
 

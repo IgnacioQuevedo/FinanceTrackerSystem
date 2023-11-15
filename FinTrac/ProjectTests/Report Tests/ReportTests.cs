@@ -6,10 +6,12 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
 namespace BusinessLogicTests;
 
@@ -33,7 +35,7 @@ public class ReportTests
     private Transaction transactionWanted2;
     private Transaction transactionUnWanted1;
     private Transaction transactionUnWanted2;
-    private MovementInXDays movements; 
+    private MovementInXDays movements;
 
     [TestInitialize]
     public void Initialize()
@@ -96,8 +98,8 @@ public class ReportTests
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
         transactionUnWanted2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
-        
-        
+
+
         movements = new MovementInXDays();
     }
 
@@ -321,21 +323,23 @@ public class ReportTests
 
     #endregion
 
+    #region Report Of Movements In X Days
+
     #region MovementInXDays
 
     [TestMethod]
     public void GivenArrayOfSpendings_ShouldBeSetToMovementInXDays()
     {
-        int[] spendings = new int [5];
+        decimal[] spendings = new decimal [5];
 
         movements.Spendings = spendings;
         Assert.AreEqual(spendings, movements.Spendings);
     }
-    
+
     [TestMethod]
     public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
     {
-        int[] incomes = new int [5];
+        decimal[] incomes = new decimal [5];
 
         movements.Incomes = incomes;
         Assert.AreEqual(incomes, movements.Incomes);
@@ -344,65 +348,103 @@ public class ReportTests
     [TestMethod]
     public void GivenRangeOfDates_ShouldBeSetToMovementInXDays()
     {
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
-                (new DateTime(2023, 11, 14).Date,
-                    new DateTime(2023, 11, 28).Date);
-        
-        movements.RangeOfDates = rangeOfDates;
-        
-        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
+            (new DateTime(2023, 11, 14).Date,
+                new DateTime(2023, 11, 28).Date);
 
+        movements.RangeOfDates = rangeOfDates;
+
+        Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenFormatOfRangeOfDatesIncorrect_ShouldThrowException()
     {
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
             (new DateTime(-2023, 45, 14).Date,
                 new DateTime(2023, 11, 28).Date);
-        
+
         movements.RangeOfDates = rangeOfDates;
-
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionReport))]
+    public void GivenFinalDateMinorThatInitialDate_ShouldThrowException()
+    {
+        RangeOfDates rangeOfDates =
+            new RangeOfDates
+            (new DateTime(2023 ,12, 30).Date,
+                new DateTime(2023, 12, 1).Date);
 
-
+        MovementInXDays movementInXDays = new MovementInXDays(rangeOfDates);
+    }
+    
     [TestMethod]
     public void GivenCorrectData_ShouldBePossibleToCreateMovementsInXDays()
     {
-        int[] incomes = new int [5];
-        int[] spendings = new int [5];
-        RangeOfDates rangeOfDates = 
+        int[] incomes = new int [15];
+        int[] spendings = new int [15];
+        RangeOfDates rangeOfDates =
             new RangeOfDates
             (new DateTime(2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
-        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
-        
-        
-        Assert.AreEqual(incomes,movements.Incomes);
-        Assert.AreEqual(spendings,movements.Spendings);
-        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
+        MovementInXDays movements = new MovementInXDays(rangeOfDates);
 
+        for (int i = 0; i < 15; i++)
+        {
+            Assert.AreEqual(incomes[i], movements.Incomes[i]);
+            Assert.AreEqual(spendings[i], movements.Spendings[i]);
+        }
+
+        Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenIncorrectData_ShouldThrowException()
     {
         int[] incomes = new int [5];
         int[] spendings = new int [5];
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
-            (new DateTime(-2023, 32, 14).Date,
+            (new DateTime(-2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
-        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
-        
+        MovementInXDays movements = new MovementInXDays(rangeOfDates);
     }
-    
-    
+
+    #endregion
+
+    [TestMethod]
+    public void GivenAccountListAndRangeOfDates_ShouldReturnMovementInXDays()
+    {
+        Transaction transactionInDate = new Transaction("Payment for party", 10, new DateTime(2023,12,1).Date,
+            CurrencyEnum.USA,
+            TypeEnum.Outcome, genericCategory2);
+        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,2).Date,
+            CurrencyEnum.USA,
+            TypeEnum.Outcome, genericCategory2);
+        myMonetaryAccount.AddTransaction(transactionInDate);
+        myMonetaryAccount.AddTransaction(transactionInDate2);
+        List<Account> accounts = loggedUser.MyAccounts;
+
+        decimal[] incomes = new decimal[31];
+        decimal[] spendings = new decimal [31];
+        spendings[0] = 200;
+        spendings[30] = 200;
+
+        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
+            new DateTime(2023, 12, 31).Date);
+        
+        MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
+        
+        Assert.AreEqual(incomes[20], movements.Incomes[20]);
+        Assert.AreEqual(spendings[0], movements.Spendings[0]);
+        Assert.AreEqual(spendings[30], movements.Spendings[30]);
+    }
     #endregion
 }
