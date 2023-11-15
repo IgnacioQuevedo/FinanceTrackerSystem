@@ -6,6 +6,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using NuGet.Frameworks;
 using System.Runtime.ExceptionServices;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Enums;
@@ -321,6 +322,8 @@ public class ReportTests
 
     #endregion
 
+    #region Report Of Movements In X Days
+
     #region MovementInXDays
 
     [TestMethod]
@@ -372,18 +375,21 @@ public class ReportTests
     [TestMethod]
     public void GivenCorrectData_ShouldBePossibleToCreateMovementsInXDays()
     {
-        int[] incomes = new int [5];
-        int[] spendings = new int [5];
+        int[] incomes = new int [31];
+        int[] spendings = new int [31];
         RangeOfDates rangeOfDates = 
             new RangeOfDates
             (new DateTime(2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
-        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
+        MovementInXDays movements = new MovementInXDays(rangeOfDates);
+
+        for (int i = 0; i < 31; i++)
+        {
+            Assert.AreEqual(incomes[i],movements.Incomes[i]);
+            Assert.AreEqual(spendings[i],movements.Spendings[i]);
+        }
         
-        
-        Assert.AreEqual(incomes,movements.Incomes);
-        Assert.AreEqual(spendings,movements.Spendings);
         Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
 
     }
@@ -396,13 +402,57 @@ public class ReportTests
         int[] spendings = new int [5];
         RangeOfDates rangeOfDates = 
             new RangeOfDates
-            (new DateTime(-2023, 32, 14).Date,
+            (new DateTime(-2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
-        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
+        MovementInXDays movements = new MovementInXDays(rangeOfDates);
         
     }
-    
+    #endregion
+
+    [TestMethod]
+    public void GivenAccountListAndRangeOfDates_ShouldReturnMovementInXDays()
+    {
+        decimal[] incomes = new decimal[31];
+        decimal[] spendings = new decimal [31];
+     
+        
+        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
+            new DateTime(2023, 12, 31).Date);
+
+        List<Account> accounts = loggedUser.MyAccounts;
+
+        foreach (var account in accounts)
+        {
+            foreach (var transaction in account.MyTransactions)
+            {
+                if (transaction.Type == TypeEnum.Income)
+                {
+                    incomes[transaction.CreationDate.Day] = transaction.Amount;
+                }
+                else
+                {
+                    spendings[transaction.CreationDate.Day] = transaction.Amount;
+                }
+            }
+        }
+        
+        MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
+
+
+        for (int i = 0; i < incomes.Length; i++)
+        {
+            Assert.AreEqual(incomes[i],movements.Incomes[i]);
+            Assert.AreEqual(spendings[i],movements.Spendings[i]);
+        }
+    }
     
     #endregion
+    
+    
+    
+    
+    
+    
+    
 }

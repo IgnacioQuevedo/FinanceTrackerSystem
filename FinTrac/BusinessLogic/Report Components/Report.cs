@@ -254,6 +254,17 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
+
+        #region Report Of Movements In X Days
+
+        public static MovementInXDays GetMovementInXDays(List<Account> accounts,RangeOfDates rangeOfDates)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        #endregion
+        
         #region Methods used by reports
 
         public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
@@ -322,6 +333,9 @@ namespace BusinessLogic.Report_Components
         }
 
         #endregion
+        
+        
+        
     }
 
     #region Class for reports
@@ -376,10 +390,10 @@ namespace BusinessLogic.Report_Components
         {
         }
 
-        public MovementInXDays(int[] incomes, int[] spendings, RangeOfDates rangeOfDates)
+        public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            Incomes = incomes;
-            Spendings = spendings;
+            Incomes = new int[31];
+            Spendings = new int[31];
             RangeOfDates = rangeOfDates;
         }
     }
