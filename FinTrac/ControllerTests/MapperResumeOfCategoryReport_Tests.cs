@@ -120,5 +120,24 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenListOfResumeOfCategoryReport_ShouldConvertToDTO()
+        {
+            List<ResumeOfCategoryReport> listOfResume = new List<ResumeOfCategoryReport>();
+
+            Category myCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            ResumeOfCategoryReport givenResume = new ResumeOfCategoryReport(myCategory, 100, 75);
+
+            listOfResume.Add(givenResume);
+
+            List<ResumeOfCategoryReportDTO> listOfResumeDTO = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(listOfResume);
+
+            Assert.AreEqual(MapperCategory.ToCategory(listOfResumeDTO[0].CategoryRelated).Name, givenResume.CategoryRelated.Name);
+            Assert.AreEqual(listOfResumeDTO[0].TotalSpentInCategory, givenResume.TotalSpentInCategory);
+            Assert.AreEqual(listOfResumeDTO[0].PercentajeOfTotal, givenResume.PercentajeOfTotal);
+        }
+
     }
 }
