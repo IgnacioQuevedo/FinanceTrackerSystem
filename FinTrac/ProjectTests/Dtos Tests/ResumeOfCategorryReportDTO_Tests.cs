@@ -56,6 +56,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Constructor
+
         [TestMethod]
         public void GivenValues_ShouldCreateResume()
         {
@@ -67,5 +69,7 @@ namespace TestProject1
             Assert.AreEqual(100, resumeOfCategoryReportDTO.TotalSpentInCategory);
             Assert.AreEqual(75, resumeOfCategoryReportDTO.PercentajeOfTotal);
         }
+
+        #endregion
     }
 }
