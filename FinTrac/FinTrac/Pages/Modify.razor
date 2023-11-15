@@ -119,20 +119,24 @@
     protected override void OnInitialized()
     {
         presetValues();
-        ErrorAlert.isError = false;
-        SuccesAlert.IsSucess = false;
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
-    private void ModifyUser()
+    private async Task ModifyUser()
     {
         try
         {
-            UserController.PasswordMatch(password,passwordRepeated);
+            UserController.PasswordMatch(password, passwordRepeated);
             userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
-            SendDataToLayout();
-
             SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            SendDataToLayout();
         }
         catch (Exception ExceptionUser)
         {
@@ -146,6 +150,7 @@
         userToModifyDTO = UserController.FindUser(userToModifyDTO.UserId);
         userToModifyDTO.flag = 1;
         NotifyChangeToMain.InvokeAsync(userToModifyDTO);
+        OnInitialized();
     }
 
 }
