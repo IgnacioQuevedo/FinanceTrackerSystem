@@ -369,6 +369,18 @@ public class ReportTests
 
         movements.RangeOfDates = rangeOfDates;
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionReport))]
+    public void GivenFinalDateMinorThatInitialDate_ShouldThrowException()
+    {
+        RangeOfDates rangeOfDates =
+            new RangeOfDates
+            (new DateTime(2023 ,12, 30).Date,
+                new DateTime(2023, 12, 1).Date);
+
+        MovementInXDays movementInXDays = new MovementInXDays(rangeOfDates);
+    }
 
 
     [TestMethod]
@@ -440,5 +452,7 @@ public class ReportTests
         Assert.AreEqual(spendings[30], movements.Spendings[30]);
     }
 
+    
+    
     #endregion
 }
