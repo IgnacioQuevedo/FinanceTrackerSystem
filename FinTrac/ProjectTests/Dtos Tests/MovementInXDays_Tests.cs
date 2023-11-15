@@ -6,43 +6,34 @@ namespace BusinessLogicTests.Dto_Components
     public class MovementInXDays_Tests
     {
         #region Initialize
-        private UserLoginDTO UserLoginDTO;
-        private string genericEmail;
-        private string genericPassword;
-        private int genericId;
+
+        private MovementInXDaysDTO movements;
 
         [TestInitialize]
         public void Initialize()
         {
-            UserLoginDTO = new UserLoginDTO();
-            genericEmail = "someone@example.com";
-            genericPassword = "ABCDE12345678";
-            genericId = 1;
+            movements = new MovementInXDaysDTO();
         }
+
         #endregion
 
         [TestMethod]
         public void GivenSpendingArray_ShouldBeSet()
         {
             decimal[] spendings = new decimal[31];
-            MovementInXDaysDTO movements = new MovementInXDaysDTO();
             movements.Spendings = spendings;
-            
-            Assert.AreEqual(spendings,movements.Spendings);
 
+            Assert.AreEqual(spendings, movements.Spendings);
         }
-        
+
         [TestMethod]
         public void GivenIncomeArray_ShouldBeSet()
         {
             decimal[] income = new decimal[31];
-            MovementInXDaysDTO movements = new MovementInXDaysDTO();
+
             movements.Spendings = income;
-            
-            Assert.AreEqual(income,movements.Income);
 
+            Assert.AreEqual(income, movements.Income);
         }
-
-
     }
 }
