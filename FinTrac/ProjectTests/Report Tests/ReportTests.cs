@@ -367,6 +367,26 @@ public class ReportTests
         movements.RangeOfDates = rangeOfDates;
 
     }
+
+
+    [TestMethod]
+    public void GivenCorrectData_ShouldBePossibleToCreateMovementsInXDays()
+    {
+        int[] incomes = new int [5];
+        int[] spendings = new int [5];
+        RangeOfDates rangeOfDates = 
+            new RangeOfDates
+            (new DateTime(2023, 11, 14).Date,
+                new DateTime(2023, 11, 28).Date);
+
+        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
+        
+        
+        Assert.AreEqual(incomes,movements.Incomes);
+        Assert.AreEqual(spendings,movements.Spendings);
+        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
+
+    }
     
     #endregion
 }
