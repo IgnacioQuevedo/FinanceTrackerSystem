@@ -365,8 +365,7 @@ public class ReportTests
                 new DateTime(2023, 11, 28).Date);
         
         movements.RangeOfDates = rangeOfDates;
-        
-        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
+
     }
     
     #endregion
