@@ -10,6 +10,8 @@ namespace Controller.Mappers;
 
 public abstract class MapperResumeOfGoaLReport
 {
+    #region To Resume Of Goal Report DTO
+
     public static ResumeOfGoalReportDTO ToResumeOfGoalReportDTO(ResumeOfGoalReport resumeToConvert)
     {
         ResumeOfGoalReportDTO resumeDTO =
@@ -17,5 +19,7 @@ public abstract class MapperResumeOfGoaLReport
 
         return resumeDTO;
     }
+
+    #endregion
 
 }
