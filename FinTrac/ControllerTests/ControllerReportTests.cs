@@ -45,7 +45,7 @@ namespace ControllerTests
             _exampleAccount = new MonetaryAccountDTO("Brou", 3000, CurrencyEnumDTO.USA, DateTime.Now, 1);
             _exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
-            _transaction1 = new TransactionDTO("hola", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
+            _transaction1 = new TransactionDTO("hola", new DateTime(2023, 11, 15), 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
             _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
@@ -110,6 +110,21 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenUserDTOAndMonth_ShouldReturnReportOfCategorySpendingsDTO()
+        {
+            ExchangeHistoryDTO myExchange = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 10, new DateTime(2023, 11, 15), 1);
+
+            _controller.CreateExchangeHistory(myExchange);
+            myExchange.ExchangeHistoryId = 1;
+
+            List<ResumeOfCategoryReportDTO> myResumeList = _controller.GiveAllSpendingsPerCategoryDetailed(_userConnected, MonthsEnumDTO.November);
+
+            Assert.AreEqual(2000, myResumeList[0].TotalSpentInCategory);
+            Assert.AreEqual(100, myResumeList[0].PercentajeOfTotal);
+            Assert.AreEqual(_exampleCategory.CategoryId, myResumeList[0].CategoryRelated.Name);
+        }
 
         #region Filtering Lists
 

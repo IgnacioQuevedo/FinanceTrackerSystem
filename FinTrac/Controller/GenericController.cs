@@ -13,6 +13,8 @@ using Controller.IControllers;
 using Controller.Mappers;
 using DataManagers;
 using Mappers;
+using BusinessLogic.Enums;
+using System.Collections.Generic;
 
 namespace Controller
 {
@@ -757,7 +759,18 @@ namespace Controller
 
         #endregion
 
+        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
+        {
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
+            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+
+            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+
+            return resumeList;
+
+
+        }
 
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
