@@ -292,7 +292,7 @@ public class ReportTests
     }
 
     [TestMethod]
-
+    [ExpectedException(typeof(ExceptionReport))]
     public void GivenUserAndTransactionOnDollarConvert_ShouldThrowExceptionIfThereIsNoExchangeSaved()
     {
         genericTransaction.CreationDate = new DateTime(1998, 09, 02);
