@@ -34,6 +34,8 @@ public abstract class MapperResumeOfGoalReport
 
     #endregion
 
+    #region To List of Resume of goal report
+
     public static List<ResumeOfGoalReport> ToListResumeOfGoalReport(List<ResumeOfGoalReportDTO> listOfResumeDTO)
     {
         List<ResumeOfGoalReport> resultResumeList = new List<ResumeOfGoalReport>();
@@ -45,4 +47,6 @@ public abstract class MapperResumeOfGoalReport
 
         return resultResumeList;
     }
+
+    #endregion
 }

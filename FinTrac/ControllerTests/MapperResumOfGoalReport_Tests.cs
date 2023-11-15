@@ -91,6 +91,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To List of Resume of goal report
+
         [TestMethod]
         public void GivenListOfResumeOfGoalReportDTO_ShouldConvertListToListOfResumeGoal()
         {
@@ -107,5 +109,7 @@ namespace ControllerTests
             Assert.AreEqual(givenResumeDTO.GoalAchieved, myConvertedList[0].GoalAchieved);
 
         }
+
+        #endregion
     }
 }
