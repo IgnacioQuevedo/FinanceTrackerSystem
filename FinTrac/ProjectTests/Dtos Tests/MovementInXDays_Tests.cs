@@ -24,6 +24,7 @@ namespace BusinessLogicTests.Dto_Components
         [TestMethod]
         public void GivenSpendingArray_ShouldBeSet()
         {
+            int[] spendings = new int[31];
             MovementInXDaysDTO movements = new MovementInXDaysDTO();
             movements.Spendings = spendings;
             
