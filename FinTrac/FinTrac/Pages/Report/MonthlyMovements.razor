@@ -102,8 +102,16 @@
 
 <script suppress-error="BL9992">
 
-    function initializeChart(incomes,spendings) {
+    // Declarar myChart como variable global
+    var myChart;
+
+    function initializeChart(incomes, spendings) {
         var ctx = document.getElementById("myChart");
+
+        // Destruir el gráfico anterior si existe
+        if (myChart) {
+            myChart.destroy();
+        }
 
         var totalSpentData1 = incomes.map(function (item) {
             return item;
@@ -115,9 +123,7 @@
 
         var labels = Array.from({ length: 31 }, (_, index) => index + 1);
 
-    
-
-        var myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
@@ -147,14 +153,14 @@
                     },
                     title: {
                         display: true,
-                        text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
+                        text: 'REPORT OF MONTHLY TRANSACTIONS SUMMING UP ALL ACCOUNTS'
                     }
                 }
             },
         });
     }
 
-    </script>
+</script>
 
 <td>
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
