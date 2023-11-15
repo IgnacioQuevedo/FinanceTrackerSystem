@@ -21,13 +21,23 @@ namespace Controller
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
         IMonetaryAccount, ICreditAccount, ITransactionController
     {
+        #region Atributes 
+
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
+
+        #endregion
+
+        #region Constructor
 
         public GenericController(UserRepositorySql userRepo)
         {
             _userRepo = userRepo;
         }
+
+        #endregion
+
+        #region User Repo
 
         public void SetUserConnected(int? userIdToConnect)
         {
@@ -37,8 +47,6 @@ namespace Controller
                 _userRepo.InstanceLists(_userConnected);
             }
         }
-
-        #region User Repo
 
         #region FindUser
 
