@@ -99,6 +99,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To List Resume Of Category Report
+
         [TestMethod]
         public void GivenListOfResumeOfCategoryReportDTO_ShouldConvertToBL()
         {
@@ -116,5 +118,7 @@ namespace ControllerTests
             Assert.AreEqual(listOfResume[0].TotalSpentInCategory, givenResumeDTO.TotalSpentInCategory);
             Assert.AreEqual(listOfResume[0].PercentajeOfTotal, givenResumeDTO.PercentajeOfTotal);
         }
+
+        #endregion
     }
 }
