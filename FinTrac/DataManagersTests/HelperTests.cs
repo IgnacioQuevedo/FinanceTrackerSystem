@@ -51,20 +51,21 @@ namespace DataManagersTests
         [TestMethod]
         public void GivenTwoSimplePropertiesThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
-            int number1 = 10;
-            int number2 = 10;
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+
             
-            Assert.IsTrue(Helper.AreTheSameObject(number1,number2));
+            Assert.IsFalse(Helper.AreTheSameObject(categoryDto.Name,categoryDto2.Name));
             
         }
         
         [TestMethod]
         public void GivenTwoSimplePropertiesThatAreNotEqual_AreTheSameObject_ShouldReturnFalse()
         {
-            int number1 = 10;
-            int number2 = 20;
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Fsood", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
             
-            Assert.IsFalse(Helper.AreTheSameObject(number1,number2));
+            Assert.IsFalse(Helper.AreTheSameObject(categoryDto.Name,categoryDto2.Name));
         }
         #endregion
 
