@@ -389,7 +389,7 @@ public class ReportTests
     }
     
     [TestMethod]
-    [ExpectedException(typeof(ExceptionRepor))]
+    [ExpectedException(typeof(ExceptionReport))]
     public void GivenIncorrectData_ShouldThrowException()
     {
         int[] incomes = new int [5];
