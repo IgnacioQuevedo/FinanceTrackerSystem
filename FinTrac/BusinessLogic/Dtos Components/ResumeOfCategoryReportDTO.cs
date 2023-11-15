@@ -11,7 +11,9 @@ public class ResumeOfCategoryReportDTO
     public ResumeOfCategoryReportDTO() { }
     public ResumeOfCategoryReportDTO(CategoryDTO categoryRelated, decimal totalSpent, decimal percentaje)
     {
-        throw new NotImplementedException();
+        CategoryRelated = categoryRelated;
+        TotalSpentInCategory = totalSpent;
+        PercentajeOfTotal = percentaje;
     }
 
 
