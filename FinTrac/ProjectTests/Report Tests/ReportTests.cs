@@ -401,7 +401,6 @@ public class ReportTests
 
         MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
         
-
     }
     
     
