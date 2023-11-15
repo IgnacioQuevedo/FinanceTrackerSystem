@@ -165,12 +165,9 @@ public class ReportTests
 
         Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
-        Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20),
+        Transaction myTransaction2 = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
-
-        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 10, 25),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-
+        
         loggedUser.AddCreditAccount(credit);
 
         loggedUser.MyAccounts[1].AddTransaction(myTransaction);
@@ -426,7 +423,7 @@ public class ReportTests
         Transaction transactionInDate = new Transaction("Payment for party", 10, new DateTime(2023,12,1).Date,
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
-        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,2).Date,
+        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,31).Date,
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
         myMonetaryAccount.AddTransaction(transactionInDate);
@@ -435,8 +432,8 @@ public class ReportTests
 
         decimal[] incomes = new decimal[31];
         decimal[] spendings = new decimal [31];
-        spendings[0] = 200;
-        spendings[30] = 200;
+        spendings[0] = 10;
+        spendings[30] = 10;
 
         RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
             new DateTime(2023, 12, 31).Date);

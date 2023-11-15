@@ -8,6 +8,7 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Enums;
@@ -411,6 +412,7 @@ namespace BusinessLogic.Report_Components
             Spendings = new decimal[_amountOfDays];
             RangeOfDates = rangeOfDates;
         }
+        
         private void ValidateDates()
         {
             if (_amountOfDays < 0)
