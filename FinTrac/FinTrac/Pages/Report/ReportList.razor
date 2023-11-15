@@ -1,45 +1,60 @@
 ﻿@page "/Reports"
 @layout MainLayout;
-<h3>Report List</h3>
+<h2>Report List</h2>
 
+
+<br/>
+<br/>
 
 <div class="form-group">
-    <label for="title"> Create Monthly Report Per Goal</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlyReportGoals"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create Monthly Report Per Goal</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlyReportGoals"))" 
+            style="margin-left: 2%"> Create </button>
 </div>
 
 <br />
 <br />
 
 <div class="form-group">
-    <label for="title"> Create Report Per Category</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlySpentOnCategory"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create Report Per Category</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo("/Report/MonthlySpentOnCategory"))"
+            style="margin-left: 2%"> Create </button>
 </div>
 
 <br />
 <br />
 
 <div class="form-group">
-    <label for="title"> Create Report Of Spent in Each Category</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo("/Report/SpendingsOfCreditCard"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create Report Of Spent in Each Category</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo("/Report/SpendingsOfCreditCard"))"
+            style="margin-left: 2%"> Create</button>
 </div>
 
 <br />
 <br />
 
 <div class="form-group">
-    <label for="title"> Create Report Monetary Balance</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo("/Report/MonetaryBalance"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create Report Monetary Balance</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo("/Report/MonetaryBalance"))"
+            style="margin-left: 2%"> Create</button>
 </div>
 <br />
 <br />
 <div class="form-group">
-    <label for="title"> Create General Spendings</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo( "/Report/Spendings"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create General Spendings</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo( "/Report/Spendings"))"
+            style="margin-left: 2%"> Create</button>
 </div>
 <br/>
 <br/>
 <div class="form-group">
-    <label for="title"> Create Monthly movements of transactions</label>
-    <button type="button" class="btn btn-primary" onclick="@(()=> NavigationManager.NavigateTo( "/Report/MonthlyMovements"))"> Create</button>
+    <label for="title" style="font-weight: bold; font-size: larger"> Create Monthly movements of transactions</label>
+    <button type="button" class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" 
+            onclick="@(()=> NavigationManager.NavigateTo( "/Report/MonthlyMovements"))"
+            style="margin-left: 2%"> Create</button>
 </div>
