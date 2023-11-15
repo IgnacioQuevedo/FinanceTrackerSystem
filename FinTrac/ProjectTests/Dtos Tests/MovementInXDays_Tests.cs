@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Dtos_Components;
+using BusinessLogic.Report_Components;
 
 namespace BusinessLogicTests.Dto_Components
 {
@@ -29,10 +30,10 @@ namespace BusinessLogicTests.Dto_Components
         [TestMethod]
         public void GivenIncomeArray_ShouldBeSet()
         {
-            decimal[] income = new decimal[31];
+            decimal[] incomes = new decimal[31];
 
-            movements.Income = income;
-            Assert.AreEqual(income, movements.Income);
+            movements.Incomes = incomes;
+            Assert.AreEqual(incomes, movements.Incomes);
         }
 
         [TestMethod]
@@ -44,6 +45,21 @@ namespace BusinessLogicTests.Dto_Components
             movements.RangeOfDates = rangeOfDatesDto;
             
             Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
+        }
+        
+        [TestMethod]
+        public void GivenCorrectData_ShouldBePossibleToCreateAnMovementInXDays()
+        {
+            RangeOfDatesDTO rangeOfDatesDto = new RangeOfDatesDTO(new DateTime(2023,12,1).Date,
+                new DateTime(2023,12,31).Date);
+            decimal[] spendings = new decimal[31];
+            decimal[] incomes = new decimal[31];
+            MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDatesDto);
+            
+            Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
+            Assert.AreEqual(spendings,movements.Spendings);
+            Assert.AreEqual(incomes,movements.Incomes);
+ 
         }
     }
 }
