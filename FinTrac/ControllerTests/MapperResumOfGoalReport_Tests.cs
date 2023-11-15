@@ -111,5 +111,22 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenListOfResumeOfGoalReport_ShouldConvertListToListOfResumeGoalDTO()
+        {
+            ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false);
+
+            List<ResumeOfGoalReport> listGiven = new List<ResumeOfGoalReport>();
+
+            listGiven.Add(givenResume);
+
+            List<ResumeOfGoalReportDTO> myConvertedList = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(listGiven);
+
+            Assert.AreEqual(givenResume.TotalSpent, myConvertedList[0].TotalSpent);
+            Assert.AreEqual(givenResume.AmountDefined, myConvertedList[0].AmountDefined);
+            Assert.AreEqual(givenResume.GoalAchieved, myConvertedList[0].GoalAchieved);
+
+        }
     }
 }
