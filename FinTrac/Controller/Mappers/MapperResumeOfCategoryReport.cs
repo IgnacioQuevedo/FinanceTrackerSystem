@@ -33,5 +33,11 @@ namespace Controller.Mappers
         }
 
         #endregion
+
+        public static List<ResumeOfCategoryReport> ToListResumeOfCategoryReport(List<ResumeOfCategoryReportDTO> myListDTO)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
