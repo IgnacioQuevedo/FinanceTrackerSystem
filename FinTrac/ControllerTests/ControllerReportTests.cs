@@ -72,6 +72,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Monthly Report
+
         [TestMethod]
         public void GivenUserDTO_ShouldReturnMonthlyReportGoal()
         {
@@ -106,6 +108,8 @@ namespace ControllerTests
             Assert.AreEqual(resumeOfGoalReportsDTO[0].GoalAchieved, false);
             Assert.AreEqual(resumeOfGoalReportsDTO.Count, 1);
         }
+
+        #endregion
 
         #region Filtering Lists
 

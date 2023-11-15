@@ -743,6 +743,7 @@ namespace Controller
 
         #region Report Section
 
+        #region Monthly Report Per Goal
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
             List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
@@ -754,6 +755,9 @@ namespace Controller
             return myListDTO;
         }
 
+        #endregion
+
+        #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
@@ -804,6 +808,8 @@ namespace Controller
 
             return accountBalance;
         }
+
+        #endregion
 
         #endregion
     }
