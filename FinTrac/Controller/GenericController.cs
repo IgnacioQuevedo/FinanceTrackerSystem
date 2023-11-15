@@ -766,5 +766,19 @@ namespace Controller
         }
 
         #endregion
+
+        #region Balance of Monetary account
+
+        public decimal GiveAccountBalance(MonetaryAccountDTO account)
+        {
+            MonetaryAccount monetGiven = ((MonetaryAccount)(FindAccountByIdInDb(account.AccountId)));
+            decimal initialMoney = monetGiven.ReturnInitialAmount();
+
+            decimal accountBalance = Report.GiveAccountBalance(monetGiven, initialMoney);
+
+            return accountBalance;
+        }
+
+        #endregion
     }
 }

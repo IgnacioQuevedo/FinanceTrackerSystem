@@ -125,6 +125,16 @@ public class MonetaryAccountTests
         Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
     }
 
+    [TestMethod]
+    public void GivenMonetaryAccount_ShouldReturnInitialAmountOfAccount()
+    {
+        MonetaryAccount myMonet = new MonetaryAccount("Brou", 1000, CurrencyEnum.UY, DateTime.Now.Date);
+
+        decimal initialAmount = myMonet.ReturnInitialAmount();
+
+        Assert.AreEqual(1000, initialAmount);
+    }
+
 
     #region Currency
 
@@ -196,7 +206,7 @@ public class MonetaryAccountTests
 
         MonetaryAccount monetaryAccountExample = new MonetaryAccount(nameToBeSetted, ammountToBeSetted, currencyToBeSetted, DateTime.Now);
 
-        Assert.AreEqual(initialAmount, monetaryAccountExample.InitialAmount);
+        Assert.AreEqual(initialAmount, monetaryAccountExample.ReturnInitialAmount());
     }
 
     #endregion

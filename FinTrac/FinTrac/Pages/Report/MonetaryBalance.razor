@@ -52,7 +52,8 @@
 
     private void ShowBalance()
     {
-        accountBalance = Report.GiveAccountBalance((MonetaryAccount)user.MyAccounts[monetaryId]);
+        MonetaryAccount myMonetary = (MonetaryAccount)user.MyAccounts[monetaryId];
+        accountBalance = Report.GiveAccountBalance(myMonetary, myMonetary.ReturnInitialAmount());
     }
 
 }

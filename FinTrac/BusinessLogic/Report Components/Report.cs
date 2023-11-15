@@ -173,9 +173,8 @@ namespace BusinessLogic.Report_Components
 
         #region Report Of Balance For Monetary Account
 
-        public static decimal GiveAccountBalance(MonetaryAccount account)
+        public static decimal GiveAccountBalance(MonetaryAccount account, decimal initialMoney)
         {
-            decimal initialMoney = account.InitialAmount;
             decimal actualBalance = 0;
             decimal accountBalance = 0;
             actualBalance = SummationOfTransactions(account, actualBalance);
