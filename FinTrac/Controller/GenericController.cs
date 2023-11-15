@@ -793,7 +793,13 @@ namespace Controller
 
         public List<TransactionDTO> ReportOfSpendingsPerCard(CreditCardAccountDTO creditCard)
         {
-            throw new NotImplementedException();
+            CreditCardAccount accountGiven = FindCreditAccountInDb(creditCard);
+
+            List<Transaction> spendingsPerCard = Report.ReportOfSpendingsPerCard(accountGiven);
+
+            List<TransactionDTO> spendingsPerCardDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCard);
+
+            return spendingsPerCardDTO;
         }
 
         #region Filtering Lists
