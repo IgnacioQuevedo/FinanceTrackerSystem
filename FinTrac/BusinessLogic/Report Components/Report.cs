@@ -416,8 +416,12 @@ namespace BusinessLogic.Report_Components
 
         public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
             
+            _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
+            if (_amountOfDays < 0)
+            {
+                throw new ExceptionReport("Final date must be greater than Initial date");
+            }
             Incomes = new decimal[_amountOfDays];
             Spendings = new decimal[_amountOfDays];
             RangeOfDates = rangeOfDates;
