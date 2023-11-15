@@ -152,8 +152,7 @@ namespace BusinessLogic.Report_Components
 
         #region Filtering Lists of spendings
 
-        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings,
-            RangeOfDates rangeOfDates)
+        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -170,8 +169,7 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings,
-            string nameOfCategory)
+        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -184,21 +182,11 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListOfSpendingsByAccount(List<Transaction> listOfSpendings,
-            Account accountSelected, User userLogged)
+        public static List<Transaction> FilterListByAccountAndOutcome(Account accountSelected)
         {
-            List<Transaction> accountSpendings = AccountSpendings(accountSelected, userLogged);
-            List<Transaction> filteredListOfSpending = listOfSpendings;
-            filteredListOfSpending = filteredListOfSpending.Intersect(accountSpendings).ToList();
+            List<Transaction> accountSpendings = accountSelected.GetAllTransactions()
+                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome && x.AccountId == accountSelected.AccountId).ToList();
 
-            return filteredListOfSpending;
-        }
-
-        private static List<Transaction> AccountSpendings(Account accountSelected, User userLogged)
-        {
-            List<Transaction> accountSpendings = userLogged.MyAccounts[accountSelected.AccountId].MyTransactions
-                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome)
-                .ToList();
             return accountSpendings;
         }
 
@@ -206,9 +194,8 @@ namespace BusinessLogic.Report_Components
 
         #region Report Of Balance For Monetary Account
 
-        public static decimal GiveAccountBalance(MonetaryAccount account)
+        public static decimal GiveAccountBalance(MonetaryAccount account, decimal initialMoney)
         {
-            decimal initialMoney = account.InitialAmount;
             decimal actualBalance = 0;
             decimal accountBalance = 0;
             actualBalance = SummationOfTransactions(account, actualBalance);

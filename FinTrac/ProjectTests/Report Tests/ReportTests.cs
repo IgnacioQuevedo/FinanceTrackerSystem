@@ -63,8 +63,8 @@ public class ReportTests
 
         loggedUser.AddMonetaryAccount(myMonetaryAccount);
 
-        genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.UY,
-            TypeEnum.Outcome, genericCategory);
+        genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericTransaction.AccountId = 1;
 
         myMonetaryAccount.AddTransaction(genericTransaction);
 
@@ -158,11 +158,12 @@ public class ReportTests
         DateTime startingDate = new DateTime(2023, 10, 16).Date;
         DateTime closingDate = new DateTime(2023, 11, 15).Date;
 
-        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, startingDate, "Brou", "1234",
-            1000, closingDate);
+        CreditCardAccount credit = new CreditCardAccount("My Credits", CurrencyEnum.UY, startingDate, "Brou", "1234", 1000, closingDate);
 
         genericCategory.CategoryId = 1;
         genericCategory2.CategoryId = 2;
+
+        Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
         Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
@@ -189,14 +190,14 @@ public class ReportTests
     public void GivenMonetaryAccount_ShouldReportBalance()
     {
         decimal balanceNeeded = 1000.0M - 200.0M - 100.0M;
-        decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount);
+        decimal balanceObtained = Report.GiveAccountBalance(myMonetaryAccount, myMonetaryAccount.ReturnInitialAmount());
 
         Assert.AreEqual(balanceNeeded, balanceObtained);
     }
 
     #endregion
 
-    #region Filtering Lists of spendings Tests
+    #region  Filtering Lists of spendings Tests
 
     [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByRangeOfDates_ShouldReturnListFilteredCorrectly()
@@ -215,7 +216,7 @@ public class ReportTests
         DateTime initialDate = new DateTime(2023, 05, 01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings, rangeOfDates);
+        listOfSpendings = Report.FilterListByRangeOfDate(listOfSpendings, rangeOfDates);
 
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
@@ -230,8 +231,7 @@ public class ReportTests
 
         List<Transaction> listOfSpendings = new List<Transaction>();
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-
-        Report.FilterListOfSpendingsByRangeOfDate(listOfSpendings, rangeOfDates);
+        Report.FilterListByRangeOfDate(listOfSpendings, rangeOfDates);
     }
 
     [TestMethod]
@@ -251,7 +251,7 @@ public class ReportTests
         DateTime initialDate = new DateTime(2023, 05, 01);
 
         RangeOfDates rangeOfDates = new RangeOfDates(initialDate, finalSelectedDate);
-        listOfSpendings = Report.FilterListOfSpendingsByNameOfCategory(listOfSpendings, "Food");
+        listOfSpendings = Report.FilterListByNameOfCategory(listOfSpendings, "Food");
 
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
@@ -260,20 +260,21 @@ public class ReportTests
     [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
     {
+        MonetaryAccount monetaryAccount = new MonetaryAccount("Brou All new", 1000, CurrencyEnum.UY, DateTime.Now);
+        monetaryAccount.AccountId = 1;
         List<Transaction> listOfSpendings = new List<Transaction>();
-        listOfSpendings.Add(transactionWanted1);
-        listOfSpendings.Add(transactionWanted2);
-        listOfSpendings.Add(transactionUnWanted1);
-
         List<Transaction> expectedList = new List<Transaction>();
+        transactionWanted1.AccountId = 1;
+        transactionWanted2.AccountId = 1;
         expectedList.Add(transactionWanted1);
         expectedList.Add(transactionWanted2);
+        loggedUser.MyAccounts[0].AccountId = 1;
 
-        loggedUser.AddMonetaryAccount(myMonetaryAccount);
-        loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
-        loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
+        loggedUser.AddMonetaryAccount(monetaryAccount);
+        loggedUser.MyAccounts[1].AddTransaction(transactionWanted1);
+        loggedUser.MyAccounts[1].AddTransaction(transactionWanted2);
 
-        listOfSpendings = Report.FilterListOfSpendingsByAccount(listOfSpendings, loggedUser.MyAccounts[0], loggedUser);
+        listOfSpendings = Report.FilterListByAccountAndOutcome(loggedUser.MyAccounts[1]);
 
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);

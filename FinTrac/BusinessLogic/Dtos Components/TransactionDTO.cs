@@ -9,15 +9,15 @@ public class TransactionDTO
     public CurrencyEnumDTO Currency { get; set; }
     public TypeEnumDTO Type { get; set; }
     public CategoryDTO TransactionCategory { get; set; }
-    
+
     public int? AccountId { get; set; }
-    
+
     public TransactionDTO()
     {
-        
+
     }
-    
-    public TransactionDTO(string title, DateTime creationDate, decimal amount, 
+
+    public TransactionDTO(string title, DateTime creationDate, decimal amount,
         CurrencyEnumDTO currencyEnumDto, TypeEnumDTO typeEnumDto, CategoryDTO transactionCategory, int? accountId)
     {
         Title = title;
@@ -28,5 +28,5 @@ public class TransactionDTO
         TransactionCategory = transactionCategory;
         AccountId = accountId;
     }
-    
+
 }
