@@ -73,7 +73,7 @@ namespace ControllerTests
         #endregion
 
         [TestMethod]
-        public void GivenAccountDTOListAndGoalDTOList_ShouldReturnMonthlyReportGoal()
+        public void GivenUserDTO_ShouldReturnMonthlyReportGoal()
         {
             List<CategoryDTO> categoriesOfGoal = new List<CategoryDTO>();
 
@@ -101,7 +101,7 @@ namespace ControllerTests
 
             List<ResumeOfGoalReportDTO> resumeOfGoalReportsDTO = _controller.GiveMonthlyReportPerGoal(_userConnected);
 
-            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 3000);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 4000);
             Assert.AreEqual(resumeOfGoalReportsDTO[0].AmountDefined, 500);
             Assert.AreEqual(resumeOfGoalReportsDTO[0].GoalAchieved, false);
             Assert.AreEqual(resumeOfGoalReportsDTO.Count, 1);
