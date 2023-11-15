@@ -70,6 +70,23 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenAccountDTOListAndGoalDTOLisr_ShouldReturnMonthlyReportGoal()
+        {
+            List<CategoryDTO> categoriesOfGoal = new List<CategoryDTO>();
+
+            categoriesOfGoal.Add(_controller.FindCategory(_exampleCategory.CategoryId, _userConnected.UserId));
+
+            GoalDTO myGoalDTO = new GoalDTO("Eat Less Food", 500, CurrencyEnumDTO.UY, categoriesOfGoal, 1);
+
+            _controller.CreateGoal(myGoalDTO);
+            myGoalDTO.GoalId = 1;
+
+            List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(_testDb.Users.First().MyAccounts, _testDb.Users.First().MyGoals);
+
+            Assert.AreEqual()
+        }
+
         #region Filtering Lists
 
         [TestMethod]

@@ -35,4 +35,27 @@ public abstract class MapperAccount
     }
 
     #endregion
+
+    public static List<Account> ToListAccountDTO(List<Account> myAccounts)
+    {
+        List<AccountDTO> myAccountsDTO = new List<AccountDTO>();
+        MonetaryAccount possibleMonetAccount = new MonetaryAccount();
+        CreditCardAccount possibleCredAccount = new CreditCardAccount();
+
+        foreach (Account account in myAccounts)
+        {
+            if (account is MonetaryAccountDTO)
+            {
+                possibleMonetAccount = account as MonetaryAccount;
+                myAccountsDTO.Add(MapperMonetaryAccount.ToMonetaryAccountDTO(possibleMonetAccount));
+            }
+            else
+            {
+                possibleCredAccount = account as CreditCardAccount;
+                myAccountsDTO.Add(MapperCreditAccount.ToCreditAccountDTO(possibleCredAccount));
+            }
+        }
+
+        return myAccountsDTO;
+    }
 }

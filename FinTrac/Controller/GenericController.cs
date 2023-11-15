@@ -728,10 +728,23 @@ namespace Controller
 
         #region Report Section
 
-        //public List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
-        //{
+        public List<ResumeOfGoalReport> GiveMonthlyReportPerGoal(List<AccountDTO> myAccountsDTO, List<GoalDTO> myGoalsDTO)
+        {
+            List<Account> accounts = new List<Account>();
+            foreach (AccountDTO accountDTO in myAccountsDTO)
+            {
+                if (accountDTO is MonetaryAccountDTO)
+                {
+                    accounts.Add(FindMonetaryAccountInDb((MonetaryAccountDTO)accountDTO));
+                }
+                else
+                {
+                    accounts.Add(FindCreditAccountInDb((CreditCardAccountDTO)accountDTO));
+                }
+            }
 
-        //}
+            return accounts;
+        }
 
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
