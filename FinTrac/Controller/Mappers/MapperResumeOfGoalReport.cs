@@ -52,7 +52,14 @@ public abstract class MapperResumeOfGoalReport
 
     public static List<ResumeOfGoalReportDTO> ToListResumeOfGoalReportDTO(List<ResumeOfGoalReport> listOfResume)
     {
-        throw new NotImplementedException();
+        List<ResumeOfGoalReportDTO> resultResumeList = new List<ResumeOfGoalReportDTO>();
+
+        foreach (ResumeOfGoalReport myResume in listOfResume)
+        {
+            resultResumeList.Add(ToResumeOfGoalReportDTO(myResume));
+        }
+
+        return resultResumeList;
 
     }
 }
