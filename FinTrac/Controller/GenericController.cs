@@ -757,6 +757,8 @@ namespace Controller
 
         #endregion
 
+
+
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {

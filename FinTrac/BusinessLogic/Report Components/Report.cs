@@ -52,7 +52,7 @@ namespace BusinessLogic.Report_Components
 
         #region Report of all spendings per category detailed
 
-        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser,
+        public static List<ResumeOfCategoryReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser,
             MonthsEnum monthGiven)
         {
             decimal[] spendingsPerCategory =
@@ -60,7 +60,7 @@ namespace BusinessLogic.Report_Components
             decimal totalSpentPerCategory = 0;
             decimal percentajeOfTotal = 0;
             Category categoryRelatedToSpending = new Category();
-            List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
+            List<ResumeOfCategoryReport> listOfSpendingsResumes = new List<ResumeOfCategoryReport>();
 
             foreach (var category in loggedUser.MyCategories)
             {
@@ -68,8 +68,8 @@ namespace BusinessLogic.Report_Components
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
 
-                ResumeOfSpendigsReport myCategorySpendingsResume =
-                    new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+                ResumeOfCategoryReport myCategorySpendingsResume =
+                    new ResumeOfCategoryReport(category, totalSpentPerCategory, percentajeOfTotal);
 
                 listOfSpendingsResumes.Add(myCategorySpendingsResume);
             }
@@ -373,13 +373,13 @@ namespace BusinessLogic.Report_Components
         }
     }
 
-    public class ResumeOfSpendigsReport
+    public class ResumeOfCategoryReport
     {
         public Category CategoryRelated { get; set; }
         public decimal TotalSpentInCategory { get; set; }
         public decimal PercentajeOfTotal { get; set; }
 
-        public ResumeOfSpendigsReport(Category categoryRelated, decimal totalSpent, decimal percentajeOfTotal)
+        public ResumeOfCategoryReport(Category categoryRelated, decimal totalSpent, decimal percentajeOfTotal)
         {
             CategoryRelated = categoryRelated;
             TotalSpentInCategory = totalSpent;
