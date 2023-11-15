@@ -5,6 +5,7 @@ using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Report_Components;
 using Mappers;
+using System.Collections.Generic;
 
 namespace Controller.Mappers;
 
@@ -32,4 +33,9 @@ public abstract class MapperResumeOfGoalReport
     }
 
     #endregion
+
+    public static List<ResumeOfGoalReport> ToListResumeOfGoalReport(List<ResumeOfGoalReportDTO> listOfResumeDTO)
+    {
+        throw new NotImplementedException();
+    }
 }
