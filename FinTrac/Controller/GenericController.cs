@@ -759,6 +759,8 @@ namespace Controller
 
         #endregion
 
+        #region Spendings Report Per Category Detailed
+
         public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
         {
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
@@ -768,9 +770,9 @@ namespace Controller
             List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
 
             return resumeList;
-
-
         }
+
+        #endregion
 
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
