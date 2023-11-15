@@ -52,7 +52,7 @@ namespace DataManagersTests
             int number1 = 10;
             int number2 = 10;
             
-            Assert.AreEqual(Helper.AreTheSameObject(number1,number2));
+            Assert.IsTrue(Helper.AreTheSameObject(number1,number2));
             
 
         }
