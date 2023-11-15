@@ -25,6 +25,7 @@
             <th>Value</th>
             <th>Currency</th>
             <th>ValueDate</th>
+            <th>Possible Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -36,8 +37,8 @@
                 <td>@exchangeHistory.Currency</td>
                 <td>@GetFormattedDate(exchangeHistory.ValueDate)</td>
                 <td>
-                    <button class="btn btn-success btn-sm" @onclick="(() => EditExchangeHistory(exchangeHistory))"> Edit </button>
-                    <button class="btn btn-danger btn-sm" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
+                    <button class="btn btn-success btn-sm button" @onclick="(() => EditExchangeHistory(exchangeHistory))"> Edit </button>
+                    <button class="btn btn-danger btn-sm button" @onclick="(() => DeleteExchange(exchangeHistory))"> Delete </button>
                 </td>
             </tr>
         }
