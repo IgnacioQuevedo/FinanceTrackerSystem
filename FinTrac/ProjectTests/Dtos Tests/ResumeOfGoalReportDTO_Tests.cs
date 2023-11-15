@@ -18,6 +18,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Amount
+
         [TestMethod]
         public void GivenAmount_ShouldBeSetted()
         {
@@ -25,6 +27,15 @@ namespace TestProject1
             resumeOfGoalReportDTO.AmountDefined = amountDefined;
 
             Assert.AreEqual(amountDefined, 100);
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void GivenTotalSpent_ShouldBeSetted()
+        {
+            resumeOfGoalReportDTO.TotalSpent = 100;
+            Assert.AreEqual(resumeOfGoalReportDTO.TotalSpent, 0);
         }
 
     }
