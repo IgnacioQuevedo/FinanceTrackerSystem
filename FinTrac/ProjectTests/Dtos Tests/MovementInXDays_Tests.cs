@@ -31,8 +31,7 @@ namespace BusinessLogicTests.Dto_Components
         {
             decimal[] income = new decimal[31];
 
-            movements.Spendings = income;
-
+            movements.Income = income;
             Assert.AreEqual(income, movements.Income);
         }
     }
