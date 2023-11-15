@@ -139,8 +139,29 @@ namespace ControllerTests
 
             Assert.AreEqual(2, allOutcomeTransactions.Count);
         }
+        #endregion
 
-        #endregion 
+        [TestMethod]
+        public void GivenUser_ShouldReturnSpendingsPerCard()
+        {
+            CreditCardAccountDTO myCreditCard = new CreditCardAccountDTO("Itau Credits", CurrencyEnumDTO.UY, new DateTime(2023, 11, 15), "Itau", "1122", 2000, new DateTime(2023, 11, 16), 1);
+
+            _controller.CreateCreditAccount(myCreditCard);
+            myCreditCard.AccountId = 2;
+
+            TransactionDTO transactionDTO1 = new TransactionDTO("Spend1", new DateTime(2023, 11, 15), 1000, CurrencyEnumDTO.EUR, TypeEnumDTO.Outcome, _exampleCategory, 2);
+
+            TransactionDTO transactionDTO2 = new TransactionDTO("Spend2", new DateTime(2023, 11, 15), 2000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 2);
+
+            _controller.CreateTransaction(transactionDTO1);
+            transactionDTO1.TransactionId = 3;
+            _controller.CreateTransaction(transactionDTO2);
+            transactionDTO2.TransactionId = 4;
+
+            List<TransactionDTO> reportPerCard = _controller.ReportOfSpendingsPerCard(myCreditCard);
+
+            Assert.AreEqual(2, reportPerCard.Count);
+        }
 
         #region Filtering Lists
 
@@ -165,8 +186,7 @@ namespace ControllerTests
 
             string categoryName = "Food";
 
-            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome,
-                unWantedCategory);
+            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, unWantedCategory);
 
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction3);
             _testDb.SaveChanges();

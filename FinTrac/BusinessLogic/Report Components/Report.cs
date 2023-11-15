@@ -122,7 +122,7 @@ namespace BusinessLogic.Report_Components
         {
             DateTime dateTimInit = GetDateTimInit(creditCard);
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
-            foreach (var transaction in creditCard.MyTransactions.Where(t => t != null))
+            foreach (var transaction in creditCard.MyTransactions)
             {
                 if (transaction.Type == TypeEnum.Outcome)
 
@@ -137,8 +137,19 @@ namespace BusinessLogic.Report_Components
 
         private static DateTime GetDateTimInit(CreditCardAccount creditCard)
         {
-            return new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1,
-                creditCard.CreationDate.Day + 1);
+            DateTime dateToSet = DateTime.MinValue;
+            if (creditCard.ClosingDate.Month == 1)
+            {
+                dateToSet = new DateTime(creditCard.ClosingDate.Year - 1, 12,
+                 creditCard.ClosingDate.Day + 1);
+            }
+            else
+            {
+                dateToSet = new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1,
+                creditCard.ClosingDate.Day + 1);
+            }
+
+            return dateToSet;
         }
 
         private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit,

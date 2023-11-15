@@ -776,9 +776,9 @@ namespace Controller
 
         #region Give All Outcome Transactions
 
-        public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userLoggedDTO)
+        public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userConnectedDTO)
         {
-            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+            User userInDb = _userRepo.FindUserInDb(userConnectedDTO.UserId);
 
             List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
 
@@ -788,6 +788,13 @@ namespace Controller
         }
 
         #endregion
+
+
+
+        public List<TransactionDTO> ReportOfSpendingsPerCard(CreditCardAccountDTO creditCard)
+        {
+            throw new NotImplementedException();
+        }
 
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
