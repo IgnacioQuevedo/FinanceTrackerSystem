@@ -10,6 +10,8 @@ public class ResumeOfGoalReportDTO
 
     public ResumeOfGoalReportDTO(decimal amount, decimal totalSpent, bool goalAchieved)
     {
-
+        AmountDefined = amount;
+        TotalSpent = totalSpent;
+        GoalAchieved = goalAchieved;
     }
 }
