@@ -19,13 +19,13 @@ namespace TestProject1
         #endregion
 
         [TestMethod]
-        public void GivenCateory_ShouldBeSetted()
+        public void GivenCategoryDTO_ShouldBeSetted()
         {
             CategoryDTO myCategoryDTO = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
             resumeOfCategoryReportDTO.CategoryRelated = myCategoryDTO;
 
-            Assert.AreEqual(null, resumeOfCategoryReportDTO.CategoryRelated);
+            Assert.AreEqual(myCategoryDTO, resumeOfCategoryReportDTO.CategoryRelated);
         }
 
 
