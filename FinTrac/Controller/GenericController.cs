@@ -101,7 +101,9 @@ namespace Controller
             {
                 User userPreUpdates = new User(_userConnected.FirstName, _userConnected.LastName, _userConnected.Email,
                     _userConnected.Password, _userConnected.Address);
+                
                 User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
+                
                 userPreUpdates.UserId = userWithUpdates.UserId;
                 
                 if (Helper.AreTheSameObject(userPreUpdates,userWithUpdates))

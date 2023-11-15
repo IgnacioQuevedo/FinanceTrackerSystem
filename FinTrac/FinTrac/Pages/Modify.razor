@@ -71,7 +71,7 @@
                             <div class="col-md-8">
                                 <input type="button" class="btn btn-primary" id="miboton" value="Save Changes" @onclick="ModifyUser"/>
                                 <span></span>
-                                <input type="button" class="btn btn-default" id="miboton" value="Cancel" @onclick="presetValues"/>
+                                <input type="button" class="btn btn-danger" id="miboton" value="Clear Modifications" @onclick="presetValues"/>
                             </div>
 
                             <br/>
@@ -81,8 +81,6 @@
                                 <SuccesAlert errorTxt="User modified successfully"/>
                             }
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -134,7 +132,7 @@
             UserController.PasswordMatch(password, passwordRepeated);
             userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
-            
+
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             SendDataToLayout();
