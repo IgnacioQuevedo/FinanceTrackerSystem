@@ -32,6 +32,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Total Spent
+
         [TestMethod]
         public void GivenTotalSpent_ShouldBeSetted()
         {
@@ -39,6 +41,8 @@ namespace TestProject1
 
             Assert.AreEqual(100, resumeOfCategoryReportDTO.TotalSpentInCategory);
         }
+
+        #endregion
 
 
     }
