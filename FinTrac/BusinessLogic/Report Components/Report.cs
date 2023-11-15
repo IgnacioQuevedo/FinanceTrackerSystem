@@ -62,7 +62,7 @@ namespace BusinessLogic.Report_Components
             Category categoryRelatedToSpending = new Category();
             List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
 
-            foreach (var category in loggedUser.MyCategories.Where(t => t != null))
+            foreach (var category in loggedUser.MyCategories)
             {
                 totalSpentPerCategory = spendingsPerCategory[category.CategoryId - 1];
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
@@ -277,25 +277,25 @@ namespace BusinessLogic.Report_Components
 
         #region Methods used by reports
 
-        public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
+        public static decimal ConvertDollarOrEuro(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
             bool found = false;
-            if (myTransaction.Currency == CurrencyEnum.USA)
+            if (myTransaction.Currency == CurrencyEnum.USA || myTransaction.Currency == CurrencyEnum.EUR)
             {
-                decimal dollarValue = 0;
+                decimal exchangeValue = 0;
                 foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
                 {
-                    if (exchange.ValueDate == myTransaction.CreationDate)
+                    if (exchange.ValueDate == myTransaction.CreationDate && exchange.Currency == myTransaction.Currency)
                     {
-                        dollarValue = exchange.Value;
+                        exchangeValue = exchange.Value;
                         found = true;
                         break;
                     }
                 }
                 if (found)
                 {
-                    amountToReturn = myTransaction.Amount * dollarValue;
+                    amountToReturn = myTransaction.Amount * exchangeValue;
                 }
                 else
                 {
@@ -317,9 +317,9 @@ namespace BusinessLogic.Report_Components
                 foreach (var transaction in account.MyTransactions)
                 {
                     if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
-                        && transaction.TransactionCategory.Type == TypeEnum.Outcome)
+                        && DateTime.Now.Year == transaction.CreationDate.Year && transaction.TransactionCategory.Type == TypeEnum.Outcome)
                     {
-                        decimal amountToAdd = ConvertDollar(transaction, loggedUser);
+                        decimal amountToAdd = ConvertDollarOrEuro(transaction, loggedUser);
                         LoadArray(spendings, transaction, amountToAdd);
                     }
                 }

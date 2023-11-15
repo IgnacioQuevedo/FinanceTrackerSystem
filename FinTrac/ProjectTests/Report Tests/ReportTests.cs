@@ -284,11 +284,11 @@ public class ReportTests
     [TestMethod]
     public void GivenTransactionInUSA_ShouldBeConvertedToUY()
     {
-        Report.ConvertDollar(genericTransaction, loggedUser);
+        Report.ConvertDollarOrEuro(genericTransaction, loggedUser);
 
         decimal convertionNeeded = 200 * 38.9M;
 
-        Assert.AreEqual(convertionNeeded, Report.ConvertDollar(genericTransaction, loggedUser));
+        Assert.AreEqual(convertionNeeded, Report.ConvertDollarOrEuro(genericTransaction, loggedUser));
     }
 
     [TestMethod]
@@ -296,7 +296,7 @@ public class ReportTests
     public void GivenUserAndTransactionOnDollarConvert_ShouldThrowExceptionIfThereIsNoExchangeSaved()
     {
         genericTransaction.CreationDate = new DateTime(1998, 09, 02);
-        Report.ConvertDollar(genericTransaction, loggedUser);
+        Report.ConvertDollarOrEuro(genericTransaction, loggedUser);
     }
 
     [TestMethod]
