@@ -8,7 +8,7 @@ using Mappers;
 
 namespace Controller.Mappers;
 
-public abstract class MapperResumeOfGoaLReport
+public abstract class MapperResumeOfGoalReport
 {
     #region To Resume Of Goal Report DTO
 
@@ -21,5 +21,10 @@ public abstract class MapperResumeOfGoaLReport
     }
 
     #endregion
+
+    public static ResumeOfGoalReport ToResumeOfGoalReport(ResumeOfGoalReportDTO resumeDTO_ToConvert)
+    {
+        throw new NotImplementedException();
+    }
 
 }

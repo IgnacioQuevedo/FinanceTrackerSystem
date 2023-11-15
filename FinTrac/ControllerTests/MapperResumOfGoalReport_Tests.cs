@@ -67,7 +67,7 @@ namespace ControllerTests
         public void GivenResumeOfGoalReport_ShouldBeConvertedToDTO()
         {
             ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false);
-            ResumeOfGoalReportDTO resumeDTO = MapperResumeOfGoaLReport.ToResumeOfGoalReportDTO(givenResume);
+            ResumeOfGoalReportDTO resumeDTO = MapperResumeOfGoalReport.ToResumeOfGoalReportDTO(givenResume);
 
             Assert.AreEqual(givenResume.AmountDefined, resumeDTO.AmountDefined);
             Assert.AreEqual(givenResume.TotalSpent, resumeDTO.TotalSpent);
@@ -75,5 +75,16 @@ namespace ControllerTests
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenResumeOfGoalDTO_ShouldReturnResumeOfGoal()
+        {
+            ResumeOfGoalReportDTO givenResumeDTO = new ResumeOfGoalReportDTO(1000, 200, false);
+            ResumeOfGoalReport resume = MapperResumeOfGoalReport.ToResumeOfGoalReport(givenResumeDTO);
+
+            Assert.AreEqual(givenResumeDTO.AmountDefined, resume.AmountDefined);
+            Assert.AreEqual(givenResumeDTO.TotalSpent, resume.TotalSpent);
+            Assert.AreEqual(givenResumeDTO.GoalAchieved, resume.GoalAchieved);
+        }
     }
 }
