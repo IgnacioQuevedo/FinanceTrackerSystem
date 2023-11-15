@@ -80,5 +80,19 @@ namespace ControllerTests
 
         #endregion
 
+        [TestMethod]
+        public void GivenResumeOfCategory_ShouldReturnResumeOfCategoryDTO()
+        {
+
+            Category myCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Outcome);
+
+            ResumeOfCategoryReport givenResume = new ResumeOfCategoryReport(myCategory, 100, 75);
+
+            ResumeOfCategoryReportDTO resumeDTO = MapperResumeOfCategoryReport.ToResumeOfCategoryReportDTO(givenResume);
+
+            Assert.AreEqual(MapperCategory.ToCategoryDTO(givenResume.CategoryRelated).Name, resumeDTO.CategoryRelated.Name);
+            Assert.AreEqual(givenResume.TotalSpentInCategory, resumeDTO.TotalSpentInCategory);
+            Assert.AreEqual(givenResume.PercentajeOfTotal, resumeDTO.PercentajeOfTotal);
+        }
     }
 }

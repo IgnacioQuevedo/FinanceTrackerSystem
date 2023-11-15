@@ -23,5 +23,10 @@ namespace Controller.Mappers
 
         #endregion
 
+        public static ResumeOfCategoryReportDTO ToResumeOfCategoryReportDTO(ResumeOfCategoryReport myResume)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
