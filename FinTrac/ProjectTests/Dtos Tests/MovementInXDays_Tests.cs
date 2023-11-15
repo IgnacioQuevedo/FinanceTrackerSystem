@@ -54,7 +54,8 @@ namespace BusinessLogicTests.Dto_Components
                 new DateTime(2023,12,31).Date);
             decimal[] spendings = new decimal[31];
             decimal[] incomes = new decimal[31];
-            MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDatesDto);
+            
+            MovementInXDaysDTO movements = new MovementInXDaysDTO(spendings, incomes, rangeOfDatesDto);
             
             Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
             Assert.AreEqual(spendings,movements.Spendings);
