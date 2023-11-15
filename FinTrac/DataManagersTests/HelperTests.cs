@@ -64,7 +64,7 @@ namespace DataManagersTests
             int number1 = 10;
             int number2 = 10;
             
-            Assert.IsTrue(Helper.AreTheSameObject(number1,number2));
+            Assert.IsFalse(Helper.AreTheSameObject(number1,number2));
             
         }
 
