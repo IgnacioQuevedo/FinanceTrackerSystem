@@ -146,6 +146,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Find Goal In Db
+
         [TestMethod]
         public void GivenGoalToFindDTO_ShouldReturnGoalInDb()
         {
@@ -157,7 +159,11 @@ namespace ControllerTests
 
             Assert.AreEqual(goalInDb.CategoriesOfGoal.Count, _goalDTOToAdd.CategoriesOfGoalDTO.Count);
             Assert.AreEqual(goalInDb.Title, _goalDTOToAdd.Title);
+            Assert.AreEqual(goalInDb.GoalId, _goalDTOToAdd.GoalId);
+            Assert.AreEqual(goalInDb.UserId, _goalDTOToAdd.UserId);
         }
+
+        #endregion
 
     }
 
