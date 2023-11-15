@@ -25,7 +25,9 @@ namespace Controller.Mappers
 
         public static ResumeOfCategoryReportDTO ToResumeOfCategoryReportDTO(ResumeOfCategoryReport myResume)
         {
-            throw new NotImplementedException();
+            ResumeOfCategoryReportDTO myResumeDTO = new ResumeOfCategoryReportDTO(MapperCategory.ToCategoryDTO(myResume.CategoryRelated), myResume.TotalSpentInCategory, myResume.PercentajeOfTotal);
+
+            return myResumeDTO;
         }
 
     }
