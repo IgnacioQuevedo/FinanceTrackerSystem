@@ -44,6 +44,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Percentaje
+
         [TestMethod]
         public void GivenPercentaje_ShouldBeSetted()
         {
@@ -52,6 +54,6 @@ namespace TestProject1
             Assert.AreEqual(75, resumeOfCategoryReportDTO.TotalSpentInCategory);
         }
 
-
+        #endregion
     }
 }
