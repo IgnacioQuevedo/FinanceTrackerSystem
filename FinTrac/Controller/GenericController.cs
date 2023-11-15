@@ -748,7 +748,6 @@ namespace Controller
             List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-
             myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(userInDb));
 
 

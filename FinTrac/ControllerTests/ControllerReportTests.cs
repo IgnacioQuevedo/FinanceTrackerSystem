@@ -81,12 +81,20 @@ namespace ControllerTests
 
             GoalDTO myGoalDTO = new GoalDTO("Eat Less Food", 500, CurrencyEnumDTO.UY, categoriesOfGoal, 1);
 
+            ExchangeHistoryDTO myExchange = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 10, DateTime.Now, 1);
+            ExchangeHistoryDTO myExchange2 = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 10, new DateTime(2020, 05, 20), 1);
+
+            _controller.CreateExchangeHistory(myExchange);
+            myExchange.ExchangeHistoryId = 1;
+            _controller.CreateExchangeHistory(myExchange2);
+            myExchange2.ExchangeHistoryId = 2;
+
             _controller.CreateGoal(myGoalDTO);
             myGoalDTO.GoalId = 1;
 
             List<ResumeOfGoalReportDTO> resumeOfGoalReportsDTO = _controller.GiveMonthlyReportPerGoal(_userConnected);
 
-            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 700);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 7000);
             Assert.AreEqual(resumeOfGoalReportsDTO[0].AmountDefined, 500);
             Assert.AreEqual(resumeOfGoalReportsDTO[0].GoalAchieved, false);
             Assert.AreEqual(resumeOfGoalReportsDTO.Count, 1);
