@@ -464,11 +464,11 @@ namespace Controller
         public AccountDTO FindAccountById(int? idAccountToFind, int? userId)
         {
             SetUserConnected(userId);
-            
+
             Account accountFound = FindAccountByIdInDb(idAccountToFind);
             MonetaryAccount possibleMonetaryAccount = new MonetaryAccount();
             CreditCardAccount possibleCreditCardAccount = new CreditCardAccount();
-            
+
             if (accountFound is MonetaryAccount)
             {
                 possibleMonetaryAccount = accountFound as MonetaryAccount;
@@ -710,13 +710,13 @@ namespace Controller
 
             accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
             accountWhereIsTransaction.UpdateAccountAfterDelete(transactionToDelete);
-            _userRepo.UpdateDbWhenDeleting(_userConnected,transactionToDelete);
+            _userRepo.UpdateDbWhenDeleting(_userConnected, transactionToDelete);
         }
 
         public List<TransactionDTO> GetAllTransactions(AccountDTO accountWithTransactions)
         {
             SetUserConnected(accountWithTransactions.UserId);
-            
+
             Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId);
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
@@ -753,13 +753,13 @@ namespace Controller
 
         }
 
-        public List<TransactionDTO> FilterByMonetaryAccountAndTypeIncome(MonetaryAccountDTO accountSelected, int userId)
+        public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected)
         {
-            SetUserConnected(userId);
+            SetUserConnected(accountSelected.UserId);
 
-            MonetaryAccount monetaryAccount = MapperMonetaryAccount.ToMonetaryAccount(accountSelected);
+            Account myAccount = FindAccountByIdInDb(accountSelected.AccountId);
 
-            List<Transaction> myTransactions = Report.FilterListByAccountAndType(monetaryAccount, _userConnected);
+            List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
 
             return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
 

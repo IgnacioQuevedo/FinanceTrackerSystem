@@ -129,7 +129,7 @@ namespace ControllerTests
             _controller.CreateTransaction(transaction3);
             _controller.CreateTransaction(transaction4);
 
-            List<TransactionDTO> filteredListDTO = _controller.FilterByMonetaryAccountAndTypeIncome(exampleAccountDTO2, _userConnected.UserId);
+            List<TransactionDTO> filteredListDTO = _controller.FilterByAccountAndTypeOutcome(_exampleAccount);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);

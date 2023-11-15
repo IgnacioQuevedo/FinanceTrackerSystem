@@ -61,6 +61,7 @@ public class ReportTests
         loggedUser.AddMonetaryAccount(myMonetaryAccount);
 
         genericTransaction = new Transaction("Payment for food", 100, DateTime.Now.Date, CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
+        genericTransaction.AccountId = 1;
 
         myMonetaryAccount.AddTransaction(genericTransaction);
 
@@ -250,18 +251,21 @@ public class ReportTests
     [TestMethod]
     public void GivenListOfSpendingsToBeFilteredByUserAccount_ShouldReturnListFilteredCorrectly()
     {
+        MonetaryAccount monetaryAccount = new MonetaryAccount("Brou All new", 1000, CurrencyEnum.UY, DateTime.Now);
+        monetaryAccount.AccountId = 1;
         List<Transaction> listOfSpendings = new List<Transaction>();
         List<Transaction> expectedList = new List<Transaction>();
+        transactionWanted1.AccountId = 1;
+        transactionWanted2.AccountId = 1;
         expectedList.Add(transactionWanted1);
         expectedList.Add(transactionWanted2);
+        loggedUser.MyAccounts[0].AccountId = 1;
 
-        loggedUser.AddMonetaryAccount(myMonetaryAccount);
-        loggedUser.MyAccounts[0].AddTransaction(transactionWanted1);
-        loggedUser.MyAccounts[0].AddTransaction(transactionWanted2);
+        loggedUser.AddMonetaryAccount(monetaryAccount);
+        loggedUser.MyAccounts[1].AddTransaction(transactionWanted1);
+        loggedUser.MyAccounts[1].AddTransaction(transactionWanted2);
 
-        expectedList = loggedUser.MyAccounts[0].GetAllTransactions();
-
-        listOfSpendings = Report.FilterListByAccountAndType(loggedUser.MyAccounts[0], loggedUser);
+        listOfSpendings = Report.FilterListByAccountAndOutcome(loggedUser.MyAccounts[1]);
 
         Assert.AreEqual(listOfSpendings[0], expectedList[0]);
         Assert.AreEqual(listOfSpendings[1], expectedList[1]);
