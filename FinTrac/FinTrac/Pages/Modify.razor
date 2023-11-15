@@ -134,6 +134,7 @@
             UserController.PasswordMatch(password, passwordRepeated);
             userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
+            
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             SendDataToLayout();
