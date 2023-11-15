@@ -29,7 +29,6 @@ namespace ControllerTests
             _testDb = _contextFactory.CreateDbContext();
             _userRepo = new UserRepositorySql(_testDb);
             _controller = new GenericController(_userRepo);
-            
         }
 
         #endregion
@@ -44,20 +43,22 @@ namespace ControllerTests
 
         #endregion
 
+        #region ToMovement
 
         [TestMethod]
         public void GivenMovementInXDaysDTO_ShouldBePossibleToConvertItToMovementInXDays()
         {
-            RangeOfDatesDTO rangeOfDatesDto = 
+            RangeOfDatesDTO rangeOfDatesDto =
                 new RangeOfDatesDTO(new DateTime(2023, 12, 1), new DateTime(2023, 12, 31));
-            
+
             MovementInXDaysDTO movementsDTO = new MovementInXDaysDTO(rangeOfDatesDto);
 
             MovementInXDays movements = MapperMovementInXDays.ToMovement(movementsDTO);
-            
-            Assert.AreEqual(movementsDTO.RangeOfDates.InitialDate,movements.RangeOfDates.InitialDate);
-            Assert.AreEqual(movementsDTO.RangeOfDates.FinalDate,movements.RangeOfDates.FinalDate);
+
+            Assert.AreEqual(movementsDTO.RangeOfDates.InitialDate, movements.RangeOfDates.InitialDate);
+            Assert.AreEqual(movementsDTO.RangeOfDates.FinalDate, movements.RangeOfDates.FinalDate);
         }
-      
+
+        #endregion
     }
 }
