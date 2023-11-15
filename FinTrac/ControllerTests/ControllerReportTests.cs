@@ -3,6 +3,7 @@ using BusinessLogic.Category_Components;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.Dtos_Components;
 using BusinessLogic.Enums;
+using BusinessLogic.Report_Components;
 using BusinessLogic.User_Components;
 using Controller;
 using Controller.Mappers;
@@ -45,7 +46,8 @@ namespace ControllerTests
 
             _transaction1 = new TransactionDTO("hola", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
-            _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
+            _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA,
+                TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
 
             _controller.CreateCategory(_exampleCategory);
@@ -75,11 +77,13 @@ namespace ControllerTests
         [TestMethod]
         public void GivenListOfTransactionAndRangeOfDates_ShouldBeFiltered()
         {
-            List<TransactionDTO> transactionUserListDTO = MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
+            List<TransactionDTO> transactionUserListDTO =
+                MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
 
             RangeOfDatesDTO myRangeDTO = new RangeOfDatesDTO(new DateTime(2023, 01, 01), new DateTime(2024, 01, 01));
 
-            List<TransactionDTO> filteredListDTO = _controller.FilterListByRangeOfDate(transactionUserListDTO, myRangeDTO);
+            List<TransactionDTO> filteredListDTO =
+                _controller.FilterListByRangeOfDate(transactionUserListDTO, myRangeDTO);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO.Count, 1);
@@ -93,33 +97,37 @@ namespace ControllerTests
 
             string categoryName = "Food";
 
-            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome,
+            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA,
+                TypeEnum.Outcome,
                 unWantedCategory);
 
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction3);
             _testDb.SaveChanges();
 
-            List<TransactionDTO> transactionUserListDTO = MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
+            List<TransactionDTO> transactionUserListDTO =
+                MapperTransaction.ToListOfTransactionsDTO(_testDb.Users.First().MyAccounts.First().MyTransactions);
 
-            List<TransactionDTO> filteredListDTO = _controller.FilterListByNameOfCategory(transactionUserListDTO, categoryName);
+            List<TransactionDTO> filteredListDTO =
+                _controller.FilterListByNameOfCategory(transactionUserListDTO, categoryName);
 
             Assert.AreEqual(filteredListDTO[0].Title, _transaction1.Title);
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
             Assert.AreEqual(filteredListDTO.Count, 2);
-
         }
 
         [TestMethod]
         public void GivenListAndMonetaryAccountDTOAndUserLoggedDTO_ShouldFilterListByAccount()
         {
-            TransactionDTO transaction3 = new TransactionDTO("Losses", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 2);
+            TransactionDTO transaction3 = new TransactionDTO("Losses", DateTime.Now.Date, 200, CurrencyEnumDTO.USA,
+                TypeEnumDTO.Outcome, _exampleCategory, 2);
 
             CategoryDTO myCategory2 = new CategoryDTO("Sugars", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
             _controller.CreateCategory(myCategory2);
             myCategory2.CategoryId = 2;
 
-            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, myCategory2, 1);
+            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA,
+                TypeEnumDTO.Income, myCategory2, 1);
 
             MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou2", 3000, CurrencyEnum.USA, DateTime.Now);
 
@@ -136,9 +144,24 @@ namespace ControllerTests
             Assert.AreEqual(filteredListDTO.Count, 2);
         }
 
-
-
         #endregion
 
+
+        #region Get Movement In X Days
+
+        [TestMethod]
+        public void GivenMovementInXDaysDTO_ShouldBePossibleToCalculateMovementsOfTransactionsPerDay()
+        {
+            RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
+                new DateTime(2023, 12, 31));
+            
+            List<Account> accounts = _testDb.Users.First().MyAccounts;
+            MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
+            
+            Assert.AreEqual(12,movements.Spendings[0]);
+            Assert.AreEqual(4,movements.Spendings[30]);
+        }
+
+        #endregion
     }
 }

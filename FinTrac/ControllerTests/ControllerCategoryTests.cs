@@ -62,7 +62,7 @@ namespace ControllerTests
             CategoryDTO dtoToAdd2 =
                 new CategoryDTO("Party", StatusEnumDTO.Enabled, TypeEnumDTO.Income, _userConnected.UserId);
             Category categoryInDb = new Category();
-
+            
             _controller.CreateCategory(dtoToAdd);
             _controller.CreateCategory(dtoToAdd2);
 
