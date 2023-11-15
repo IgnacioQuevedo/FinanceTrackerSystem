@@ -14,19 +14,31 @@ using Controller.IControllers;
 using Controller.Mappers;
 using DataManagers;
 using Mappers;
+using BusinessLogic.Enums;
+using System.Collections.Generic;
 
 namespace Controller
 {
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
         IMonetaryAccount, ICreditAccount, ITransactionController
     {
+        #region Atributes 
+
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
+
+        #endregion
+
+        #region Constructor
 
         public GenericController(UserRepositorySql userRepo)
         {
             _userRepo = userRepo;
         }
+
+        #endregion
+
+        #region User Repo
 
         public void SetUserConnected(int? userIdToConnect)
         {
@@ -36,8 +48,6 @@ namespace Controller
                 _userRepo.InstanceLists(_userConnected);
             }
         }
-
-        #region User Repo
 
         #region FindUser
 
@@ -280,6 +290,21 @@ namespace Controller
         {
             SetUserConnected(userConnectedId);
             return _userConnected.MyGoals;
+        }
+
+        public Goal FindGoalInDb(GoalDTO goalToFind)
+        {
+            SetUserConnected(goalToFind.UserId);
+
+            foreach (Goal goal in _userConnected.MyGoals)
+            {
+                if (goal.GoalId == goalToFind.GoalId)
+                {
+                    return goal;
+                }
+            }
+
+            throw new Exception("Category was not found, an error on index must be somewhere.");
         }
 
         private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
@@ -729,8 +754,68 @@ namespace Controller
 
         #region Report Section
 
-        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO,
-            RangeOfDatesDTO rangeOfDates)
+
+        #region Monthly Report Per Goal
+        public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
+        {
+            List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+
+            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(userInDb));
+
+
+            return myListDTO;
+        }
+
+        #endregion
+
+        #region Give All Outcome Transactions
+
+        public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userConnectedDTO)
+        {
+            User userInDb = _userRepo.FindUserInDb(userConnectedDTO.UserId);
+
+            List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
+
+            List<TransactionDTO> spendingsPerCategoryDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
+
+            return spendingsPerCategoryDTO;
+        }
+
+        #endregion
+
+        #region Spendings Report Per Category Detailed
+
+        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
+        {
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+
+            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+
+            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+
+            return resumeList;
+        }
+
+        #endregion
+
+        #region Report Of Spendings Per Card
+
+        public List<TransactionDTO> ReportOfSpendingsPerCard(CreditCardAccountDTO creditCard)
+        {
+            CreditCardAccount accountGiven = FindCreditAccountInDb(creditCard);
+
+            List<Transaction> spendingsPerCard = Report.ReportOfSpendingsPerCard(accountGiven);
+
+            List<TransactionDTO> spendingsPerCardDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCard);
+
+            return spendingsPerCardDTO;
+        }
+
+        #endregion 
+
+        #region Filtering Lists
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
@@ -779,6 +864,8 @@ namespace Controller
 
             return accountBalance;
         }
+
+        #endregion
 
         #endregion
 

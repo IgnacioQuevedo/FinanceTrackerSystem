@@ -8,6 +8,8 @@ using BusinessLogic.User_Components;
 using Controller;
 using Controller.Mappers;
 using DataManagers;
+using BusinessLogic.Report_Components;
+using BusinessLogic.Exceptions;
 
 namespace ControllerTests
 {
@@ -44,7 +46,7 @@ namespace ControllerTests
             _exampleAccount = new MonetaryAccountDTO("Brou", 3000, CurrencyEnumDTO.USA, DateTime.Now, 1);
             _exampleCategory = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
-            _transaction1 = new TransactionDTO("hola", DateTime.Now.Date, 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
+            _transaction1 = new TransactionDTO("hola", new DateTime(2023, 11, 15), 200, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
             _transaction2 = new TransactionDTO("Nueva", new DateTime(2020, 05, 20), 500, CurrencyEnumDTO.USA,
                 TypeEnumDTO.Outcome,
@@ -68,6 +70,101 @@ namespace ControllerTests
         public void CleanUp()
         {
             _testDb.Database.EnsureDeleted();
+        }
+
+        #endregion
+
+        #region Monthly Report
+
+        [TestMethod]
+        public void GivenUserDTO_ShouldReturnMonthlyReportGoal()
+        {
+            List<CategoryDTO> categoriesOfGoal = new List<CategoryDTO>();
+
+            categoriesOfGoal.Add(_controller.FindCategory(_exampleCategory.CategoryId, _userConnected.UserId));
+
+            GoalDTO myGoalDTO = new GoalDTO("Eat Less Food", 500, CurrencyEnumDTO.UY, categoriesOfGoal, 1);
+
+            TransactionDTO myTransaction = new TransactionDTO("Spend2", DateTime.Now, 100, CurrencyEnumDTO.EUR, TypeEnumDTO.Outcome, categoriesOfGoal[0], 1);
+
+            ExchangeHistoryDTO myExchange = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 10, DateTime.Now, 1);
+
+            ExchangeHistoryDTO myExchange2 = new ExchangeHistoryDTO(CurrencyEnumDTO.EUR, 20, DateTime.Now, 1);
+
+            _controller.CreateExchangeHistory(myExchange);
+            myExchange.ExchangeHistoryId = 1;
+
+            _controller.CreateExchangeHistory(myExchange2);
+            myExchange2.ExchangeHistoryId = 1;
+
+            _controller.CreateTransaction(myTransaction);
+            myTransaction.TransactionId = 3;
+
+            _controller.CreateGoal(myGoalDTO);
+            myGoalDTO.GoalId = 1;
+
+            List<ResumeOfGoalReportDTO> resumeOfGoalReportsDTO = _controller.GiveMonthlyReportPerGoal(_userConnected);
+
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 4000);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].AmountDefined, 500);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].GoalAchieved, false);
+            Assert.AreEqual(resumeOfGoalReportsDTO.Count, 1);
+        }
+
+        #endregion
+
+        #region Spendings Report Per Category Detailed
+
+        [TestMethod]
+        public void GivenUserDTOAndMonth_ShouldReturnReportOfCategorySpendingsDTO()
+        {
+            ExchangeHistoryDTO myExchange = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 10, new DateTime(2023, 11, 15), 1);
+
+            _controller.CreateExchangeHistory(myExchange);
+            myExchange.ExchangeHistoryId = 1;
+
+            List<ResumeOfCategoryReportDTO> myResumeList = _controller.GiveAllSpendingsPerCategoryDetailed(_userConnected, MonthsEnumDTO.November);
+
+            Assert.AreEqual(2000, myResumeList[0].TotalSpentInCategory);
+            Assert.AreEqual(100, myResumeList[0].PercentajeOfTotal);
+            Assert.AreEqual(_exampleCategory.Name, myResumeList[0].CategoryRelated.Name);
+        }
+
+        #endregion
+
+        #region Give All Outcome Transaction
+
+        [TestMethod]
+        public void GivenUser_ShoulReturnListOfAllOutComeTransactionsDTO()
+        {
+            List<TransactionDTO> allOutcomeTransactions = _controller.GiveAllOutcomeTransactions(_userConnected);
+
+            Assert.AreEqual(2, allOutcomeTransactions.Count);
+        }
+        #endregion
+
+        #region Report Of Spendings Per Card
+
+        [TestMethod]
+        public void GivenUser_ShouldReturnSpendingsPerCard()
+        {
+            CreditCardAccountDTO myCreditCard = new CreditCardAccountDTO("Itau Credits", CurrencyEnumDTO.UY, new DateTime(2023, 11, 15), "Itau", "1122", 2000, new DateTime(2023, 11, 16), 1);
+
+            _controller.CreateCreditAccount(myCreditCard);
+            myCreditCard.AccountId = 2;
+
+            TransactionDTO transactionDTO1 = new TransactionDTO("Spend1", new DateTime(2023, 11, 15), 1000, CurrencyEnumDTO.EUR, TypeEnumDTO.Outcome, _exampleCategory, 2);
+
+            TransactionDTO transactionDTO2 = new TransactionDTO("Spend2", new DateTime(2023, 11, 15), 2000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 2);
+
+            _controller.CreateTransaction(transactionDTO1);
+            transactionDTO1.TransactionId = 3;
+            _controller.CreateTransaction(transactionDTO2);
+            transactionDTO2.TransactionId = 4;
+
+            List<TransactionDTO> reportPerCard = _controller.ReportOfSpendingsPerCard(myCreditCard);
+
+            Assert.AreEqual(2, reportPerCard.Count);
         }
 
         #endregion
@@ -97,9 +194,7 @@ namespace ControllerTests
 
             string categoryName = "Food";
 
-            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA,
-                TypeEnum.Outcome,
-                unWantedCategory);
+            Transaction transaction3 = new Transaction("Losses", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, unWantedCategory);
 
             _testDb.Users.First().MyAccounts.First().MyTransactions.Add(transaction3);
             _testDb.SaveChanges();
@@ -143,10 +238,29 @@ namespace ControllerTests
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
             Assert.AreEqual(filteredListDTO.Count, 2);
         }
-
         #endregion
 
+        #region Monetary Account Balance
 
+        [TestMethod]
+        public void GivenMonetaryAccountDTO_ShouldReturnAccountBalance()
+        {
+            CategoryDTO myCategory2 = new CategoryDTO("Sugars", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            _controller.CreateCategory(myCategory2);
+            myCategory2.CategoryId = 2;
+
+            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, myCategory2, 1);
+
+            _controller.CreateTransaction(transaction4);
+
+            decimal balanceExpected = 2700;
+            decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
+
+            Assert.AreEqual(balanceExpected, accountBalance);
+        }
+      
+        #endregion
+          
         #region Get Movement In X Days
 
         [TestMethod]

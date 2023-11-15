@@ -146,6 +146,25 @@ namespace ControllerTests
 
         #endregion
 
+        #region Find Goal In Db
+
+        [TestMethod]
+        public void GivenGoalToFindDTO_ShouldReturnGoalInDb()
+        {
+            _controller.CreateCategory(_categoryDTO1);
+            _controller.CreateGoal(_goalDTOToAdd);
+            _goalDTOToAdd.GoalId = 1;
+
+            Goal goalInDb = _controller.FindGoalInDb(_goalDTOToAdd);
+
+            Assert.AreEqual(goalInDb.CategoriesOfGoal.Count, _goalDTOToAdd.CategoriesOfGoalDTO.Count);
+            Assert.AreEqual(goalInDb.Title, _goalDTOToAdd.Title);
+            Assert.AreEqual(goalInDb.GoalId, _goalDTOToAdd.GoalId);
+            Assert.AreEqual(goalInDb.UserId, _goalDTOToAdd.UserId);
+        }
+
+        #endregion
+
     }
 
 }

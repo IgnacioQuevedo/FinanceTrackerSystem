@@ -64,14 +64,14 @@
     [CascadingParameter]
     public User user { get; set; }
 
-    private List<ResumeOfSpendigsReport> reportsOfEachCategory;
+    private List<ResumeOfCategoryReport> reportsOfEachCategory;
     private MonthsEnum monthSelected;
     private bool ConfirmedMonth;
 
     protected override void OnInitialized()
     {
         monthSelected = (MonthsEnum)DateTime.Now.Month;
-        reportsOfEachCategory = new List<ResumeOfSpendigsReport>();
+        reportsOfEachCategory = new List<ResumeOfCategoryReport>();
         ConfirmedMonth = false;
     }
 

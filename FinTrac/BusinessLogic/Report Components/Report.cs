@@ -53,7 +53,7 @@ namespace BusinessLogic.Report_Components
 
         #region Report of all spendings per category detailed
 
-        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser,
+        public static List<ResumeOfCategoryReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser,
             MonthsEnum monthGiven)
         {
             decimal[] spendingsPerCategory =
@@ -61,16 +61,16 @@ namespace BusinessLogic.Report_Components
             decimal totalSpentPerCategory = 0;
             decimal percentajeOfTotal = 0;
             Category categoryRelatedToSpending = new Category();
-            List<ResumeOfSpendigsReport> listOfSpendingsResumes = new List<ResumeOfSpendigsReport>();
+            List<ResumeOfCategoryReport> listOfSpendingsResumes = new List<ResumeOfCategoryReport>();
 
-            foreach (var category in loggedUser.MyCategories.Where(t => t != null))
+            foreach (var category in loggedUser.MyCategories)
             {
                 totalSpentPerCategory = spendingsPerCategory[category.CategoryId - 1];
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
 
-                ResumeOfSpendigsReport myCategorySpendingsResume =
-                    new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+                ResumeOfCategoryReport myCategorySpendingsResume =
+                    new ResumeOfCategoryReport(category, totalSpentPerCategory, percentajeOfTotal);
 
                 listOfSpendingsResumes.Add(myCategorySpendingsResume);
             }
@@ -123,7 +123,7 @@ namespace BusinessLogic.Report_Components
         {
             DateTime dateTimInit = GetDateTimInit(creditCard);
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
-            foreach (var transaction in creditCard.MyTransactions.Where(t => t != null))
+            foreach (var transaction in creditCard.MyTransactions)
             {
                 if (transaction.Type == TypeEnum.Outcome)
 
@@ -138,8 +138,19 @@ namespace BusinessLogic.Report_Components
 
         private static DateTime GetDateTimInit(CreditCardAccount creditCard)
         {
-            return new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1,
-                creditCard.CreationDate.Day + 1);
+            DateTime dateToSet = DateTime.MinValue;
+            if (creditCard.ClosingDate.Month == 1)
+            {
+                dateToSet = new DateTime(creditCard.ClosingDate.Year - 1, 12,
+                 creditCard.ClosingDate.Day + 1);
+            }
+            else
+            {
+                dateToSet = new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1,
+                creditCard.ClosingDate.Day + 1);
+            }
+
+            return dateToSet;
         }
 
         private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit,
@@ -280,22 +291,31 @@ namespace BusinessLogic.Report_Components
 
         #region Methods used by reports
 
-        public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
+        public static decimal ConvertDollarOrEuro(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
-            if (myTransaction.Currency == CurrencyEnum.USA)
+            bool found = false;
+            if (myTransaction.Currency == CurrencyEnum.USA || myTransaction.Currency == CurrencyEnum.EUR)
             {
-                decimal dollarValue = 0;
+                decimal exchangeValue = 0;
                 foreach (ExchangeHistory exchange in loggedUser.MyExchangesHistory)
                 {
-                    if (exchange.ValueDate == myTransaction.CreationDate)
+                    if (exchange.ValueDate == myTransaction.CreationDate && exchange.Currency == myTransaction.Currency)
                     {
-                        dollarValue = exchange.Value;
+                        exchangeValue = exchange.Value;
+                        found = true;
                         break;
                     }
                 }
+                if (found)
+                {
+                    amountToReturn = myTransaction.Amount * exchangeValue;
+                }
+                else
+                {
+                    throw new ExceptionReport("There is no exchange registered for transaction");
+                }
 
-                amountToReturn = myTransaction.Amount * dollarValue;
             }
 
             return amountToReturn;
@@ -306,14 +326,14 @@ namespace BusinessLogic.Report_Components
         {
             decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
 
-            foreach (var account in listOfAccounts.Where(t => t != null))
+            foreach (var account in listOfAccounts)
             {
-                foreach (var transaction in account.MyTransactions.Where(t => t != null))
+                foreach (var transaction in account.MyTransactions)
                 {
                     if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
-                        && transaction.TransactionCategory.Type == TypeEnum.Outcome)
+                        && DateTime.Now.Year == transaction.CreationDate.Year && transaction.TransactionCategory.Type == TypeEnum.Outcome)
                     {
-                        decimal amountToAdd = ConvertDollar(transaction, loggedUser);
+                        decimal amountToAdd = ConvertDollarOrEuro(transaction, loggedUser);
                         LoadArray(spendings, transaction, amountToAdd);
                     }
                 }
@@ -346,6 +366,7 @@ namespace BusinessLogic.Report_Components
         }
 
         #endregion
+
     }
 
     #region Class for reports
@@ -364,13 +385,13 @@ namespace BusinessLogic.Report_Components
         }
     }
 
-    public class ResumeOfSpendigsReport
+    public class ResumeOfCategoryReport
     {
         public Category CategoryRelated { get; set; }
         public decimal TotalSpentInCategory { get; set; }
         public decimal PercentajeOfTotal { get; set; }
 
-        public ResumeOfSpendigsReport(Category categoryRelated, decimal totalSpent, decimal percentajeOfTotal)
+        public ResumeOfCategoryReport(Category categoryRelated, decimal totalSpent, decimal percentajeOfTotal)
         {
             CategoryRelated = categoryRelated;
             TotalSpentInCategory = totalSpent;

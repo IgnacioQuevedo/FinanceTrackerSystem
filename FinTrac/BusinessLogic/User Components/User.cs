@@ -484,7 +484,7 @@ namespace BusinessLogic.User_Components
         {
             foreach (var oneExchange in MyExchangesHistory)
             {
-                if (DateTime.Compare(oneExchange.ValueDate, exchangeHistoryToAdd.ValueDate) == 0)
+                if (DateTime.Compare(oneExchange.ValueDate, exchangeHistoryToAdd.ValueDate) == 0 && oneExchange.Currency == exchangeHistoryToAdd.Currency)
                 {
                     throw new ExceptionExchangeHistoryManagement("There already exists a exchange history " +
                                                                  "for this date, modify it instead.");
