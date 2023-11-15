@@ -3,6 +3,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
@@ -171,6 +172,7 @@ namespace Controller
             {
                 throw new Exception("Must select a category, otherwise there would not be changes");
             }
+
             SetUserConnected(categoryToFind.UserId);
 
             return SearchCategoryInDb(categoryToFind.CategoryId);
@@ -623,7 +625,6 @@ namespace Controller
                 CreditCardAccount creditAccountToDelete = FindCreditAccountInDb(accountToDelete);
                 _userConnected.DeleteAccount(creditAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
-
             }
             catch (ExceptionCategoryManagement Exception)
             {
@@ -753,6 +754,7 @@ namespace Controller
 
         #region Report Section
 
+
         #region Monthly Report Per Goal
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
@@ -826,7 +828,8 @@ namespace Controller
             return listOfSpendingsDTO;
         }
 
-        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO, string nameOfCategory)
+        public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO,
+            string nameOfCategory)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
@@ -835,7 +838,6 @@ namespace Controller
             listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 
             return listOfSpendingsDTO;
-
         }
 
         public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected)
@@ -847,7 +849,6 @@ namespace Controller
             List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
 
             return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
-
         }
 
         #endregion
@@ -867,5 +868,28 @@ namespace Controller
         #endregion
 
         #endregion
+
+        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO, MonthsEnumDTO monthSelected)
+        {
+            try
+            {
+                if ((int) monthSelected != rangeOfDatesDTO.InitialDate.Month)
+                {
+                    throw new Exception("Month selected must be equal to the month of the dates");
+                }
+                
+                SetUserConnected(userId);
+                MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
+                RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
+            
+                movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
+                return MapperMovementInXDays.ToMovementDTO(movementsOfTransactionsPerDay);
+            }
+            catch(ExceptionReport Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+           
+        }
     }
 }

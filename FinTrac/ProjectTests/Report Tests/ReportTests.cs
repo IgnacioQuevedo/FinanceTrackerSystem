@@ -431,7 +431,9 @@ public class ReportTests
         Transaction transactionInDate = new Transaction("Payment for party", 10, new DateTime(2023, 12, 1).Date,
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
-        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023, 12, 2).Date,
+
+        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,31).Date,
+                                                         
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
         myMonetaryAccount.AddTransaction(transactionInDate);
@@ -439,9 +441,9 @@ public class ReportTests
         List<Account> accounts = loggedUser.MyAccounts;
 
         decimal[] incomes = new decimal[31];
-        decimal[] spendings = new decimal[31];
-        spendings[0] = 200;
-        spendings[30] = 200;
+        decimal[] spendings = new decimal [31];
+        spendings[0] = 10;
+        spendings[30] = 10;
 
         RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
             new DateTime(2023, 12, 31).Date);

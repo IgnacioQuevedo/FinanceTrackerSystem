@@ -8,6 +8,7 @@ using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Account_Components;
+using BusinessLogic.Dtos_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
 using BusinessLogic.Enums;
@@ -163,7 +164,8 @@ namespace BusinessLogic.Report_Components
 
         #region Filtering Lists of spendings
 
-        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings,
+            RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -180,7 +182,8 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
+        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings,
+            string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -196,7 +199,8 @@ namespace BusinessLogic.Report_Components
         public static List<Transaction> FilterListByAccountAndOutcome(Account accountSelected)
         {
             List<Transaction> accountSpendings = accountSelected.GetAllTransactions()
-                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome && x.AccountId == accountSelected.AccountId).ToList();
+                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome && x.AccountId == accountSelected.AccountId)
+                .ToList();
 
             return accountSpendings;
         }
@@ -257,7 +261,6 @@ namespace BusinessLogic.Report_Components
 
         public static MovementInXDays GetMovementInXDays(List<Account> accounts, RangeOfDates rangeOfDates)
         {
-
             MovementInXDays movements = new MovementInXDays(rangeOfDates);
             int month = rangeOfDates.InitialDate.Month;
 
@@ -277,10 +280,10 @@ namespace BusinessLogic.Report_Components
                         {
                             movements.Spendings[transaction.CreationDate.Day - 1] += transaction.Amount;
                         }
-
                     }
                 }
             }
+
             return movements;
         }
 
@@ -364,8 +367,6 @@ namespace BusinessLogic.Report_Components
 
         #endregion
 
-
-
     }
 
     #region Class for reports
@@ -417,25 +418,31 @@ namespace BusinessLogic.Report_Components
         public decimal[] Incomes { get; set; }
 
         public RangeOfDates RangeOfDates { get; set; }
+
         public MovementInXDays()
         {
         }
 
         public MovementInXDays(RangeOfDates rangeOfDates)
         {
-
             _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
-            ValidateDates();
+            ValidateDates(rangeOfDates.FinalDate, rangeOfDates.InitialDate);
 
-            Incomes = new decimal[_amountOfDays];
-            Spendings = new decimal[_amountOfDays];
+            Incomes = new decimal[31];
+            Spendings = new decimal[31];
             RangeOfDates = rangeOfDates;
         }
-        private void ValidateDates()
+
+        private void ValidateDates(DateTime finalDate, DateTime initialDate)
         {
-            if (_amountOfDays < 0)
+            bool monthsAreEqual = finalDate.Month == initialDate.Month;
+            bool yearsAreEqual = finalDate.Year == initialDate.Year;
+
+            if (_amountOfDays < 0 || !monthsAreEqual || !yearsAreEqual)
             {
-                throw new ExceptionReport("Final date must be greater than Initial date");
+                throw new ExceptionReport("Seems that there is an error on the DATES, validate that FINAL DATE " +
+                                          "is greater than the INITIAL one. Also check that there are in the SAME YEAR " +
+                                          "and references the SELECTED MONTH from below this alert.");
             }
         }
     }
