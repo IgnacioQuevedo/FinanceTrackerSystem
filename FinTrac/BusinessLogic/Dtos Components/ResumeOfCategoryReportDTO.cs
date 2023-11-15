@@ -6,6 +6,7 @@ public class ResumeOfCategoryReportDTO
 {
     public CategoryDTO CategoryRelated { get; set; }
     public decimal TotalSpentInCategory { get; set; }
+    public decimal PercentajeOfTotal { get; set; }
 
     public ResumeOfCategoryReportDTO() { }
 }
