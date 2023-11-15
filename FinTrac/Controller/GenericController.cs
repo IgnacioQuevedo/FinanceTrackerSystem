@@ -783,12 +783,20 @@ namespace Controller
 
         public MovementInXDays GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO)
         {
-            SetUserConnected(userId);
-            MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
-            RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
+            try
+            {
+                SetUserConnected(userId);
+                MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
+                RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
             
-            movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
-            return movementsOfTransactionsPerDay;
+                movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
+                return movementsOfTransactionsPerDay;
+            }
+            catch(ExceptionReport Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
+           
         }
     }
 }

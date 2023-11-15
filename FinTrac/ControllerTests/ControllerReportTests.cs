@@ -150,21 +150,20 @@ namespace ControllerTests
         #region Get Movement In X Days
 
         [TestMethod]
-        public void GivenMovementInXDaysDTO_ShouldBePossibleToCalculateMovementsOfTransactionsPerDay()
+        public void GivenRangeOfDatesOfOneMonth_ShouldBePossibleToCalculateMovementsOfTransactionsPerDay()
         {
             RangeOfDatesDTO rangeOfDatesDTO = new RangeOfDatesDTO(new DateTime(2020, 5, 20).Date,
                 new DateTime(2020, 5, 24));
-                
-                TransactionDTO _transaction3= new TransactionDTO("Party", new DateTime(2020, 05, 23), 1000, CurrencyEnumDTO.USA,
-                TypeEnumDTO.Outcome,
-                _exampleCategory, 1);
-                
-                _controller.CreateTransaction(_transaction3);
-            
+
+            TransactionDTO _transaction3 = new TransactionDTO("Party", new DateTime(2020, 05, 23),
+                1000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 1);
+
+            _controller.CreateTransaction(_transaction3);
+
             MovementInXDays movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO);
-            
-            Assert.AreEqual(500,movements.Spendings[19]);
-            Assert.AreEqual(1000,movements.Spendings[22]);
+
+            Assert.AreEqual(500, movements.Spendings[19]);
+            Assert.AreEqual(1000, movements.Spendings[22]);
         }
 
         #endregion
