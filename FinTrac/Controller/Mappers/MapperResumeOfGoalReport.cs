@@ -24,7 +24,9 @@ public abstract class MapperResumeOfGoalReport
 
     public static ResumeOfGoalReport ToResumeOfGoalReport(ResumeOfGoalReportDTO resumeDTO_ToConvert)
     {
-        throw new NotImplementedException();
+        ResumeOfGoalReport resume = new ResumeOfGoalReport(resumeDTO_ToConvert.AmountDefined, resumeDTO_ToConvert.TotalSpent, resumeDTO_ToConvert.GoalAchieved);
+
+        return resume;
     }
 
 }
