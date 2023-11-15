@@ -20,7 +20,7 @@ using System.Collections.Generic;
 namespace Controller
 {
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
-        IMonetaryAccount, ICreditAccount, ITransactionController
+        IMonetaryAccount, ICreditAccount, ITransactionController, IReportController
     {
         #region Atributes 
 
@@ -873,23 +873,23 @@ namespace Controller
         {
             try
             {
-                if ((int) monthSelected != rangeOfDatesDTO.InitialDate.Month)
+                if ((int)monthSelected != rangeOfDatesDTO.InitialDate.Month)
                 {
                     throw new Exception("Month selected must be equal to the month of the dates");
                 }
-                
+
                 SetUserConnected(userId);
                 MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
                 RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
-            
+
                 movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
                 return MapperMovementInXDays.ToMovementDTO(movementsOfTransactionsPerDay);
             }
-            catch(ExceptionReport Exception)
+            catch (ExceptionReport Exception)
             {
                 throw new Exception(Exception.Message);
             }
-           
+
         }
     }
 }
