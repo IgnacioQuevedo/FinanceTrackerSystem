@@ -774,6 +774,11 @@ namespace Controller
 
         #endregion
 
+        public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userLoggedDTO)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {

@@ -111,6 +111,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Spendings Report Per Category Detailed
+
         [TestMethod]
         public void GivenUserDTOAndMonth_ShouldReturnReportOfCategorySpendingsDTO()
         {
@@ -124,6 +126,16 @@ namespace ControllerTests
             Assert.AreEqual(2000, myResumeList[0].TotalSpentInCategory);
             Assert.AreEqual(100, myResumeList[0].PercentajeOfTotal);
             Assert.AreEqual(_exampleCategory.Name, myResumeList[0].CategoryRelated.Name);
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void GivenUser_ShoulReturnListOfAllOutComeTransactionsDTO()
+        {
+            List<TransactionDTO> allOutcomeTransactions = _controller.GiveAllOutcomeTransactions(_userConnected);
+
+            Assert.AreEqual(2, allOutcomeTransactions.Count);
         }
 
         #region Filtering Lists
