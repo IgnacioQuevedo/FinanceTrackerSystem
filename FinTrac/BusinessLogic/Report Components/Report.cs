@@ -17,12 +17,12 @@ namespace BusinessLogic.Report_Components
 {
     public abstract class Report
     {
-
         #region Monthly report
 
         public static List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
         {
-            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
+            decimal[] spendingsPerCategory =
+                CategorySpendings(loggedUser, (MonthsEnum)DateTime.Now.Month, loggedUser.MyAccounts);
             decimal totalSpent = 0;
             List<ResumeOfGoalReport> listOfSpendingsResumes = new List<ResumeOfGoalReport>();
             bool goalAchieved = false;
@@ -35,19 +35,28 @@ namespace BusinessLogic.Report_Components
                 {
                     totalSpent += spendingsPerCategory[category.CategoryId - 1];
                 }
-                if (totalSpent > myGoal.MaxAmountToSpend) { goalAchieved = false; }
+
+                if (totalSpent > myGoal.MaxAmountToSpend)
+                {
+                    goalAchieved = false;
+                }
+
                 ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
                 listOfSpendingsResumes.Add(myResume);
             }
+
             return listOfSpendingsResumes;
         }
+
         #endregion
 
         #region Report of all spendings per category detailed
 
-        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser, MonthsEnum monthGiven)
+        public static List<ResumeOfSpendigsReport> GiveAllSpendingsPerCategoryDetailed(User loggedUser,
+            MonthsEnum monthGiven)
         {
-            decimal[] spendingsPerCategory = CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
+            decimal[] spendingsPerCategory =
+                CategorySpendings(loggedUser, (MonthsEnum)monthGiven, loggedUser.MyAccounts);
             decimal totalSpentPerCategory = 0;
             decimal percentajeOfTotal = 0;
             Category categoryRelatedToSpending = new Category();
@@ -59,10 +68,12 @@ namespace BusinessLogic.Report_Components
                 percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
                 categoryRelatedToSpending = category;
 
-                ResumeOfSpendigsReport myCategorySpendingsResume = new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
+                ResumeOfSpendigsReport myCategorySpendingsResume =
+                    new ResumeOfSpendigsReport(category, totalSpentPerCategory, percentajeOfTotal);
 
                 listOfSpendingsResumes.Add(myCategorySpendingsResume);
             }
+
             return listOfSpendingsResumes;
         }
 
@@ -72,12 +83,14 @@ namespace BusinessLogic.Report_Components
             {
                 return 0;
             }
+
             return (totalSpentPerCategory / spendingsPerCategory[spendingsPerCategory.Length - 1]) * 100;
         }
 
         #endregion
 
         #region Report of All Outcome Transactions
+
         public static List<Transaction> GiveAllOutcomeTransactions(User loggedUser)
         {
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
@@ -88,10 +101,12 @@ namespace BusinessLogic.Report_Components
                     AddToListOfOutcomest(listOfAllOutcomeTransactions, transaction);
                 }
             }
+
             return listOfAllOutcomeTransactions;
         }
 
-        private static void AddToListOfOutcomest(List<Transaction> listOfAllOutcomeTransactions, Transaction transaction)
+        private static void AddToListOfOutcomest(List<Transaction> listOfAllOutcomeTransactions,
+            Transaction transaction)
         {
             if (transaction.Type == TypeEnum.Outcome)
             {
@@ -116,24 +131,29 @@ namespace BusinessLogic.Report_Components
                         listOfAllOutcomeTransactions.Add(transaction);
                     }
             }
+
             return listOfAllOutcomeTransactions;
         }
 
         private static DateTime GetDateTimInit(CreditCardAccount creditCard)
         {
-            return new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1, creditCard.CreationDate.Day + 1);
+            return new DateTime(creditCard.ClosingDate.Year, creditCard.ClosingDate.Month - 1,
+                creditCard.CreationDate.Day + 1);
         }
 
-        private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit, Transaction transaction)
+        private static bool IsBetweenBalanceDates(CreditCardAccount creditCard, DateTime dateTimInit,
+            Transaction transaction)
         {
-            return transaction.CreationDate.CompareTo(dateTimInit) >= 0 && transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0;
+            return transaction.CreationDate.CompareTo(dateTimInit) >= 0 &&
+                   transaction.CreationDate.CompareTo(creditCard.ClosingDate) <= 0;
         }
 
         #endregion
 
-        #region  Filtering Lists of spendings
+        #region Filtering Lists of spendings
 
-        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        public static List<Transaction> FilterListOfSpendingsByRangeOfDate(List<Transaction> listOfSpendings,
+            RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -146,16 +166,19 @@ namespace BusinessLogic.Report_Components
             {
                 throw new ExceptionReport("Error: Initial date is bigger than final date");
             }
+
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
+        public static List<Transaction> FilterListOfSpendingsByNameOfCategory(List<Transaction> listOfSpendings,
+            string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
             if (!String.IsNullOrEmpty(nameOfCategory))
             {
-                filteredListOfSpending = filteredListOfSpending.Where(x => x.TransactionCategory.Name.StartsWith(nameOfCategory, StringComparison.OrdinalIgnoreCase)).ToList();
+                filteredListOfSpending = filteredListOfSpending.Where(x =>
+                    x.TransactionCategory.Name.StartsWith(nameOfCategory, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             return filteredListOfSpending;
@@ -232,6 +255,7 @@ namespace BusinessLogic.Report_Components
         #endregion
 
         #region Methods used by reports
+
         public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
@@ -246,12 +270,15 @@ namespace BusinessLogic.Report_Components
                         break;
                     }
                 }
+
                 amountToReturn = myTransaction.Amount * dollarValue;
             }
+
             return amountToReturn;
         }
 
-        public static decimal[] CategorySpendings(User loggedUser, MonthsEnum monthSelected, List<Account> listOfAccounts)
+        public static decimal[] CategorySpendings(User loggedUser, MonthsEnum monthSelected,
+            List<Account> listOfAccounts)
         {
             decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
 
@@ -267,13 +294,14 @@ namespace BusinessLogic.Report_Components
                     }
                 }
             }
+
             return spendings;
         }
+
         private static void LoadArray(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
         {
             LoadPerCategory(arrayToLoad, transaction, amountToAdd);
             LoadTotalsInArray(arrayToLoad, transaction, amountToAdd);
-
         }
 
         private static void LoadTotalsInArray(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
@@ -292,6 +320,7 @@ namespace BusinessLogic.Report_Components
         {
             arrayToLoad[transaction.TransactionCategory.CategoryId - 1] += amountToAdd;
         }
+
         #endregion
     }
 
@@ -323,7 +352,6 @@ namespace BusinessLogic.Report_Components
             TotalSpentInCategory = totalSpent;
             PercentajeOfTotal = percentajeOfTotal;
         }
-
     }
 
     public class RangeOfDates
@@ -336,15 +364,18 @@ namespace BusinessLogic.Report_Components
             InitialDate = initialDate;
             FinalDate = finalDate;
         }
-
     }
-    
+
     public class MovementInXDays
     {
         public int[] Spendings { get; set; }
         public int[] Incomes { get; set; }
         public RangeOfDates RangeOfDates { get; set; }
-        
+
+        public MovementInXDays()
+        {
+        }
+
         public MovementInXDays(int[] incomes, int[] spendings, RangeOfDates rangeOfDates)
         {
             Incomes = incomes;
@@ -352,12 +383,6 @@ namespace BusinessLogic.Report_Components
             RangeOfDates = rangeOfDates;
         }
     }
+
     #endregion
 }
-
-
-
-
-
-
-
