@@ -1,10 +1,5 @@
-﻿@inject ITransactionController TransactionController
-@inject ICategoryController CategoryController
-
-
-
-@page "/Transactions/{accountId:int}";
-@using DataManagers
+﻿@page "/Transactions/{accountId:int}";
+@inject ITransactionController TransactionController
 
 <PageTitle>Accounts</PageTitle>
 <h3>AccountList</h3>
@@ -17,7 +12,7 @@
 
 <h1>
     Transaction
-    <a class="btn btn-success btn-sm" style="float: right;margin-right: 40px;"
+    <a class="btn btn-success btn btn-primary fa-lg gradient-custom-4 mb-3" style="float: right;margin-right: 40px;"
        onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{accountId}/CreateTransaction"))">
         Create Transaction +
     </a>

@@ -15,13 +15,11 @@
 <main>
     <h3>
         Monetary List
-        <a class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" style="float: right;margin-right: 40px;"
+        <a class="btn btn-success btn btn-primary fa-lg gradient-custom-4 mb-3" style="float: right;margin-right: 40px;"
            onclick="@(() => NavigationManager.NavigateTo("/Account/MonetaryCreation"))">
             Create Monetary Account +
         </a>
     </h3>
-
-
     <br />
     <br />
 
@@ -50,7 +48,7 @@
                         <td>
                             <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@monetAccount.AccountId}/ModifyMonetary"))"> Edit</button>
                             <button class="btn btn-danger" @onclick="(() => DeleteMonetaryAccountUI(monetAccount))">Delete</button>
-                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@monetAccount.AccountId}"))">View Transactions</button>
+                            <button class="btn btn-secondary" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@monetAccount.AccountId}"))">View Transactions</button>
                         </td>
                     </tr>
                 }
@@ -74,7 +72,7 @@
 
     <h3>
         Credit Card List
-        <a class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" style="float: right;margin-right: 40px;"
+        <a class="btn btn-success btn btn-primary fa-lg gradient-custom-4 mb-3" style="float: right;margin-right: 40px;"
            onclick="@(() => NavigationManager.NavigateTo("/Account/CreditCardCreation"))">
             Create Credit Card +
         </a>
@@ -113,7 +111,7 @@
                         <td>
                             <button class="btn btn-success" onclick="@(() => NavigationManager.NavigateTo($"/Accounts/{@creditAccount.AccountId}/CreditCardModification"))"> Edit</button>
                             <button class="btn btn-danger" @onclick="(() => DeleteCreditAccountUI(creditAccount))">Delete</button>
-                            <button class="btn btn-info" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@creditAccount.AccountId}"))">View Transactions</button>
+                            <button class="btn btn-secondary" onclick="@(() => NavigationManager.NavigateTo($"/Transactions/{@creditAccount.AccountId}"))">View Transactions</button>
                         </td>
                     </tr>
 

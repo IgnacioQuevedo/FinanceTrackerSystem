@@ -9,7 +9,5 @@ namespace Controller.IControllers
         public void UpdateCategory(CategoryDTO categoryDtoWithUpdates);
         public void DeleteCategory(CategoryDTO categoryToDelete);
         public List<CategoryDTO> GetAllCategories(int userConnectedId);
-
-
     }
 }

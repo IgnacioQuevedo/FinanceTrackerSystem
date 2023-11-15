@@ -363,6 +363,9 @@ public class ReportTests
 
         Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
+<<<<<<< HEAD
+    
+=======
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
@@ -376,6 +379,7 @@ public class ReportTests
         movements.RangeOfDates = rangeOfDates;
     }
 
+>>>>>>> develop
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenFinalDateMinorThatInitialDate_ShouldThrowException()
@@ -408,6 +412,8 @@ public class ReportTests
 
         Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
+<<<<<<< HEAD
+=======
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
@@ -423,6 +429,7 @@ public class ReportTests
         MovementInXDays movements = new MovementInXDays(rangeOfDates);
     }
 
+>>>>>>> develop
     #endregion
 
     [TestMethod]

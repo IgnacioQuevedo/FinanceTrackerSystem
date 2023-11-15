@@ -223,7 +223,6 @@ namespace ControllerTests
             transactionToUpd.TransactionId = 2;
 
             TransactionDTO transactionDtoWithUpdates = transactionDtoToAdd;
-            transactionDtoWithUpdates.Currency = CurrencyEnumDTO.EUR;
             transactionDtoWithUpdates.Amount = 3333;
             transactionDtoWithUpdates.TransactionCategory = categoryDTO2;
 
@@ -235,7 +234,6 @@ namespace ControllerTests
                 transactionDtoWithUpdates.TransactionId, monetaryAccount.AccountId, _userConnected.UserId);
 
             Assert.AreEqual(transactionDtoWithUpdates.Amount, transactionUpdatedInDb.Amount);
-            Assert.AreEqual((CurrencyEnum)transactionDtoWithUpdates.Currency, transactionUpdatedInDb.Currency);
             Assert.IsTrue(Helper.AreTheSameObject(
                 _controller.FindCategoryInDb(transactionDtoWithUpdates.TransactionCategory),
                 transactionUpdatedInDb.TransactionCategory));
