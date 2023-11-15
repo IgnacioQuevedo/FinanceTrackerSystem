@@ -759,21 +759,6 @@ namespace Controller
 
         #endregion
 
-        #region Spendings Report Per Category Detailed
-
-        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
-        {
-            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
-
-            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
-
-            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
-
-            return resumeList;
-        }
-
-        #endregion
-
         #region Give All Outcome Transactions
 
         public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userConnectedDTO)
@@ -789,7 +774,22 @@ namespace Controller
 
         #endregion
 
+        #region Spendings Report Per Category Detailed
 
+        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
+        {
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+
+            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+
+            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+
+            return resumeList;
+        }
+
+        #endregion
+
+        #region Report Of Spendings Per Card
 
         public List<TransactionDTO> ReportOfSpendingsPerCard(CreditCardAccountDTO creditCard)
         {
@@ -801,6 +801,8 @@ namespace Controller
 
             return spendingsPerCardDTO;
         }
+
+        #endregion 
 
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)

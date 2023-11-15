@@ -141,6 +141,8 @@ namespace ControllerTests
         }
         #endregion
 
+        #region Report Of Spendings Per Card
+
         [TestMethod]
         public void GivenUser_ShouldReturnSpendingsPerCard()
         {
@@ -162,6 +164,8 @@ namespace ControllerTests
 
             Assert.AreEqual(2, reportPerCard.Count);
         }
+
+        #endregion
 
         #region Filtering Lists
 
