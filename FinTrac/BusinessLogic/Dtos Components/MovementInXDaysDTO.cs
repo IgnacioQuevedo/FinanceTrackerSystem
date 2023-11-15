@@ -17,8 +17,8 @@ namespace BusinessLogic.Dtos_Components
 		public MovementInXDaysDTO(RangeOfDatesDTO rangeOfDatesDto)
 		{
 			_amountOfDays = rangeOfDatesDto.FinalDate.Day - rangeOfDatesDto.InitialDate.Day + 1;
-			Spendings = new decimal [_amountOfDays];
-			Incomes = new decimal [_amountOfDays];
+			Spendings = new decimal [31];
+			Incomes = new decimal [31];
 			RangeOfDates = rangeOfDatesDto;
 		}
 	}
