@@ -53,6 +53,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm Password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" @bind-value="passwordRepeated"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-lg-3 control-label">Address:</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" @bind-value="address"/>
@@ -89,6 +96,7 @@
     private string firstName;
     private string lastName;
     private string password;
+    private string passwordRepeated;
     private string address;
 
     [CascadingParameter]
@@ -104,6 +112,7 @@
         firstName = userToModifyDTO.FirstName;
         lastName = userToModifyDTO.LastName;
         password = userToModifyDTO.Password;
+        passwordRepeated = userToModifyDTO.Password;
         address = userToModifyDTO.Address;
     }
 
@@ -118,6 +127,7 @@
     {
         try
         {
+            UserController.PasswordMatch(password,passwordRepeated);
             userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
             SendDataToLayout();
