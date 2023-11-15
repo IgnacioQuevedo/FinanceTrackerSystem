@@ -34,5 +34,16 @@ namespace BusinessLogicTests.Dto_Components
             movements.Income = income;
             Assert.AreEqual(income, movements.Income);
         }
+
+        [TestMethod]
+        public void GivenRangeOfDatesDTO_ShouldBeSet()
+        {
+            RangeOfDatesDTO rangeOfDatesDto = new RangeOfDatesDTO(new DateTime(2023,12,1).Date,
+                new DateTime(2023,12,31).Date);
+
+            movements.RangeOfDates = rangeOfDatesDto;
+            
+            Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
+        }
     }
 }

@@ -165,12 +165,9 @@ public class ReportTests
 
         Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20), CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
 
-        Transaction myTransaction = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20),
+        Transaction myTransaction2 = new Transaction("Payment for party", 200, new DateTime(2023, 10, 20),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
-
-        Transaction myTransaction2 = new Transaction("Payment for FOOD", 100, new DateTime(2023, 10, 25),
-            CurrencyEnum.UY, TypeEnum.Outcome, genericCategory);
-
+        
         loggedUser.AddCreditAccount(credit);
 
         loggedUser.MyAccounts[1].AddTransaction(myTransaction);
