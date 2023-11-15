@@ -58,9 +58,12 @@ namespace BusinessLogicTests.Dto_Components
             MovementInXDaysDTO movements = new MovementInXDaysDTO(rangeOfDatesDto);
             
             Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
-            Assert.AreEqual(spendings,movements.Spendings);
-            Assert.AreEqual(incomes,movements.Incomes);
- 
+            
+            for (int i = 0; i < spendings.Length; i++)
+            {
+                Assert.AreEqual(spendings[i],movements.Spendings[i]);
+                Assert.AreEqual(incomes[i],movements.Incomes[i]);
+            }
         }
         
     }

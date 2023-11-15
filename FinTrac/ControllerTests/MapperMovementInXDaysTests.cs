@@ -54,7 +54,9 @@ namespace ControllerTests
             MovementInXDaysDTO movementsDTO = new MovementInXDaysDTO(rangeOfDatesDto);
 
             MovementInXDays movements = MapperMovementInXDays.ToMovement(movementsDTO);
-
+            
+            Assert.AreEqual(movementsDTO.RangeOfDates.InitialDate,movements.RangeOfDates.InitialDate);
+            Assert.AreEqual(movementsDTO.RangeOfDates.FinalDate,movements.RangeOfDates.FinalDate);
         }
       
     }
