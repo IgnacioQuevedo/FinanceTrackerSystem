@@ -53,7 +53,14 @@ namespace Controller.Mappers
 
         public static List<ResumeOfCategoryReportDTO> ToListResumeOfCategoryReportDTO(List<ResumeOfCategoryReport> myList)
         {
-            throw new NotImplementedException();
+            List<ResumeOfCategoryReportDTO> myResumeListDTO = new List<ResumeOfCategoryReportDTO>();
+
+            foreach (ResumeOfCategoryReport myResume in myList)
+            {
+                myResumeListDTO.Add(ToResumeOfCategoryReportDTO(myResume));
+            }
+
+            return myResumeListDTO;
         }
 
     }
