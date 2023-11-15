@@ -56,5 +56,17 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenValues_ShoulCreateAnInstance()
+        {
+            decimal amountDefined = 1000;
+            decimal totalSpentDefined = 200;
+            bool goalWasAchieved = true;
+            resumeOfGoalReportDTO = new ResumeOfGoalReportDTO();
+            Assert.AreEqual(amountDefined, resumeOfGoalReportDTO.AmountDefined);
+            Assert.AreEqual(totalSpentDefined, resumeOfGoalReportDTO.TotalSpent);
+            Assert.AreEqual(goalWasAchieved, resumeOfGoalReportDTO.GoalAchieved);
+        }
     }
 }
