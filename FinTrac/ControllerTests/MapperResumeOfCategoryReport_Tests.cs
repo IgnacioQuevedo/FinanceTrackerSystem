@@ -121,6 +121,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To Resume Of Category Report DTO
+
         [TestMethod]
         public void GivenListOfResumeOfCategoryReport_ShouldConvertToDTO()
         {
@@ -139,5 +141,6 @@ namespace ControllerTests
             Assert.AreEqual(listOfResumeDTO[0].PercentajeOfTotal, givenResume.PercentajeOfTotal);
         }
 
+        #endregion
     }
 }

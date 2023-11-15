@@ -50,6 +50,7 @@ namespace Controller.Mappers
 
         #endregion
 
+        #region To Resume Of Category Report DTO
 
         public static List<ResumeOfCategoryReportDTO> ToListResumeOfCategoryReportDTO(List<ResumeOfCategoryReport> myList)
         {
@@ -63,5 +64,6 @@ namespace Controller.Mappers
             return myResumeListDTO;
         }
 
+        #endregion
     }
 }
