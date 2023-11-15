@@ -48,7 +48,7 @@ namespace TestProject1
         {
             resumeOfGoalReportDTO.GoalAchieved = false;
 
-            Assert.AreEqual(false, true);
+            Assert.AreEqual(false, resumeOfGoalReportDTO.GoalAchieved);
 
         }
     }
