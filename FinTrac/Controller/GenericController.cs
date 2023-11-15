@@ -776,7 +776,13 @@ namespace Controller
 
         public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userLoggedDTO)
         {
-            throw new NotImplementedException();
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+
+            List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
+
+            List<TransactionDTO> spendingsPerCategoryDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
+
+            return spendingsPerCategoryDTO;
         }
 
         #region Filtering Lists
