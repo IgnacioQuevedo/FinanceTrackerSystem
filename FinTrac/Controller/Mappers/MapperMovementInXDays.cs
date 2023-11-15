@@ -27,7 +27,13 @@ namespace Controller.Mappers
 
         public static MovementInXDaysDTO ToMovementDTO(MovementInXDays movements)
         {
-            throw new NotImplementedException();
+
+            RangeOfDatesDTO rangeOfDatesDto =
+                new RangeOfDatesDTO(movements.RangeOfDates.InitialDate, movements.RangeOfDates.FinalDate);
+
+            MovementInXDaysDTO movementInXDaysDto = new MovementInXDaysDTO(rangeOfDatesDto);
+
+            return movementInXDaysDto;
         }
     }
 }
