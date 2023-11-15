@@ -32,7 +32,9 @@ namespace Controller.Mappers
                 new RangeOfDatesDTO(movements.RangeOfDates.InitialDate, movements.RangeOfDates.FinalDate);
 
             MovementInXDaysDTO movementInXDaysDto = new MovementInXDaysDTO(rangeOfDatesDto);
-
+            movementInXDaysDto.Incomes = movements.Incomes;
+            movementInXDaysDto.Spendings = movements.Spendings;
+            
             return movementInXDaysDto;
         }
     }

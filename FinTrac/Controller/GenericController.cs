@@ -781,7 +781,7 @@ namespace Controller
 
         #endregion
 
-        public MovementInXDays GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO)
+        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO)
         {
             try
             {
@@ -790,7 +790,7 @@ namespace Controller
                 RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
             
                 movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
-                return movementsOfTransactionsPerDay;
+                return MapperMovementInXDays.ToMovementDTO(movementsOfTransactionsPerDay);
             }
             catch(ExceptionReport Exception)
             {

@@ -1,0 +1,161 @@
+﻿@inject GenericController Controller
+@inject IJSRuntime JSRuntime
+
+@page "/Report/MonthlyMovements"
+
+
+@using BusinessLogic.Report_Components;
+@using BusinessLogic.Enums;
+
+<h3>Montly movements Of Transactions</h3>
+
+<main>
+    <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
+
+        @foreach (MonthsEnum month in Enum.GetValues(typeof(MonthsEnum)))
+        {
+            <option value="@month"> @month </option>
+        }
+
+    </select>
+
+    <div class="form-group">
+        <label for="title">Select Initial Date</label>
+        <input type="date" class="form-control" id="Name" @bind="initialDate"/>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Select Final Date</label>
+        <input type="date" class="form-control" id="Name" @bind="finalDate"/>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Confirm Selection Of Month Report</label>
+        <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
+    </div>
+
+    <br/>
+    <br/>
+
+    @if (ConfirmedMonth)
+    {
+        <div class="form-group">
+            <label for="title">Confirm Selection Of Month Report</label>
+            <button type="button" class="btn btn-outline-danger" @onclick="ShowGraphic"># Show Graphic # </button>
+        </div>
+    }
+
+
+    <td>
+        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+    </td>
+
+
+    <html>
+    <head>
+        <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+    </html>
+</main>
+
+
+@code
+{
+    [CascadingParameter]
+    public UserDTO userConnected { get; set; }
+
+    private MovementInXDaysDTO movements;
+    private RangeOfDatesDTO rangeOfDates;
+    private MonthsEnum monthSelected;
+    private bool ConfirmedMonth;
+    private DateTime initialDate;
+    private DateTime finalDate;
+
+    protected override void OnInitialized()
+    {
+        monthSelected = (MonthsEnum)DateTime.Now.Month;
+        ConfirmedMonth = false;
+    }
+
+    private void GenerateReport()
+    {
+        rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
+        movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates);
+        ConfirmedMonth = true;
+    }
+
+    public async Task ShowGraphic()
+    {
+        
+        await JSRuntime.InvokeAsync<object>("initializeChart", movements.Incomes, movements.Spendings);
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        StateHasChanged();
+    }
+}
+
+<script suppress-error="BL9992">
+
+    function initializeChart(incomes,spendings) {
+        var ctx = document.getElementById("myChart");
+
+        var totalSpentData1 = incomes.map(function (item) {
+            return item;
+        });
+
+        var totalSpentData2 = spendings.map(function (item) {
+            return item;
+        });
+
+        var labels = incomes.map(function (item) {
+            return "hola";
+        });
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Spent on Category 1",
+                        data: totalSpentData1,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: "Spent on Category 2",
+                        data: totalSpentData2,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
+                    }
+                }
+            },
+        });
+    }
+
+    </script>
+
+<td>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
+</td>
