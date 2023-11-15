@@ -80,6 +80,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To Resume Of Category Report DTO
+
         [TestMethod]
         public void GivenResumeOfCategory_ShouldReturnResumeOfCategoryDTO()
         {
@@ -94,5 +96,7 @@ namespace ControllerTests
             Assert.AreEqual(givenResume.TotalSpentInCategory, resumeDTO.TotalSpentInCategory);
             Assert.AreEqual(givenResume.PercentajeOfTotal, resumeDTO.PercentajeOfTotal);
         }
+
+        #endregion
     }
 }

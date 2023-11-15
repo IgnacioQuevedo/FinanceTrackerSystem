@@ -23,6 +23,8 @@ namespace Controller.Mappers
 
         #endregion
 
+        #region To Resume Of Category Report DTO
+
         public static ResumeOfCategoryReportDTO ToResumeOfCategoryReportDTO(ResumeOfCategoryReport myResume)
         {
             ResumeOfCategoryReportDTO myResumeDTO = new ResumeOfCategoryReportDTO(MapperCategory.ToCategoryDTO(myResume.CategoryRelated), myResume.TotalSpentInCategory, myResume.PercentajeOfTotal);
@@ -30,5 +32,6 @@ namespace Controller.Mappers
             return myResumeDTO;
         }
 
+        #endregion
     }
 }
