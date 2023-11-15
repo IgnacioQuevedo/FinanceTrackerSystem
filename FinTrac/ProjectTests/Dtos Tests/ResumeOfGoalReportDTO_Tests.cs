@@ -31,12 +31,16 @@ namespace TestProject1
 
         #endregion
 
+        #region Total Spent
+
         [TestMethod]
         public void GivenTotalSpent_ShouldBeSetted()
         {
-            resumeOfGoalReportDTO.TotalSpent = 100;
-            Assert.AreEqual(resumeOfGoalReportDTO.TotalSpent, 100);
+            decimal totalSpentDefined = 100;
+            resumeOfGoalReportDTO.TotalSpent = totalSpentDefined;
+            Assert.AreEqual(resumeOfGoalReportDTO.TotalSpent, totalSpentDefined);
         }
 
+        #endregion
     }
 }
