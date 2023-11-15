@@ -30,12 +30,18 @@ namespace Controller
 
         public void SetUserConnected(int? userIdToConnect)
         {
-            if (_userConnected == null)
+            if (_userConnected == null || _userConnected.UserId != userIdToConnect)
             {
                 _userConnected = _userRepo.FindUserInDb(userIdToConnect);
                 _userRepo.InstanceLists(_userConnected);
             }
         }
+
+        public void DesactiveUserConnected(int? userIdToDesactivate)
+        {
+            _userConnected = null;
+        }
+        
 
         #region User Repo
 
