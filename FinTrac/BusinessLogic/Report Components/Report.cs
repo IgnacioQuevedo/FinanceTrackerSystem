@@ -153,7 +153,8 @@ namespace BusinessLogic.Report_Components
 
         #region Filtering Lists of spendings
 
-        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings, RangeOfDates rangeOfDates)
+        public static List<Transaction> FilterListByRangeOfDate(List<Transaction> listOfSpendings,
+            RangeOfDates rangeOfDates)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -170,7 +171,8 @@ namespace BusinessLogic.Report_Components
             return filteredListOfSpending;
         }
 
-        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings, string nameOfCategory)
+        public static List<Transaction> FilterListByNameOfCategory(List<Transaction> listOfSpendings,
+            string nameOfCategory)
         {
             List<Transaction> filteredListOfSpending = listOfSpendings;
 
@@ -186,7 +188,8 @@ namespace BusinessLogic.Report_Components
         public static List<Transaction> FilterListByAccountAndOutcome(Account accountSelected)
         {
             List<Transaction> accountSpendings = accountSelected.GetAllTransactions()
-                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome && x.AccountId == accountSelected.AccountId).ToList();
+                .Where(x => x.TransactionCategory.Type == TypeEnum.Outcome && x.AccountId == accountSelected.AccountId)
+                .ToList();
 
             return accountSpendings;
         }
@@ -245,12 +248,11 @@ namespace BusinessLogic.Report_Components
 
         #region Report Of Movements In X Days
 
-        public static MovementInXDays GetMovementInXDays(List<Account> accounts,RangeOfDates rangeOfDates)
+        public static MovementInXDays GetMovementInXDays(List<Account> accounts, RangeOfDates rangeOfDates)
         {
-
             MovementInXDays movements = new MovementInXDays(rangeOfDates);
             int month = rangeOfDates.InitialDate.Month;
-            
+
             foreach (var account in accounts)
             {
                 foreach (var transaction in account.MyTransactions)
@@ -261,21 +263,21 @@ namespace BusinessLogic.Report_Components
                     {
                         if (transaction.Type == TypeEnum.Income)
                         {
-                            movements.Incomes[transaction.CreationDate.Day -1] += transaction.Amount;
+                            movements.Incomes[transaction.CreationDate.Day - 1] += transaction.Amount;
                         }
                         else
                         {
-                            movements.Spendings[transaction.CreationDate.Day -1] += transaction.Amount;
+                            movements.Spendings[transaction.CreationDate.Day - 1] += transaction.Amount;
                         }
-                        
                     }
                 }
             }
+
             return movements;
         }
 
         #endregion
-        
+
         #region Methods used by reports
 
         public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
@@ -344,9 +346,6 @@ namespace BusinessLogic.Report_Components
         }
 
         #endregion
-        
-        
-        
     }
 
     #region Class for reports
@@ -398,24 +397,27 @@ namespace BusinessLogic.Report_Components
         public decimal[] Incomes { get; set; }
 
         public RangeOfDates RangeOfDates { get; set; }
+
         public MovementInXDays()
         {
         }
 
         public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            
             _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
-            ValidateDates(rangeOfDates.FinalDate,rangeOfDates.InitialDate);
-            
+            ValidateDates(rangeOfDates.FinalDate, rangeOfDates.InitialDate);
+
             Incomes = new decimal[31];
             Spendings = new decimal[31];
             RangeOfDates = rangeOfDates;
         }
-        
+
         private void ValidateDates(DateTime finalDate, DateTime initialDate)
         {
-            if (_amountOfDays < 0 || finalDate.Month != initialDate.Month || finalDate.Year != initialDate.Year)
+            bool monthsAreEqual = finalDate.Month == initialDate.Month;
+            bool yearsAreEqual = finalDate.Year == initialDate.Year;
+
+            if (_amountOfDays < 0 || !monthsAreEqual || !yearsAreEqual)
             {
                 throw new ExceptionReport("Seems that there is an error on the DATES, validate that FINAL DATE " +
                                           "is greater than the INITIAL one. Also check that there are in the SAME YEAR " +
