@@ -37,7 +37,7 @@ namespace TestProject1
         {
             resumeOfCategoryReportDTO.TotalSpentInCategory = 100;
 
-            Assert.AreEqual(0, resumeOfCategoryReportDTO.TotalSpentInCategory);
+            Assert.AreEqual(100, resumeOfCategoryReportDTO.TotalSpentInCategory);
         }
 
 
