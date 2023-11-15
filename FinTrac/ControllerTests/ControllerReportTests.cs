@@ -135,10 +135,24 @@ namespace ControllerTests
             Assert.AreEqual(filteredListDTO[1].Title, _transaction2.Title);
             Assert.AreEqual(filteredListDTO.Count, 2);
         }
-
-
-
         #endregion
 
+
+        [TestMethod]
+        public void GivenMonetaryAccountDTO_ShouldReturnAccountBalance()
+        {
+            CategoryDTO myCategory2 = new CategoryDTO("Sugars", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+
+            _controller.CreateCategory(myCategory2);
+            myCategory2.CategoryId = 2;
+
+            TransactionDTO transaction4 = new TransactionDTO("Wins", DateTime.Now.Date, 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Income, myCategory2, 1);
+
+            _controller.CreateTransaction(transaction4);
+
+            decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
+
+            Assert.AreEqual(2700, accountBalance);
+        }
     }
 }
