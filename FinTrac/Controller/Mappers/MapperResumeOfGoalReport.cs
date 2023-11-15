@@ -22,6 +22,8 @@ public abstract class MapperResumeOfGoalReport
 
     #endregion
 
+    #region To resume of goal report
+
     public static ResumeOfGoalReport ToResumeOfGoalReport(ResumeOfGoalReportDTO resumeDTO_ToConvert)
     {
         ResumeOfGoalReport resume = new ResumeOfGoalReport(resumeDTO_ToConvert.AmountDefined, resumeDTO_ToConvert.TotalSpent, resumeDTO_ToConvert.GoalAchieved);
@@ -29,4 +31,5 @@ public abstract class MapperResumeOfGoalReport
         return resume;
     }
 
+    #endregion
 }

@@ -76,6 +76,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region To Resume of goal report
+
         [TestMethod]
         public void GivenResumeOfGoalDTO_ShouldReturnResumeOfGoal()
         {
@@ -86,5 +88,7 @@ namespace ControllerTests
             Assert.AreEqual(givenResumeDTO.TotalSpent, resume.TotalSpent);
             Assert.AreEqual(givenResumeDTO.GoalAchieved, resume.GoalAchieved);
         }
+
+        #endregion
     }
 }
