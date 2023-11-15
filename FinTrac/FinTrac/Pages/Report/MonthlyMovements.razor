@@ -113,9 +113,9 @@
             return item;
         });
 
-        var labels = incomes.map(function (item) {
-            return "hola";
-        });
+        var labels = Array.from({ length: 31 }, (_, index) => index + 1);
+
+    
 
         var myChart = new Chart(ctx, {
             type: 'bar',
