@@ -728,7 +728,10 @@ namespace Controller
 
         #region Report Section
 
+        //public List<ResumeOfGoalReport> MonthlyReportPerGoal(User loggedUser)
+        //{
 
+        //}
 
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
