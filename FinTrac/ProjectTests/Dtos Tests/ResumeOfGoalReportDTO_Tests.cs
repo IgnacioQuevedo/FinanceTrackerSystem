@@ -21,10 +21,10 @@ namespace TestProject1
         [TestMethod]
         public void GivenAmount_ShouldBeSetted()
         {
-            resumeOfGoalReportDTO.AmountDefined = 100;
+            decimal amountDefined = 100;
+            resumeOfGoalReportDTO.AmountDefined = amountDefined;
 
-            Assert.AreEqual(resumeOfGoalReportDTO.AmountDefined, 100);
-
+            Assert.AreEqual(amountDefined, 100);
         }
 
     }
