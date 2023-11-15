@@ -280,6 +280,7 @@ namespace BusinessLogic.Report_Components
         public static decimal ConvertDollar(Transaction myTransaction, User loggedUser)
         {
             decimal amountToReturn = myTransaction.Amount;
+            bool found = false;
             if (myTransaction.Currency == CurrencyEnum.USA)
             {
                 decimal dollarValue = 0;
@@ -288,11 +289,19 @@ namespace BusinessLogic.Report_Components
                     if (exchange.ValueDate == myTransaction.CreationDate)
                     {
                         dollarValue = exchange.Value;
+                        found = true;
                         break;
                     }
                 }
+                if (found)
+                {
+                    amountToReturn = myTransaction.Amount * dollarValue;
+                }
+                else
+                {
+                    throw new ExceptionReport("There is no exchange registered for transaction");
+                }
 
-                amountToReturn = myTransaction.Amount * dollarValue;
             }
 
             return amountToReturn;
@@ -303,9 +312,9 @@ namespace BusinessLogic.Report_Components
         {
             decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
 
-            foreach (var account in listOfAccounts.Where(t => t != null))
+            foreach (var account in listOfAccounts)
             {
-                foreach (var transaction in account.MyTransactions.Where(t => t != null))
+                foreach (var transaction in account.MyTransactions)
                 {
                     if ((MonthsEnum)transaction.CreationDate.Month == monthSelected
                         && transaction.TransactionCategory.Type == TypeEnum.Outcome)

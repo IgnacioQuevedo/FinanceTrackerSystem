@@ -743,25 +743,16 @@ namespace Controller
 
         #region Report Section
 
-        public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(List<AccountDTO> myAccountsDTO, List<GoalDTO> myGoalsDTO)
+        public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
-            //List<Goal> myGoals = MapperGoal.ToListOfGoalDTO;
-            List<ResumeOfGoalReportDTO> myList = new List<ResumeOfGoalReportDTO>();
-            List<Account> accounts = new List<Account>();
-            foreach (AccountDTO accountDTO in myAccountsDTO)
-            {
-                if (accountDTO is MonetaryAccountDTO)
-                {
-                    accounts.Add(FindMonetaryAccountInDb((MonetaryAccountDTO)accountDTO));
-                }
-                else
-                {
-                    accounts.Add(FindCreditAccountInDb((CreditCardAccountDTO)accountDTO));
-                }
-            }
+            List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
+            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
 
-            return myList;
+            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(userInDb));
+
+
+            return myListDTO;
         }
 
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)

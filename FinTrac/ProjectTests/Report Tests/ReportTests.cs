@@ -292,6 +292,14 @@ public class ReportTests
     }
 
     [TestMethod]
+
+    public void GivenUserAndTransactionOnDollarConvert_ShouldThrowExceptionIfThereIsNoExchangeSaved()
+    {
+        genericTransaction.CreationDate = new DateTime(1998, 09, 02);
+        Report.ConvertDollar(genericTransaction, loggedUser);
+    }
+
+    [TestMethod]
     public void GivenUser_ShouldBePossibleToRegisterAllSpendingsPerCategory()
     {
         decimal[] arrayNeeded = new decimal[2];

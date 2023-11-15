@@ -7,6 +7,8 @@ using BusinessLogic.User_Components;
 using Controller;
 using Controller.Mappers;
 using DataManagers;
+using BusinessLogic.Report_Components;
+using BusinessLogic.Exceptions;
 
 namespace ControllerTests
 {
@@ -82,15 +84,12 @@ namespace ControllerTests
             _controller.CreateGoal(myGoalDTO);
             myGoalDTO.GoalId = 1;
 
-            List<GoalDTO> myGoalDTOList = MapperGoal.ToListOfGoalDTO(_testDb.Users.First().MyGoals);
+            List<ResumeOfGoalReportDTO> resumeOfGoalReportsDTO = _controller.GiveMonthlyReportPerGoal(_userConnected);
 
-            List<AccountDTO> myAccountsDTO = MapperAccount.ToListAccountDTO(_testDb.Users.First().MyAccounts);
-
-
-            List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(myAccountsDTO, myGoalDTOList);
-
-            //Assert.AreEqual()
-            Assert.AreEqual(0, 1);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].TotalSpent, 700);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].AmountDefined, 500);
+            Assert.AreEqual(resumeOfGoalReportsDTO[0].GoalAchieved, false);
+            Assert.AreEqual(resumeOfGoalReportsDTO.Count, 1);
         }
 
         #region Filtering Lists
