@@ -116,7 +116,7 @@ namespace ControllerTests
         }
 
         [TestMethod]
-        public void GivenListAndMonetaryAccountDTOAndUserLoggedDTO_ShouldFilterListByAccount()
+        public void GivenMonetaryAccountDTO_ShouldFilterListByAccountAndType()
         {
             TransactionDTO transaction3 = new TransactionDTO("Losses", DateTime.Now.Date, 200, CurrencyEnumDTO.USA,
                 TypeEnumDTO.Outcome, _exampleCategory, 2);
@@ -130,9 +130,10 @@ namespace ControllerTests
                 TypeEnumDTO.Income, myCategory2, 1);
 
             MonetaryAccount exampleAccount2 = new MonetaryAccount("Brou2", 3000, CurrencyEnum.USA, DateTime.Now);
+            exampleAccount2.UserId = 1;
 
             MonetaryAccountDTO exampleAccountDTO2 = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
-
+            
             _controller.CreateMonetaryAccount(exampleAccountDTO2);
             _controller.CreateTransaction(transaction3);
             _controller.CreateTransaction(transaction4);
