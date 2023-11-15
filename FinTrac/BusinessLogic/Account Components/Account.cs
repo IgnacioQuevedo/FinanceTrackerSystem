@@ -88,7 +88,6 @@ namespace BusinessLogic.Account_Components
                 if (HaveSameId(transactionToUpdate, i))
                 {
                     MyTransactions[i].Amount = transactionToUpdate.Amount;
-                    MyTransactions[i].Currency = transactionToUpdate.Currency;
                     MyTransactions[i].TransactionCategory = transactionToUpdate.TransactionCategory;
                     flag = true;
                     
