@@ -273,11 +273,11 @@ namespace BusinessLogic.Report_Components
                     {
                         if (transaction.Type == TypeEnum.Income)
                         {
-                            movements.Incomes[transaction.CreationDate.Day -1] = transaction.Amount;
+                            movements.Incomes[transaction.CreationDate.Day -1] += transaction.Amount;
                         }
                         else
                         {
-                            movements.Spendings[transaction.CreationDate.Day -1] = transaction.Amount;
+                            movements.Spendings[transaction.CreationDate.Day -1] += transaction.Amount;
                         }
                         
                     }

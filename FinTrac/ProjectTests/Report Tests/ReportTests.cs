@@ -381,8 +381,7 @@ public class ReportTests
 
         MovementInXDays movementInXDays = new MovementInXDays(rangeOfDates);
     }
-
-
+    
     [TestMethod]
     public void GivenCorrectData_ShouldBePossibleToCreateMovementsInXDays()
     {
@@ -423,36 +422,29 @@ public class ReportTests
     [TestMethod]
     public void GivenAccountListAndRangeOfDates_ShouldReturnMovementInXDays()
     {
-        Transaction transactionInDate = new Transaction("Payment for party", 200, new DateTime(2023,12,1).Date,
+        Transaction transactionInDate = new Transaction("Payment for party", 10, new DateTime(2023,12,1).Date,
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
-        Transaction transactionInDate2 = new Transaction("Payment for party", 200, new DateTime(2023,12,31).Date,
+        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,2).Date,
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
-
         myMonetaryAccount.AddTransaction(transactionInDate);
         myMonetaryAccount.AddTransaction(transactionInDate2);
-
         List<Account> accounts = loggedUser.MyAccounts;
 
         decimal[] incomes = new decimal[31];
         decimal[] spendings = new decimal [31];
-        int month = 12;
-
-        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
-            new DateTime(2023, 12, 31).Date);
-
         spendings[0] = 200;
         spendings[30] = 200;
 
+        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
+            new DateTime(2023, 12, 31).Date);
+        
         MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
         
         Assert.AreEqual(incomes[20], movements.Incomes[20]);
         Assert.AreEqual(spendings[0], movements.Spendings[0]);
         Assert.AreEqual(spendings[30], movements.Spendings[30]);
     }
-
-    
-    
     #endregion
 }
