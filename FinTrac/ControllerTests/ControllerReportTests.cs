@@ -123,7 +123,7 @@ namespace ControllerTests
 
             Assert.AreEqual(2000, myResumeList[0].TotalSpentInCategory);
             Assert.AreEqual(100, myResumeList[0].PercentajeOfTotal);
-            Assert.AreEqual(_exampleCategory.CategoryId, myResumeList[0].CategoryRelated.Name);
+            Assert.AreEqual(_exampleCategory.Name, myResumeList[0].CategoryRelated.Name);
         }
 
         #region Filtering Lists
