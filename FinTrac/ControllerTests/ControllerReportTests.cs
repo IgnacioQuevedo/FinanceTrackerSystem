@@ -130,6 +130,8 @@ namespace ControllerTests
 
         #endregion
 
+        #region Give All Outcome Transaction
+
         [TestMethod]
         public void GivenUser_ShoulReturnListOfAllOutComeTransactionsDTO()
         {
@@ -137,6 +139,8 @@ namespace ControllerTests
 
             Assert.AreEqual(2, allOutcomeTransactions.Count);
         }
+
+        #endregion 
 
         #region Filtering Lists
 

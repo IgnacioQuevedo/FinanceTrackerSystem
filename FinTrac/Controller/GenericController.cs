@@ -774,6 +774,8 @@ namespace Controller
 
         #endregion
 
+        #region Give All Outcome Transactions
+
         public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userLoggedDTO)
         {
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
@@ -784,6 +786,8 @@ namespace Controller
 
             return spendingsPerCategoryDTO;
         }
+
+        #endregion
 
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
