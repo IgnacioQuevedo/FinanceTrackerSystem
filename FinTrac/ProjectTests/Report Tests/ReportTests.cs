@@ -367,9 +367,6 @@ public class ReportTests
         movements.RangeOfDates = rangeOfDates;
         
         Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
-        
-        
-        
     }
     
     #endregion

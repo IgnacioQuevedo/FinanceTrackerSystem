@@ -344,6 +344,7 @@ namespace BusinessLogic.Report_Components
         public int[] Spendings { get; set; }
         public int[] Incomes { get; set; }
         public RangeOfDates RangeOfDates { get; set; }
+        
     }
     
     
