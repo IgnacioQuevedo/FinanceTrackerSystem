@@ -143,20 +143,20 @@ namespace BusinessLogicTests
             genericUser.ModifyMonetaryAccount(accountWithChanges);
         }
 
-        //[TestMethod]
-        //public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
-        //{
-        //    genericUser.AddMonetaryAccount(genericMonetaryAccount);
-        //    int idAccount = genericMonetaryAccount.AccountId;
+        [TestMethod]
+        public void GivenMonetaryAccountToUpdate_InitialAmountShouldBeNotAffected()
+        {
+            genericUser.AddMonetaryAccount(genericMonetaryAccount);
+            int idAccount = genericMonetaryAccount.AccountId;
 
-        //    MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 2000, CurrencyEnum.USA, DateTime.Now);
-        //    accountToUpdate.AccountId = idAccount;
-        //    genericUser.ModifyMonetaryAccount(accountToUpdate);
+            MonetaryAccount accountToUpdate = new MonetaryAccount("Brou Saving Bank", 2000, CurrencyEnum.USA, DateTime.Now);
+            accountToUpdate.AccountId = idAccount;
+            genericUser.ModifyMonetaryAccount(accountToUpdate);
 
-        //    MonetaryAccount accountUpdated = (MonetaryAccount)genericUser.MyAccounts[idAccount];
+            MonetaryAccount accountUpdated = (MonetaryAccount)genericUser.MyAccounts[idAccount];
 
-        //    Assert.AreEqual(accountToUpdate.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
-        //}
+            Assert.AreEqual(genericMonetaryAccount.ReturnInitialAmount(), accountUpdated.ReturnInitialAmount());
+        }
 
         #endregion
 
