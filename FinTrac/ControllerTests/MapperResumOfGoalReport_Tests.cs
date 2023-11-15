@@ -102,9 +102,9 @@ namespace ControllerTests
 
             List<ResumeOfGoalReport> myConvertedList = MapperResumeOfGoalReport.ToListResumeOfGoalReport(listGivenDTO);
 
-            Assert.AreEqual(givenResumeDTO.TotalSpent, 200);
-            Assert.AreEqual(givenResumeDTO.AmountDefined, 1000);
-            Assert.AreEqual(givenResumeDTO.GoalAchieved, false);
+            Assert.AreEqual(givenResumeDTO.TotalSpent, myConvertedList[0].TotalSpent);
+            Assert.AreEqual(givenResumeDTO.AmountDefined, myConvertedList[0].AmountDefined);
+            Assert.AreEqual(givenResumeDTO.GoalAchieved, myConvertedList[0].GoalAchieved);
 
         }
     }
