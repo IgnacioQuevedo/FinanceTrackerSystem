@@ -24,5 +24,10 @@ namespace Controller.Mappers
             
             return movements;
         }
+
+        public static MovementInXDaysDTO ToMovementDTO(MovementInXDays movements)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -60,5 +60,23 @@ namespace ControllerTests
         }
 
         #endregion
+
+        #region ToMovementDTO
+
+        [TestMethod]
+        public void GivenMovementInXDays_ShouldBePossibleToConvertItToMovementInXDaysDTO()
+        {
+            RangeOfDates rangeOfDatesDto =
+                new RangeOfDates(new DateTime(2023, 12, 1), new DateTime(2023, 12, 31));
+
+            MovementInXDays movements = new MovementInXDays(rangeOfDatesDto);
+
+            MovementInXDaysDTO movementsDTO = MapperMovementInXDays.ToMovementDTO(movements);
+
+            Assert.AreEqual(movements.RangeOfDates.InitialDate, movementsDTO.RangeOfDates.InitialDate);
+            Assert.AreEqual(movements.RangeOfDates.FinalDate, movementsDTO.RangeOfDates.FinalDate);
+        }
+
+        #endregion
     }
 }
