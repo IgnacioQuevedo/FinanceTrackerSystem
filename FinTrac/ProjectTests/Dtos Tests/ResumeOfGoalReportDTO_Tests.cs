@@ -23,7 +23,7 @@ namespace TestProject1
         {
             resumeOfGoalReportDTO.AmountDefined = 100;
 
-            Assert.AreEqual(1, 0);
+            Assert.AreEqual(resumeOfGoalReportDTO.AmountDefined, 100);
 
         }
 
