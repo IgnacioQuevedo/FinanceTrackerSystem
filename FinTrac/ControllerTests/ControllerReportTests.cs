@@ -82,9 +82,15 @@ namespace ControllerTests
             _controller.CreateGoal(myGoalDTO);
             myGoalDTO.GoalId = 1;
 
-            List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(_testDb.Users.First().MyAccounts, _testDb.Users.First().MyGoals);
+            List<GoalDTO> myGoalDTOList = MapperGoal.ToListOfGoalDTO(_testDb.Users.First().MyGoals);
 
-            Assert.AreEqual()
+            //List<AccountDTO> myAccountsDTO = MapperAccount
+
+
+            //List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(_testDb.Users.First().MyAccounts, myGoalDTOList);
+
+            //Assert.AreEqual()
+            Assert.AreEqual(0, 1);
         }
 
         #region Filtering Lists

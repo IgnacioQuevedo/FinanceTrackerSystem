@@ -59,5 +59,21 @@ namespace ControllerTests
         }
 
         #endregion
+
+        #region To List Acount DTO
+
+        [TestMethod]
+        public void GivenListAccount_ShouldBeConvertedToLIstOfAccountDTO()
+        {
+            List<Account> givenAccountList = new List<Account>();
+            MonetaryAccount monetAccount = new MonetaryAccount("Brou", 1000, CurrencyEnum.UY, DateTime.Now);
+            givenAccountList.Add(monetAccount);
+
+            List<AccountDTO> accountConvertedList = MapperAccount.ToListAccountDTO(givenAccountList);
+
+            Assert.AreEqual(accountConvertedList[0].Name, monetAccount.Name);
+        }
+
+        #endregion
     }
 }

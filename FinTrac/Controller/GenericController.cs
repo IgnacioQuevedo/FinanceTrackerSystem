@@ -730,6 +730,7 @@ namespace Controller
 
         public List<ResumeOfGoalReport> GiveMonthlyReportPerGoal(List<AccountDTO> myAccountsDTO, List<GoalDTO> myGoalsDTO)
         {
+            List<ResumeOfGoalReport> myList = new List<ResumeOfGoalReport>();
             List<Account> accounts = new List<Account>();
             foreach (AccountDTO accountDTO in myAccountsDTO)
             {
@@ -743,7 +744,7 @@ namespace Controller
                 }
             }
 
-            return accounts;
+            return myList;
         }
 
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)

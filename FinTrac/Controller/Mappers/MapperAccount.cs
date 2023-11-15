@@ -36,7 +36,7 @@ public abstract class MapperAccount
 
     #endregion
 
-    public static List<Account> ToListAccountDTO(List<Account> myAccounts)
+    public static List<AccountDTO> ToListAccountDTO(List<Account> myAccounts)
     {
         List<AccountDTO> myAccountsDTO = new List<AccountDTO>();
         MonetaryAccount possibleMonetAccount = new MonetaryAccount();
@@ -44,7 +44,7 @@ public abstract class MapperAccount
 
         foreach (Account account in myAccounts)
         {
-            if (account is MonetaryAccountDTO)
+            if (account is MonetaryAccount)
             {
                 possibleMonetAccount = account as MonetaryAccount;
                 myAccountsDTO.Add(MapperMonetaryAccount.ToMonetaryAccountDTO(possibleMonetAccount));
