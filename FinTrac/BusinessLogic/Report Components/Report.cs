@@ -345,11 +345,13 @@ namespace BusinessLogic.Report_Components
         public int[] Incomes { get; set; }
         public RangeOfDates RangeOfDates { get; set; }
         
+        public MovementInXDays(int[] incomes, int[] spendings, RangeOfDates rangeOfDates)
+        {
+            Incomes = incomes;
+            Spendings = spendings;
+            RangeOfDates = rangeOfDates;
+        }
     }
-    
-    
-    
-    
     #endregion
 }
 
