@@ -43,12 +43,7 @@
     </div>
     <br/>
     <br/>
-
-    <td>
-        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-    </td>
-
-
+    
     <html>
     <head>
         <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -71,7 +66,6 @@
     private MovementInXDaysDTO movements;
     private RangeOfDatesDTO rangeOfDates;
     private MonthsEnumDTO monthSelected =(MonthsEnumDTO)DateTime.Now.Month; 
-    private bool ConfirmedMonth;
     private DateTime initialDate;
     private DateTime finalDate;
     
@@ -81,7 +75,6 @@
         {
             rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
             movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates,monthSelected);
-            ConfirmedMonth = true;
 
             ShowGraphic();
             SuccesAlert.ShowSucessAlert();
@@ -114,13 +107,11 @@
 
 <script suppress-error="BL9992">
 
-    // Declarar myChart como variable global
     var myChart;
 
     function initializeChart(incomes, spendings) {
         var ctx = document.getElementById("myChart");
 
-        // Destruir el gráfico anterior si existe
         if (myChart) {
             myChart.destroy();
         }
