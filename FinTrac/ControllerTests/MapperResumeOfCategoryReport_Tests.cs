@@ -64,6 +64,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenResumeOfCategoryDTO_ShouldReturnResumeOfCategory()
         {
+
             CategoryDTO myCategoryDTO = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
 
             ResumeOfCategoryReportDTO givenResumeDTO = new ResumeOfCategoryReportDTO(myCategoryDTO, 100, 75);
