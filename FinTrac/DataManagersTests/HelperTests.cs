@@ -46,6 +46,8 @@ namespace DataManagersTests
         #endregion
 
 
+        #region Validation of two properties
+
         [TestMethod]
         public void GivenTwoSimplePropertiesThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
@@ -54,9 +56,22 @@ namespace DataManagersTests
             
             Assert.IsTrue(Helper.AreTheSameObject(number1,number2));
             
-
         }
         
+        [TestMethod]
+        public void GivenTwoSimplePropertiesThatAreNotEqual_AreTheSameObject_ShouldReturnFalse()
+        {
+            int number1 = 10;
+            int number2 = 10;
+            
+            Assert.IsTrue(Helper.AreTheSameObject(number1,number2));
+            
+        }
+
+        #endregion
+     
+        
+
         
     }
 }
