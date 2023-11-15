@@ -152,14 +152,19 @@ namespace ControllerTests
         [TestMethod]
         public void GivenMovementInXDaysDTO_ShouldBePossibleToCalculateMovementsOfTransactionsPerDay()
         {
-            RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
-                new DateTime(2023, 12, 31));
+            RangeOfDatesDTO rangeOfDatesDTO = new RangeOfDatesDTO(new DateTime(2020, 5, 20).Date,
+                new DateTime(2020, 5, 24));
+                
+                TransactionDTO _transaction3= new TransactionDTO("Party", new DateTime(2020, 05, 23), 1000, CurrencyEnumDTO.USA,
+                TypeEnumDTO.Outcome,
+                _exampleCategory, 1);
+                
+                _controller.CreateTransaction(_transaction3);
             
-            List<Account> accounts = _testDb.Users.First().MyAccounts;
-            MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
+            MovementInXDays movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO);
             
-            Assert.AreEqual(12,movements.Spendings[0]);
-            Assert.AreEqual(4,movements.Spendings[30]);
+            Assert.AreEqual(500,movements.Spendings[19]);
+            Assert.AreEqual(1000,movements.Spendings[22]);
         }
 
         #endregion
