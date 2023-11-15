@@ -42,5 +42,14 @@ namespace TestProject1
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenGoalAchieved_ShouldBeSetted()
+        {
+            resumeOfGoalReportDTO.GoalAchieved = false;
+
+            Assert.AreEqual(false, true);
+
+        }
     }
 }
