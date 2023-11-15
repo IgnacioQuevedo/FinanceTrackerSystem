@@ -8,11 +8,14 @@ using Mappers;
 
 namespace Controller.Mappers;
 
-public abstract class MapperResumeOfGoalReport
+public abstract class MapperResumeOfGoaLReport
 {
     public static ResumeOfGoalReportDTO ToResumeOfGoalReportDTO(ResumeOfGoalReport resumeToConvert)
     {
-        throw new NotImplementedException();
+        ResumeOfGoalReportDTO resumeDTO =
+            new ResumeOfGoalReportDTO(resumeToConvert.AmountDefined, resumeToConvert.TotalSpent, resumeToConvert.GoalAchieved);
+
+        return resumeDTO;
     }
 
 }
