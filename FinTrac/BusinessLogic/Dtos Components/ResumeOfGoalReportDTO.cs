@@ -2,9 +2,15 @@ namespace BusinessLogic.Dtos_Components;
 
 public class ResumeOfGoalReportDTO
 {
+    #region Properties
+
     public decimal AmountDefined { get; set; }
     public decimal TotalSpent { get; set; }
     public bool GoalAchieved { get; set; }
+
+    #endregion
+
+    #region Constructors
 
     public ResumeOfGoalReportDTO() { }
 
@@ -14,4 +20,6 @@ public class ResumeOfGoalReportDTO
         TotalSpent = totalSpent;
         GoalAchieved = goalAchieved;
     }
+
+    #endregion
 }

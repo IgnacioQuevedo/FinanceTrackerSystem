@@ -57,6 +57,8 @@ namespace TestProject1
 
         #endregion
 
+        #region Constructor
+
         [TestMethod]
         public void GivenValues_ShoulCreateAnInstance()
         {
@@ -68,5 +70,7 @@ namespace TestProject1
             Assert.AreEqual(totalSpentDefined, resumeOfGoalReportDTO.TotalSpent);
             Assert.AreEqual(goalWasAchieved, resumeOfGoalReportDTO.GoalAchieved);
         }
+
+        #endregion
     }
 }
