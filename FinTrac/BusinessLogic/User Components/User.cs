@@ -81,9 +81,14 @@ namespace BusinessLogic.User_Components
             bool hasSpecialChar = !Regex.IsMatch(possibleFirstName, pattern);
 
 
-            if (hasNullOrSpaceOrEmpty || hasSpecialChar)
+            if (hasNullOrSpaceOrEmpty)
             {
-                throw new ExceptionValidateUser("ERROR ON FIRSTNAME");
+                throw new ExceptionValidateUser("Error - First name can not be null");
+            }
+
+            if (hasSpecialChar)
+            {
+                throw new ExceptionValidateUser("Error - First name can not have special characters");
             }
 
             return true;
@@ -106,9 +111,14 @@ namespace BusinessLogic.User_Components
             bool hasNullOrEmptyOrSpace = string.IsNullOrWhiteSpace(possibleLastName);
 
 
-            if (hasNullOrEmptyOrSpace || hasSpecialChar)
+            if (hasNullOrEmptyOrSpace)
             {
-                throw new ExceptionValidateUser("ERROR ON LASTNAME");
+                throw new ExceptionValidateUser("Error - Last name can not be null ");
+            }
+
+            if (hasSpecialChar)
+            {
+                throw new ExceptionValidateUser("Error - Last name can not have special characters");
             }
 
             return true;
@@ -133,7 +143,7 @@ namespace BusinessLogic.User_Components
 
             if (!hasCorrectPattern)
             {
-                throw new ExceptionValidateUser("ERROR ON EMAIL");
+                throw new ExceptionValidateUser("Error - Incorrect pattern on email");
             }
 
             return true;
@@ -159,7 +169,7 @@ namespace BusinessLogic.User_Components
 
             if (posiblePassword.Length < minLength || posiblePassword.Length > maxLength)
             {
-                throw new ExceptionValidateUser("ERROR ON PASSWORD");
+                throw new ExceptionValidateUser($"Error - Password lenght must be between {minLength} and {maxLength}");
             }
 
         }
@@ -180,7 +190,7 @@ namespace BusinessLogic.User_Components
 
             if (!hasUpperCase)
             {
-                throw new ExceptionValidateUser("ERROR ON PASSWORD");
+                throw new ExceptionValidateUser("ERROR - Password must have an uppercase letter");
             }
         }
 
