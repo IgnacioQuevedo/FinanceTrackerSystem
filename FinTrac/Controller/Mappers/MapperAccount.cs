@@ -12,6 +12,24 @@ public abstract class MapperAccount
 {
     public static List<Account> ToListAccount(List<AccountDTO> myAccountsDTO)
     {
-        throw new NotImplementedException();
+        List<Account> myAccounts = new List<Account>();
+        MonetaryAccountDTO possibleMonetAccount = new MonetaryAccountDTO();
+        CreditCardAccountDTO possibleCredAccount = new CreditCardAccountDTO();
+
+        foreach (AccountDTO accountDTO in myAccountsDTO)
+        {
+            if (accountDTO is MonetaryAccountDTO)
+            {
+                possibleMonetAccount = accountDTO as MonetaryAccountDTO;
+                myAccounts.Add(MapperMonetaryAccount.ToMonetaryAccount(possibleMonetAccount));
+            }
+            else
+            {
+                possibleCredAccount = accountDTO as CreditCardAccountDTO;
+                myAccounts.Add(MapperCreditAccount.ToCreditAccount(possibleCredAccount));
+            }
+        }
+
+        return myAccounts;
     }
 }
