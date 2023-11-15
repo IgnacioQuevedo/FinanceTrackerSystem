@@ -3,6 +3,7 @@ using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Dtos_Components;
+using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Goal_Components;
@@ -781,10 +782,15 @@ namespace Controller
 
         #endregion
 
-        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO)
+        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO, MonthsEnumDTO monthSelected)
         {
             try
             {
+                if ((int) monthSelected != rangeOfDatesDTO.InitialDate.Month)
+                {
+                    throw new Exception("Month selected must be equal to the month of the dates");
+                }
+                
                 SetUserConnected(userId);
                 MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
                 RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);

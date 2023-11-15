@@ -417,7 +417,9 @@ namespace BusinessLogic.Report_Components
         {
             if (_amountOfDays < 0 || finalDate.Month != initialDate.Month || finalDate.Year != initialDate.Year)
             {
-                throw new ExceptionReport("Final date must be greater than Initial date");
+                throw new ExceptionReport("Seems that there is an error on the DATES, validate that FINAL DATE " +
+                                          "is greater than the INITIAL one. Also check that there are in the SAME YEAR " +
+                                          "and references the SELECTED MONTH from below this alert.");
             }
         }
     }

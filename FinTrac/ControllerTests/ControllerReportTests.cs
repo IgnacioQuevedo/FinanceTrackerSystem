@@ -160,7 +160,7 @@ namespace ControllerTests
 
             _controller.CreateTransaction(_transaction3);
 
-            MovementInXDaysDTO movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO);
+            MovementInXDaysDTO movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO,MonthsEnumDTO.May);
 
             Assert.AreEqual(500, movements.Spendings[19]);
             Assert.AreEqual(1000, movements.Spendings[22]);

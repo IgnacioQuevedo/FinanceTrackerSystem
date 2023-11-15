@@ -3,10 +3,6 @@
 
 @page "/Report/MonthlyMovements"
 
-
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Enums;
-
 <h3>Montly movements Of Transactions</h3>
 @if (ErrorAlert.isError)
 {
@@ -15,7 +11,7 @@
 <main>
     <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
 
-        @foreach (MonthsEnum month in Enum.GetValues(typeof(MonthsEnum)))
+        @foreach (MonthsEnumDTO month in Enum.GetValues(typeof(MonthsEnumDTO)))
         {
             <option value="@month"> @month </option>
         }
@@ -74,23 +70,17 @@
 
     private MovementInXDaysDTO movements;
     private RangeOfDatesDTO rangeOfDates;
-    private MonthsEnum monthSelected;
+    private MonthsEnumDTO monthSelected =(MonthsEnumDTO)DateTime.Now.Month; 
     private bool ConfirmedMonth;
     private DateTime initialDate;
     private DateTime finalDate;
-
-    protected override void OnInitialized()
-    {
-        monthSelected = (MonthsEnum)DateTime.Now.Month;
-        ConfirmedMonth = false;
-    }
-
+    
     private async Task GenerateReport()
     {
         try
         {
             rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
-            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates);
+            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates,monthSelected);
             ConfirmedMonth = true;
 
             ShowGraphic();
