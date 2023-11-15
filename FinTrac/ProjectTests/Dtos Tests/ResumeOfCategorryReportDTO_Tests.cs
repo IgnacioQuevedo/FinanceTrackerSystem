@@ -49,7 +49,7 @@ namespace TestProject1
         {
             resumeOfCategoryReportDTO.PercentajeOfTotal = 75;
 
-            Assert.AreEqual(0, resumeOfCategoryReportDTO.TotalSpentInCategory);
+            Assert.AreEqual(75, resumeOfCategoryReportDTO.TotalSpentInCategory);
         }
 
 
