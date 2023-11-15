@@ -5,6 +5,7 @@ namespace BusinessLogic.Dtos_Components
 {
 	public class MovementInXDaysDTO
 	{
+		private int _amountOfDays;
 		public decimal[] Spendings { get; set; }
 		public decimal[] Incomes { get; set; }
 		public RangeOfDatesDTO RangeOfDates { get; set; }
@@ -13,10 +14,11 @@ namespace BusinessLogic.Dtos_Components
 		{
 			
 		}
-		public MovementInXDaysDTO(decimal[] spendings,decimal[] incomes,  RangeOfDatesDTO rangeOfDatesDto)
+		public MovementInXDaysDTO(RangeOfDatesDTO rangeOfDatesDto)
 		{
-			Spendings = spendings;
-			Incomes = incomes;
+			_amountOfDays = rangeOfDatesDto.FinalDate.Day - rangeOfDatesDto.InitialDate.Day + 1;
+			Spendings = new decimal [_amountOfDays];
+			Incomes = new decimal [_amountOfDays];
 			RangeOfDates = rangeOfDatesDto;
 		}
 	}

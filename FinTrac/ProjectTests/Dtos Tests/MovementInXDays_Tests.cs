@@ -55,12 +55,13 @@ namespace BusinessLogicTests.Dto_Components
             decimal[] spendings = new decimal[31];
             decimal[] incomes = new decimal[31];
             
-            MovementInXDaysDTO movements = new MovementInXDaysDTO(spendings, incomes, rangeOfDatesDto);
+            MovementInXDaysDTO movements = new MovementInXDaysDTO(rangeOfDatesDto);
             
             Assert.AreEqual(rangeOfDatesDto,movements.RangeOfDates);
             Assert.AreEqual(spendings,movements.Spendings);
             Assert.AreEqual(incomes,movements.Incomes);
  
         }
+        
     }
 }
