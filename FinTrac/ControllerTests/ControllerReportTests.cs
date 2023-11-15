@@ -71,7 +71,7 @@ namespace ControllerTests
         #endregion
 
         [TestMethod]
-        public void GivenAccountDTOListAndGoalDTOLisr_ShouldReturnMonthlyReportGoal()
+        public void GivenAccountDTOListAndGoalDTOList_ShouldReturnMonthlyReportGoal()
         {
             List<CategoryDTO> categoriesOfGoal = new List<CategoryDTO>();
 
@@ -84,7 +84,7 @@ namespace ControllerTests
 
             List<GoalDTO> myGoalDTOList = MapperGoal.ToListOfGoalDTO(_testDb.Users.First().MyGoals);
 
-            //List<AccountDTO> myAccountsDTO = MapperAccount
+            //List<AccountDTO> myAccountsDTO = MapperAccount.ToL
 
 
             //List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(_testDb.Users.First().MyAccounts, myGoalDTOList);

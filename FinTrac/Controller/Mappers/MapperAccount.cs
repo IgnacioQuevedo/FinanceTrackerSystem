@@ -36,6 +36,8 @@ public abstract class MapperAccount
 
     #endregion
 
+    #region To List Account DTO
+
     public static List<AccountDTO> ToListAccountDTO(List<Account> myAccounts)
     {
         List<AccountDTO> myAccountsDTO = new List<AccountDTO>();
@@ -58,4 +60,6 @@ public abstract class MapperAccount
 
         return myAccountsDTO;
     }
+
+    #endregion
 }
