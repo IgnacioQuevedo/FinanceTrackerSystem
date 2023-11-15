@@ -18,6 +18,8 @@ namespace TestProject1
 
         #endregion
 
+        #region CategoryDTO
+
         [TestMethod]
         public void GivenCategoryDTO_ShouldBeSetted()
         {
@@ -27,6 +29,8 @@ namespace TestProject1
 
             Assert.AreEqual(myCategoryDTO, resumeOfCategoryReportDTO.CategoryRelated);
         }
+
+        #endregion 
 
 
     }
