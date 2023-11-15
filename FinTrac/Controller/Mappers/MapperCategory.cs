@@ -12,7 +12,8 @@ public abstract class MapperCategory
     public static CategoryDTO ToCategoryDTO(Category categoryToConvert)
     {
         CategoryDTO categoryDTO =
-            new CategoryDTO(categoryToConvert.Name, (StatusEnumDTO)categoryToConvert.Status, (TypeEnumDTO)categoryToConvert.Type,
+            new CategoryDTO(categoryToConvert.Name, (StatusEnumDTO)categoryToConvert.Status,
+                (TypeEnumDTO)categoryToConvert.Type,
                 categoryToConvert.UserId);
 
         categoryDTO.CategoryId = categoryToConvert.CategoryId;
@@ -25,11 +26,12 @@ public abstract class MapperCategory
         try
         {
             Category categoryConverted =
-                new Category(categoryDTO_ToConvert.Name, (StatusEnum)categoryDTO_ToConvert.Status, (TypeEnum)categoryDTO_ToConvert.Type);
+                new Category(categoryDTO_ToConvert.Name, (StatusEnum)categoryDTO_ToConvert.Status,
+                    (TypeEnum)categoryDTO_ToConvert.Type);
 
             categoryConverted.UserId = categoryDTO_ToConvert.UserId;
             categoryConverted.CategoryId = categoryDTO_ToConvert.CategoryId;
-            
+
             return categoryConverted;
         }
         catch (ExceptionValidateCategory Exception)
@@ -42,10 +44,13 @@ public abstract class MapperCategory
     {
         List<CategoryDTO> listCategoryDTO = new List<CategoryDTO>();
 
-        foreach (Category category in categoryList)
+        if (categoryList != null)
         {
-            CategoryDTO categoryDTO = ToCategoryDTO(category);
-            listCategoryDTO.Add(categoryDTO);
+            foreach (Category category in categoryList)
+            {
+                CategoryDTO categoryDTO = ToCategoryDTO(category);
+                listCategoryDTO.Add(categoryDTO);
+            }
         }
 
         return listCategoryDTO;
@@ -60,7 +65,7 @@ public abstract class MapperCategory
             Category category = ToCategory(categoryDTO);
             listOfCategories.Add(category);
         }
+
         return listOfCategories;
     }
-
 }
