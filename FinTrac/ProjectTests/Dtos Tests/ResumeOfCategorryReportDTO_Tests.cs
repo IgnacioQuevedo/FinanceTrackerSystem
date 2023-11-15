@@ -30,7 +30,15 @@ namespace TestProject1
             Assert.AreEqual(myCategoryDTO, resumeOfCategoryReportDTO.CategoryRelated);
         }
 
-        #endregion 
+        #endregion
+
+        [TestMethod]
+        public void GivenTotalSpent_ShouldBeSetted()
+        {
+            resumeOfCategoryReportDTO.TotalSpentInCategory = 100;
+
+            Assert.AreEqual(0, resumeOfCategoryReportDTO.TotalSpentInCategory);
+        }
 
 
     }
