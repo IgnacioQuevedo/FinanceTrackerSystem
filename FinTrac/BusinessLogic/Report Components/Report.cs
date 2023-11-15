@@ -260,7 +260,30 @@ namespace BusinessLogic.Report_Components
         public static MovementInXDays GetMovementInXDays(List<Account> accounts,RangeOfDates rangeOfDates)
         {
 
-            throw new NotImplementedException();
+            MovementInXDays movements = new MovementInXDays(rangeOfDates);
+            int month = (int)rangeOfDates.Month;
+            
+            foreach (var account in accounts)
+            {
+                foreach (var transaction in account.MyTransactions)
+                {
+                    if (transaction.CreationDate.Month == month &&
+                        transaction.CreationDate.Day >= rangeOfDates.InitialDate.Day &&
+                        transaction.CreationDate.Day <= rangeOfDates.FinalDate.Day)
+                    {
+                        if (transaction.Type == TypeEnum.Income)
+                        {
+                            movements.Incomes[transaction.CreationDate.Day] = transaction.Amount;
+                        }
+                        else
+                        {
+                            movements.Spendings[transaction.CreationDate.Day] = transaction.Amount;
+                        }
+                        
+                    }
+                }
+            }
+            return movements;
         }
 
         #endregion
@@ -372,6 +395,7 @@ namespace BusinessLogic.Report_Components
     {
         public DateTime InitialDate { get; set; }
         public DateTime FinalDate { get; set; }
+        public MonthsEnum Month { get; set; }
 
         public RangeOfDates(DateTime initialDate, DateTime finalDate)
         {
@@ -382,8 +406,8 @@ namespace BusinessLogic.Report_Components
 
     public class MovementInXDays
     {
-        public int[] Spendings { get; set; }
-        public int[] Incomes { get; set; }
+        public decimal[] Spendings { get; set; }
+        public decimal[] Incomes { get; set; }
         public RangeOfDates RangeOfDates { get; set; }
 
         public MovementInXDays()
@@ -392,8 +416,8 @@ namespace BusinessLogic.Report_Components
 
         public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            Incomes = new int[31];
-            Spendings = new int[31];
+            Incomes = new decimal[31];
+            Spendings = new decimal[31];
             RangeOfDates = rangeOfDates;
         }
     }

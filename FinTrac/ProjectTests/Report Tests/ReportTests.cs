@@ -329,7 +329,7 @@ public class ReportTests
     [TestMethod]
     public void GivenArrayOfSpendings_ShouldBeSetToMovementInXDays()
     {
-        int[] spendings = new int [5];
+        decimal[] spendings = new decimal [5];
 
         movements.Spendings = spendings;
         Assert.AreEqual(spendings, movements.Spendings);
@@ -338,7 +338,7 @@ public class ReportTests
     [TestMethod]
     public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
     {
-        int[] incomes = new int [5];
+        decimal[] incomes = new decimal [5];
 
         movements.Incomes = incomes;
         Assert.AreEqual(incomes, movements.Incomes);
@@ -413,9 +413,21 @@ public class ReportTests
     [TestMethod]
     public void GivenAccountListAndRangeOfDates_ShouldReturnMovementInXDays()
     {
+        
+        Transaction transactionInDate = new Transaction("Payment for party", 200, new DateTime(2023/12/1).Date, CurrencyEnum.USA,
+            TypeEnum.Outcome, genericCategory2);
+
+        myMonetaryAccount.AddTransaction(transactionInDate);
+        
+        Transaction transactionInDate2 = new Transaction("Payment for party", 200, new DateTime(2023/12/31).Date, CurrencyEnum.USA,
+            TypeEnum.Outcome, genericCategory2);
+
+        myMonetaryAccount.AddTransaction(transactionInDate2);
+        
+        
         decimal[] incomes = new decimal[31];
         decimal[] spendings = new decimal [31];
-     
+        int month = 12;
         
         RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
             new DateTime(2023, 12, 31).Date);
@@ -426,13 +438,19 @@ public class ReportTests
         {
             foreach (var transaction in account.MyTransactions)
             {
-                if (transaction.Type == TypeEnum.Income)
+                if (transaction.CreationDate.Month == month &&
+                    transaction.CreationDate.Day >= rangeOfDates.InitialDate.Day &&
+                    transaction.CreationDate.Day <= rangeOfDates.FinalDate.Day)
                 {
-                    incomes[transaction.CreationDate.Day] = transaction.Amount;
-                }
-                else
-                {
-                    spendings[transaction.CreationDate.Day] = transaction.Amount;
+                    if (transaction.Type == TypeEnum.Income)
+                    {
+                        incomes[transaction.CreationDate.Day] = transaction.Amount;
+                    }
+                    else
+                    {
+                        spendings[transaction.CreationDate.Day] = transaction.Amount;
+                    }
+                        
                 }
             }
         }
