@@ -43,13 +43,18 @@ namespace TestProject1
 
         #endregion
 
+        #region Goal Achieved
+
         [TestMethod]
         public void GivenGoalAchieved_ShouldBeSetted()
         {
-            resumeOfGoalReportDTO.GoalAchieved = false;
+            bool goalWasAchieved = true;
+            resumeOfGoalReportDTO.GoalAchieved = goalWasAchieved;
 
-            Assert.AreEqual(false, resumeOfGoalReportDTO.GoalAchieved);
+            Assert.AreEqual(goalWasAchieved, resumeOfGoalReportDTO.GoalAchieved);
 
         }
+
+        #endregion
     }
 }
