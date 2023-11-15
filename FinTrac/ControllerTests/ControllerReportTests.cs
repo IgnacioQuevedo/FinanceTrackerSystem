@@ -137,6 +137,7 @@ namespace ControllerTests
         }
         #endregion
 
+        #region Monetary Account Balance
 
         [TestMethod]
         public void GivenMonetaryAccountDTO_ShouldReturnAccountBalance()
@@ -150,9 +151,12 @@ namespace ControllerTests
 
             _controller.CreateTransaction(transaction4);
 
+            decimal balanceExpected = 2700;
             decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
 
-            Assert.AreEqual(2700, accountBalance);
+            Assert.AreEqual(balanceExpected, accountBalance);
         }
+
+        #endregion
     }
 }
