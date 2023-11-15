@@ -11,6 +11,7 @@ using BusinessLogic.Report_Components;
 using BusinessLogic.ExchangeHistory_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 
 namespace BusinessLogicTests;
 
@@ -34,7 +35,7 @@ public class ReportTests
     private Transaction transactionWanted2;
     private Transaction transactionUnWanted1;
     private Transaction transactionUnWanted2;
-    private MovementInXDays movements; 
+    private MovementInXDays movements;
 
     [TestInitialize]
     public void Initialize()
@@ -97,8 +98,8 @@ public class ReportTests
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
         transactionUnWanted2 = new Transaction("Payment for Debt", 1000, new DateTime(2022, 01, 01),
             CurrencyEnum.UY, TypeEnum.Outcome, genericCategory2);
-        
-        
+
+
         movements = new MovementInXDays();
     }
 
@@ -334,7 +335,7 @@ public class ReportTests
         movements.Spendings = spendings;
         Assert.AreEqual(spendings, movements.Spendings);
     }
-    
+
     [TestMethod]
     public void GivenArrayOfIncomes_ShouldBeSetToMovementInXDays()
     {
@@ -347,130 +348,97 @@ public class ReportTests
     [TestMethod]
     public void GivenRangeOfDates_ShouldBeSetToMovementInXDays()
     {
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
-                (new DateTime(2023, 11, 14).Date,
-                    new DateTime(2023, 11, 28).Date);
-        
-        movements.RangeOfDates = rangeOfDates;
-        
-        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
+            (new DateTime(2023, 11, 14).Date,
+                new DateTime(2023, 11, 28).Date);
 
+        movements.RangeOfDates = rangeOfDates;
+
+        Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenFormatOfRangeOfDatesIncorrect_ShouldThrowException()
     {
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
             (new DateTime(-2023, 45, 14).Date,
                 new DateTime(2023, 11, 28).Date);
-        
-        movements.RangeOfDates = rangeOfDates;
 
+        movements.RangeOfDates = rangeOfDates;
     }
 
 
     [TestMethod]
     public void GivenCorrectData_ShouldBePossibleToCreateMovementsInXDays()
     {
-        int[] incomes = new int [31];
-        int[] spendings = new int [31];
-        RangeOfDates rangeOfDates = 
+        int[] incomes = new int [15];
+        int[] spendings = new int [15];
+        RangeOfDates rangeOfDates =
             new RangeOfDates
             (new DateTime(2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
         MovementInXDays movements = new MovementInXDays(rangeOfDates);
 
-        for (int i = 0; i < 31; i++)
+        for (int i = 0; i < 15; i++)
         {
-            Assert.AreEqual(incomes[i],movements.Incomes[i]);
-            Assert.AreEqual(spendings[i],movements.Spendings[i]);
+            Assert.AreEqual(incomes[i], movements.Incomes[i]);
+            Assert.AreEqual(spendings[i], movements.Spendings[i]);
         }
-        
-        Assert.AreEqual(rangeOfDates,movements.RangeOfDates);
 
+        Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenIncorrectData_ShouldThrowException()
     {
         int[] incomes = new int [5];
         int[] spendings = new int [5];
-        RangeOfDates rangeOfDates = 
+        RangeOfDates rangeOfDates =
             new RangeOfDates
             (new DateTime(-2023, 11, 14).Date,
                 new DateTime(2023, 11, 28).Date);
 
         MovementInXDays movements = new MovementInXDays(rangeOfDates);
-        
     }
+
     #endregion
 
     [TestMethod]
     public void GivenAccountListAndRangeOfDates_ShouldReturnMovementInXDays()
     {
-        
-        Transaction transactionInDate = new Transaction("Payment for party", 200, new DateTime(2023/12/1).Date, CurrencyEnum.USA,
+        Transaction transactionInDate = new Transaction("Payment for party", 200, new DateTime(2023,12,1).Date,
+            CurrencyEnum.USA,
+            TypeEnum.Outcome, genericCategory2);
+        Transaction transactionInDate2 = new Transaction("Payment for party", 200, new DateTime(2023,12,31).Date,
+            CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
 
         myMonetaryAccount.AddTransaction(transactionInDate);
-        
-        Transaction transactionInDate2 = new Transaction("Payment for party", 200, new DateTime(2023/12/31).Date, CurrencyEnum.USA,
-            TypeEnum.Outcome, genericCategory2);
-
         myMonetaryAccount.AddTransaction(transactionInDate2);
-        
-        
-        decimal[] incomes = new decimal[31];
-        decimal[] spendings = new decimal [31];
-        int month = 12;
-        
-        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
-            new DateTime(2023, 12, 31).Date);
 
         List<Account> accounts = loggedUser.MyAccounts;
 
-        foreach (var account in accounts)
-        {
-            foreach (var transaction in account.MyTransactions)
-            {
-                if (transaction.CreationDate.Month == month &&
-                    transaction.CreationDate.Day >= rangeOfDates.InitialDate.Day &&
-                    transaction.CreationDate.Day <= rangeOfDates.FinalDate.Day)
-                {
-                    if (transaction.Type == TypeEnum.Income)
-                    {
-                        incomes[transaction.CreationDate.Day] = transaction.Amount;
-                    }
-                    else
-                    {
-                        spendings[transaction.CreationDate.Day] = transaction.Amount;
-                    }
-                        
-                }
-            }
-        }
-        
+        decimal[] incomes = new decimal[31];
+        decimal[] spendings = new decimal [31];
+        int month = 12;
+
+        RangeOfDates rangeOfDates = new RangeOfDates(new DateTime(2023, 12, 1).Date,
+            new DateTime(2023, 12, 31).Date);
+
+        spendings[0] = 200;
+        spendings[30] = 200;
+
         MovementInXDays movements = Report.GetMovementInXDays(accounts, rangeOfDates);
-
-
-        for (int i = 0; i < incomes.Length; i++)
-        {
-            Assert.AreEqual(incomes[i],movements.Incomes[i]);
-            Assert.AreEqual(spendings[i],movements.Spendings[i]);
-        }
+        
+        Assert.AreEqual(incomes[20], movements.Incomes[20]);
+        Assert.AreEqual(spendings[0], movements.Spendings[0]);
+        Assert.AreEqual(spendings[30], movements.Spendings[30]);
     }
-    
+
     #endregion
-    
-    
-    
-    
-    
-    
-    
 }

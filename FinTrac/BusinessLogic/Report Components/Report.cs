@@ -261,7 +261,7 @@ namespace BusinessLogic.Report_Components
         {
 
             MovementInXDays movements = new MovementInXDays(rangeOfDates);
-            int month = (int)rangeOfDates.Month;
+            int month = rangeOfDates.InitialDate.Month;
             
             foreach (var account in accounts)
             {
@@ -273,11 +273,11 @@ namespace BusinessLogic.Report_Components
                     {
                         if (transaction.Type == TypeEnum.Income)
                         {
-                            movements.Incomes[transaction.CreationDate.Day] = transaction.Amount;
+                            movements.Incomes[transaction.CreationDate.Day -1] = transaction.Amount;
                         }
                         else
                         {
-                            movements.Spendings[transaction.CreationDate.Day] = transaction.Amount;
+                            movements.Spendings[transaction.CreationDate.Day -1] = transaction.Amount;
                         }
                         
                     }
@@ -395,7 +395,6 @@ namespace BusinessLogic.Report_Components
     {
         public DateTime InitialDate { get; set; }
         public DateTime FinalDate { get; set; }
-        public MonthsEnum Month { get; set; }
 
         public RangeOfDates(DateTime initialDate, DateTime finalDate)
         {
@@ -406,18 +405,21 @@ namespace BusinessLogic.Report_Components
 
     public class MovementInXDays
     {
+        private int _amountOfDays;
         public decimal[] Spendings { get; set; }
         public decimal[] Incomes { get; set; }
-        public RangeOfDates RangeOfDates { get; set; }
 
+        public RangeOfDates RangeOfDates { get; set; }
         public MovementInXDays()
         {
         }
 
         public MovementInXDays(RangeOfDates rangeOfDates)
         {
-            Incomes = new decimal[31];
-            Spendings = new decimal[31];
+            _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
+            
+            Incomes = new decimal[_amountOfDays];
+            Spendings = new decimal[_amountOfDays];
             RangeOfDates = rangeOfDates;
         }
     }
