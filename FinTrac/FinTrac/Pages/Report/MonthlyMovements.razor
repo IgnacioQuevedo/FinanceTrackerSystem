@@ -8,10 +8,10 @@
 @using BusinessLogic.Enums;
 
 <h3>Montly movements Of Transactions</h3>
-  @if (ErrorAlert.isError)
-    {
-        <ErrorAlert errorTxt="@errorTxt" />
-    }
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt"/>
+}
 <main>
     <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
 
@@ -42,12 +42,12 @@
     <div>
         @if (SuccesAlert.IsSucess)
         {
-            <SuccesAlert errorTxt="Category created successfully" />
+            <SuccesAlert errorTxt="Category created successfully"/>
         }
     </div>
     <br/>
     <br/>
-    
+
     <td>
         <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
     </td>
@@ -95,21 +95,18 @@
 
             ShowGraphic();
             SuccesAlert.ShowSucessAlert();
-            await Task.Delay(2000);
+            await Task.Delay(1500);
             ResetValues();
-            
         }
         catch (Exception ExceptionReport)
         {
             errorTxt = ExceptionReport.Message;
             ErrorAlert.ShowErrorAlert();
         }
-        
     }
-    
+
     private void ResetValues()
     {
-    // Helps prevent threading-related issues and ensures that UI updates are done
         InvokeAsync(() =>
         {
             SuccesAlert.IsSucess = false;
@@ -117,15 +114,10 @@
             StateHasChanged();
         });
     }
-    
+
     public async Task ShowGraphic()
     {
-        
         await JSRuntime.InvokeAsync<object>("initializeChart", movements.Incomes, movements.Spendings);
-    }
-    
-    protected override async Task OnInitializedAsync()
-    {
         StateHasChanged();
     }
 }
