@@ -388,5 +388,22 @@ public class ReportTests
 
     }
     
+    [TestMethod]
+    [ExpectedException(typeof(ExceptionRepor))]
+    public void GivenIncorrectData_ShouldThrowException()
+    {
+        int[] incomes = new int [5];
+        int[] spendings = new int [5];
+        RangeOfDates rangeOfDates = 
+            new RangeOfDates
+            (new DateTime(-2023, 32, 14).Date,
+                new DateTime(2023, 11, 28).Date);
+
+        MovementInXDays movements = new MovementInXDays(incomes, spendings, rangeOfDates);
+        
+
+    }
+    
+    
     #endregion
 }
