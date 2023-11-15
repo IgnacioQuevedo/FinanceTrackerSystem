@@ -280,6 +280,21 @@ namespace Controller
             return _userConnected.MyGoals;
         }
 
+        public Goal FindGoalInDb(GoalDTO goalToFind)
+        {
+            SetUserConnected(goalToFind.UserId);
+
+            foreach (Goal goal in _userConnected.MyGoals)
+            {
+                if (goal.GoalId == goalToFind.GoalId)
+                {
+                    return goal;
+                }
+            }
+
+            throw new Exception("Category was not found, an error on index must be somewhere.");
+        }
+
         private List<Category> SetListOfCategories(GoalDTO goalDtoToCreate)
         {
             List<Category> result = new List<Category>();
@@ -728,9 +743,10 @@ namespace Controller
 
         #region Report Section
 
-        public List<ResumeOfGoalReport> GiveMonthlyReportPerGoal(List<AccountDTO> myAccountsDTO, List<GoalDTO> myGoalsDTO)
+        public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(List<AccountDTO> myAccountsDTO, List<GoalDTO> myGoalsDTO)
         {
-            List<ResumeOfGoalReport> myList = new List<ResumeOfGoalReport>();
+            //List<Goal> myGoals = MapperGoal.ToListOfGoalDTO;
+            List<ResumeOfGoalReportDTO> myList = new List<ResumeOfGoalReportDTO>();
             List<Account> accounts = new List<Account>();
             foreach (AccountDTO accountDTO in myAccountsDTO)
             {
@@ -743,6 +759,7 @@ namespace Controller
                     accounts.Add(FindCreditAccountInDb((CreditCardAccountDTO)accountDTO));
                 }
             }
+
 
             return myList;
         }

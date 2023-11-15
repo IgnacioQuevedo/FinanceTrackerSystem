@@ -84,10 +84,10 @@ namespace ControllerTests
 
             List<GoalDTO> myGoalDTOList = MapperGoal.ToListOfGoalDTO(_testDb.Users.First().MyGoals);
 
-            //List<AccountDTO> myAccountsDTO = MapperAccount.ToL
+            List<AccountDTO> myAccountsDTO = MapperAccount.ToListAccountDTO(_testDb.Users.First().MyAccounts);
 
 
-            //List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(_testDb.Users.First().MyAccounts, myGoalDTOList);
+            List<ResumeOfGoalReportDTO> resumeOfGoalReports = _controller.GiveMonthlyReportPerGoal(myAccountsDTO, myGoalDTOList);
 
             //Assert.AreEqual()
             Assert.AreEqual(0, 1);
