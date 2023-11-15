@@ -134,7 +134,7 @@ namespace ControllerTests
             Assert.AreEqual(_controller.FindCategoryInDb(categoryOfTransactionDTO),
                 transactionFound.TransactionCategory);
 
-            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.AccountId),
+            Assert.AreEqual(_controller.FindAccountByIdInDb(monetaryAccount.AccountId, monetaryAccount.UserId),
                 transactionFound.TransactionAccount);
         }
 
@@ -177,7 +177,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenAnAccountId_ShouldBePossibleToFindHimInDb()
         {
-            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.AccountId);
+            Account accountToFound = _controller.FindAccountByIdInDb(monetaryAccount.AccountId, monetaryAccount.UserId);
             monetaryAccount.AccountId = 1;
 
             Assert.AreEqual(monetaryAccount.AccountId, accountToFound.AccountId);
@@ -230,7 +230,7 @@ namespace ControllerTests
             transactionDtoWithUpdates.TransactionId = 2;
             _controller.UpdateTransaction(transactionDtoWithUpdates, monetaryAccount.UserId);
 
-            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.AccountId);
+            Account accountInDb = _controller.FindAccountByIdInDb(monetaryAccount.AccountId, monetaryAccount.UserId);
             Transaction transactionUpdatedInDb = _controller.FindTransactionInDb(
                 transactionDtoWithUpdates.TransactionId, monetaryAccount.AccountId, _userConnected.UserId);
 

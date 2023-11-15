@@ -1,20 +1,16 @@
 ﻿@page "/Report/MonetaryBalance"
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Account_Components;
+
+@inject IReportController ReportController;
 
 <h3>Monetary Balance</h3>
 
+<select class="form-select" aria-label="select example" @onchange="OnSearchInitDate">
 
-<select class="form-select" aria-label="select example" @bind="monetaryId">
-
-    @foreach (var accountToReport in Accounts)
+    @foreach (MonetaryAccountDTO monetAccountToReport in monetaryAccountsList)
     {
-        if (accountToReport is MonetaryAccount)
-        {
-            MonetaryAccount monetaryAcc = accountToReport as MonetaryAccount;
-            <option value="@monetaryAcc.AccountId">@monetaryAcc.Name</option>
-        }
+        <option value="@monetAccountToReport.AccountId">@monetAccountToReport.Name</option>
     }
+
 </select>
 
 <br />
@@ -22,8 +18,7 @@
 
 <button type="button" class="btn btn-primary" @onclick="ShowBalance">Show Balance</button>
 
-
-<input type="number" class="form-control" id="Name" @bind="accountBalance" />
+<input type="number" class="form-control" id="Name" @bind="accountBalance"/>
 
 <br />
 <br />
@@ -32,28 +27,32 @@
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
 </td>
 
-
-
 @code
 {
-
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
     private int monetaryId;
     private decimal accountBalance;
-    private List<Account> Accounts;
+    private MonetaryAccountDTO myAccount;
+    private List<MonetaryAccountDTO> monetaryAccountsList;
 
     protected override void OnInitialized()
     {
-        Accounts = user.GetAccounts();
-
+        monetaryAccountsList = GenericController.GetAllMonetaryAccounts(UserConnected.UserId);
+        myAccount = monetaryAccountsList[0];
     }
 
     private void ShowBalance()
     {
-        MonetaryAccount myMonetary = (MonetaryAccount)user.MyAccounts[monetaryId];
-        accountBalance = Report.GiveAccountBalance(myMonetary, myMonetary.ReturnInitialAmount());
+        accountBalance = ReportController.GiveAccountBalance(myAccount);
+    }
+
+    private void OnSearchInitDate(ChangeEventArgs elementSelected)
+    {
+        string idSelected = elementSelected.Value.ToString();
+        myAccount = GenericController.FindMonetaryAccount(int.Parse(idSelected), UserConnected.UserId);
+        
     }
 
 }

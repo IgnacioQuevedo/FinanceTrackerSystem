@@ -26,6 +26,7 @@ builder.Services.AddScoped<IExchangeHistoryController, GenericController>();
 builder.Services.AddScoped<IMonetaryAccount, GenericController>();
 builder.Services.AddScoped<ICreditAccount, GenericController>();
 builder.Services.AddScoped<ITransactionController, GenericController>();
+builder.Services.AddScoped<IReportController, GenericController>();
 
 var app = builder.Build();
 

@@ -221,15 +221,7 @@ namespace BusinessLogic.Report_Components
         private static decimal CalculateBalance(decimal initialMoney, decimal actualBalance)
         {
             decimal accountBalance;
-            if (actualBalance < 0)
-            {
-                accountBalance = initialMoney + actualBalance;
-            }
-            else
-            {
-                accountBalance = initialMoney - actualBalance;
-            }
-
+            accountBalance = initialMoney + actualBalance;
             return accountBalance;
         }
 

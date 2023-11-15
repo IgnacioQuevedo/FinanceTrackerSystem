@@ -258,9 +258,9 @@ namespace ControllerTests
 
             Assert.AreEqual(balanceExpected, accountBalance);
         }
-      
+
         #endregion
-          
+
         #region Get Movement In X Days
 
         [TestMethod]
@@ -274,7 +274,7 @@ namespace ControllerTests
 
             _controller.CreateTransaction(_transaction3);
 
-            MovementInXDaysDTO movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO,MonthsEnumDTO.May);
+            MovementInXDaysDTO movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO, MonthsEnumDTO.May);
 
             Assert.AreEqual(500, movements.Spendings[19]);
             Assert.AreEqual(1000, movements.Spendings[22]);
