@@ -406,16 +406,16 @@ namespace BusinessLogic.Report_Components
         {
             
             _amountOfDays = rangeOfDates.FinalDate.Day - rangeOfDates.InitialDate.Day + 1;
-            ValidateDates();
+            ValidateDates(rangeOfDates.FinalDate,rangeOfDates.InitialDate);
             
             Incomes = new decimal[31];
             Spendings = new decimal[31];
             RangeOfDates = rangeOfDates;
         }
         
-        private void ValidateDates()
+        private void ValidateDates(DateTime finalDate, DateTime initialDate)
         {
-            if (_amountOfDays < 0)
+            if (_amountOfDays < 0 || finalDate.Month != initialDate.Month || finalDate.Year != initialDate.Year)
             {
                 throw new ExceptionReport("Final date must be greater than Initial date");
             }

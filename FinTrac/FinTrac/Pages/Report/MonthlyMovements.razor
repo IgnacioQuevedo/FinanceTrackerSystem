@@ -8,7 +8,10 @@
 @using BusinessLogic.Enums;
 
 <h3>Montly movements Of Transactions</h3>
-
+  @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
 <main>
     <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
 
@@ -68,6 +71,8 @@
     [CascadingParameter]
     public UserDTO userConnected { get; set; }
 
+    public string errorTxt { get; set; }
+
     private MovementInXDaysDTO movements;
     private RangeOfDatesDTO rangeOfDates;
     private MonthsEnum monthSelected;
@@ -83,10 +88,33 @@
 
     private void GenerateReport()
     {
-        rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
-        movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates);
-        ConfirmedMonth = true;
+        try
+        {
+            rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
+            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates);
+            ConfirmedMonth = true;
+            ResetValues();
+        }
+        catch (Exception ExceptionReport)
+        {
+            errorTxt = ExceptionReport.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+        
     }
+    
+    private void ResetValues()
+    {
+    // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
+    
+    
 
     public async Task ShowGraphic()
     {
@@ -99,6 +127,56 @@
         StateHasChanged();
     }
 }
+
+
+protected override void OnInitialized()
+    {
+        ResetValues();
+    }
+
+    private async void SaveChanges()
+    {
+        try
+        {
+            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
+            CategoryController.CreateCategory(newCategory);
+
+            SuccesAlert.ShowSucessAlert();
+
+            await Task.Delay(2000);
+            ResetValues();
+        }
+        catch (Exception ExceptionCategory)
+        {
+            errorTxt = ExceptionCategory.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+    }
+
+    private void ResetValues()
+    {
+        name = "";
+        status = StatusEnumDTO.Enabled;
+        type = TypeEnumDTO.Income;  
+        
+        // Helps prevent threading-related issues and ensures that UI updates are done
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
+
+
+
+
+
+
+
+
+
+
 
 <script suppress-error="BL9992">
 
