@@ -183,10 +183,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenUserDTO_ShouldSetUserConnected()
         {
-            UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo",
-                "nachitoquevedo@gmail.com", "Nacho200304!", "");
-
-            _controller.SetUserConnected(userToConnect.UserId);
+            _controller.SetUserConnected(_userConnected.UserId);
         }
 
         #endregion
