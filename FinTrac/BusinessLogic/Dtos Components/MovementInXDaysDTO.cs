@@ -7,6 +7,6 @@ namespace BusinessLogic.Dtos_Components
 	{
 		public decimal[] Spendings { get; set; }
 		public decimal[] Income { get; set; }
-		
+		public RangeOfDatesDTO RangeOfDates { get; set; }
 	}
 }
