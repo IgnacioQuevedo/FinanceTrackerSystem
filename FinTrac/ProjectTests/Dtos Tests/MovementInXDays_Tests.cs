@@ -31,6 +31,17 @@ namespace BusinessLogicTests.Dto_Components
             Assert.AreEqual(spendings,movements.Spendings);
 
         }
+        
+        [TestMethod]
+        public void GivenIncomeArray_ShouldBeSet()
+        {
+            decimal[] income = new decimal[31];
+            MovementInXDaysDTO movements = new MovementInXDaysDTO();
+            movements.Spendings = income;
+            
+            Assert.AreEqual(income,movements.Income);
+
+        }
 
 
     }
