@@ -12,6 +12,5 @@ namespace Controller.Mappers
 
     public abstract class MapperResumeOfCategoryReport
     {
-
     }
 }

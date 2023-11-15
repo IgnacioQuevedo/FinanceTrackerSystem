@@ -51,9 +51,21 @@ namespace TestProject1
         {
             resumeOfCategoryReportDTO.PercentajeOfTotal = 75;
 
-            Assert.AreEqual(75, resumeOfCategoryReportDTO.TotalSpentInCategory);
+            Assert.AreEqual(75, resumeOfCategoryReportDTO.PercentajeOfTotal);
         }
 
         #endregion
+
+        [TestMethod]
+        public void GivenValues_ShouldCreateResume()
+        {
+            CategoryDTO myCategoryDTO = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Outcome, 1);
+
+            resumeOfCategoryReportDTO = new ResumeOfCategoryReportDTO(myCategoryDTO, 100, 75);
+
+            Assert.AreEqual(myCategoryDTO, resumeOfCategoryReportDTO.CategoryRelated);
+            Assert.AreEqual(100, resumeOfCategoryReportDTO.TotalSpentInCategory);
+            Assert.AreEqual(75, resumeOfCategoryReportDTO.PercentajeOfTotal);
+        }
     }
 }

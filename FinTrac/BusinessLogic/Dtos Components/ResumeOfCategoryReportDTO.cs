@@ -9,4 +9,10 @@ public class ResumeOfCategoryReportDTO
     public decimal PercentajeOfTotal { get; set; }
 
     public ResumeOfCategoryReportDTO() { }
+    public ResumeOfCategoryReportDTO(CategoryDTO categoryRelated, decimal totalSpent, decimal percentaje)
+    {
+        throw new NotImplementedException();
+    }
+
+
 }
