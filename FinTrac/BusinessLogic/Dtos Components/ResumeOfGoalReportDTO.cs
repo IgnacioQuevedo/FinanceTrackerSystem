@@ -7,6 +7,7 @@ public class ResumeOfGoalReportDTO
     public decimal AmountDefined { get; set; }
     public decimal TotalSpent { get; set; }
     public bool GoalAchieved { get; set; }
+    public string GoalName { get; set; }
 
     #endregion
 

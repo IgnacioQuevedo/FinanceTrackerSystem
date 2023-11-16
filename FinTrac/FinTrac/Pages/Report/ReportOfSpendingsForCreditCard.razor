@@ -1,20 +1,14 @@
 ﻿@page "/Report/SpendingsOfCreditCard"
 
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Transaction_Components;
+@inject IReportController ReportController;
 
 <h3>Spendings of Credit Card this Month</h3>
 
-<select class="form-select" aria-label="select example" @bind="creditCardId">
-
-    @foreach (var accountToReport in Accounts)
+<select class="form-select" aria-label="Default select example" @onchange="OnChangeEvent">
+    <option disabled selected> Select a Credit Account for the report</option>
+    @foreach (CreditCardAccountDTO creditAccount in creditAccounts)
     {
-        if (accountToReport is CreditCardAccount)
-        {
-            CreditCardAccount creditCardToReport = accountToReport as CreditCardAccount;
-            <option value="@creditCardToReport.AccountId">@creditCardToReport.IssuingBank, @creditCardToReport.Last4Digits</option>
-        }
+        <option value="@creditAccount.AccountId">@creditAccount.IssuingBank, @creditAccount.Last4Digits</option>
     }
 
 </select>
@@ -28,11 +22,11 @@
 <br />
 <br />
 <td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+
 </td>
 
 
-@if (showSpendings)
+@if (showSpendings && transactionsOfCard.Count>0)
 {
     <table class= "table table-striped table-bordered claseTabla">
         <thead>
@@ -62,32 +56,54 @@
         </tbody>
     </table>
 
+    <br>
+    <br>
+
+
 }
+else
+{
+    <table class="table table-striped table-bordered claseTabla">
+        <tbody>
+            <tr>
+                <td>There are no transactions to show for this month</td>
+            </tr>
+        </tbody>
+    </table>
+}
+<button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
 
 
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private List<Account> Accounts;
-    private List<Transaction> transactionsOfCard;
+    private List<CreditCardAccountDTO> creditAccounts;
+    private List<TransactionDTO> transactionsOfCard;
+    private CreditCardAccountDTO myCard;
 
     private bool showSpendings;
     private int creditCardId;
 
     protected override void OnInitialized()
     {
-        Accounts = user.GetAccounts();
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
         showSpendings = false;
     }
 
     private void ShowSpendings()
     {
-        transactionsOfCard = Report.ReportOfSpendingsPerCard((CreditCardAccount)user.MyAccounts[creditCardId]);
+        myCard = GenericController.FindCreditAccount(creditCardId, UserConnected.UserId);
+        transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
         showSpendings = true;
     }
 
+    private void OnChangeEvent(ChangeEventArgs elementSelected)
+    {
+        string stringValue = elementSelected.Value.ToString();
+        creditCardId = int.Parse(stringValue);
+    }
     string GetFormattedDate(DateTime date)
     {
         return date.ToString("dd/MM/yyyy");

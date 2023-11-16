@@ -57,6 +57,14 @@ namespace TestProject1
 
         #endregion
 
+        [TestMethod]
+        public void GivenGoalName_ShouldBeSetted()
+        {
+            resumeOfGoalReportDTO.GoalName = "My goal";
+
+            Assert.AreEqual(resumeOfGoalReportDTO.GoalName, "My");
+        }
+
         #region Constructor
 
         [TestMethod]

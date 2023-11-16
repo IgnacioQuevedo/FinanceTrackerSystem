@@ -123,7 +123,7 @@ namespace BusinessLogic.Report_Components
         {
             DateTime dateTimInit = GetDateTimInit(creditCard);
             List<Transaction> listOfAllOutcomeTransactions = new List<Transaction>();
-            foreach (var transaction in creditCard.MyTransactions)
+            foreach (Transaction transaction in creditCard.MyTransactions)
             {
                 if (transaction.Type == TypeEnum.Outcome)
 

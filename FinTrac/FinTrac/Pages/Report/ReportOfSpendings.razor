@@ -10,6 +10,7 @@
     initialSelectedDate = DateTime.MinValue;
     finalSelectedDate = DateTime.MaxValue;
     rangeDates = new RangeOfDatesDTO(initialSelectedDate, finalSelectedDate);
+    ApplyAllFilters();
     <ErrorAlert errorTxt="@Text" />
 }
 
@@ -62,7 +63,7 @@
     </thead>
     <tbody>
 
-        @foreach (var transaction in filteredListOfSpending)
+        @foreach (TransactionDTO transaction in filteredListOfSpending)
         {
             <tr>
                 <td>@transaction.Title</td>
@@ -117,7 +118,7 @@
 
         if (listOfSpendingsInitial != null && listOfSpendingsInitial.Count != 0)
         {
-            accountSelected = listOfSpendingsInitial[0].AccountId.ToString();
+            accountSelected = monetaryAccounts[0].AccountId.ToString();
         }
 
         ApplyAllFilters();

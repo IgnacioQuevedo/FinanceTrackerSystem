@@ -1,6 +1,6 @@
 ﻿@page "/Report/MonthlyReportGoals"
 
-@using BusinessLogic.Report_Components;
+@inject IReportController ReportController;
 
 <h3>Monthly Report Goal</h3>
 
@@ -18,7 +18,7 @@
     </thead>
     <tbody>
 
-        @foreach (var goalReport in monthlyReportOfGoals)
+        @foreach (ResumeOfGoalReportDTO goalReport in monthlyReportOfGoalsDTO)
         {
 
             <tr>
@@ -39,12 +39,12 @@
 {
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    List<ResumeOfGoalReport> monthlyReportOfGoals;
+    List<ResumeOfGoalReportDTO> monthlyReportOfGoalsDTO;
 
     protected override void OnInitialized()
     {
-        monthlyReportOfGoals = Report.MonthlyReportPerGoal(user);
+        monthlyReportOfGoalsDTO = ReportController.GiveMonthlyReportPerGoal(UserConnected);
     }
 }
