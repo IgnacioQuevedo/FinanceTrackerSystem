@@ -88,6 +88,14 @@ namespace ControllerTests
 
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenGoalDTOWitBadData_ShouldThrowException()
+        {
+            _goalDTOToAdd.Title = "";
+            _controller.CreateGoal(_goalDTOToAdd);
+        }
+
         #endregion
 
         #region Get All GoalsDTO
