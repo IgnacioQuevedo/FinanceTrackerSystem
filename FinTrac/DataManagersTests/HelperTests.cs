@@ -72,21 +72,25 @@ namespace DataManagersTests
         #region Validation Of Two Lists
 
         [TestMethod]
-        public void GivenTwoListsThatAreEqual_AreTheSameObject_ShouldReturnFalse()
+        public void GivenTwoListsThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
             CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            CategoryDTO categoryDto2 = new CategoryDTO("Fsood", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
 
-            
             List<CategoryDTO> categories = new List<CategoryDTO>();
-            categories.Add(categoryDto2);
             categories.Add(categoryDto);
+            categories.Add(categoryDto2);
             
             List<CategoryDTO> categories2 = new List<CategoryDTO>();
-            categories2.Add(categoryDto2);
             categories2.Add(categoryDto);
-            
-            Assert.IsFalse(Helper.AreTheSameObject(categories,categories2));
+            categories2.Add(categoryDto2);
+
+
+            GoalDTO goalDto = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories,1);
+            GoalDTO goalDto2 = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories2,1);
+     
+        
+            Assert.IsTrue(Helper.AreTheSameObject(goalDto,goalDto2));
         }
 
         #endregion
