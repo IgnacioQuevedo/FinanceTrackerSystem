@@ -14,7 +14,7 @@ namespace BusinessLogic.Account_Components
         public int AccountId { get; set; }
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now.Date;
+        public DateTime CreationDate { get; set; }
 
         public int? UserId { get; set; }
         public User AccountUser { get; set; }
@@ -33,7 +33,7 @@ namespace BusinessLogic.Account_Components
         {
             Name = name;
             Currency = currency;
-            CreationDate = creationDate;
+            CreationDate = creationDate.Date;
 
             if (ValidateAccount())
             {

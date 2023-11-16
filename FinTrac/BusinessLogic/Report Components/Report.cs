@@ -65,14 +65,17 @@ namespace BusinessLogic.Report_Components
 
             foreach (var category in loggedUser.MyCategories)
             {
-                totalSpentPerCategory = spendingsPerCategory[category.CategoryId - 1];
-                percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
-                categoryRelatedToSpending = category;
+                if (category.Type == TypeEnum.Outcome)
+                {
+                    totalSpentPerCategory = spendingsPerCategory[category.CategoryId - 1];
+                    percentajeOfTotal = CalulatePercent(spendingsPerCategory, totalSpentPerCategory);
+                    categoryRelatedToSpending = category;
 
-                ResumeOfCategoryReport myCategorySpendingsResume =
-                    new ResumeOfCategoryReport(category, totalSpentPerCategory, percentajeOfTotal);
+                    ResumeOfCategoryReport myCategorySpendingsResume =
+                        new ResumeOfCategoryReport(category, totalSpentPerCategory, percentajeOfTotal);
 
-                listOfSpendingsResumes.Add(myCategorySpendingsResume);
+                    listOfSpendingsResumes.Add(myCategorySpendingsResume);
+                }
             }
 
             return listOfSpendingsResumes;

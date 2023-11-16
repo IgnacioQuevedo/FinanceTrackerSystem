@@ -1,8 +1,6 @@
 ﻿@page "/pie/{monthSelected:int}"
 
-@using BusinessLogic.User_Components
-@using BusinessLogic.Report_Components
-@using BusinessLogic.Enums;
+@inject IReportController ReportController;
 
 @inject IJSRuntime JSRuntime
 
@@ -21,18 +19,18 @@
 
 @code {
     [Parameter]
-    public MonthsEnum monthSelected { get; set; }
+    public MonthsEnumDTO monthSelected { get; set; }
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private List<ResumeOfCategoryReport> reportsOfEachCategory;
+    private List<ResumeOfCategoryReportDTO> reportsOfEachCategory;
 
 
     protected override async Task OnInitializedAsync()
     {
         // Asynchronous method to get the data before rendering
-        reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
+        reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
         // Inform Blazor that the state has changed
         StateHasChanged();
     }

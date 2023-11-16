@@ -67,7 +67,7 @@ namespace BusinessLogic.Account_Components
         {
             if (DateTime.Compare(CreationDate, ClosingDate) >= 0)
             {
-                throw new ExceptionValidateAccount("ERROR ON DATE");
+                throw new ExceptionValidateAccount("Error on date, seems like your creation date is greater than the closing date");
             }
         }
 

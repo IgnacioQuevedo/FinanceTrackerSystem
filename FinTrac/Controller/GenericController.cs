@@ -790,6 +790,8 @@ namespace Controller
 
         public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
         {
+            SetUserConnected(userLoggedDTO.UserId);
+
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
             List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
@@ -831,7 +833,7 @@ namespace Controller
 
                 return listOfSpendingsDTO;
             }
-            catch (ExceptionReport e) 
+            catch (ExceptionReport e)
             {
                 throw new Exception(e.Message);
             }
