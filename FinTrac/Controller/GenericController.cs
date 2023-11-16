@@ -540,9 +540,12 @@ namespace Controller
                 _userConnected.DeleteAccount(monetaryAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, monetaryAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 

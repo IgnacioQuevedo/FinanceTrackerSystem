@@ -84,7 +84,7 @@ namespace ControllerTests
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void GivenMonetaryAccountToCreateWithBadData_ShouldThrowException()
@@ -93,7 +93,6 @@ namespace ControllerTests
                 _userConnected.UserId);
 
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
-            
         }
 
         #endregion
@@ -159,15 +158,25 @@ namespace ControllerTests
             int amountOfMonetaryAccountsPreDelete = _testDb.Users.First().MyAccounts.Count;
             _monetToCreateDTO1.AccountId = 1;
             _monetToCreateDTO2.AccountId = 2;
-            
+
             _controller.DeleteMonetaryAccount(_monetToCreateDTO1);
             _controller.DeleteMonetaryAccount(_monetToCreateDTO2);
-            
+
             int amountOfMonetaryAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
 
-            Assert.AreEqual(amountOfMonetaryAccountsPostDelete,amountOfMonetaryAccountsPreDelete - 2);
-            #endregion
+            Assert.AreEqual(amountOfMonetaryAccountsPostDelete, amountOfMonetaryAccountsPreDelete - 2);
+
+            
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenAMonetaryAccountDTOToDeleteThatIsNotInDb_ShouldThrowException()
+        {
+            _controller.DeleteMonetaryAccount(_monetToCreateDTO1);
+        }
+
+        #endregion
 
         #region Get All Monetary Accounts
 
