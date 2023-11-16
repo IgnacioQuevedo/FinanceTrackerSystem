@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
@@ -20,7 +19,7 @@ using System.Collections.Generic;
 namespace Controller
 {
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
-        IMonetaryAccount, ICreditAccount, ITransactionController
+        IMonetaryAccount, ICreditAccount, ITransactionController, IReportController
     {
         #region Atributes
 
@@ -457,7 +456,7 @@ namespace Controller
         public MonetaryAccountDTO FindMonetaryAccount(int idMonetToFind, int userId)
         {
             SetUserConnected(userId);
-            MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountByIdInDb(idMonetToFind);
+            MonetaryAccount monetAccountFound = (MonetaryAccount)FindAccountByIdInDb(idMonetToFind, userId);
             MonetaryAccountDTO monetAccountFoundDTO = MapperMonetaryAccount.ToMonetaryAccountDTO(monetAccountFound);
 
             return monetAccountFoundDTO;
@@ -467,12 +466,13 @@ namespace Controller
         {
             SetUserConnected(monetDTO.UserId);
 
-            return (MonetaryAccount)FindAccountByIdInDb(monetDTO.AccountId);
+            return (MonetaryAccount)FindAccountByIdInDb(monetDTO.AccountId, monetDTO.UserId);
         }
 
 
-        public Account FindAccountByIdInDb(int? idAccountToFind)
+        public Account FindAccountByIdInDb(int? idAccountToFind, int? userId)
         {
+            SetUserConnected(userId);
             bool isFound = false;
             Account accountFound = new MonetaryAccount();
 
@@ -497,7 +497,7 @@ namespace Controller
         {
             SetUserConnected(userId);
 
-            Account accountFound = FindAccountByIdInDb(idAccountToFind);
+            Account accountFound = FindAccountByIdInDb(idAccountToFind, userId);
             MonetaryAccount possibleMonetaryAccount = new MonetaryAccount();
             CreditCardAccount possibleCreditCardAccount = new CreditCardAccount();
 
@@ -594,7 +594,7 @@ namespace Controller
 
         public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
         {
-            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountByIdInDb(idCreditAccountToFind);
+            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountByIdInDb(idCreditAccountToFind, userId);
 
             CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
 
@@ -604,7 +604,7 @@ namespace Controller
         public CreditCardAccount FindCreditAccountInDb(CreditCardAccountDTO creditAccount)
         {
             SetUserConnected(creditAccount.UserId);
-            return (CreditCardAccount)FindAccountByIdInDb(creditAccount.AccountId);
+            return (CreditCardAccount)FindAccountByIdInDb(creditAccount.AccountId, creditAccount.UserId);
         }
 
         public void UpdateCreditAccount(CreditCardAccountDTO creditDtoWithUpdates)
@@ -667,7 +667,7 @@ namespace Controller
         {
             try
             {
-                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId);
+                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId, 0);
                 Category categoryOfTransaction = FindCategoryInDb(dtoToAdd.TransactionCategory);
                 SetUserConnected(transactionAccount.UserId);
 
@@ -690,7 +690,7 @@ namespace Controller
         public Transaction FindTransactionInDb(int transactionId, int? accountId, int? userId)
         {
             SetUserConnected(userId);
-            Account accountAssigned = FindAccountByIdInDb(accountId);
+            Account accountAssigned = FindAccountByIdInDb(accountId, userId);
 
             foreach (var transaction in accountAssigned.MyTransactions)
             {
@@ -741,7 +741,7 @@ namespace Controller
 
         public void DeleteTransaction(TransactionDTO transactionDtoToDelete)
         {
-            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId);
+            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId, 0);
             SetUserConnected(accountWhereIsTransaction.UserId);
             Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
                 transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
@@ -755,7 +755,7 @@ namespace Controller
         {
             SetUserConnected(accountWithTransactions.UserId);
 
-            Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId);
+            Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId, accountWithTransactions.UserId);
             List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
             transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
@@ -770,10 +770,11 @@ namespace Controller
 
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
+            SetUserConnected(userLoggedDTO.UserId);
             List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
-            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+            //User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(userInDb));
+            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(_userConnected));
 
 
             return myListDTO;
@@ -785,6 +786,7 @@ namespace Controller
 
         public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userConnectedDTO)
         {
+            SetUserConnected(userConnectedDTO.UserId);
             User userInDb = _userRepo.FindUserInDb(userConnectedDTO.UserId);
 
             List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
@@ -802,6 +804,8 @@ namespace Controller
         public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO,
             MonthsEnumDTO monthGiven)
         {
+            SetUserConnected(userLoggedDTO.UserId);
+
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
             List<ResumeOfCategoryReport> resumeDTOList =
@@ -835,15 +839,22 @@ namespace Controller
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO,
             RangeOfDatesDTO rangeOfDates)
         {
-            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+            try
+            {
+                List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
-            RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
+                RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
 
-            listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
+                listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
 
-            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+                listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 
-            return listOfSpendingsDTO;
+                return listOfSpendingsDTO;
+            }
+            catch (ExceptionReport e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO,
@@ -862,7 +873,7 @@ namespace Controller
         {
             SetUserConnected(accountSelected.UserId);
 
-            Account myAccount = FindAccountByIdInDb(accountSelected.AccountId);
+            Account myAccount = FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId);
 
             List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
 
@@ -873,9 +884,9 @@ namespace Controller
 
         #region Balance of Monetary account
 
-        public decimal GiveAccountBalance(MonetaryAccountDTO account)
+        public decimal GiveAccountBalance(MonetaryAccountDTO accountSelected)
         {
-            MonetaryAccount monetGiven = ((MonetaryAccount)(FindAccountByIdInDb(account.AccountId)));
+            MonetaryAccount monetGiven = ((MonetaryAccount)(FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId)));
             decimal initialMoney = monetGiven.ReturnInitialAmount();
 
             decimal accountBalance = Report.GiveAccountBalance(monetGiven, initialMoney);

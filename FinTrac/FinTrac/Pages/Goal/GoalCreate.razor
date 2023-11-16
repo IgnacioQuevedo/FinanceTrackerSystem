@@ -35,9 +35,12 @@
 
     <select class="form-select" aria-label="multiple select example" multiple @onchange="OnChangeCategories">
 
-        @foreach (var category in allCategoriesCreated)
+        @foreach (CategoryDTO category in allCategoriesCreated)
         {
-            <option value="@category.CategoryId">@category.Name</option>
+            if (category.Type == TypeEnumDTO.Outcome)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
         }
 
     </select>
@@ -50,8 +53,6 @@
 {
     <SuccesAlert errorTxt="Goal created successfully" />
 }
-
-
 
 
 @code

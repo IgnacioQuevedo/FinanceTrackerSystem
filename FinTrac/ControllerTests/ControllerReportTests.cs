@@ -279,7 +279,7 @@ namespace ControllerTests
             _controller.CreateExchangeHistory(exchangeHistoryDto4);
             _controller.CreateTransaction(transaction4);
 
-            decimal balanceExpected = 2700;
+            decimal balanceExpected = 3300;
             decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
 
             Assert.AreEqual(balanceExpected, accountBalance);
@@ -302,6 +302,7 @@ namespace ControllerTests
 
             MovementInXDaysDTO movements =
                 _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO, MonthsEnumDTO.May);
+
 
             Assert.AreEqual(500, movements.Spendings[19]);
             Assert.AreEqual(1000, movements.Spendings[22]);

@@ -110,7 +110,7 @@ public class ReportTests
     [TestMethod]
     public void GivenUser_ShouldReturnReportOfGoals()
     {
-        ResumeOfGoalReport resumeNeeded = new ResumeOfGoalReport(100, 100, true);
+        ResumeOfGoalReport resumeNeeded = new ResumeOfGoalReport(100, 100, true, "My goal");
         List<ResumeOfGoalReport> listObtained = Report.MonthlyReportPerGoal(loggedUser);
 
         Assert.AreEqual(resumeNeeded.AmountDefined, listObtained[0].AmountDefined);
@@ -405,8 +405,8 @@ public class ReportTests
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
 
-        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023,12,31).Date,
-                                                         
+        Transaction transactionInDate2 = new Transaction("Payment for party", 10, new DateTime(2023, 12, 31).Date,
+
             CurrencyEnum.USA,
             TypeEnum.Outcome, genericCategory2);
         myMonetaryAccount.AddTransaction(transactionInDate);
@@ -414,7 +414,7 @@ public class ReportTests
         List<Account> accounts = loggedUser.MyAccounts;
 
         decimal[] incomes = new decimal[31];
-        decimal[] spendings = new decimal [31];
+        decimal[] spendings = new decimal[31];
         spendings[0] = 10;
         spendings[30] = 10;
 

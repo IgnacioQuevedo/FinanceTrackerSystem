@@ -1,15 +1,13 @@
 ﻿@page "/Report/MonthlySpentOnCategory"
 
-
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Enums;
+@inject IReportController ReportController;
 
 <h3>Montly Spent On Category</h3>
 
 
 <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
 
-    @foreach (MonthsEnum month in Enum.GetValues(typeof(MonthsEnum)))
+    @foreach (MonthsEnumDTO month in Enum.GetValues(typeof(MonthsEnumDTO)))
     {
         <option value="@month"> @month </option>
     }
@@ -31,7 +29,7 @@
         <thead>
             <tr>
                 <th>Category Name</th>
-                <th>Amount Spent on Goal</th>
+                <th>Amount Spent on category</th>
                 <th>Percentage Of Total</th>
             </tr>
         </thead>
@@ -62,22 +60,22 @@
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private List<ResumeOfCategoryReport> reportsOfEachCategory;
-    private MonthsEnum monthSelected;
+    private List<ResumeOfCategoryReportDTO> reportsOfEachCategory;
+    private MonthsEnumDTO monthSelected;
     private bool ConfirmedMonth;
 
     protected override void OnInitialized()
     {
-        monthSelected = (MonthsEnum)DateTime.Now.Month;
-        reportsOfEachCategory = new List<ResumeOfCategoryReport>();
+        monthSelected = (MonthsEnumDTO)DateTime.Now.Month;
+        reportsOfEachCategory = new List<ResumeOfCategoryReportDTO>();
         ConfirmedMonth = false;
     }
 
     private void GenerateReport()
     {
-        reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
+        reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
         ConfirmedMonth = true;
     }
 
