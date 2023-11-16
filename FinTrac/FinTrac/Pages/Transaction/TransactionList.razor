@@ -116,7 +116,7 @@ else
         try
         {
             TransactionDTO transactionDtoToDelete = TransactionController.FindTransaction(transactionId, accountId, userConnected.UserId);
-            TransactionController.DeleteTransaction(transactionDtoToDelete);
+            TransactionController.DeleteTransaction(transactionDtoToDelete,userConnected.UserId);
             ResetValues();
             await Task.Delay(1);
             SuccesAlert.ShowSucessAlert();
@@ -130,7 +130,7 @@ else
 
     private void createCopy()
     {
-        TransactionController.CreateTransaction(transactionDuplicated);
+        TransactionController.CreateTransaction(transactionDuplicated,userConnected.UserId);
         showDuplicateScreen = false;
         SuccesAlert.ShowSucessAlert();
         ResetValues();

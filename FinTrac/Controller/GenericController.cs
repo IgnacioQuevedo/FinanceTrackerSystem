@@ -472,6 +472,11 @@ namespace Controller
 
         public Account FindAccountByIdInDb(int? idAccountToFind, int? userId)
         {
+            if (idAccountToFind == -1)
+            {
+                throw new Exception("Must select a credit card account, otherwise there would not be changes");
+            }
+            
             SetUserConnected(userId);
             bool isFound = false;
             Account accountFound = new MonetaryAccount();
@@ -489,7 +494,6 @@ namespace Controller
             {
                 throw new Exception("Account was not found, an error on index must be somewhere.");
             }
-
             return accountFound;
         }
 
@@ -594,7 +598,8 @@ namespace Controller
 
         public CreditCardAccountDTO FindCreditAccount(int idCreditAccountToFind, int userId)
         {
-            CreditCardAccount creditAccountFound = (CreditCardAccount)FindAccountByIdInDb(idCreditAccountToFind, userId);
+            CreditCardAccount creditAccountFound =
+                (CreditCardAccount)FindAccountByIdInDb(idCreditAccountToFind, userId);
 
             CreditCardAccountDTO creditAccountFoundDTO = MapperCreditAccount.ToCreditAccountDTO(creditAccountFound);
 
@@ -663,16 +668,16 @@ namespace Controller
 
         #region Transaction Section
 
-        public void CreateTransaction(TransactionDTO dtoToAdd)
+        public void CreateTransaction(TransactionDTO dtoToAdd, int? userId)
         {
             try
             {
-                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId, 0);
+                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId, userId);
                 Category categoryOfTransaction = FindCategoryInDb(dtoToAdd.TransactionCategory);
                 SetUserConnected(transactionAccount.UserId);
 
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
-                Transaction.CheckExistenceOfExchange(transactionToCreate,_userConnected.MyExchangesHistory);
+                Transaction.CheckExistenceOfExchange(transactionToCreate, _userConnected.MyExchangesHistory);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
 
@@ -739,27 +744,43 @@ namespace Controller
             }
         }
 
-        public void DeleteTransaction(TransactionDTO transactionDtoToDelete)
+        public void DeleteTransaction(TransactionDTO transactionDtoToDelete, int? userId)
         {
-            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId, 0);
-            SetUserConnected(accountWhereIsTransaction.UserId);
-            Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
-                transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
+            try
+            {
+                Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId, userId);
+                SetUserConnected(accountWhereIsTransaction.UserId);
+                Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
+                    transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);
 
-            accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
-            accountWhereIsTransaction.UpdateAccountAfterDelete(transactionToDelete);
-            _userRepo.UpdateDbWhenDeleting(_userConnected, transactionToDelete);
+                accountWhereIsTransaction.DeleteTransaction(transactionToDelete);
+                accountWhereIsTransaction.UpdateAccountAfterDelete(transactionToDelete);
+                _userRepo.UpdateDbWhenDeleting(_userConnected, transactionToDelete);
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         public List<TransactionDTO> GetAllTransactions(AccountDTO accountWithTransactions)
         {
-            SetUserConnected(accountWithTransactions.UserId);
+            try
+            {
+                SetUserConnected(accountWithTransactions.UserId);
 
-            Account accountToGetTransactions = FindAccountByIdInDb(accountWithTransactions.AccountId, accountWithTransactions.UserId);
-            List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
+                Account accountToGetTransactions =
+                    FindAccountByIdInDb(accountWithTransactions.AccountId, accountWithTransactions.UserId);
+                List<TransactionDTO> transactionsDTO = new List<TransactionDTO>();
 
-            transactionsDTO = MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
-            return transactionsDTO;
+                transactionsDTO =
+                    MapperTransaction.ToListOfTransactionsDTO(accountToGetTransactions.GetAllTransactions());
+                return transactionsDTO;
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         #endregion
@@ -770,14 +791,21 @@ namespace Controller
 
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
-            SetUserConnected(userLoggedDTO.UserId);
-            List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
-            //User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+            try
+            {
+                SetUserConnected(userLoggedDTO.UserId);
+                List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
+                
+                myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(
+                    Report.MonthlyReportPerGoal(_userConnected));
 
-            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(_userConnected));
 
-
-            return myListDTO;
+                return myListDTO;
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         #endregion
@@ -804,17 +832,24 @@ namespace Controller
         public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO,
             MonthsEnumDTO monthGiven)
         {
-            SetUserConnected(userLoggedDTO.UserId);
+            try
+            {
+                SetUserConnected(userLoggedDTO.UserId);
 
-            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+                User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-            List<ResumeOfCategoryReport> resumeDTOList =
-                Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+                List<ResumeOfCategoryReport> resumeDTOList =
+                    Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
 
-            List<ResumeOfCategoryReportDTO> resumeList =
-                MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+                List<ResumeOfCategoryReportDTO> resumeList =
+                    MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
 
-            return resumeList;
+                return resumeList;
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         #endregion
@@ -823,13 +858,20 @@ namespace Controller
 
         public List<TransactionDTO> ReportOfSpendingsPerCard(CreditCardAccountDTO creditCard)
         {
-            CreditCardAccount accountGiven = FindCreditAccountInDb(creditCard);
+            try
+            {
+                CreditCardAccount accountGiven = FindCreditAccountInDb(creditCard);
 
-            List<Transaction> spendingsPerCard = Report.ReportOfSpendingsPerCard(accountGiven);
+                List<Transaction> spendingsPerCard = Report.ReportOfSpendingsPerCard(accountGiven);
 
-            List<TransactionDTO> spendingsPerCardDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCard);
+                List<TransactionDTO> spendingsPerCardDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCard);
 
-            return spendingsPerCardDTO;
+                return spendingsPerCardDTO;
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception(Exception.Message);
+            }
         }
 
         #endregion
@@ -871,13 +913,20 @@ namespace Controller
 
         public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected)
         {
-            SetUserConnected(accountSelected.UserId);
+            try
+            {
+                SetUserConnected(accountSelected.UserId);
 
-            Account myAccount = FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId);
+                Account myAccount = FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId);
 
-            List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
+                List<Transaction> myTransactions = Report.FilterListByAccountAndOutcome(myAccount);
 
-            return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
+                return MapperTransaction.ToListOfTransactionsDTO(myTransactions);
+            }
+            catch (Exception Exception)
+            {
+                throw new Exception();
+            }
         }
 
         #endregion
@@ -886,7 +935,8 @@ namespace Controller
 
         public decimal GiveAccountBalance(MonetaryAccountDTO accountSelected)
         {
-            MonetaryAccount monetGiven = ((MonetaryAccount)(FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId)));
+            MonetaryAccount monetGiven =
+                ((MonetaryAccount)(FindAccountByIdInDb(accountSelected.AccountId, accountSelected.UserId)));
             decimal initialMoney = monetGiven.ReturnInitialAmount();
 
             decimal accountBalance = Report.GiveAccountBalance(monetGiven, initialMoney);

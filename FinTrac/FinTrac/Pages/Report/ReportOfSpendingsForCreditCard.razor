@@ -5,7 +5,7 @@
 <h3>Spendings of Credit Card this Month</h3>
 
 <select class="form-select" aria-label="Default select example" @onchange="OnChangeEvent">
-    <option disabled selected> Select a Credit Account for the report</option>
+    <option disabled selected value=""> Select a Credit Account for the report</option>
     @foreach (CreditCardAccountDTO creditAccount in creditAccounts)
     {
         <option value="@creditAccount.AccountId">@creditAccount.IssuingBank, @creditAccount.Last4Digits</option>
@@ -58,8 +58,6 @@
 
     <br>
     <br>
-
-
 }
 else
 {
@@ -72,12 +70,19 @@ else
     </table>
 }
 <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-
+ <div>
+        @if (ErrorAlert.isError)
+        {
+            <ErrorAlert errorTxt="@errorTxt"/>
+        }
+    </div>
 
 @code
 {
     [CascadingParameter]
     public UserDTO UserConnected { get; set; }
+
+    public string errorTxt { get; set; }
 
     private List<CreditCardAccountDTO> creditAccounts;
     private List<TransactionDTO> transactionsOfCard;
@@ -88,15 +93,24 @@ else
 
     protected override void OnInitialized()
     {
-        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
-        showSpendings = false;
+        ResetValues();
     }
 
     private void ShowSpendings()
     {
-        myCard = GenericController.FindCreditAccount(creditCardId, UserConnected.UserId);
-        transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
-        showSpendings = true;
+        try
+        {
+            myCard = ReportController.FindCreditAccount(creditCardId, UserConnected.UserId);
+            transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
+            showSpendings = true;
+            ResetAlerts();
+        }
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+      
     }
 
     private void OnChangeEvent(ChangeEventArgs elementSelected)
@@ -109,6 +123,22 @@ else
         return date.ToString("dd/MM/yyyy");
     }
 
+    public void ResetAlerts()
+    {
+        InvokeAsync(() =>
+        {
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
+
+    private void ResetValues()
+    {
+        creditCardId = -1;
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
+        showSpendings = false;
+      
+    }
 
 }
 

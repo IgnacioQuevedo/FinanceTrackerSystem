@@ -20,6 +20,7 @@ namespace Controller.IControllers
         public List<MonetaryAccountDTO> GetAllMonetaryAccounts(int userConnectedId);
         public List<CreditCardAccountDTO> GetAllCreditAccounts(int userId);
 
+        public CreditCardAccountDTO FindCreditAccount(int idOfAccountToFind, int idUserConnected);
 
     }
 }

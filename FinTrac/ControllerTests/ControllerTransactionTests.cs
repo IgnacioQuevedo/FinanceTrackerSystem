@@ -55,7 +55,7 @@ namespace ControllerTests
             transactionDtoToAdd = new TransactionDTO("Spent on food", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
 
-            _controller.CreateTransaction(transactionDtoToAdd);
+            _controller.CreateTransaction(transactionDtoToAdd,_userConnected.UserId);
             transactionDtoToAdd.TransactionId = 1;
         }
 
@@ -80,7 +80,7 @@ namespace ControllerTests
             TransactionDTO dtoToAdd2 = new TransactionDTO("Spent on party", DateTime.Now.Date, 500, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
 
-            _controller.CreateTransaction(dtoToAdd2);
+            _controller.CreateTransaction(dtoToAdd2,_userConnected.UserId);
             dtoToAdd2.TransactionId = 2;
 
 
@@ -108,7 +108,7 @@ namespace ControllerTests
             TransactionDTO transactionWithBadData = new TransactionDTO("", DateTime.Now.Date, 100, CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
 
-            _controller.CreateTransaction(transactionWithBadData);
+            _controller.CreateTransaction(transactionWithBadData,_userConnected.UserId);
         }
 
         #endregion
@@ -219,7 +219,7 @@ namespace ControllerTests
             TransactionDTO transactionToUpd = new TransactionDTO("Spent on party", DateTime.Now.Date, 500,
                 CurrencyEnumDTO.UY,
                 TypeEnumDTO.Income, categoryDTO2, 1);
-            _controller.CreateTransaction(transactionToUpd);
+            _controller.CreateTransaction(transactionToUpd,_userConnected.UserId);
             transactionToUpd.TransactionId = 2;
 
             TransactionDTO transactionDtoWithUpdates = transactionDtoToAdd;
@@ -260,7 +260,7 @@ namespace ControllerTests
         {
             int amountOfTransactionsPreDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
 
-            _controller.DeleteTransaction(transactionDtoToAdd);
+            _controller.DeleteTransaction(transactionDtoToAdd,_userConnected.UserId);
 
             int amountOfTransactionsPostDelete = _testDb.Users.First().MyAccounts[0].MyTransactions.Count;
 
@@ -276,7 +276,7 @@ namespace ControllerTests
         {
             TransactionDTO transaction2 = new TransactionDTO("Spent on dancing", DateTime.Now.Date, 1000,
                 CurrencyEnumDTO.UY, TypeEnumDTO.Income, categoryOfTransactionDTO, 1);
-            _controller.CreateTransaction(transaction2);
+            _controller.CreateTransaction(transaction2,_userConnected.UserId);
 
             transaction2.TransactionId = 2;
             List<TransactionDTO> transactions =

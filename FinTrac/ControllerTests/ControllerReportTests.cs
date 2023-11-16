@@ -70,9 +70,10 @@ namespace ControllerTests
             _exampleCategory.CategoryId = 1;
             _controller.CreateMonetaryAccount(_exampleAccount);
             _exampleAccount.AccountId = 1;
-            _controller.CreateTransaction(_transaction1);
+            _exampleAccount.UserId = 1;
+            _controller.CreateTransaction(_transaction1,_userConnected.UserId);
             _transaction1.TransactionId = 1;
-            _controller.CreateTransaction(_transaction2);
+            _controller.CreateTransaction(_transaction2,_userConnected.UserId);
             _transaction1.TransactionId = 2;
         }
 
@@ -172,9 +173,9 @@ namespace ControllerTests
             _controller.CreateExchangeHistory(exchangeHistoryDto6);
             _controller.CreateExchangeHistory(exchangeHistoryDto7);
             
-            _controller.CreateTransaction(transactionDTO1);
+            _controller.CreateTransaction(transactionDTO1,_userConnected.UserId);
             transactionDTO1.TransactionId = 3;
-            _controller.CreateTransaction(transactionDTO2);
+            _controller.CreateTransaction(transactionDTO2,_userConnected.UserId);
             transactionDTO2.TransactionId = 4;
 
             List<TransactionDTO> reportPerCard = _controller.ReportOfSpendingsPerCard(myCreditCard);
@@ -250,8 +251,8 @@ namespace ControllerTests
             MonetaryAccountDTO exampleAccountDTO2 = MapperMonetaryAccount.ToMonetaryAccountDTO(exampleAccount2);
 
             _controller.CreateMonetaryAccount(exampleAccountDTO2);
-            _controller.CreateTransaction(transaction3);
-            _controller.CreateTransaction(transaction4);
+            _controller.CreateTransaction(transaction3,_userConnected.UserId);
+            _controller.CreateTransaction(transaction4,_userConnected.UserId);
 
             List<TransactionDTO> filteredListDTO = _controller.FilterByAccountAndTypeOutcome(_exampleAccount);
 
@@ -277,7 +278,7 @@ namespace ControllerTests
             ExchangeHistoryDTO exchangeHistoryDto4 =
                 new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 1000, DateTime.Now.Date, 1);
             _controller.CreateExchangeHistory(exchangeHistoryDto4);
-            _controller.CreateTransaction(transaction4);
+            _controller.CreateTransaction(transaction4,_userConnected.UserId);
 
             decimal balanceExpected = 3300;
             decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
@@ -298,7 +299,7 @@ namespace ControllerTests
             TransactionDTO _transaction3 = new TransactionDTO("Party", new DateTime(2020, 05, 23),
                 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 1);
             
-            _controller.CreateTransaction(_transaction3);
+            _controller.CreateTransaction(_transaction3,_userConnected.UserId);
 
             MovementInXDaysDTO movements =
                 _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO, MonthsEnumDTO.May);
@@ -320,7 +321,7 @@ namespace ControllerTests
             TransactionDTO _transaction3 = new TransactionDTO("Party", new DateTime(2020, 05, 23),
                 1000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 1);
             
-            _controller.CreateTransaction(_transaction3);
+            _controller.CreateTransaction(_transaction3,_userConnected.UserId);
 
             _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO, monthsEnumDto);
         }

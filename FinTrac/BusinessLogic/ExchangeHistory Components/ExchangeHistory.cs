@@ -48,9 +48,9 @@ namespace BusinessLogic.ExchangeHistory_Components
         #region Validate Exchange Auxiliaries
         private void ValidateValueNumber()
         {
-            if (Value < 0)
+            if (Value <= 0)
             {
-                throw new ExceptionExchangeHistory("Dollar value must be a positive number");
+                throw new ExceptionExchangeHistory($" {Currency} value must be a positive number");
             }
         }
 

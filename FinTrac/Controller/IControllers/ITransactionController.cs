@@ -5,11 +5,11 @@ namespace Controller.IControllers
 {
     public interface ITransactionController
     {
-        public void CreateTransaction(TransactionDTO dtoToAdd);
+        public void CreateTransaction(TransactionDTO dtoToAdd, int? userId);
 
-        public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? UserId);
+        public void UpdateTransaction(TransactionDTO dtoWithUpdates, int? userId);
 
-        public void DeleteTransaction(TransactionDTO dtoToDelete);
+        public void DeleteTransaction(TransactionDTO dtoToDelete, int? userId);
 
         public TransactionDTO FindTransaction(int idToFound, int? accountId, int? userId);
         
