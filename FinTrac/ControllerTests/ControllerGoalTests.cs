@@ -171,6 +171,19 @@ namespace ControllerTests
             Assert.AreEqual(goalInDb.UserId, _goalDTOToAdd.UserId);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenGoalToFindDTOWhichIsNotCreated_ShouldThrowException()
+        {
+            _goalDTOToAdd.GoalId = -1;
+            Goal goalInDb = _controller.FindGoalInDb(_goalDTOToAdd);
+
+            Assert.AreEqual(goalInDb.CategoriesOfGoal.Count, _goalDTOToAdd.CategoriesOfGoalDTO.Count);
+            Assert.AreEqual(goalInDb.Title, _goalDTOToAdd.Title);
+            Assert.AreEqual(goalInDb.GoalId, _goalDTOToAdd.GoalId);
+            Assert.AreEqual(goalInDb.UserId, _goalDTOToAdd.UserId);
+        }
+        
         #endregion
 
     }
