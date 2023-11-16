@@ -48,7 +48,8 @@ public abstract class MapperCreditAccount
         try
         {
             CreditCardAccount creditAccount =
-              new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, DateTime.Now.Date, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
+              new CreditCardAccount(myCreditAccountDTO.Name, (CurrencyEnum)myCreditAccountDTO.Currency, 
+                  myCreditAccountDTO.CreationDate, myCreditAccountDTO.IssuingBank, myCreditAccountDTO.Last4Digits, myCreditAccountDTO.AvailableCredit, myCreditAccountDTO.ClosingDate);
 
             creditAccount.AccountId = myCreditAccountDTO.AccountId;
             creditAccount.UserId = myCreditAccountDTO.UserId;

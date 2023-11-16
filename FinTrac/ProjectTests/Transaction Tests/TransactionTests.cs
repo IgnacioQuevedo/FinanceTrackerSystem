@@ -192,7 +192,7 @@ public class TransactionTests
     {
         string title = "Payment of Clothes";
         decimal amount = 200;
-        TypeEnum transactionType = TypeEnum.Outcome;
+        TypeEnum transactionType = TypeEnum.Income;
         CurrencyEnum currencyType = CurrencyEnum.USA;
         DateTime dateTime = DateTime.Now.Date;
 
