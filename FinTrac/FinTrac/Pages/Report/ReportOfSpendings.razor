@@ -1,14 +1,15 @@
 ﻿@page "/Report/Spendings"
 
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Transaction_Components;
+@inject IReportController ReportController;
 
 <h3>General Spendings</h3>
 <br />
 <br />
 @if (showAlert)
 {
+    initialSelectedDate = DateTime.MinValue;
+    finalSelectedDate = DateTime.MaxValue;
+    rangeDates = new RangeOfDatesDTO(initialSelectedDate, finalSelectedDate);
     <ErrorAlert errorTxt="@Text" />
 }
 
@@ -24,18 +25,15 @@
             <th>
                 <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
 
-                    @foreach (var accountToReport in Accounts)
+                    @foreach (MonetaryAccountDTO monetaryAccountToReport in monetaryAccounts)
                     {
-                        if (accountToReport is CreditCardAccount)
-                        {
-                            CreditCardAccount creditCardToReport = accountToReport as CreditCardAccount;
-                            <option value="@creditCardToReport.AccountId">@creditCardToReport.IssuingBank, @creditCardToReport.Last4Digits</option>
-                        }
-                        else
-                        {
-                            MonetaryAccount monetaryAccountToReport = accountToReport as MonetaryAccount;
-                            <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
-                        }
+                        <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
+                        
+                    }
+                    @foreach (CreditCardAccountDTO creditAccountToReport in creditAccounts)
+                    {
+                        <option value="@creditAccountToReport.AccountId">@creditAccountToReport.Name</option>
+
                     }
 
                 </select>
@@ -83,21 +81,119 @@
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    public List<Account> Accounts;
-    private List<Transaction> filteredListOfSpending;
-    private List<Transaction> listOfSpendings;
+    public List<MonetaryAccountDTO> monetaryAccounts;
+    public List<CreditCardAccountDTO> creditAccounts;
+
+    private List<TransactionDTO> filteredListOfSpending;
+    private List<TransactionDTO> listOfSpendingsInitial;
+
     private int accountId;
     private bool showAlert;
     public string Text { get; set; }
     private string _search = string.Empty;
-    private string str;
-
+    private string stringSelected;
+    private string accountSelected;
     public DateTime initialSelectedDate;
     public DateTime finalSelectedDate;
 
+    RangeOfDatesDTO rangeDates;
+
     private bool showSpendings;
+
+    protected override void OnInitialized()
+    {
+        listOfSpendingsInitial = ReportController.GiveAllOutcomeTransactions(UserConnected);
+
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        monetaryAccounts = ReportController.GetAllMonetaryAccounts(UserConnected.UserId);
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
+
+        initialSelectedDate = DateTime.MinValue;
+        finalSelectedDate = DateTime.MaxValue;
+        rangeDates = new RangeOfDatesDTO(initialSelectedDate, finalSelectedDate);
+
+        if (listOfSpendingsInitial != null && listOfSpendingsInitial.Count != 0)
+        {
+            accountSelected = listOfSpendingsInitial[0].AccountId.ToString();
+        }
+
+        ApplyAllFilters();
+    }
+
+    private void OnSearchInitDate(ChangeEventArgs elementSelected)
+    {
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        string initialSelDate = elementSelected.Value.ToString();
+        string[] nuevo = initialSelDate.Split('-');
+        int year = int.Parse(nuevo[0]);
+        int month = int.Parse(nuevo[1]);
+        int day = int.Parse(nuevo[2]);
+        DateTime myDate = new DateTime(year, month, day);
+        rangeDates.InitialDate = myDate;
+
+        ApplyAllFilters();
+
+    }
+
+    private void OnSearchFinalDate(ChangeEventArgs elementSelected)
+    {
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        string endSelDate = elementSelected.Value.ToString();
+        string[] nuevo = endSelDate.Split('-');
+        int year = int.Parse(nuevo[0]);
+        int month = int.Parse(nuevo[1]);
+        int day = int.Parse(nuevo[2]);
+        DateTime myDate = new DateTime(year, month, day);
+        rangeDates.FinalDate = myDate;
+
+        ApplyAllFilters();
+    }
+
+    private void OnSearch(string myString)
+    {
+        filteredListOfSpending = listOfSpendingsInitial;
+        stringSelected = myString;
+        ApplyAllFilters();
+    }
+
+    public void OnChangeAccount(ChangeEventArgs elementSelected)
+    {
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        accountSelected = elementSelected.Value.ToString();
+        ApplyAllFilters();
+
+    }
+
+    public void ApplyAllFilters()
+    {
+        AccountDTO accoutSelectedDTO = GenericController.FindAccountById(int.Parse(accountSelected), UserConnected.UserId);
+
+        try
+        {
+            List<TransactionDTO> filteredData = ReportController.FilterByAccountAndTypeOutcome(accoutSelectedDTO);
+            filteredData = ReportController.FilterListByRangeOfDate(filteredData, rangeDates);
+            filteredData = ReportController.FilterListByNameOfCategory(filteredData, stringSelected);
+
+            filteredListOfSpending = filteredData;
+        }
+        catch (Exception e)
+        {
+            Text = e.Message;
+            showAlert = true;
+        }
+    }
+
+
+    string GetFormattedDate(DateTime date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
 
     private string search
     {
@@ -111,100 +207,6 @@
             OnSearch(value);
         }
     }
-
-    private void OnSearchInitDate(ChangeEventArgs elementSelected)
-    {
-        filteredListOfSpending = listOfSpendings;
-        string initialSelDate = elementSelected.Value.ToString();
-        string[] nuevo = initialSelDate.Split('-');
-        int year = int.Parse(nuevo[0]);
-        int month = int.Parse(nuevo[1]);
-        int day = int.Parse(nuevo[2]);
-        DateTime myDate = new DateTime(year, month, day);
-        initialSelectedDate = myDate;
-        if (initialSelectedDate <= finalSelectedDate)
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
-            showAlert = false;
-        }
-        else
-        {
-            showAlert = true;
-            Text = "La fecha inicial debe ser mayor a la final";
-        }
-
-    }
-
-    private void OnSearchFinalDate(ChangeEventArgs elementSelected)
-    {
-        filteredListOfSpending = listOfSpendings;
-        string endSelDate = elementSelected.Value.ToString();
-        string[] nuevo = endSelDate.Split('-');
-        int year = int.Parse(nuevo[0]);
-        int month = int.Parse(nuevo[1]);
-        int day = int.Parse(nuevo[2]);
-        DateTime myDate = new DateTime(year, month, day);
-        finalSelectedDate = myDate;
-        if (finalSelectedDate >= initialSelectedDate)
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate <= finalSelectedDate && x.CreationDate >= initialSelectedDate).ToList();
-            showAlert = false;
-        }
-        else
-        {
-            showAlert = true;
-            Text = "La fecha inicial debe ser mayor a la final";
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        Accounts = user.GetAccounts();
-        listOfSpendings = Report.GiveAllOutcomeTransactions(user);
-        filteredListOfSpending = listOfSpendings;
-        initialSelectedDate = DateTime.MinValue;
-        finalSelectedDate = DateTime.MaxValue;
-    }
-
-    private void OnSearch(string myString)
-    {
-        filteredListOfSpending = listOfSpendings;
-        str = myString;
-        if (!String.IsNullOrEmpty(str))
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate && x.TransactionCategory.Name.StartsWith(str, StringComparison.OrdinalIgnoreCase)).ToList();
-        }
-        else
-        {
-            filteredListOfSpending = listOfSpendings;
-        }
-    }
-
-    public void OnChangeAccount(ChangeEventArgs elementSelected)
-    {
-        filteredListOfSpending = listOfSpendings;
-        if (elementSelected.Value is not null && int.TryParse(elementSelected.Value.ToString(), out int accountSelected))
-        {
-            if (!String.IsNullOrEmpty(str))
-            {
-                filteredListOfSpending = user.MyAccounts[accountSelected].GetAllTransactions();
-                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate && x.TransactionCategory.Name.StartsWith(str, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-            else
-            {
-                filteredListOfSpending = user.MyAccounts[accountSelected].GetAllTransactions();
-                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
-            }
-        }
-
-    }
-
-
-    string GetFormattedDate(DateTime date)
-    {
-        return date.ToString("dd/MM/yyyy");
-    }
-
 
 
 

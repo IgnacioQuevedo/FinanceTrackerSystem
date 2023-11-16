@@ -32,14 +32,13 @@
     [CascadingParameter]
     public UserDTO UserConnected { get; set; }
 
-    private int monetaryId;
     private decimal accountBalance;
     private MonetaryAccountDTO myAccount;
     private List<MonetaryAccountDTO> monetaryAccountsList;
 
     protected override void OnInitialized()
     {
-        monetaryAccountsList = GenericController.GetAllMonetaryAccounts(UserConnected.UserId);
+        monetaryAccountsList = ReportController.GetAllMonetaryAccounts(UserConnected.UserId);
         myAccount = monetaryAccountsList[0];
     }
 
@@ -51,7 +50,7 @@
     private void OnSearchInitDate(ChangeEventArgs elementSelected)
     {
         string idSelected = elementSelected.Value.ToString();
-        myAccount = GenericController.FindMonetaryAccount(int.Parse(idSelected), UserConnected.UserId);
+        myAccount = ReportController.FindMonetaryAccount(int.Parse(idSelected), UserConnected.UserId);
         
     }
 

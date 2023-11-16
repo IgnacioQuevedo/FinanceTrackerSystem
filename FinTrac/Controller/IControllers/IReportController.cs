@@ -1,3 +1,5 @@
+using Azure;
+using BusinessLogic.Account_Components;
 using BusinessLogic.Dtos_Components;
 
 namespace Controller.IControllers
@@ -14,6 +16,9 @@ namespace Controller.IControllers
         public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO,
             string nameOfCategory);
         public List<TransactionDTO> FilterByAccountAndTypeOutcome(AccountDTO accountSelected);
+        public MonetaryAccountDTO FindMonetaryAccount(int idMonetToFind, int userId);
+        public List<MonetaryAccountDTO> GetAllMonetaryAccounts(int userConnectedId);
+        public List<CreditCardAccountDTO> GetAllCreditAccounts(int userId);
 
 
     }

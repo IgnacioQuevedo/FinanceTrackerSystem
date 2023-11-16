@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using BusinessLogic.Account_Components;
 using BusinessLogic.Transaction_Components;
 using BusinessLogic.Category_Components;
@@ -774,6 +773,7 @@ namespace Controller
 
         public List<TransactionDTO> GiveAllOutcomeTransactions(UserDTO userConnectedDTO)
         {
+            SetUserConnected(userConnectedDTO.UserId);
             User userInDb = _userRepo.FindUserInDb(userConnectedDTO.UserId);
 
             List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
@@ -818,15 +818,22 @@ namespace Controller
         #region Filtering Lists
         public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
         {
-            List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
+            try
+            {
+                List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
-            RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
+                RangeOfDates myRangeOfDates = new RangeOfDates(rangeOfDates.InitialDate, rangeOfDates.FinalDate);
 
-            listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
+                listOfTransactions = Report.FilterListByRangeOfDate(listOfTransactions, myRangeOfDates);
 
-            listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
+                listOfSpendingsDTO = MapperTransaction.ToListOfTransactionsDTO(listOfTransactions);
 
-            return listOfSpendingsDTO;
+                return listOfSpendingsDTO;
+            }
+            catch (ExceptionReport e) 
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public List<TransactionDTO> FilterListByNameOfCategory(List<TransactionDTO> listOfSpendingsDTO,

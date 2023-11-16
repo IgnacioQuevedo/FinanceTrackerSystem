@@ -63,18 +63,6 @@ public class UserRepositorySql
         
     }
 
-    public void UpdateGoal(User updatedUser)
-    {
-        _database.Attach(updatedUser);
-        //_database.Entry(updatedUser).Property("MyCategories").IsModified = true;
-        _database.Entry(updatedUser).Collection(x => x.MyCategories).IsModified = false;
-        //var existingUser = FindUserInDb(updatedUser.UserId);
-        //_database.Entry(updatedUser).State = EntityState.Detached;
-
-        _database.SaveChanges();
-    }
-
-
     public User FindUserInDb(int? userId)
     {
         return _database.Users.FirstOrDefault(u => u.UserId == userId);
