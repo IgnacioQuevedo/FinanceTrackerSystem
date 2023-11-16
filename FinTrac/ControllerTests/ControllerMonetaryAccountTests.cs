@@ -84,6 +84,17 @@ namespace ControllerTests
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenMonetaryAccountToCreateWithBadData_ShouldThrowException()
+        {
+            _monetToCreateDTO1 = new MonetaryAccountDTO("", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date,
+                _userConnected.UserId);
+
+            _controller.CreateMonetaryAccount(_monetToCreateDTO2);
+            
+        }
 
         #endregion
 

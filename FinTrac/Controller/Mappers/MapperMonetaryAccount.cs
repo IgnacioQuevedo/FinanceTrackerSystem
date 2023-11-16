@@ -14,6 +14,15 @@ public abstract class MapperMonetaryAccount
 
     public static MonetaryAccountDTO ToMonetaryAccountDTO(MonetaryAccount myMonetaryAccount)
     {
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         MonetaryAccountDTO monetaryAccountDTO =
             new MonetaryAccountDTO(myMonetaryAccount.Name, myMonetaryAccount.Amount, (CurrencyEnumDTO)myMonetaryAccount.Currency, myMonetaryAccount.CreationDate, myMonetaryAccount.UserId);
 
