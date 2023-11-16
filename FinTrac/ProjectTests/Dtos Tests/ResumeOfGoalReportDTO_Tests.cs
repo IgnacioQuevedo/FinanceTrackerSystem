@@ -62,7 +62,7 @@ namespace TestProject1
         {
             resumeOfGoalReportDTO.GoalName = "My goal";
 
-            Assert.AreEqual(resumeOfGoalReportDTO.GoalName, "My");
+            Assert.AreEqual(resumeOfGoalReportDTO.GoalName, "My goal");
         }
 
         #region Constructor
