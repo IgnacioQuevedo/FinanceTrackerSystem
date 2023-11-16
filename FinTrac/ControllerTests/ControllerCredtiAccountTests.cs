@@ -75,7 +75,15 @@ namespace ControllerTests
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
-
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditAccountDTOToCreateWithBadData_ShouldThrowException()
+        {
+            _creditAccountDTO1.AvailableCredit = -1;
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+        }
+        
         #endregion
 
         #region Find Credit Account
@@ -127,6 +135,20 @@ namespace ControllerTests
             Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
             Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
         }
+        
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditDTOToUpdateButWithoutChanges_ShouldThrowException()
+        {
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+
+            CreditCardAccountDTO accountDTOWithUpdates = _creditAccountDTO1;
+            accountDTOWithUpdates.AccountId = 1;
+
+            _controller.UpdateCreditAccount(accountDTOWithUpdates);
+            
+        }
 
         #endregion
 
@@ -149,6 +171,14 @@ namespace ControllerTests
             int amountOfAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
 
             Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditAccountDTOToDeleteThatIsNotInDb_ShouldThrowException()
+        {
+            
+            _creditAccountDTO1.AccountId = 9999;
+            _controller.DeleteCreditAccount(_creditAccountDTO1);
         }
 
         #endregion

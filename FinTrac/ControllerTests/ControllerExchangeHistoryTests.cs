@@ -182,7 +182,7 @@ namespace ControllerTests
             Category exampleCategory = new Category("Hola", StatusEnum.Enabled, TypeEnum.Income);
             Transaction transaction = new Transaction("hola", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
                 exampleCategory);
-            Transaction.CheckExistenceOfExchange(DateTime.Now.Date, _testDb.Users.First().MyExchangesHistory);
+            Transaction.CheckExistenceOfExchange(transaction, _testDb.Users.First().MyExchangesHistory);
 
             exampleCategory.CategoryId = 0;
             exampleAccount.AccountId = 0;
@@ -232,7 +232,7 @@ namespace ControllerTests
             Category exampleCategory = new Category("Food", StatusEnum.Enabled, TypeEnum.Income);
             Transaction transaction = new Transaction("Spent on food", 200, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Income,
                 exampleCategory);
-            Transaction.CheckExistenceOfExchange(DateTime.Now.Date, _testDb.Users.First().MyExchangesHistory);
+            Transaction.CheckExistenceOfExchange(transaction, _testDb.Users.First().MyExchangesHistory);
 
             exampleCategory.CategoryId = 0;
             exampleAccount.AccountId = 0;

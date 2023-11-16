@@ -150,7 +150,18 @@ namespace ControllerTests
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
             UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
-            ;
+            
+            newDtoWithoutChanges.UserId = _userConnected.UserId;
+
+            _controller.UpdateUser(newDtoWithoutChanges);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserToUpdateButWithBadData_ShouldThrowException()
+        {
+            UserDTO newDtoWithoutChanges = new UserDTO("", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            
             newDtoWithoutChanges.UserId = _userConnected.UserId;
 
             _controller.UpdateUser(newDtoWithoutChanges);

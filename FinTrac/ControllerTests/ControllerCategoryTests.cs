@@ -101,6 +101,14 @@ namespace ControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
+        public void GivenNullCategoryToFind_ShouldThrowException()
+        {
+            _controller.FindCategoryInDb(null);
+        }
+        
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void GivenCategoryDTOThatIsNotInDb_WhenTryingToFound_ShouldThrowException()
         {
             _controller.FindCategory(categoryDTO.CategoryId, categoryDTO.UserId);

@@ -30,11 +30,6 @@ namespace DataManagers
                     }
                 }
             }
-            else
-            {
-                areTheSame = false;
-            }
-
             return areTheSame;
         }
 
@@ -60,14 +55,6 @@ namespace DataManagers
 
                 if (list1.Count != list2.Count)
                     return false;
-
-                for (int i = 0; i < list1.Count; i++)
-                {
-                    if (!EqualityComparer<object>.Default.Equals(list1[i], list2[i]))
-                        return false;
-                }
-
-                return true;
             }
 
             return true;
@@ -75,19 +62,24 @@ namespace DataManagers
 
         private static bool AreSameSimpleProperty<T>(T object1, T object2, string propertyName)
         {
+            bool areSame = false;
+            
             if (typeof(T).IsPrimitive || typeof(T) == typeof(string))
             {
                 return object1.Equals(object2);
             }
-
-            var property1 = typeof(T).GetProperty(propertyName)?.GetValue(object1);
-            var property2 = typeof(T).GetProperty(propertyName)?.GetValue(object2);
-
-            if (property1 != null && property2 != null)
+            else
             {
-                return property1.Equals(property2);
+                var property1 = typeof(T).GetProperty(propertyName)?.GetValue(object1);
+                var property2 = typeof(T).GetProperty(propertyName)?.GetValue(object2);
+
+                if (property1 != null && property2 != null)
+                {
+                    areSame = property1.Equals(property2);
+                }
+
+                return areSame;
             }
-            return property1 == null && property2 == null;
         }
         #endregion
     }

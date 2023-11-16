@@ -22,7 +22,7 @@ namespace Controller
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
         IMonetaryAccount, ICreditAccount, ITransactionController
     {
-        #region Atributes 
+        #region Atributes
 
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
@@ -39,6 +39,7 @@ namespace Controller
         #endregion
 
         #region User Repo
+
         public void SetUserConnected(int? userIdToConnect)
         {
             if (_userConnected == null || _userConnected.UserId != userIdToConnect)
@@ -47,12 +48,6 @@ namespace Controller
                 _userRepo.InstanceLists(_userConnected);
             }
         }
-        
-        public void DesactiveUserConnected(int? userIdToDesactivate)
-        {
-            _userConnected = null;
-        }
-        
 
         #region FindUser
 
@@ -116,12 +111,12 @@ namespace Controller
             {
                 User userPreUpdates = new User(_userConnected.FirstName, _userConnected.LastName, _userConnected.Email,
                     _userConnected.Password, _userConnected.Address);
-                
+
                 User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
-                
+
                 userPreUpdates.UserId = userWithUpdates.UserId;
-                
-                if (Helper.AreTheSameObject(userPreUpdates,userWithUpdates))
+
+                if (Helper.AreTheSameObject(userPreUpdates, userWithUpdates))
                 {
                     throw new Exception("You need to change at least one value.");
                 }
@@ -545,9 +540,12 @@ namespace Controller
                 _userConnected.DeleteAccount(monetaryAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, monetaryAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 
@@ -636,9 +634,12 @@ namespace Controller
                 _userConnected.DeleteAccount(creditAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 
@@ -671,6 +672,7 @@ namespace Controller
                 SetUserConnected(transactionAccount.UserId);
 
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
+                Transaction.CheckExistenceOfExchange(transactionToCreate,_userConnected.MyExchangesHistory);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
 
@@ -764,8 +766,8 @@ namespace Controller
 
         #region Report Section
 
-
         #region Monthly Report Per Goal
+
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
             List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
@@ -787,7 +789,8 @@ namespace Controller
 
             List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
 
-            List<TransactionDTO> spendingsPerCategoryDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
+            List<TransactionDTO> spendingsPerCategoryDTO =
+                MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
 
             return spendingsPerCategoryDTO;
         }
@@ -796,13 +799,16 @@ namespace Controller
 
         #region Spendings Report Per Category Detailed
 
-        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
+        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO,
+            MonthsEnumDTO monthGiven)
         {
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+            List<ResumeOfCategoryReport> resumeDTOList =
+                Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
 
-            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+            List<ResumeOfCategoryReportDTO> resumeList =
+                MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
 
             return resumeList;
         }
@@ -822,10 +828,12 @@ namespace Controller
             return spendingsPerCardDTO;
         }
 
-        #endregion 
+        #endregion
 
         #region Filtering Lists
-        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
+
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO,
+            RangeOfDatesDTO rangeOfDates)
         {
             List<Transaction> listOfTransactions = MapperTransaction.ToListOfTransactions(listOfSpendingsDTO);
 
@@ -879,27 +887,27 @@ namespace Controller
 
         #endregion
 
-        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO, MonthsEnumDTO monthSelected)
+        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO,
+            MonthsEnumDTO monthSelected)
         {
             try
             {
-                if ((int) monthSelected != rangeOfDatesDTO.InitialDate.Month)
+                if ((int)monthSelected != rangeOfDatesDTO.InitialDate.Month)
                 {
                     throw new Exception("Month selected must be equal to the month of the dates");
                 }
-                
+
                 SetUserConnected(userId);
                 MovementInXDays movementsOfTransactionsPerDay = new MovementInXDays();
                 RangeOfDates rangeOfDates = new RangeOfDates(rangeOfDatesDTO.InitialDate, rangeOfDatesDTO.FinalDate);
-            
+
                 movementsOfTransactionsPerDay = Report.GetMovementInXDays(_userConnected.MyAccounts, rangeOfDates);
                 return MapperMovementInXDays.ToMovementDTO(movementsOfTransactionsPerDay);
             }
-            catch(ExceptionReport Exception)
+            catch (ExceptionReport Exception)
             {
                 throw new Exception(Exception.Message);
             }
-           
         }
     }
 }

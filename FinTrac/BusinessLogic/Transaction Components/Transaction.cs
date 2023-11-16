@@ -109,22 +109,28 @@ namespace BusinessLogic.Transaction_Components
         #endregion
 
         #region Validate exchange exists for USA transaction date
-        public static void CheckExistenceOfExchange(DateTime creationDate, List<ExchangeHistory> exchangeHistories)
+        public static void CheckExistenceOfExchange(Transaction transactionToCheck, List<ExchangeHistory> exchangeHistories)
         {
             bool existsExchangeOnThatDate = false;
 
-            foreach (ExchangeHistory exchangeHistory in exchangeHistories)
+            if (transactionToCheck.Currency != CurrencyEnum.UY)
             {
-                if (!existsExchangeOnThatDate && DateTime.Compare(exchangeHistory.ValueDate, creationDate) == 0)
+                foreach (ExchangeHistory exchangeHistory in exchangeHistories)
                 {
-                    existsExchangeOnThatDate = true;
-                    exchangeHistory.SetAppliedExchangeIntoTrue();
-                }
-            }
+                    if (!existsExchangeOnThatDate && DateTime.Compare(exchangeHistory.ValueDate,
+                                                      transactionToCheck.CreationDate) == 0
+                                                  && transactionToCheck.Currency == exchangeHistory.Currency)
 
-            if (!existsExchangeOnThatDate)
-            {
-                throw new ExceptionValidateTransaction("There is no register exchange for this date");
+                    {
+                        existsExchangeOnThatDate = true;
+                        exchangeHistory.SetAppliedExchangeIntoTrue();
+                    }
+                }
+
+                if (!existsExchangeOnThatDate)
+                {
+                    throw new ExceptionValidateTransaction("There is no register exchange for this date");
+                }
             }
 
         }
