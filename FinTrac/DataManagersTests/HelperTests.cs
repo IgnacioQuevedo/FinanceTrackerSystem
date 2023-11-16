@@ -78,19 +78,20 @@ namespace DataManagersTests
             CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
 
             List<CategoryDTO> categories = new List<CategoryDTO>();
+            List<CategoryDTO> categories2 = new List<CategoryDTO>();
+            
             categories.Add(categoryDto);
             categories.Add(categoryDto2);
             
-            List<CategoryDTO> categories2 = new List<CategoryDTO>();
             categories2.Add(categoryDto);
             categories2.Add(categoryDto2);
-
-
+            
             GoalDTO goalDto = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories,1);
             GoalDTO goalDto2 = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories2,1);
      
         
-            Assert.IsTrue(Helper.AreTheSameObject(goalDto,goalDto2));
+            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0],goalDto2.CategoriesOfGoalDTO[0]));
+            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1],goalDto2.CategoriesOfGoalDTO[1]));
         }
 
         #endregion
