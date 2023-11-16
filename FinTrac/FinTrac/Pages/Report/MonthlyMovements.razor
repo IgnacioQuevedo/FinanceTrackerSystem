@@ -31,8 +31,10 @@
     <div class="form-group">
         <label for="title">Confirm Selection Of Month Report</label>
         <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
+       
     </div>
-
+    <br/>
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
     <br/>
     <br/>
     <div>
@@ -43,7 +45,7 @@
     </div>
     <br/>
     <br/>
-    
+
     <html>
     <head>
         <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -65,16 +67,16 @@
 
     private MovementInXDaysDTO movements;
     private RangeOfDatesDTO rangeOfDates;
-    private MonthsEnumDTO monthSelected =(MonthsEnumDTO)DateTime.Now.Month; 
+    private MonthsEnumDTO monthSelected = (MonthsEnumDTO)DateTime.Now.Month;
     private DateTime initialDate;
     private DateTime finalDate;
-    
+
     private async Task GenerateReport()
     {
         try
         {
             rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
-            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates,monthSelected);
+            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates, monthSelected);
 
             ShowGraphic();
             SuccesAlert.ShowSucessAlert();
@@ -164,7 +166,3 @@
     }
 
 </script>
-
-<td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-</td>
