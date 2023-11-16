@@ -11,7 +11,5 @@ namespace Controller.IControllers
         public void UpdateUser(UserDTO userDto);
         public UserDTO FindUser(int userId);
         public void PasswordMatch(string password, string passwordRepeated);
-
-        public void DesactiveUserConnected(int? userIdToDesactivate);
     }
 }

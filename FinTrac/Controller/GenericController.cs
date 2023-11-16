@@ -47,12 +47,6 @@ namespace Controller
                 _userRepo.InstanceLists(_userConnected);
             }
         }
-        
-        public void DesactiveUserConnected(int? userIdToDesactivate)
-        {
-            _userConnected = null;
-        }
-        
 
         #region FindUser
 

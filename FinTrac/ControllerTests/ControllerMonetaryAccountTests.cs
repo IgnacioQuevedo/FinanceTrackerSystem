@@ -145,11 +145,16 @@ namespace ControllerTests
             _controller.CreateMonetaryAccount(_monetToCreateDTO1);
             _controller.CreateMonetaryAccount(_monetToCreateDTO2);
 
-            List<Account> accountListOfUser = _testDb.Users.First().MyAccounts;
-
+            int amountOfMonetaryAccountsPreDelete = _testDb.Users.First().MyAccounts.Count;
             _monetToCreateDTO1.AccountId = 1;
-            _monetToCreateDTO2.AccountId = 1;
+            _monetToCreateDTO2.AccountId = 2;
+            
+            _controller.DeleteMonetaryAccount(_monetToCreateDTO1);
+            _controller.DeleteMonetaryAccount(_monetToCreateDTO2);
+            
+            int amountOfMonetaryAccountsPostDelete = _testDb.Users.First().MyAccounts.Count;
 
+            Assert.AreEqual(amountOfMonetaryAccountsPostDelete,amountOfMonetaryAccountsPreDelete - 2);
             #endregion
         }
 
