@@ -135,6 +135,20 @@ namespace ControllerTests
             Assert.AreEqual(accountInDbWithSupossedChanges.Currency, (CurrencyEnum)accountDTOWithUpdates.Currency);
             Assert.AreEqual(accountInDbWithSupossedChanges.UserId, accountDTOWithUpdates.UserId);
         }
+        
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditDTOToUpdateButWithoutChanges_ShouldThrowException()
+        {
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+
+            CreditCardAccountDTO accountDTOWithUpdates = _creditAccountDTO1;
+            accountDTOWithUpdates.AccountId = 1;
+
+            _controller.UpdateCreditAccount(accountDTOWithUpdates);
+            
+        }
 
         #endregion
 
