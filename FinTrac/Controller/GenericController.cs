@@ -663,11 +663,11 @@ namespace Controller
 
         #region Transaction Section
 
-        public void CreateTransaction(TransactionDTO dtoToAdd)
+        public void CreateTransaction(TransactionDTO dtoToAdd, int? userId)
         {
             try
             {
-                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId, 0);
+                Account transactionAccount = FindAccountByIdInDb(dtoToAdd.AccountId, userId);
                 Category categoryOfTransaction = FindCategoryInDb(dtoToAdd.TransactionCategory);
                 SetUserConnected(transactionAccount.UserId);
 
@@ -739,9 +739,9 @@ namespace Controller
             }
         }
 
-        public void DeleteTransaction(TransactionDTO transactionDtoToDelete)
+        public void DeleteTransaction(TransactionDTO transactionDtoToDelete, int? userId)
         {
-            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId, 0);
+            Account accountWhereIsTransaction = FindAccountByIdInDb(transactionDtoToDelete.AccountId, userId);
             SetUserConnected(accountWhereIsTransaction.UserId);
             Transaction transactionToDelete = FindTransactionInDb(transactionDtoToDelete.TransactionId,
                 transactionDtoToDelete.AccountId, accountWhereIsTransaction.UserId);

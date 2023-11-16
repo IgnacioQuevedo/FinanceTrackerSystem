@@ -102,10 +102,12 @@ public class MonetaryAccountTests
 
     #region Creation Date
     [TestMethod]
-    public void MadeAnAccount_DateShouldBeActualDate()
+    public void MadeAnAccount_DateShouldBeSetted()
     {
         DateTime actualDate = DateTime.Now.Date;
-
+        myMonetaryAccount.CreationDate = actualDate;
+        
+        
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
     #endregion
