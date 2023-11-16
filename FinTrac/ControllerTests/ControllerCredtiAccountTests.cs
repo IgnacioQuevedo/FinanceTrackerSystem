@@ -150,6 +150,14 @@ namespace ControllerTests
 
             Assert.AreEqual(amountOfAccountsInDb - 2, amountOfAccountsPostDelete);
         }
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditAccountDTOToDeleteThatIsNotInDb_ShouldThrowException()
+        {
+            
+            _creditAccountDTO1.AccountId = 9999;
+            _controller.DeleteCreditAccount(_creditAccountDTO1);
+        }
 
         #endregion
 

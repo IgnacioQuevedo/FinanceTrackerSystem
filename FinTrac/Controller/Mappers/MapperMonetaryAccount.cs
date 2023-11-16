@@ -23,9 +23,9 @@ public abstract class MapperMonetaryAccount
             monetaryAccountDTO.UserId = myMonetaryAccount.UserId;
             return monetaryAccountDTO;
         }
-        catch (ExceptionMapper Exception)
+        catch (ExceptionValidateAccount Exception)
         {
-            throw new Exception(Exception.Message);
+            throw new ExceptionMapper(Exception.Message);
         }
     }
 
