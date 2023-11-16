@@ -3,7 +3,7 @@
 
 @page "/Report/MonthlyMovements"
 
-<h3>Montly movements Of Transactions</h3>
+<h3>Monthly movements Of Transactions</h3>
 @if (ErrorAlert.isError)
 {
     <ErrorAlert errorTxt="@errorTxt"/>
@@ -31,7 +31,7 @@
     <div class="form-group">
         <label for="title">Confirm Selection Of Month Report</label>
         <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
-       
+
     </div>
     <br/>
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
@@ -70,6 +70,13 @@
     private MonthsEnumDTO monthSelected = (MonthsEnumDTO)DateTime.Now.Month;
     private DateTime initialDate;
     private DateTime finalDate;
+
+    protected override void OnInitialized()
+
+    {
+        initialDate = DateTime.Now.Date;
+        finalDate = DateTime.Now.Date;
+    }
 
     private async Task GenerateReport()
     {
