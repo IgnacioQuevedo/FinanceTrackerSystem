@@ -19,14 +19,15 @@
 </select>
 
 <br />
-<br />
-
-<button type="button" class="btn btn-primary" @onclick="ShowBalance">Show Balance</button>
-
+<div>
+    <button type="button" class="btn btn-primary" @onclick="ShowBalance">Show Balance</button>
+    <br/>
+</div>
+<br/>
+<br/>
+<label>Account balance: </label>
 <input type="number" class="form-control" id="Name" @bind="accountBalance"/>
 
-<br />
-<br />
 <br>
 <td>
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
