@@ -281,6 +281,25 @@ namespace ControllerTests
             Assert.AreEqual(1000, movements.Spendings[22]);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenMonthSelectDifferentOfTheMonthOfTheDates_ShouldThrowException()
+        {
+            MonthsEnumDTO monthsEnumDto = MonthsEnumDTO.April;
+            
+            RangeOfDatesDTO rangeOfDatesDTO = new RangeOfDatesDTO(new DateTime(2020, 5, 20).Date,
+                new DateTime(2020, 5, 24));
+
+            TransactionDTO _transaction3 = new TransactionDTO("Party", new DateTime(2020, 05, 23),
+                1000, CurrencyEnumDTO.USA, TypeEnumDTO.Outcome, _exampleCategory, 1);
+
+            _controller.CreateTransaction(_transaction3);
+
+            MovementInXDaysDTO movements = _controller.GetMovementsOfTransactionsInXDays(1, rangeOfDatesDTO,monthsEnumDto);
+
+
+        }
+
         #endregion
     }
 }
