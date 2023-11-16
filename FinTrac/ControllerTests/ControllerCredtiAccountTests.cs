@@ -75,7 +75,15 @@ namespace ControllerTests
 
             Assert.AreEqual(2, _testDb.Users.First().MyAccounts.Count);
         }
-
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenCreditAccountDTOToCreateWithBadData_ShouldThrowException()
+        {
+            _creditAccountDTO1.AvailableCredit = -1;
+            _controller.CreateCreditAccount(_creditAccountDTO1);
+        }
+        
         #endregion
 
         #region Find Credit Account

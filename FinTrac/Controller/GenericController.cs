@@ -634,9 +634,12 @@ namespace Controller
                 _userConnected.DeleteAccount(creditAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 
