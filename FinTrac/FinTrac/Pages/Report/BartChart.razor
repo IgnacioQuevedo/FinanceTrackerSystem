@@ -10,14 +10,22 @@
         <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
+    <div>
+
+        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
+    </div>
+
     <div class="chart-container">
         <canvas id="myChart"></canvas>
     </div>
-</html>
+
+
+    </html>
 </main>
 
 
 @code {
+
     [Parameter]
     public MonthsEnumDTO monthSelected { get; set; }
 
@@ -29,7 +37,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Asynchronous method to get the data before renderingz
+    // Asynchronous method to get the data before renderingz
         try
         {
             reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
@@ -40,7 +48,6 @@
         {
             NavigationManager.NavigateTo("/Home");
         }
-        
     }
 
     // Method to invoke JavaScript code after rendering
@@ -51,12 +58,8 @@
             await JSRuntime.InvokeAsync<object>("initializeChart", reportsOfEachCategory);
         }
     }
+
 }
-
-<td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
-</td>
-
 
 <script suppress-error="BL9992">
 
