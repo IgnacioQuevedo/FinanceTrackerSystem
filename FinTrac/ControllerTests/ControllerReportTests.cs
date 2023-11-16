@@ -10,6 +10,7 @@ using Controller.Mappers;
 using DataManagers;
 using BusinessLogic.Report_Components;
 using BusinessLogic.Exceptions;
+using BusinessLogic.ExchangeHistory_Components;
 
 namespace ControllerTests
 {
@@ -53,6 +54,14 @@ namespace ControllerTests
                 TypeEnumDTO.Outcome,
                 _exampleCategory, 1);
 
+            ExchangeHistoryDTO exchangeHistory1 =
+                new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 37, new DateTime(2023, 11, 15).Date,1);
+                
+            ExchangeHistoryDTO exchangeHistory2 = new ExchangeHistoryDTO(CurrencyEnumDTO.USA, 37, new DateTime(2020, 5, 20).Date,1);
+            
+            _controller.CreateExchangeHistory(exchangeHistory1);
+            _controller.CreateExchangeHistory(exchangeHistory2);
+            
             _controller.CreateCategory(_exampleCategory);
             _exampleCategory.CategoryId = 1;
             _controller.CreateMonetaryAccount(_exampleAccount);
