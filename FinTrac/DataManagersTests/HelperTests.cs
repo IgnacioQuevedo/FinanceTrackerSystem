@@ -45,82 +45,90 @@ namespace DataManagersTests
 
         #endregion
 
-
-        #region Validation of two properties
-
         [TestMethod]
         public void GivenTwoSimplePropertiesThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-            
-            Assert.IsTrue(Helper.AreTheSameObject(categoryDto.Name,categoryDto2.Name));
-            
+
+            Assert.IsTrue(Helper.AreTheSameObject(categoryDto.Name, categoryDto2.Name));
         }
-        
+
         [TestMethod]
         public void GivenTwoSimplePropertiesThatAreNotEqual_AreTheSameObject_ShouldReturnFalse()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            CategoryDTO categoryDto2 = new CategoryDTO("Fsood", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            
-            Assert.IsFalse(Helper.AreTheSameObject(categoryDto.Name,categoryDto2.Name));
-        }
-        #endregion
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Fsood", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-        #region Validation Of Two Lists
+            Assert.IsFalse(Helper.AreTheSameObject(categoryDto.Name, categoryDto2.Name));
+        }
 
         [TestMethod]
         public void GivenTwoObjectsThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
             List<CategoryDTO> categories = new List<CategoryDTO>();
             List<CategoryDTO> categories2 = new List<CategoryDTO>();
-            
+
             categories.Add(categoryDto);
             categories.Add(categoryDto2);
-            
+
             categories2.Add(categoryDto);
             categories2.Add(categoryDto2);
-            
-            GoalDTO goalDto = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories,1);
-            GoalDTO goalDto2 = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories2,1);
-     
-        
-            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0],goalDto2.CategoriesOfGoalDTO[0]));
-            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1],goalDto2.CategoriesOfGoalDTO[1]));
+
+            GoalDTO goalDto = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories, 1);
+            GoalDTO goalDto2 = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories2, 1);
+
+
+            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0], goalDto2.CategoriesOfGoalDTO[0]));
+            Assert.IsTrue(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1], goalDto2.CategoriesOfGoalDTO[1]));
         }
-        
+
         [TestMethod]
         public void GivenTwoObjectsThatAreNotEqual_AreTheSameObject_ShouldReturnTrue()
         {
-            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
-            CategoryDTO categoryDto2 = new CategoryDTO("Foo2d", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Foo2d", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
             List<CategoryDTO> categories = new List<CategoryDTO>();
             List<CategoryDTO> categories2 = new List<CategoryDTO>();
-            
+
             categories.Add(categoryDto);
             categories.Add(categoryDto2);
-            
+
             categories2.Add(categoryDto);
             categories2.Add(categoryDto2);
-            
-            GoalDTO goalDto = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories,1);
-            GoalDTO goalDto2 = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories2,1);
-     
-        
-            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0],goalDto2.CategoriesOfGoalDTO[1]));
-            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1],goalDto2.CategoriesOfGoalDTO[0]));
+
+            GoalDTO goalDto = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories, 1);
+            GoalDTO goalDto2 = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories2, 1);
+
+
+            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0], goalDto2.CategoriesOfGoalDTO[1]));
+            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1], goalDto2.CategoriesOfGoalDTO[0]));
         }
-        
-        
 
-        #endregion
+        [TestMethod]
+        public void GivenTwoObjectsThatAreTotallyDiferent_AreTheSameObject_ShouldReturnFalse()
+        {
+            CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
+            CategoryDTO categoryDto2 = new CategoryDTO("Foo2d", StatusEnumDTO.Enabled, TypeEnumDTO.Income, 1);
 
-        
+            List<CategoryDTO> categories = new List<CategoryDTO>();
+            List<CategoryDTO> categories2 = new List<CategoryDTO>();
+
+            categories.Add(categoryDto);
+            categories.Add(categoryDto2);
+
+            categories2.Add(categoryDto);
+
+            GoalDTO goalDto = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories, 1);
+            GoalDTO goalDto2 = new GoalDTO("Goal", 200, CurrencyEnumDTO.UY, categories2, 1);
+
+
+            Assert.IsFalse(Helper.AreTheSameObject(goalDto, goalDto2));
+        }
     }
 }
