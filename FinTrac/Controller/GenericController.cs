@@ -472,6 +472,11 @@ namespace Controller
 
         public Account FindAccountByIdInDb(int? idAccountToFind, int? userId)
         {
+            if (idAccountToFind == -1)
+            {
+                throw new Exception("Must select an coso, otherwise there would not be changes");
+            }
+            
             SetUserConnected(userId);
             bool isFound = false;
             Account accountFound = new MonetaryAccount();
@@ -489,7 +494,6 @@ namespace Controller
             {
                 throw new Exception("Account was not found, an error on index must be somewhere.");
             }
-
             return accountFound;
         }
 

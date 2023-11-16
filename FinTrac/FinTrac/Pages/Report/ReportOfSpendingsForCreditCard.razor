@@ -5,7 +5,7 @@
 <h3>Spendings of Credit Card this Month</h3>
 
 <select class="form-select" aria-label="Default select example" @onchange="OnChangeEvent">
-    <option disabled selected> Select a Credit Account for the report</option>
+    <option disabled selected value=""> Select a Credit Account for the report</option>
     @foreach (CreditCardAccountDTO creditAccount in creditAccounts)
     {
         <option value="@creditAccount.AccountId">@creditAccount.IssuingBank, @creditAccount.Last4Digits</option>
@@ -58,14 +58,6 @@
 
     <br>
     <br>
-    
-    <div>
-        @if (ErrorAlert.isError)
-        {
-            <ErrorAlert errorTxt="@errorTxt"/>
-        }
-    </div>
-
 }
 else
 {
@@ -78,7 +70,12 @@ else
     </table>
 }
 <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
-
+ <div>
+        @if (ErrorAlert.isError)
+        {
+            <ErrorAlert errorTxt="@errorTxt"/>
+        }
+    </div>
 
 @code
 {
@@ -106,7 +103,7 @@ else
             myCard = ReportController.FindCreditAccount(creditCardId, UserConnected.UserId);
             transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
             showSpendings = true;
-            ResetValues();
+            ResetAlerts();
         }
         catch (Exception Exception)
         {
@@ -126,16 +123,21 @@ else
         return date.ToString("dd/MM/yyyy");
     }
 
-    private void ResetValues()
+    public void ResetAlerts()
     {
-        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
-        showSpendings = false;
         InvokeAsync(() =>
         {
-            SuccesAlert.IsSucess = false;
             ErrorAlert.isError = false;
             StateHasChanged();
         });
+    }
+
+    private void ResetValues()
+    {
+        creditCardId = -1;
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
+        showSpendings = false;
+      
     }
 
 }
