@@ -77,10 +77,12 @@ namespace TestProject1
             decimal amountDefined = 1000;
             decimal totalSpentDefined = 200;
             bool goalWasAchieved = true;
-            resumeOfGoalReportDTO = new ResumeOfGoalReportDTO(amountDefined, totalSpentDefined, goalWasAchieved);
+            string goalName = "MY GOAL";
+            resumeOfGoalReportDTO = new ResumeOfGoalReportDTO(amountDefined, totalSpentDefined, goalWasAchieved, goalName);
             Assert.AreEqual(amountDefined, resumeOfGoalReportDTO.AmountDefined);
             Assert.AreEqual(totalSpentDefined, resumeOfGoalReportDTO.TotalSpent);
             Assert.AreEqual(goalWasAchieved, resumeOfGoalReportDTO.GoalAchieved);
+            Assert.AreEqual(goalName, resumeOfGoalReportDTO.GoalName);
         }
 
         #endregion

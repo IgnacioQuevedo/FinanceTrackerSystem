@@ -758,10 +758,11 @@ namespace Controller
         #region Monthly Report Per Goal
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
+            SetUserConnected(userLoggedDTO.UserId);
             List<ResumeOfGoalReportDTO> myListDTO = new List<ResumeOfGoalReportDTO>();
-            User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
+            //User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(userInDb));
+            myListDTO = MapperResumeOfGoalReport.ToListResumeOfGoalReportDTO(Report.MonthlyReportPerGoal(_userConnected));
 
 
             return myListDTO;

@@ -66,12 +66,13 @@ namespace ControllerTests
         [TestMethod]
         public void GivenResumeOfGoalReport_ShouldBeConvertedToDTO()
         {
-            ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false);
+            ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false, "My goal");
             ResumeOfGoalReportDTO resumeDTO = MapperResumeOfGoalReport.ToResumeOfGoalReportDTO(givenResume);
 
             Assert.AreEqual(givenResume.AmountDefined, resumeDTO.AmountDefined);
             Assert.AreEqual(givenResume.TotalSpent, resumeDTO.TotalSpent);
             Assert.AreEqual(givenResume.GoalAchieved, resumeDTO.GoalAchieved);
+            Assert.AreEqual(givenResume.GoalName, resumeDTO.GoalName);
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenResumeOfGoalDTO_ShouldReturnResumeOfGoal()
         {
-            ResumeOfGoalReportDTO givenResumeDTO = new ResumeOfGoalReportDTO(1000, 200, false);
+            ResumeOfGoalReportDTO givenResumeDTO = new ResumeOfGoalReportDTO(1000, 200, false, "My goal");
             ResumeOfGoalReport resume = MapperResumeOfGoalReport.ToResumeOfGoalReport(givenResumeDTO);
 
             Assert.AreEqual(givenResumeDTO.AmountDefined, resume.AmountDefined);
@@ -96,7 +97,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenListOfResumeOfGoalReportDTO_ShouldConvertListToListOfResumeGoal()
         {
-            ResumeOfGoalReportDTO givenResumeDTO = new ResumeOfGoalReportDTO(1000, 200, false);
+            ResumeOfGoalReportDTO givenResumeDTO = new ResumeOfGoalReportDTO(1000, 200, false, "My goal");
 
             List<ResumeOfGoalReportDTO> listGivenDTO = new List<ResumeOfGoalReportDTO>();
 
@@ -117,7 +118,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenListOfResumeOfGoalReport_ShouldConvertListToListOfResumeGoalDTO()
         {
-            ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false);
+            ResumeOfGoalReport givenResume = new ResumeOfGoalReport(1000, 200, false, "My goal");
 
             List<ResumeOfGoalReport> listGiven = new List<ResumeOfGoalReport>();
 
@@ -128,6 +129,7 @@ namespace ControllerTests
             Assert.AreEqual(givenResume.TotalSpent, myConvertedList[0].TotalSpent);
             Assert.AreEqual(givenResume.AmountDefined, myConvertedList[0].AmountDefined);
             Assert.AreEqual(givenResume.GoalAchieved, myConvertedList[0].GoalAchieved);
+            Assert.AreEqual(givenResume.GoalName, myConvertedList[0].GoalName);
 
         }
 

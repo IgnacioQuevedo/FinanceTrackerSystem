@@ -15,11 +15,12 @@ public class ResumeOfGoalReportDTO
 
     public ResumeOfGoalReportDTO() { }
 
-    public ResumeOfGoalReportDTO(decimal amount, decimal totalSpent, bool goalAchieved)
+    public ResumeOfGoalReportDTO(decimal amount, decimal totalSpent, bool goalAchieved, string goalName)
     {
         AmountDefined = amount;
         TotalSpent = totalSpent;
         GoalAchieved = goalAchieved;
+        GoalName = goalName;
     }
 
     #endregion

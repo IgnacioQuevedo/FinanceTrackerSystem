@@ -42,7 +42,7 @@ namespace BusinessLogic.Report_Components
                     goalAchieved = false;
                 }
 
-                ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved);
+                ResumeOfGoalReport myResume = new ResumeOfGoalReport(myGoal.MaxAmountToSpend, totalSpent, goalAchieved, myGoal.Title);
                 listOfSpendingsResumes.Add(myResume);
             }
 
@@ -316,7 +316,9 @@ namespace BusinessLogic.Report_Components
         public static decimal[] CategorySpendings(User loggedUser, MonthsEnum monthSelected,
             List<Account> listOfAccounts)
         {
-            decimal[] spendings = new decimal[loggedUser.MyCategories.Count + 2];
+            int maxCategoryId = int.MinValue;
+            maxCategoryId = FindMaxCategoryId(loggedUser, maxCategoryId);
+            decimal[] spendings = new decimal[maxCategoryId + 2];
 
             foreach (var account in listOfAccounts)
             {
@@ -332,6 +334,19 @@ namespace BusinessLogic.Report_Components
             }
 
             return spendings;
+        }
+
+        private static int FindMaxCategoryId(User loggedUser, int maxId)
+        {
+            for (int i = 0; i < loggedUser.MyCategories.Count; i++)
+            {
+                if (loggedUser.MyCategories[i].CategoryId > maxId)
+                {
+                    maxId = loggedUser.MyCategories[i].CategoryId;
+                }
+            }
+
+            return maxId;
         }
 
         private static void LoadArray(decimal[] arrayToLoad, Transaction transaction, decimal amountToAdd)
@@ -368,12 +383,14 @@ namespace BusinessLogic.Report_Components
         public decimal AmountDefined { get; set; }
         public decimal TotalSpent { get; set; }
         public bool GoalAchieved { get; set; }
+        public string GoalName { get; set; }
 
-        public ResumeOfGoalReport(decimal amountDefined, decimal totalSpent, bool goalAchieved)
+        public ResumeOfGoalReport(decimal amountDefined, decimal totalSpent, bool goalAchieved, string goalName)
         {
             AmountDefined = amountDefined;
             TotalSpent = totalSpent;
             GoalAchieved = goalAchieved;
+            GoalName = goalName;
         }
     }
 

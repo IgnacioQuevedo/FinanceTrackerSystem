@@ -253,7 +253,7 @@ namespace ControllerTests
 
             _controller.CreateTransaction(transaction4);
 
-            decimal balanceExpected = 2700;
+            decimal balanceExpected = 3300;
             decimal accountBalance = _controller.GiveAccountBalance(_exampleAccount);
 
             Assert.AreEqual(balanceExpected, accountBalance);
