@@ -474,7 +474,7 @@ namespace Controller
         {
             if (idAccountToFind == -1)
             {
-                throw new Exception("Must select an coso, otherwise there would not be changes");
+                throw new Exception("Must select a credit card account, otherwise there would not be changes");
             }
             
             SetUserConnected(userId);
