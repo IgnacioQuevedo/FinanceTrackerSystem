@@ -672,6 +672,7 @@ namespace Controller
                 SetUserConnected(transactionAccount.UserId);
 
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
+                Transaction.CheckExistenceOfExchange(transactionToCreate,_userConnected.MyExchangesHistory);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
 

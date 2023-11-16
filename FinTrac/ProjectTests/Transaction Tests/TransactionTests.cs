@@ -190,18 +190,34 @@ public class TransactionTests
     [TestMethod]
     public void GivenUSATransactionWithExchangeForIt_ShouldBeCreated()
     {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum transactionType = TypeEnum.Outcome;
+        CurrencyEnum currencyType = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+
+        Transaction transactionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
+        
         ExchangeHistory exchangeHistory = new ExchangeHistory(CurrencyEnum.USA,38.5M,DateTime.Now.Date);
         genericUser.AddExchangeHistory(exchangeHistory);
+        
 
-        Transaction.CheckExistenceOfExchange(transactionDate, genericUser.MyExchangesHistory);
+        Transaction.CheckExistenceOfExchange(transactionExample, genericUser.MyExchangesHistory);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ExceptionValidateTransaction))]
     public void GivenUSATransactionWithoutExchangeHistory_ShouldBeCreated()
     {
+        string title = "Payment of Clothes";
+        decimal amount = 200;
+        TypeEnum transactionType = TypeEnum.Outcome;
+        CurrencyEnum currencyType = CurrencyEnum.USA;
+        DateTime dateTime = DateTime.Now.Date;
+
+        Transaction transactionExample = new Transaction(title, amount, dateTime, currencyType, transactionType, genericCategory);
         
-        Transaction.CheckExistenceOfExchange(transactionDate, genericUser.MyExchangesHistory);
+        Transaction.CheckExistenceOfExchange(transactionExample, genericUser.MyExchangesHistory);
     }
 
     #endregion
