@@ -1,46 +1,42 @@
 ﻿@page "/ExchangeHistory/ExchangeHistoryCreation"
-@using BusinessLogic.ExchangeHistory_Components;
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Enums;
+@inject IExchangeHistoryController ExchangeHistoryController
+
 
 <head>
     <h1>Exchange History Creation</h1>
 </head>
 
-<br />
+<br/>
 
 <div>
     @if (ErrorAlert.isError)
     {
-        <ErrorAlert errorTxt="@errorTxt" />
+        <ErrorAlert errorTxt="@errorTxt"/>
     }
 </div>
 
-<br />
+<br/>
 
 <form>
     <div class="form-group">
         <label for="title">Value</label>
-        <input type="number" class="form-control" id="Name" @bind="value" />
+        <input type="number" class="form-control" id="Name" @bind="value"/>
     </div>
 
-    <br />
+    <br/>
     <div class="form-group">
         <label for="title">Value of Exchange to Register</label>
-        <input type="date" class="form-control" id="Name" @bind="valueDate" />
+        <input type="date" class="form-control" id="Name" @bind="valueDate"/>
     </div>
 
-    <br />
+    <br/>
 
     <label for="title">Currency To Select </label>
     <select class="form-select" aria-label="multiple select example" @bind="valueCurrency">
 
-        @foreach (CurrencyEnum currency in Enum.GetValues(typeof(CurrencyEnum)))
+        @foreach (CurrencyEnumDTO currency in Enum.GetValues(typeof(CurrencyEnumDTO)))
         {
-            if (!currency.Equals(CurrencyEnum.UY))
-            {
-                <option value="@currency">@currency</option>
-            }
+            <option value="@currency">@currency</option>
         }
 
     </select>
@@ -49,12 +45,12 @@
     <a href="/ExchangeHistories">Cancelar</a>
 </form>
 
-<br />
+<br/>
 
 <div>
     @if (SuccesAlert.IsSucess)
     {
-        <SuccesAlert errorTxt="Exchange history created successfully" />
+        <SuccesAlert errorTxt="Exchange history created successfully"/>
     }
 
 </div>
@@ -63,13 +59,13 @@
 @code
 {
     private decimal value;
-    private CurrencyEnum valueCurrency;
+    private CurrencyEnumDTO valueCurrency;
     private DateTime valueDate;
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO userConnected { get; set; }
 
-    public string errorTxt{ get; set; }
+    public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
@@ -80,24 +76,23 @@
     {
         try
         {
-            ExchangeHistory dollarValue = new ExchangeHistory(valueCurrency, value, valueDate);
-            user.AddExchangeHistory(dollarValue);
+            ExchangeHistoryDTO exchangeHistoryValue = new ExchangeHistoryDTO(valueCurrency, value, valueDate, userConnected.UserId);
+            ExchangeHistoryController.CreateExchangeHistory(exchangeHistoryValue);
+            
             SuccesAlert.ShowSucessAlert();
-            await Task.Delay(2000);
+            await Task.Delay(1500);
             ResetValues();
-        
         }
-        catch(Exception ExceptionExchangeHistory)
+        catch (Exception ExceptionExchangeHistory)
         {
             errorTxt = ExceptionExchangeHistory.Message;
             ErrorAlert.ShowErrorAlert();
         }
-
     }
 
     private void ResetValues()
     {
-        valueCurrency = CurrencyEnum.USA;
+        valueCurrency = CurrencyEnumDTO.USA;
         valueDate = DateTime.Now.Date;
         value = 0;
 

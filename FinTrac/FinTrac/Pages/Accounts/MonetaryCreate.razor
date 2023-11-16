@@ -1,7 +1,6 @@
 ﻿@page "/Account/MonetaryCreation"
 
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Enums;
+@inject IMonetaryAccount MonetaryController;
 
 <h3>Monetary Account Creation</h3>
 
@@ -27,10 +26,11 @@
     <br />
 
     <div>
-        <label for="title">Status</label>
+        <label for="title">Currency</label>
         <select class="form-select" aria-label="Default select example" @bind="currencyType">
-            <option value="@CurrencyEnum.UY">@CurrencyEnum.UY</option>
-            <option value="@CurrencyEnum.USA">@CurrencyEnum.USA</option>
+            <option value="@CurrencyEnumDTO.UY">@CurrencyEnumDTO.UY</option>
+            <option value="@CurrencyEnumDTO.USA">@CurrencyEnumDTO.USA</option>
+            <option value="@CurrencyEnumDTO.EUR">@CurrencyEnumDTO.EUR</option>
         </select>
     </div>
 
@@ -62,14 +62,14 @@
 
     private string name;
     private decimal initialAmount;
-    private CurrencyEnum currencyType;
+    private CurrencyEnumDTO currencyType;
     private DateTime creationDate;
-    private List<Account> accountList;
-    private MonetaryAccount accountToAdd;
+    private List<MonetaryAccountDTO> monetaryAccountList;
+    private MonetaryAccountDTO accountToCreate;
 
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO UserConnected { get; set; }
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
@@ -81,8 +81,8 @@
     {
         try
         {
-            accountToAdd = new MonetaryAccount(name, initialAmount, currencyType, creationDate);
-            mainUser.AddMonetaryAccount(accountToAdd);
+            accountToCreate = new MonetaryAccountDTO(name, initialAmount, currencyType, creationDate, UserConnected.UserId);
+            MonetaryController.CreateMonetaryAccount(accountToCreate);
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(2000);
             ResetValues();
@@ -99,9 +99,9 @@
     {
         name = "";
         initialAmount = 0;
-        currencyType = CurrencyEnum.UY;
+        currencyType = CurrencyEnumDTO.UY;
         creationDate = DateTime.Now.Date;
-        accountList = mainUser.GetAccounts();
+        monetaryAccountList = MonetaryController.GetAllMonetaryAccounts(UserConnected.UserId);
 
         SuccesAlert.IsSucess = false;
         ErrorAlert.isError = false;

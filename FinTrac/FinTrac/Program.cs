@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using DataManagers;
-using DataManagers.UserManager;
-using FinTrac.Data;
+using Controller;
+using Controller.IControllers;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,14 +10,31 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-//Repository is a singleton, because we want it to be initialized only one time in all the proyect.
-builder.Services.AddSingleton<Repository>();
-builder.Services.AddSingleton<UserLogged>();
 
-builder.Services.AddScoped<UserManagement>();
 
+builder.Services.AddDbContext<SqlContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddScoped<UserRepositorySql>();
+builder.Services.AddScoped<GenericController>();
+builder.Services.AddScoped<IUserController, GenericController>();
+builder.Services.AddScoped<ICategoryController, GenericController>();
+builder.Services.AddScoped<IGoalController, GenericController>();
+builder.Services.AddScoped<IExchangeHistoryController, GenericController>();
+builder.Services.AddScoped<IMonetaryAccount, GenericController>();
+builder.Services.AddScoped<ICreditAccount, GenericController>();
+builder.Services.AddScoped<ITransactionController, GenericController>();
+builder.Services.AddScoped<IReportController, GenericController>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<SqlContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -10,8 +10,11 @@
 @using FinTrac.Shared
 
 @using BusinessLogic.User_Components;
-@using DataManagers.UserManager;
+@using BusinessLogic.Dtos_Components;
+@using Controller
+@using Controller.IControllers
+@using Microsoft.AspNetCore.Mvc
 
 @inject NavigationManager NavigationManager;
-@inject UserManagement UserManagement;
+@inject GenericController GenericController;
 

@@ -1,27 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Category_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using BusinessLogic.User_Components;
 
 namespace BusinessLogic.Goal_Components
 {
     public class Goal
     {
         #region Properties
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GoalId { get; set; }
         public string Title { get; set; } = "";
         public int MaxAmountToSpend { get; set; }
-        public int GoalId { get; set; } = -1;
-        public CurrencyEnum CurrencyOfAmount { get; set; } = CurrencyEnum.UY;
+        public CurrencyEnum CurrencyOfAmount { get; set; }
         public List<Category> CategoriesOfGoal { get; set; }
+        public int? UserId { get; set; }
+        public User GoalUser { get; set; }
 
         #endregion
 
         #region Constructor
-        public Goal() { }
+
+        public Goal()
+        {
+        }
 
         public Goal(string title, int maxAmount, List<Category> categoriesAsignedToGoal)
         {
@@ -34,6 +43,7 @@ namespace BusinessLogic.Goal_Components
         #endregion
 
         #region Validations
+
         public void ValidateGoal()
         {
             ValidateTitle();
@@ -43,7 +53,7 @@ namespace BusinessLogic.Goal_Components
 
         private void ValidateAmountOfCategories()
         {
-            if (CategoriesOfGoal== null || CategoriesOfGoal.Count == 0)
+            if (CategoriesOfGoal == null || CategoriesOfGoal.Count == 0)
             {
                 throw new ExceptionValidateGoal("It is necessary to set at least one category");
             }
@@ -67,5 +77,4 @@ namespace BusinessLogic.Goal_Components
 
         #endregion
     }
-
 }

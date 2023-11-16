@@ -70,9 +70,10 @@ public class CreditCardAccountTests
     #region CreationDate
     [TestMethod]
 
-    public void DateOfCreditCard_ShouldBeActualDate()
+    public void DateOfCreditCard_ShouldBeSetted()
     {
         DateTime actualDate = DateTime.Now.Date;
+        myCreditCard.CreationDate = actualDate;
         Assert.AreEqual(actualDate, myCreditCard.CreationDate);
 
     }
@@ -229,9 +230,10 @@ public class CreditCardAccountTests
     public void SelectedClosingDateThatIsBeforeCreationDate_ShouldThrowException()
     {
 
-        myCreditCardAccount.ClosingDate = new DateTime(2023, 7, 1);
+        myCreditAccount.CreationDate = DateTime.MaxValue;
+        myCreditAccount.ClosingDate = new DateTime(2023, 7, 1);
 
-        myCreditCardAccount.ValidateCreditCardAccount();
+        myCreditAccount.ValidateCreditCardAccount();
 
 
     }

@@ -1,0 +1,186 @@
+﻿@inject GenericController Controller
+@inject IJSRuntime JSRuntime
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+
+@page "/Report/MonthlyMovements"
+
+<h3>Monthly movements Of Transactions</h3>
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt" />
+}
+<main>
+    <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
+        @foreach (MonthsEnumDTO month in Enum.GetValues(typeof(MonthsEnumDTO)))
+        {
+            <option value="@month"> @month </option>
+        }
+    </select>
+
+    <div class="form-group">
+        <label for="title">Select Initial Date</label>
+        <input type="date" class="form-control" id="Name" @bind="initialDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="title">Select Final Date</label>
+        <input type="date" class="form-control" id="Name" @bind="finalDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="title">Confirm Selection Of Month Report</label>
+        <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create +</button>
+    </div>
+
+    <br />
+    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
+    <br />
+    <br />
+    <div>
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Showing Graph" />
+        }
+    </div>
+    <br />
+    <br />
+
+    <html>
+        <head>
+            <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </head>
+        <body>
+            <div class="chart-container">
+                <canvas id="myChartMonthlyMovements"></canvas>
+            </div>
+        </body>
+    </html>
+</main>
+
+@code
+{
+    [CascadingParameter]
+    public UserDTO userConnected { get; set; }
+
+    public string errorTxt { get; set; }
+
+    private MovementInXDaysDTO movements;
+    private RangeOfDatesDTO rangeOfDates;
+    private MonthsEnumDTO monthSelected = (MonthsEnumDTO)DateTime.Now.Month;
+    private DateTime initialDate;
+    private DateTime finalDate;
+
+    protected override void OnInitialized()
+    {
+        initialDate = DateTime.Now.Date;
+        finalDate = DateTime.Now.Date;
+    }
+
+    private async Task GenerateReport()
+    {
+        try
+        {
+            rangeOfDates = new RangeOfDatesDTO(initialDate, finalDate);
+            movements = Controller.GetMovementsOfTransactionsInXDays(userConnected.UserId, rangeOfDates, monthSelected);
+
+            ShowGraphic();
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(1500);
+            ResetValues();
+        }
+        catch (Exception ExceptionReport)
+        {
+            errorTxt = ExceptionReport.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+    }
+
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
+
+    public async Task ShowGraphic()
+    {
+        await JSRuntime.InvokeAsync<object>("initializeMonthlyMovementsChart", movements.Incomes, movements.Spendings);
+        StateHasChanged();
+    }
+}
+
+<script suppress-error="BL9992">
+
+    class MonthlyMovementsChart {
+        constructor(incomes, spendings) {
+            this.incomes = incomes;
+            this.spendings = spendings;
+            this.chart = null;
+        }
+
+        initializeChart() {
+            var ctx = document.getElementById("myChartMonthlyMovements");
+
+            if (this.chart) {
+                this.chart.destroy();
+            }
+
+            var totalSpentData1 = this.incomes.map(function (item) {
+                return item;
+            });
+
+            var totalSpentData2 = this.spendings.map(function (item) {
+                return item;
+            });
+
+            var labels = Array.from({ length: 31 }, (_, index) => index + 1);
+
+            this.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Incomes",
+                            data: totalSpentData1,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: "Spendings",
+                            data: totalSpentData2,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'REPORT OF MONTHLY TRANSACTIONS SUMMING UP ALL ACCOUNTS'
+                        }
+                    }
+                },
+            });
+        }
+    }
+
+    var monthlyMovementsChart;
+
+    function initializeMonthlyMovementsChart(incomes, spendings) {
+        monthlyMovementsChart = new MonthlyMovementsChart(incomes, spendings);
+        monthlyMovementsChart.initializeChart();
+    }
+
+</script>

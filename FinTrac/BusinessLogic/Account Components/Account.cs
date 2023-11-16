@@ -1,48 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogic.Transaction_Components;
-using BusinessLogic.ExchangeHistory_Components;
+﻿using BusinessLogic.Transaction_Components;
 using BusinessLogic.User_Components;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessLogic.Account_Components
 {
     public abstract class Account
     {
         #region Properties
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AccountId { get; set; }
         public string Name { get; set; } = "";
         public CurrencyEnum Currency { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now.Date;
-        public int AccountId { get; set; } = -1;
-        public List<Transaction> MyTransactions { get; set; }
+        public DateTime CreationDate { get; set; }
 
+        public int? UserId { get; set; }
+        public User AccountUser { get; set; }
+        public List<Transaction> MyTransactions { get; set; }
 
         #endregion
 
         #region Constructor
-        public Account() { }
+
+        public Account()
+        {
+        }
 
 
         public Account(string name, CurrencyEnum currency, DateTime creationDate)
         {
             Name = name;
             Currency = currency;
-            CreationDate = creationDate;
+            CreationDate = creationDate.Date;
 
             if (ValidateAccount())
             {
                 MyTransactions = new List<Transaction>();
             }
-
         }
 
         #endregion
 
         #region Mandatory Methods
+
         public abstract void UpdateAccountMoneyAfterAdd(Transaction transactionToBeAdded);
 
         public abstract void UpdateAccountAfterModify(Transaction transactionToBeAdded, decimal oldAmountOfTransaction);
@@ -51,30 +53,28 @@ namespace BusinessLogic.Account_Components
         #endregion
 
         #region Validate Account
+
         public bool ValidateAccount()
         {
             if (string.IsNullOrEmpty(Name))
             {
                 throw new ExceptionValidateAccount("ERROR ON ACCOUNT NAME");
             }
+
             return true;
         }
+
         #endregion
 
         #region Transaction Management
 
         #region Add Transaction
+
         public void AddTransaction(Transaction transactionToBeAdded)
         {
-            SetTransactionId(transactionToBeAdded);
             MyTransactions.Add(transactionToBeAdded);
         }
-
-        private void SetTransactionId(Transaction transactionToBeAdded)
-        {
-            transactionToBeAdded.TransactionId = MyTransactions.Count;
-        }
-
+        
         #endregion
 
         #region Modify Transaction
@@ -87,8 +87,10 @@ namespace BusinessLogic.Account_Components
             {
                 if (HaveSameId(transactionToUpdate, i))
                 {
-                    MyTransactions[i] = transactionToUpdate;
+                    MyTransactions[i].Amount = transactionToUpdate.Amount;
+                    MyTransactions[i].TransactionCategory = transactionToUpdate.TransactionCategory;
                     flag = true;
+                    
                 }
             }
         }
@@ -114,14 +116,10 @@ namespace BusinessLogic.Account_Components
         public void DeleteTransaction(Transaction transactionToDelete)
         {
             MyTransactions.Remove(transactionToDelete);
-            MyTransactions.Insert(transactionToDelete.TransactionId,null);
-            
         }
 
         #endregion
 
-
         #endregion
-
     }
 }

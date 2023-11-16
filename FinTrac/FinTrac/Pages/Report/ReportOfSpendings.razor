@@ -1,198 +1,188 @@
 ﻿@page "/Report/Spendings"
 
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Account_Components;
-@using BusinessLogic.Transaction_Components;
+@inject IReportController ReportController;
 
 <h3>General Spendings</h3>
-<br />
-<br />
-@if (showAlert)
+<br/>
+<br/>
+@if (ErrorAlert.isError)
 {
-    <ErrorAlert errorTxt="@Text"/>
+    <ErrorAlert errorTxt="@errorTxt"/>
 }
-
-<br />
+<br/>
 <td>
     @*  <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button> *@
 </td>
 
 <table class="table">
     <thead>
-        <tr>
-            <th><input type="search" class="form-control" id="search" value="@search" @oninput=@(e=> OnSearch(e.Value.ToString())) placeholder="Search by category"/></th>
-            <th>
-                <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
+    <tr>
+        <th>
+            <input type="search" class="form-control" id="search" value="@search" @oninput=@(e => OnSearch(e.Value.ToString())) placeholder="Search by category"/>
+        </th>
+        <th>
+            <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
 
-                    @foreach (var accountToReport in Accounts)
-                    {
-                        if (accountToReport is CreditCardAccount)
-                        {
-                            CreditCardAccount creditCardToReport = accountToReport as CreditCardAccount;
-                            <option value="@creditCardToReport.AccountId">@creditCardToReport.IssuingBank, @creditCardToReport.Last4Digits</option>
-                        }
-                        else
-                        {
-                            MonetaryAccount monetaryAccountToReport = accountToReport as MonetaryAccount;
-                            <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
-                        }
-                    }
+                <option disabled selected="value"> Select an account </option>
+                @foreach (MonetaryAccountDTO monetaryAccountToReport in monetaryAccounts)
+                {
+                    <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
+                }
+                @foreach (CreditCardAccountDTO creditAccountToReport in creditAccounts)
+                {
+                    <option value="@creditAccountToReport.AccountId">@creditAccountToReport.Name</option>
+                }
 
-                </select>
-            </th>
-            <th>
-                <div>
-                    <input type="date" class="form-control" id="initDate" @onchange="OnSearchInitDate" />
-                </div>
-            </th>
-            <th>
-                <div>
+            </select>
+        </th>
+        <th>
+            <div>
+                <input type="date" class="form-control" id="initDate" @onchange="OnSearchInitDate"/>
+            </div>
+        </th>
+        <th>
+            <div>
 
-                    <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate"/>
-                </div>
-            </th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <th>Creation Date</th>
-            <th>Amount</th>
-            <th>Currency</th>
-            <th>Type</th>
-            <th>Category</th>
-        </tr>
+                <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate"/>
+            </div>
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <th>Creation Date</th>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>Type</th>
+        <th>Category</th>
+    </tr>
     </thead>
     <tbody>
 
-        @foreach (var transaction in filteredListOfSpending)
-        {
-            <tr>
-                <td>@transaction.Title</td>
-                <td>@GetFormattedDate(@transaction.CreationDate)</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.Currency</td>
-                <td>@transaction.Type</td>
-                <td>@transaction.TransactionCategory.Name</td>
-            </tr>
-
-        }
+    @foreach (TransactionDTO transaction in filteredListOfSpending)
+    {
+        <tr>
+            <td>@transaction.Title</td>
+            <td>@GetFormattedDate(@transaction.CreationDate)</td>
+            <td>@transaction.Amount</td>
+            <td>@transaction.Currency</td>
+            <td>@transaction.Type</td>
+            <td>@transaction.TransactionCategory.Name</td>
+        </tr>
+    }
     </tbody>
 </table>
-
 
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    public List<Account> Accounts;
-    private List<Transaction> filteredListOfSpending;
-    private List<Transaction> listOfSpendings;
+    public string errorTxt { get; set; }
+
+    public List<MonetaryAccountDTO> monetaryAccounts;
+    public List<CreditCardAccountDTO> creditAccounts;
+
+    private List<TransactionDTO> filteredListOfSpending;
+    private List<TransactionDTO> listOfSpendingsInitial;
+
     private int accountId;
     private bool showAlert;
-    public string Text{get; set;}
+    public string Text { get; set; }
     private string _search = string.Empty;
-    private string str;
-
+    private string stringSelected;
+    private string accountSelected;
     public DateTime initialSelectedDate;
     public DateTime finalSelectedDate;
 
+    RangeOfDatesDTO rangeDates;
+
     private bool showSpendings;
 
-    private string search
+    protected override void OnInitialized()
     {
-        get
+        listOfSpendingsInitial = new List<TransactionDTO>();
+
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        monetaryAccounts = ReportController.GetAllMonetaryAccounts(UserConnected.UserId);
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
+
+        initialSelectedDate = DateTime.MinValue;
+        finalSelectedDate = DateTime.MaxValue;
+        rangeDates = new RangeOfDatesDTO(initialSelectedDate, finalSelectedDate);
+
+        if (listOfSpendingsInitial != null && listOfSpendingsInitial.Count != 0)
         {
-            return _search;
+            accountSelected = monetaryAccounts[0].AccountId.ToString();
         }
-        set
-        {
-            _search = value;
-            OnSearch(value);
-        }
+        
     }
 
     private void OnSearchInitDate(ChangeEventArgs elementSelected)
     {
+        filteredListOfSpending = listOfSpendingsInitial;
+
         string initialSelDate = elementSelected.Value.ToString();
         string[] nuevo = initialSelDate.Split('-');
         int year = int.Parse(nuevo[0]);
         int month = int.Parse(nuevo[1]);
         int day = int.Parse(nuevo[2]);
         DateTime myDate = new DateTime(year, month, day);
-        initialSelectedDate = myDate;
-        if (initialSelectedDate <= finalSelectedDate)
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
-            showAlert = false;
-        }
-        else
-        {
-            showAlert = true;
-            Text = "La fecha inicial debe ser mayor a la final";
-        }
+        rangeDates.InitialDate = myDate;
 
+        ApplyAllFilters();
     }
 
     private void OnSearchFinalDate(ChangeEventArgs elementSelected)
     {
+        filteredListOfSpending = listOfSpendingsInitial;
+
         string endSelDate = elementSelected.Value.ToString();
         string[] nuevo = endSelDate.Split('-');
         int year = int.Parse(nuevo[0]);
         int month = int.Parse(nuevo[1]);
         int day = int.Parse(nuevo[2]);
         DateTime myDate = new DateTime(year, month, day);
-        finalSelectedDate = myDate;
-        if (finalSelectedDate >= initialSelectedDate)
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate <= finalSelectedDate && x.CreationDate >= initialSelectedDate).ToList();
-            showAlert = false;
-        }
-        else
-        {
-            showAlert = true;
-            Text = "La fecha inicial debe ser mayor a la final";
-        }
-    }
+        rangeDates.FinalDate = myDate;
 
-    protected override void OnInitialized()
-    {
-        Accounts = user.GetAccounts();
-        listOfSpendings = Report.GiveAllOutcomeTransactions(user);
-        filteredListOfSpending = listOfSpendings;
-        initialSelectedDate = DateTime.MinValue;
-        finalSelectedDate = DateTime.MaxValue;
+        ApplyAllFilters();
     }
 
     private void OnSearch(string myString)
     {
-        str = myString;
-        if (!String.IsNullOrEmpty(str))
-        {
-            filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate && x.TransactionCategory.Name.StartsWith(str, StringComparison.OrdinalIgnoreCase)).ToList();
-        }
-        else
-        {
-            filteredListOfSpending = listOfSpendings;
-        }
+        filteredListOfSpending = listOfSpendingsInitial;
+        stringSelected = myString;
+        ApplyAllFilters();
     }
 
     public void OnChangeAccount(ChangeEventArgs elementSelected)
     {
-        if (elementSelected.Value is not null && int.TryParse(elementSelected.Value.ToString(), out int accountSelected))
+        filteredListOfSpending = listOfSpendingsInitial;
+
+        accountSelected = elementSelected.Value.ToString();
+        ApplyAllFilters();
+    }
+
+    public async Task ApplyAllFilters()
+    {
+        AccountDTO accoutSelectedDTO = GenericController.FindAccountById(int.Parse(accountSelected), UserConnected.UserId);
+
+        try
         {
-            if (!String.IsNullOrEmpty(str))
-            {
-                filteredListOfSpending = user.MyAccounts[accountSelected].GetAllTransactions();
-                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate && x.TransactionCategory.Name.StartsWith(str, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-            else
-            {
-                filteredListOfSpending = user.MyAccounts[accountSelected].GetAllTransactions();
-                filteredListOfSpending = filteredListOfSpending.Where(x => x.CreationDate >= initialSelectedDate && x.CreationDate <= finalSelectedDate).ToList();
-            }
+            listOfSpendingsInitial = ReportController.GiveAllOutcomeTransactions(UserConnected);
+            List<TransactionDTO> filteredData = ReportController.FilterByAccountAndTypeOutcome(accoutSelectedDTO);
+            filteredData = ReportController.FilterListByRangeOfDate(filteredData, rangeDates);
+            filteredData = ReportController.FilterListByNameOfCategory(filteredData, stringSelected);
+            filteredListOfSpending = filteredData;
+            ResetValues();
         }
-    
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+            OnInitialized();
+        }
     }
 
 
@@ -201,10 +191,27 @@
         return date.ToString("dd/MM/yyyy");
     }
 
+    private string search
+    {
+        get { return _search; }
+        set
+        {
+            _search = value;
+            OnSearch(value);
+        }
+    }
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
 
 
 
 
 
 }
-

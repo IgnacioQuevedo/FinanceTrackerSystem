@@ -1,8 +1,6 @@
 ﻿@page "/Category/Create/"
-
-
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
+@layout MainLayout
+@inject  ICategoryController CategoryController;
 
 <head>
 
@@ -27,8 +25,8 @@
         <div>
             <label for="type">Type</label>
             <select class="form-select" aria-label="Default select example" @bind="type">
-                <option value="@TypeEnum.Income">@TypeEnum.Income</option>
-                <option value="@TypeEnum.Outcome">@TypeEnum.Outcome</option>
+                <option value="@TypeEnumDTO.Income">@TypeEnumDTO.Income</option>
+                <option value="@TypeEnumDTO.Outcome">@TypeEnumDTO.Outcome</option>
             </select>
         </div>
 
@@ -36,8 +34,8 @@
         <div>
             <label for="status">Status</label>
             <select class="form-select" aria-label="Default select example" @bind="status">
-                <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
-                <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
+                <option value="@StatusEnumDTO.Enabled">@StatusEnumDTO.Enabled</option>
+                <option value="@StatusEnumDTO.Disabled">@StatusEnumDTO.Disabled</option>
             </select>
         </div>
     </form>
@@ -64,11 +62,11 @@
 
 @code {
     private string name;
-    private StatusEnum status;
-    private TypeEnum type;
+    private StatusEnumDTO status;
+    private TypeEnumDTO type;
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO userConnected { get; set; }
 
     public string errorTxt { get; set; }
 
@@ -81,12 +79,13 @@
     {
         try
         {
-            Category newCategory = new Category(name, status, type);
-            mainUser.AddCategory(newCategory);
+            CategoryDTO newCategory = new CategoryDTO(name, status, type,userConnected.UserId);
+            CategoryController.CreateCategory(newCategory);
+
             SuccesAlert.ShowSucessAlert();
 
-            await Task.Delay(2000);
-            ResetValues();
+            await Task.Delay(1300);
+            NavigationManager.NavigateTo("/Category");
         }
         catch (Exception ExceptionCategory)
         {
@@ -98,8 +97,9 @@
     private void ResetValues()
     {
         name = "";
-        status = StatusEnum.Enabled;
-        type = TypeEnum.Income;        
+        status = StatusEnumDTO.Enabled;
+        type = TypeEnumDTO.Income;  
+        
         // Helps prevent threading-related issues and ensures that UI updates are done
         InvokeAsync(() =>
         {

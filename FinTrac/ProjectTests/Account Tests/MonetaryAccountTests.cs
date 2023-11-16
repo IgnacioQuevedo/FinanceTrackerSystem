@@ -102,10 +102,12 @@ public class MonetaryAccountTests
 
     #region Creation Date
     [TestMethod]
-    public void MadeAnAccount_DateShouldBeActualDate()
+    public void MadeAnAccount_DateShouldBeSetted()
     {
         DateTime actualDate = DateTime.Now.Date;
-
+        myMonetaryAccount.CreationDate = actualDate;
+        
+        
         Assert.AreEqual(myMonetaryAccount.CreationDate, actualDate);
     }
     #endregion
@@ -123,6 +125,16 @@ public class MonetaryAccountTests
         myMonetaryAccount.UpdateAccountAfterModify(transactionUpdated, genericTransaction.Amount);
 
         Assert.AreEqual(myMonetaryAccount.Amount, oldAmount - transactionUpdated.Amount);
+    }
+
+    [TestMethod]
+    public void GivenMonetaryAccount_ShouldReturnInitialAmountOfAccount()
+    {
+        MonetaryAccount myMonet = new MonetaryAccount("Brou", 1000, CurrencyEnum.UY, DateTime.Now.Date);
+
+        decimal initialAmount = myMonet.ReturnInitialAmount();
+
+        Assert.AreEqual(1000, initialAmount);
     }
 
 

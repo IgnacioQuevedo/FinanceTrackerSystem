@@ -37,17 +37,7 @@ public class ExchangeHistoryTests
         genericExchange.Currency = currency;
         Assert.AreEqual(currency, genericExchange.Currency);
     }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionExchangeHistory))]
-
-    public void GivenCurrencyThatItIsNotDollar_ShouldThrowException()
-    {
-        genericExchange.Currency = CurrencyEnum.UY;
-        genericExchange.ValidateExchange();
-    }
-
-
+    
     #endregion
 
     #region Value
@@ -103,10 +93,10 @@ public class ExchangeHistoryTests
     [TestMethod]
     [ExpectedException(typeof(ExceptionExchangeHistory))]
 
-    public void GivenIncorrectValues_ShouldThrowExcepton()
+    public void GivenIncorrectValues_ShouldThrowException()
     {
         CurrencyEnum currency = CurrencyEnum.UY;
-        decimal exchangeValue = 38.5M;
+        decimal exchangeValue = -3.5M;
         DateTime valueDate = new DateTime(2023 / 10 / 4);
 
         ExchangeHistory historyToday = new ExchangeHistory(currency, exchangeValue, valueDate);

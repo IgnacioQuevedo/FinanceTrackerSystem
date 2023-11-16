@@ -1,21 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Enums;
 using BusinessLogic.Exceptions;
+using BusinessLogic.User_Components;
+using BusinessLogic.Goal_Components;
 
 namespace BusinessLogic.Category_Components
 {
     public class Category
     {
         #region Properties
-        public int CategoryId { get; set; } = -1;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CategoryId { get; set; }
         public string Name { get; set; } = "";
-        public DateTime CreationDate { get; } = DateTime.Now.Date;
+        public DateTime CreationDate { get; private set; } = DateTime.Now.Date;
         public StatusEnum Status { get; set; }
         public TypeEnum Type { get; set; }
+        
+        public int UserId { get; set; }
+        public User CategoryUser { get; set; }
+        public List<Goal> CategoryGoals { get; set; }
+
         #endregion
 
         #region Constructors

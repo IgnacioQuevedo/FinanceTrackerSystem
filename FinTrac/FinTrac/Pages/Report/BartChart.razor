@@ -1,112 +1,133 @@
 ﻿@page "/pie/{monthSelected:int}"
 
-@using BusinessLogic.User_Components
-@using BusinessLogic.Report_Components
-@using BusinessLogic.Enums;
-
+@inject IReportController ReportController
 @inject IJSRuntime JSRuntime
 
 <main>
     <html>
     <head>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script suppress-error="BL9992" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
+    <div>
+
+        <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
     </div>
-</html>
+
+    <div class="chart-container">
+        <canvas id="myChartMonthlySpent"></canvas>
+    </div>
+
+
+    </html>
 </main>
 
-
 @code {
+
     [Parameter]
-    public MonthsEnum monthSelected { get; set; }
+    public MonthsEnumDTO monthSelected { get; set; }
 
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private List<ResumeOfSpendigsReport> reportsOfEachCategory;
+    private List<ResumeOfCategoryReportDTO> reportsOfEachCategory;
 
 
     protected override async Task OnInitializedAsync()
     {
-        // Asynchronous method to get the data before rendering
-        reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
-        // Inform Blazor that the state has changed
-        StateHasChanged();
+        try
+        {
+            reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo("/Home");
+        }
     }
 
-    // Method to invoke JavaScript code after rendering
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender && reportsOfEachCategory != null)
         {
-            await JSRuntime.InvokeAsync<object>("initializeChart", reportsOfEachCategory);
+            await JSRuntime.InvokeAsync<object>("initializeMonthlySpentChart", reportsOfEachCategory);
         }
     }
+
 }
+<script suppress-error="BL9992">
 
-<td>
-    <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Report/MonthlySpentOnCategory"))"> Go Back</button>
-</td>
+    class MonthlySpentChart {
+        constructor(reportsOfEachCategory) {
+            this.reportsOfEachCategory = reportsOfEachCategory;
+            this.chart = null;
+        }
 
+        initializeChart() {
+            var ctx = document.getElementById("myChartMonthlySpent");
 
-<script>
+            if (this.chart) {
+                this.chart.destroy();
+            }
 
-    function initializeChart(reportsOfEachCategory) {
-        var ctx = document.getElementById("myChart");
+            var totalSpentData = this.reportsOfEachCategory.map(function (item) {
+                return item.totalSpentInCategory;
+            });
 
-        var totalSpentData = reportsOfEachCategory.map(function (item) {
-            return item.totalSpentInCategory;
-        });
+            var labels = this.reportsOfEachCategory.map(function (item) {
+                return item.categoryRelated.name + " " + Math.round(item.percentajeOfTotal).toString() + "%";
+            });
 
-        var labels = reportsOfEachCategory.map(function (item) {
-            return item.categoryRelated.name + " " + Math.round(item.percentajeOfTotal).toString() + "%";
-        });
-
-        myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: "Spent on each category per month",
-                        data: totalSpentData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+            this.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Spent on each category per month",
+                            data: totalSpentData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
+                        }
                     }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
-                    }
-                }
-            },
-        });
+                },
+            });
+        }
+    }
+
+    var monthlySpentChart;
+
+    function initializeMonthlySpentChart(reportsOfEachCategory) {
+        monthlySpentChart = new MonthlySpentChart(reportsOfEachCategory);
+        monthlySpentChart.initializeChart();
     }
 
 </script>

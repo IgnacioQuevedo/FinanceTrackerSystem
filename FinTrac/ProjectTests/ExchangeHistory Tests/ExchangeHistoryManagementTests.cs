@@ -93,7 +93,8 @@ namespace TestProject1
             int idOfExchangeHistoryToDelete = exchangeHistoryExample.ExchangeHistoryId;
             genericUser.DeleteExchangeHistory(exchangeHistoryExample);
 
-            Assert.IsNull(genericUser.MyExchangesHistory[idOfExchangeHistoryToDelete]);
+            int numberOfExchangeHistoriesPostDelete = genericUser.MyExchangesHistory.Count;
+            Assert.AreEqual(0,numberOfExchangeHistoriesPostDelete);
         }
 
         #endregion
@@ -131,6 +132,7 @@ namespace TestProject1
             genericUser.AddExchangeHistory(exchangeHistoryExample);
 
             exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
+            exchangeUpdated.ExchangeHistoryId = -1;
             genericUser.ModifyExchangeHistory(exchangeUpdated);
         }
 
@@ -148,7 +150,7 @@ namespace TestProject1
 
             Category genericCategory = new Category("Clothes", StatusEnum.Enabled, TypeEnum.Outcome);
             Transaction transaction = new Transaction("Payment of food", 400, DateTime.Now.Date, CurrencyEnum.USA, TypeEnum.Outcome, genericCategory);
-            Transaction.CheckExistenceOfExchange(transaction.CreationDate, genericUser.GetExchangesHistory());
+            Transaction.CheckExistenceOfExchange(transaction, genericUser.GetExchangesHistory());
 
             exchangeHistoryExample.ValidateApplianceExchangeOnTransaction();
         }

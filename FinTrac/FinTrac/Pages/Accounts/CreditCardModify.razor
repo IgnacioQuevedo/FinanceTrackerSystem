@@ -1,7 +1,6 @@
 ﻿@page "/Accounts/{accountId:int}/CreditCardModification"
 
-@using BusinessLogic.Account_Components;
-
+@inject ICreditAccount CreditController;
 
 <h3>Credit Card Modification</h3>
 
@@ -49,20 +48,20 @@
 
 
     [CascadingParameter]
-    public User mainUser { get; set; }
+    public UserDTO UserConnected { get; set; }
 
     [Parameter]
     public int accountId { get; set; }
 
     public string errorTxt { get; set; }
 
-    private CreditCardAccount accountToUpdate;
-    private CreditCardAccount accountUpdated;
+    private CreditCardAccountDTO accountToUpdate;
+    private CreditCardAccountDTO accountUpdated;
 
     protected override void OnInitialized()
     {
 
-        accountToUpdate = mainUser.MyAccounts[accountId] as CreditCardAccount;
+        accountToUpdate = CreditController.FindCreditAccount(accountId,UserConnected.UserId);
         issuingBank = accountToUpdate.IssuingBank;
         last4Digits = accountToUpdate.Last4Digits;
         closingDate = accountToUpdate.ClosingDate;
@@ -74,9 +73,9 @@
     {
         try
         {
-            accountUpdated = new CreditCardAccount(accountToUpdate.Name, accountToUpdate.Currency, creationDate, issuingBank, last4Digits, accountToUpdate.AvailableCredit, closingDate);
+            accountUpdated = new CreditCardAccountDTO(accountToUpdate.Name, accountToUpdate.Currency, creationDate, issuingBank, last4Digits, accountToUpdate.AvailableCredit, closingDate, UserConnected.UserId);
             accountUpdated.AccountId = accountId;
-            mainUser.ModifyCreditAccount(accountUpdated);
+            CreditController.UpdateCreditAccount(accountUpdated);
             NavigationManager.NavigateTo("/Accounts");
         }
         catch(Exception ExceptionAccount)
@@ -88,5 +87,6 @@
 
 
     }
+
 
 }

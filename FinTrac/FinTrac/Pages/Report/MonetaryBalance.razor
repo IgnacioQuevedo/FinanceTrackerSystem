@@ -1,58 +1,94 @@
 ﻿@page "/Report/MonetaryBalance"
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Account_Components;
+
+@inject IReportController ReportController;
 
 <h3>Monetary Balance</h3>
 
-
-<select class="form-select" aria-label="select example" @bind="monetaryId">
-
-    @foreach (var accountToReport in Accounts)
+ @if (ErrorAlert.isError)
     {
-        if (accountToReport is MonetaryAccount)
-        {
-            MonetaryAccount monetaryAcc = accountToReport as MonetaryAccount;
-            <option value="@monetaryAcc.AccountId">@monetaryAcc.Name</option>
-        }
+        <ErrorAlert errorTxt="@errorTxt" />
     }
+
+<select class="form-select" aria-label="select example" @onchange="OnSearchInitDate">
+
+    @foreach (MonetaryAccountDTO monetAccountToReport in monetaryAccountsList)
+    {
+        <option value="@monetAccountToReport.AccountId">@monetAccountToReport.Name</option>
+    }
+
 </select>
 
 <br />
-<br />
+<div>
+    <button type="button" class="btn btn-primary" @onclick="ShowBalance">Show Balance</button>
+    <br/>
+</div>
+<br/>
+<br/>
+<label>Account balance: </label>
+<input type="number" class="form-control" id="Name" @bind="accountBalance"/>
 
-<button type="button" class="btn btn-primary" @onclick="ShowBalance">Show Balance</button>
-
-
-<input type="number" class="form-control" id="Name" @bind="accountBalance" />
-
-<br />
-<br />
 <br>
 <td>
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
 </td>
-
-
+<br/>
+  <div>
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Balance created successfully!" />
+        }
+    </div>
 
 @code
 {
-
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private int monetaryId;
+    public string errorTxt { get; set; }
+
     private decimal accountBalance;
-    private List<Account> Accounts;
+    private MonetaryAccountDTO myAccount;
+    private List<MonetaryAccountDTO> monetaryAccountsList;
 
     protected override void OnInitialized()
     {
-        Accounts = user.GetAccounts();
-
+        monetaryAccountsList = ReportController.GetAllMonetaryAccounts(UserConnected.UserId);
+        myAccount = monetaryAccountsList[0];
     }
-
-    private void ShowBalance()
+    
+    private async Task ShowBalance()
     {
-        accountBalance = Report.GiveAccountBalance((MonetaryAccount)user.MyAccounts[monetaryId]);
+        try
+        {
+            accountBalance = ReportController.GiveAccountBalance(myAccount);
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(1300);
+            ResetValues();
+        }
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+        
+    }
+    private void OnSearchInitDate(ChangeEventArgs elementSelected)
+    {
+        string idSelected = elementSelected.Value.ToString();
+        myAccount = ReportController.FindMonetaryAccount(int.Parse(idSelected), UserConnected.UserId);
+        
+    }
+    
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            OnInitialized();
+            StateHasChanged();
+        });
     }
 
 }

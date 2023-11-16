@@ -107,13 +107,15 @@ public class TransactionManagementTests
 
         modifiedListOfCategories.Add(genericCategoryOutcome1);
 
-        Transaction modifiedTransaction = new Transaction("Payment of food", 100, DateTime.Now, CurrencyEnum.USA, TypeEnum.Outcome, genericCategoryOutcome1);
+        Transaction modifiedTransaction = new Transaction("Payment of food", 100, DateTime.Now, CurrencyEnum.UY, TypeEnum.Outcome, genericCategoryOutcome1);
 
         modifiedTransaction.TransactionId = 0;
 
         genericUser.MyAccounts[1].ModifyTransaction(modifiedTransaction);
 
-        Assert.AreEqual(modifiedTransaction, genericUser.MyAccounts[1].MyTransactions[0]);
+        Assert.AreEqual(modifiedTransaction.Amount, genericUser.MyAccounts[1].MyTransactions[0].Amount);
+        Assert.AreEqual(modifiedTransaction.TransactionCategory, genericUser.MyAccounts[1].MyTransactions[0].TransactionCategory);
+   
     }
 
     #endregion
@@ -135,10 +137,12 @@ public class TransactionManagementTests
     public void GivenTransactionToDelete_ShouldDeleteIt()
     {
         genericMonetaryAccount.AddTransaction(genericTransactionOutcome1);
-        int idOfMonetaryToDelete = genericTransactionOutcome1.TransactionId;
+        int amountOfTransactionsPreDelete = genericMonetaryAccount.MyTransactions.Count;
 
         genericMonetaryAccount.DeleteTransaction(genericTransactionOutcome1);
-        Assert.IsNull(genericMonetaryAccount.MyTransactions[idOfMonetaryToDelete]);
+        int amountOfTransactionsPostDelete = genericMonetaryAccount.MyTransactions.Count;
+        
+        Assert.AreEqual(amountOfTransactionsPreDelete - 1,amountOfTransactionsPostDelete);
     }
 
     #endregion

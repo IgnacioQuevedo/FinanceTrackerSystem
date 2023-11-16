@@ -1,45 +1,54 @@
 ﻿@page "/Home";
 
-@using Data;
-@using DataManagers;
+@inject IUserController UserController
 @inject IJSRuntime JSRuntime
 
-<div id="@carouselName" class="carousel slide" data-bs-ride="carousel" data-bs-wrap="true" data-bs-interval="3000" data-bs-pause="false">
-	<div class="carousel-indicators">
-		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-	</div>
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<img src="https://picsum.photos/id/196/1920/1080" class="d-block w-100" alt="...">
-		</div>
-		<div class="carousel-item">
-			<img src="https://picsum.photos/id/1057/1920/1080" class="d-block w-100" alt="...">
-		</div>
-		<div class="carousel-item">
-			<img src="https://picsum.photos/id/1067/1920/1080" class="d-block w-100" alt="...">
-		</div>
-	</div>
-	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Previous</span>
-	</button>
-	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="visually-hidden">Next</span>
-	</button>
-</div>
+<section>
+    
+    <center>
+        <h1 style="font-family:'Apple SD Gothic Neo'; font-weight: bold"> WELCOME AGAIN @userConnected.FirstName.ToUpper()! WE ARE GLAD THAT YOU ARE BACK
+            </h1>
+    </center> 
+    
+    <br/>
+    <br/>
+    <div id="@carouselName" class="carousel slide" data-bs-ride="carousel" data-bs-wrap="true" data-bs-interval="7000" data-bs-pause="false" style="max-width:60%; margin: auto;">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://fastly.picsum.photos/id/668/4133/2745.jpg?hmac=n2-nIVXnrSE_pCjAmI-nlhBicoySz1xq-KUFMr9ERrM" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://fastly.picsum.photos/id/6/5000/3333.jpg?hmac=pq9FRpg2xkAQ7J9JTrBtyFcp9-qvlu8ycAi7bUHlL7I" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://fastly.picsum.photos/id/4/5000/3333.jpg?hmac=ghf06FdmgiD0-G4c9DdNM8RnBIN7BO0-ZGEw47khHP4" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
 
 @code {
-	[CascadingParameter]
-	public User mainUser { get; set; }
+    const string carouselName = "carouselExampleIndicators";
 
-	const string carouselName = "carouselExampleIndicators"; // NOTE: the ID of the carousel
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		object[] args = { carouselName };
-		await JSRuntime.InvokeVoidAsync("startCarousel", args); // NOTE: call JavaScript function with the ID of the carousel
-	}
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        object[] args = { carouselName };
+        await JSRuntime.InvokeVoidAsync("startCarousel", args);
+    }
+    
+    [CascadingParameter]
+    public UserDTO userConnected { get; set; }
 }

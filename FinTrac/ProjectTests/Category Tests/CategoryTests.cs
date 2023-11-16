@@ -142,18 +142,22 @@ public class CategoryTests
         anotherCategory.CategoryId = genericCategory.CategoryId;
         genericUser.ModifyCategory(anotherCategory);
         int indexOfCategoryToUpdate = genericCategory.CategoryId;
-
-        Assert.AreEqual(anotherCategory, genericUser.MyCategories[indexOfCategoryToUpdate]);
+        
+        Assert.AreEqual(anotherCategory.CategoryId, genericUser.MyCategories[indexOfCategoryToUpdate].CategoryId);
+        Assert.AreEqual(anotherCategory.Name, genericUser.MyCategories[indexOfCategoryToUpdate].Name);
+        Assert.AreEqual(anotherCategory.Status, genericUser.MyCategories[indexOfCategoryToUpdate].Status);
+        Assert.AreEqual(anotherCategory.Type, genericUser.MyCategories[indexOfCategoryToUpdate].Type);
     }
 
     [TestMethod]
     public void GivenCategoryToDelete_ShouldDelete()
     {
         genericUser.AddCategory(genericCategory);
+        int amountOfCategoriesPreDelete = genericUser.MyCategories.Count;
         int idOfCategoryDeleted = genericCategory.CategoryId;
         genericUser.DeleteCategory(genericCategory);
 
-        Assert.IsNull(genericUser.MyCategories[idOfCategoryDeleted]);
+        Assert.AreEqual(genericUser.MyCategories.Count,amountOfCategoriesPreDelete - 1);
     }
 
     [TestMethod]

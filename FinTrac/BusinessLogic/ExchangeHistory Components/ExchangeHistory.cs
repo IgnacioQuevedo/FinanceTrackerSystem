@@ -16,10 +16,13 @@ namespace BusinessLogic.ExchangeHistory_Components
         #endregion
 
         #region Properties
+        public int ExchangeHistoryId { get; set; }
         public CurrencyEnum Currency { get; set; }
         public decimal Value { get; set; }
         public DateTime ValueDate { get; set; }
-        public int ExchangeHistoryId { get; set; } = -1;
+        
+        public int? UserId{get; set; }
+        public User ExchangeHistoryUser { get; set; }
 
         #endregion
 
@@ -40,29 +43,21 @@ namespace BusinessLogic.ExchangeHistory_Components
         #region Validate Exchange
         public void ValidateExchange()
         {
-            ValidateCurrencyIsDollar();
             ValidateValueNumber();
         }
         #region Validate Exchange Auxiliaries
         private void ValidateValueNumber()
         {
-            if (Value < 0)
+            if (Value <= 0)
             {
-                throw new ExceptionExchangeHistory("Dollar value must be a positive number");
+                throw new ExceptionExchangeHistory($" {Currency} value must be a positive number");
             }
         }
 
-        private void ValidateCurrencyIsDollar()
-        {
-            if (Currency != CurrencyEnum.USA)
-            {
-                throw new ExceptionExchangeHistory("Only dollar currency is allowed");
-            }
-        }
         #endregion
 
 
-        #endregion
+        #endregion 
 
         #region Have Exchanges
         public static bool HaveExchanges(User loggedUser)

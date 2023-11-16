@@ -1,112 +1,121 @@
 ﻿@page "/";
-@layout LayoutForGuest;
-
-@using Data;
-@inject UserLogged UserLogged;
-
+@layout MainLayout;
+@inject IUserController UserController
 
 <PageTitle>Login</PageTitle>
 
-<section class="h-100 gradient-form" style="background-color: slategrey;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div>
-                <div class="card rounded-3 text-black" style="font-size:x-large">
-                    <div class="row g-0">
-                        <div class="col-lg-6">
-                            <div class="card-body p-md-5 mx-md-4">
+<main class="gradient-custom-4">
+    <section>
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div>
+                    <div class="card rounded-3 text-black" style="font-size:x-large">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
 
-                                <div class="text-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                                         style="width: 185px;" alt="logo">
-                                    <h4 class="mt-1 mb-5 pb-1">We are The Gonnak Team</h4>
+                                    <div class="text-center">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                                             style="width: 185px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">We are The Gonnak Team</h4>
+                                    </div>
+
+                                    <form>
+
+                                        @if (ErrorAlert.isError)
+                                        {
+                                            <ErrorAlert errorTxt="@errorTxt"/>
+                                        }
+
+                                        <p>Please login into your Account</p>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="email" id="form2Example11" class="form-control"
+                                                   placeholder="Email address" @bind-value="userLoginDTO.Email"/>
+                                            <label class="form-label" for="form2Example11">Email address</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="password" id="form2Example22" class="form-control" @bind-value="userLoginDTO.Password"/>
+                                            <label class="form-label" for="form2Example22">Password</label>
+                                        </div>
+
+                                        <div class="text-center pt-4 mb-5 pb-4">
+                                            <button class="btn btn-primary fa-lg gradient-custom-2 mb-3" type="button" style="width: 60%;font-size:x-large" @onclick="LoginUser">
+                                                Log in
+                                            </button>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <p class="mb-0 me-2">Don't have an account?</p>
+                                            <button type="button" class="btn btn-outline-danger" onclick="@(() => NavigationManager.NavigateTo("/register"))">Create new</button>
+
+                                        </div>
+
+                                    </form>
+
                                 </div>
-
-                                <form>
-
-                                    @if (ErrorAlert.isError)
-                                    {
-                                        <ErrorAlert errorTxt="@errorTxt" />
-                                    }
-
-                                    <p>Please login into your Account</p>
-
-                                    <div class="form-outline mb-4">
-                                        <input type="email" id="form2Example11" class="form-control"
-                                               placeholder="Email address" @bind-value="user.Email" />
-                                        <label class="form-label" for="form2Example11">Email address</label>
-                                    </div>
-
-                                    <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example22" class="form-control" @bind-value="user.Password" />
-                                        <label class="form-label" for="form2Example22">Password</label>
-                                    </div>
-
-                                    <div class="text-center pt-4 mb-5 pb-4">
-                                        <button class="btn btn-primary fa-lg gradient-custom-2 mb-3" type="button" style="width: 60%;font-size:x-large" @onclick="LoginUser">
-                                            Log in
-                                        </button>
-                                    </div>
-
-                                    <div class="d-flex align-items-center justify-content-center pb-4">
-                                        <p class="mb-0 me-2">Don't have an account?</p>
-                                        <button type="button" class="btn btn-outline-danger" onclick="@(() => NavigationManager.NavigateTo("/register"))">Create new</button>
-
-                                    </div>
-
-                                </form>
-
                             </div>
-                        </div>
-                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                <h4 class="mb-4">We are more than just a company</h4>
-                                <p class="small mb-0">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                </p>
+                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h4 class="mb-4">We are more than just a company</h4>
+                                    <p class="small mb-0">
+                                        Gonnak is created to make your life easier, is our mision to make our
+                                        customers enjoy our website helping them to have a total control of
+                                        their own finances.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
+</main>
 
 @code
 {
 
-    private User user = new User();
+    [CascadingParameter]
+    public EventCallback<UserDTO> NotifyChangeToMain { get; set; }
+
+    private UserLoginDTO userLoginDTO = new UserLoginDTO();
+    public UserDTO userDTO = new UserDTO();
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        user.Email = "nachitoquevedo@gmail.com";
-        user.Password = "Nacho200304!";
+        userLoginDTO.Email = "someone@gmail.com";
+        userLoginDTO.Password = "Bouzort2023";
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
-
+        userDTO = null;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
     public void LoginUser()
     {
         try
         {
-            if (UserManagement.Login(user))
+            if (UserController.LoginUser(userLoginDTO))
             {
-                UserLogged.Id = UserManagement.FindUserId(user);
-                NavigationManager.NavigateTo("/Home");
+                SendDataToLayout();
+                NavigationManager.NavigateTo($"/Home");
             }
         }
-        catch(Exception ExceptionUser)
+        catch (Exception ExceptionUser)
         {
             ErrorAlert.ShowErrorAlert();
             errorTxt = ExceptionUser.Message;
         }
+    }
 
+    public void SendDataToLayout()
+    {
+        userDTO = UserController.FindUser(userLoginDTO.UserId);
+        userDTO.flag = 1;
+        NotifyChangeToMain.InvokeAsync(userDTO);
     }
 
 }

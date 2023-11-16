@@ -1,15 +1,17 @@
 ﻿@page "/Report/MonthlySpentOnCategory"
 
-
-@using BusinessLogic.Report_Components;
-@using BusinessLogic.Enums;
+@inject IReportController ReportController;
 
 <h3>Montly Spent On Category</h3>
 
+@if (ErrorAlert.isError)
+{
+    <ErrorAlert errorTxt="@errorTxt"/>
+}
 
 <select class="form-select" aria-label="multiple select example" @bind="monthSelected">
 
-    @foreach (MonthsEnum month in Enum.GetValues(typeof(MonthsEnum)))
+    @foreach (MonthsEnumDTO month in Enum.GetValues(typeof(MonthsEnumDTO)))
     {
         <option value="@month"> @month </option>
     }
@@ -22,29 +24,29 @@
     <button type="button" class="btn btn-outline-danger" @onclick="GenerateReport">Create + </button>
 </div>
 
-<br />
-<br />
+<br/>
+<br/>
 
 @if (ConfirmedMonth)
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Category Name</th>
-                <th>Amount Spent on Goal</th>
-                <th>Percentage Of Total</th>
-            </tr>
+        <tr>
+            <th>Category Name</th>
+            <th>Amount Spent on category</th>
+            <th>Percentage Of Total</th>
+        </tr>
         </thead>
         <tbody>
 
-            @foreach (var categoryReport in reportsOfEachCategory)
-            {
-                <tr>
-                    <td>@categoryReport.CategoryRelated.Name</td>
-                    <td>@categoryReport.TotalSpentInCategory</td>
-                    <td>@Math.Round(categoryReport.PercentajeOfTotal)%</td>
-                </tr>
-            }
+        @foreach (var categoryReport in reportsOfEachCategory)
+        {
+            <tr>
+                <td>@categoryReport.CategoryRelated.Name</td>
+                <td>@categoryReport.TotalSpentInCategory</td>
+                <td>@Math.Round(categoryReport.PercentajeOfTotal)%</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -58,32 +60,74 @@
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
 </td>
 
+<br/>
+<div>
+    @if (SuccesAlert.IsSucess)
+    {
+        <SuccesAlert errorTxt="Now graph is available"/>
+    }
+</div>
+
 
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO UserConnected { get; set; }
 
-    private List<ResumeOfSpendigsReport> reportsOfEachCategory;
-    private MonthsEnum monthSelected;
+    public string errorTxt { get; set; }
+
+    private List<ResumeOfCategoryReportDTO>? reportsOfEachCategory;
+    private MonthsEnumDTO monthSelected;
     private bool ConfirmedMonth;
+
 
     protected override void OnInitialized()
     {
-        monthSelected = (MonthsEnum)DateTime.Now.Month;
-        reportsOfEachCategory = new List<ResumeOfSpendigsReport>();
+        monthSelected = (MonthsEnumDTO)DateTime.Now.Month;
+        reportsOfEachCategory = null;
         ConfirmedMonth = false;
+        ResetValues();
     }
 
-    private void GenerateReport()
+    private async Task GenerateReport()
     {
-        reportsOfEachCategory = Report.GiveAllSpendingsPerCategoryDetailed(user, monthSelected);
-        ConfirmedMonth = true;
+        try
+        {
+            reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
+            ConfirmedMonth = true;
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(1300);
+            ResetValues();
+        }
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
     }
 
     public void ShowGraphic()
     {
-        NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
+        if (reportsOfEachCategory != null)
+        {
+            NavigationManager.NavigateTo($"/pie/{(int)monthSelected}");
+        }
+        else
+        {
+            errorTxt = "You must click un create button first to show graph";
+            ErrorAlert.ShowErrorAlert();
+        }
+        
+    }
+    
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
 }

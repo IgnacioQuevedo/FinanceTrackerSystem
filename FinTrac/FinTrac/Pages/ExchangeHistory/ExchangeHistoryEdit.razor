@@ -1,21 +1,31 @@
 ﻿@page "/ExchangeHistories/{ExchangeId:int}/Edit"
-@using BusinessLogic.ExchangeHistory_Components;
+@inject IExchangeHistoryController ExchangeHistoryController
 
 <h3>ExchangeHistoryEdit</h3>
 
 <div>
     @if (ErrorAlert.isError)
     {
-        <ErrorAlert errorTxt="@errorTxt" />
+        <ErrorAlert errorTxt="@errorTxt"/>
     }
 </div>
 
 
 <div class="form-group">
-    <label for="title">Value of Exchange to Register</label>
-    <input type="number" class="form-control" id="Name" @bind="newValue" />
+    <label for="title">Value of Exchange to Update</label>
+    <input type="number" class="form-control" id="Name" @bind="newValue"/>
 </div>
+<div>
+    <label for="title">Currency To Update </label>
+    <select class="form-select" aria-label="multiple select example" @bind="newCurrency">
 
+        @foreach (CurrencyEnumDTO currency in Enum.GetValues(typeof(CurrencyEnumDTO)))
+        {
+            <option value="@currency">@currency</option>
+        }
+
+    </select>
+</div>
 <button type="button" class="btn btn-primary" @onclick="UpdateExchange">Guardar cambios</button>
 <a href="/ExchangeHistories">Cancelar</a>
 
@@ -23,20 +33,23 @@
 @code
 {
     [CascadingParameter]
-    public User user { get; set; }
+    public UserDTO userConnected { get; set; }
 
     [Parameter]
     public int ExchangeId { get; set; }
+
     public string errorTxt { get; set; }
 
-    private ExchangeHistory exchangeWithoutUpdate;
-    private ExchangeHistory exchangeUpdated;
+    private ExchangeHistoryDTO exchangeWithoutUpdate;
+    private ExchangeHistoryDTO exchangeUpdated;
     private decimal newValue;
+    private CurrencyEnumDTO newCurrency;
 
     protected override void OnInitialized()
     {
-        exchangeWithoutUpdate = user.MyExchangesHistory[ExchangeId];
+        exchangeWithoutUpdate = ExchangeHistoryController.FindExchangeHistory(ExchangeId, userConnected.UserId);
         newValue = exchangeWithoutUpdate.Value;
+        newCurrency = exchangeWithoutUpdate.Currency;
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;
     }
@@ -45,17 +58,16 @@
     {
         try
         {
-            exchangeUpdated = new ExchangeHistory(exchangeWithoutUpdate.Currency, newValue, exchangeWithoutUpdate.ValueDate);
+            exchangeUpdated = new ExchangeHistoryDTO(newCurrency, newValue, exchangeWithoutUpdate.ValueDate, userConnected.UserId);
             exchangeUpdated.ExchangeHistoryId = ExchangeId;
 
-            user.ModifyExchangeHistory(exchangeUpdated);
+            ExchangeHistoryController.UpdateExchangeHistory(exchangeUpdated);
             NavigationManager.NavigateTo("/ExchangeHistories");
         }
-        catch(Exception ExceptionExchangeHistory)
+        catch (Exception ExceptionExchangeHistory)
         {
             ErrorAlert.ShowErrorAlert();
             errorTxt = ExceptionExchangeHistory.Message;
         }
-
     }
 }

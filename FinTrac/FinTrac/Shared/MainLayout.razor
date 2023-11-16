@@ -1,44 +1,51 @@
 ﻿@inherits LayoutComponentBase
 
-
 @using DataManagers;
-@using Data;
-
-@inject UserLogged UserLogged;
-@inject Repository MemoryDataBase;
+@inject IUserController UserController
+@using Controller;
 
 <PageTitle>FinTrac</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="d-flex align-items-end justify-content-end pb-4">
-            <button type="button" class="btn btn-outline-danger" onclick="@(() => NavigationManager.NavigateTo("/"))">Log Out</button>
-
+    @if (userDTO != null)
+    {
+        <div class="sidebar">
+            <NavMenu/>
         </div>
-
+    }
+    <main>
+        @if (userDTO != null)
+        {
+            <div class="d-flex align-items-end justify-content-end pb-4">
+                <button type="button" class="btn btn-outline-dark" onclick="@(() => NavigationManager.NavigateTo("/"))"> Log Out </button>
+            </div>
+        }
         <article class="content px-4">
-            <CascadingValue Value = "mainUser">
-                @Body
+
+            <CascadingValue Value="event_userConnected">
+                <CascadingValue Value="userDTO">
+                    @Body
+                </CascadingValue>
             </CascadingValue>
-            
         </article>
-
-
     </main>
 </div>
 
-@code{
+@code {
+    public bool menuFlag { get; set; } = true;
+    public UserDTO userDTO { get; set; }
 
+    EventCallback<UserDTO> event_userConnected => EventCallback.Factory.Create(this, (Action<UserDTO>)NotifyLayoutWithUser);
 
-    public User mainUser { get; set; }
+    private void NotifyLayoutWithUser(UserDTO userDTOGiven)
+    {
+        userDTO = userDTOGiven;
 
-
-    protected override void OnInitialized()
-    {     
-        mainUser = MemoryDataBase.Users[UserLogged.Id];
+        if (userDTOGiven != null && userDTOGiven.Email == "")
+        {
+            menuFlag = userDTO.flag == 1 ? true : false;
+        }
     }
+
 }

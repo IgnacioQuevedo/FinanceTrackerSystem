@@ -1,6 +1,7 @@
 ﻿@page "/Category/{categoryId:int}/Edit"
-@using BusinessLogic.Category_Components;
-@using BusinessLogic.Enums;
+@layout MainLayout
+@inject  ICategoryController CategoryController;
+
 
 <head>
     <h1>CategoryEdit</h1>
@@ -17,8 +18,8 @@
         <label for="Status">Status</label>
         <select class="form-select" aria-label="Default select example" @bind="status">
 
-            <option value="@StatusEnum.Enabled">@StatusEnum.Enabled</option>
-            <option value="@StatusEnum.Disabled">@StatusEnum.Disabled</option>
+            <option value="@StatusEnumDTO.Enabled">@StatusEnumDTO.Enabled</option>
+            <option value="@StatusEnumDTO.Disabled">@StatusEnumDTO.Disabled</option>
         </select>
     </div>
 </form>
@@ -49,18 +50,17 @@
     public int categoryId { get; set; }
 
     [CascadingParameter]
-    public User mainUser { get; set; }
-
+    public UserDTO userConnected { get; set; }
 
     private string name;
-    private StatusEnum status;
-    private Category categoryToEdit;
-    private Category categoryUpdated;
+    private StatusEnumDTO status;
+    private CategoryDTO categoryToEdit;
+    private CategoryDTO categoryUpdated;
     public string errorTxt { get; set; }
 
     protected override void OnInitialized()
     {
-        categoryToEdit = mainUser.MyCategories[categoryId];
+        categoryToEdit = CategoryController.FindCategory(categoryId, userConnected.UserId);
         name = categoryToEdit.Name;
         status = categoryToEdit.Status;
         ErrorAlert.isError = false;
@@ -71,11 +71,10 @@
     {
         try
         {
-
-            categoryUpdated = new Category(name, status, categoryToEdit.Type);
-            categoryUpdated.CategoryId = categoryToEdit.CategoryId;
-            User.areTheSameObject(categoryToEdit, categoryUpdated);
-            mainUser.ModifyCategory(categoryUpdated);
+            categoryUpdated = new CategoryDTO(name, status, categoryToEdit.Type,userConnected.UserId);
+            categoryUpdated.CategoryId = categoryId;
+            
+            CategoryController.UpdateCategory(categoryUpdated);
             NavigationManager.NavigateTo("/Category");
         }
         catch (Exception ExceptionCategory)
