@@ -72,7 +72,7 @@ namespace DataManagersTests
         #region Validation Of Two Lists
 
         [TestMethod]
-        public void GivenTwoListsThatAreEqual_AreTheSameObject_ShouldReturnTrue()
+        public void GivenTwoObjectsThatAreEqual_AreTheSameObject_ShouldReturnTrue()
         {
             CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
             CategoryDTO categoryDto2 = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
@@ -95,7 +95,7 @@ namespace DataManagersTests
         }
         
         [TestMethod]
-        public void GivenTwoListsThatAreNotEqual_AreTheSameObject_ShouldReturnTrue()
+        public void GivenTwoObjectsThatAreNotEqual_AreTheSameObject_ShouldReturnTrue()
         {
             CategoryDTO categoryDto = new CategoryDTO("Food", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
             CategoryDTO categoryDto2 = new CategoryDTO("Foo2d", StatusEnumDTO.Enabled, TypeEnumDTO.Income,1);
@@ -113,8 +113,8 @@ namespace DataManagersTests
             GoalDTO goalDto2 = new GoalDTO("Goal",200, CurrencyEnumDTO.UY, categories2,1);
      
         
-            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0],goalDto2.CategoriesOfGoalDTO[0]));
-            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1],goalDto2.CategoriesOfGoalDTO[1]));
+            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[0],goalDto2.CategoriesOfGoalDTO[1]));
+            Assert.IsFalse(Helper.AreTheSameObject(goalDto.CategoriesOfGoalDTO[1],goalDto2.CategoriesOfGoalDTO[0]));
         }
         
         
