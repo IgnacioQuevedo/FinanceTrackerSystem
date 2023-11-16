@@ -4,6 +4,11 @@
 
 <h3>Monetary Balance</h3>
 
+ @if (ErrorAlert.isError)
+    {
+        <ErrorAlert errorTxt="@errorTxt" />
+    }
+
 <select class="form-select" aria-label="select example" @onchange="OnSearchInitDate">
 
     @foreach (MonetaryAccountDTO monetAccountToReport in monetaryAccountsList)
@@ -26,11 +31,20 @@
 <td>
     <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button>
 </td>
+<br/>
+  <div>
+        @if (SuccesAlert.IsSucess)
+        {
+            <SuccesAlert errorTxt="Category created successfully" />
+        }
+    </div>
 
 @code
 {
     [CascadingParameter]
     public UserDTO UserConnected { get; set; }
+
+    public string errorTxt { get; set; }
 
     private decimal accountBalance;
     private MonetaryAccountDTO myAccount;
@@ -41,17 +55,39 @@
         monetaryAccountsList = ReportController.GetAllMonetaryAccounts(UserConnected.UserId);
         myAccount = monetaryAccountsList[0];
     }
-
-    private void ShowBalance()
+    
+    private async Task ShowBalance()
     {
-        accountBalance = ReportController.GiveAccountBalance(myAccount);
+        try
+        {
+            accountBalance = ReportController.GiveAccountBalance(myAccount);
+            SuccesAlert.ShowSucessAlert();
+            await Task.Delay(1300);
+            ResetValues();
+        }
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+        
     }
-
     private void OnSearchInitDate(ChangeEventArgs elementSelected)
     {
         string idSelected = elementSelected.Value.ToString();
         myAccount = ReportController.FindMonetaryAccount(int.Parse(idSelected), UserConnected.UserId);
         
+    }
+    
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            OnInitialized();
+            StateHasChanged();
+        });
     }
 
 }

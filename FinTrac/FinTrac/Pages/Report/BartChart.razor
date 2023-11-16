@@ -29,10 +29,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Asynchronous method to get the data before rendering
-        reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
-        // Inform Blazor that the state has changed
-        StateHasChanged();
+        // Asynchronous method to get the data before renderingz
+        try
+        {
+            reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
+    // Inform Blazor that the state has changed
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            NavigationManager.NavigateTo("/Home");
+        }
+        
     }
 
     // Method to invoke JavaScript code after rendering

@@ -58,7 +58,13 @@
 
     <br>
     <br>
-
+    
+    <div>
+        @if (ErrorAlert.isError)
+        {
+            <ErrorAlert errorTxt="@errorTxt"/>
+        }
+    </div>
 
 }
 else
@@ -79,6 +85,8 @@ else
     [CascadingParameter]
     public UserDTO UserConnected { get; set; }
 
+    public string errorTxt { get; set; }
+
     private List<CreditCardAccountDTO> creditAccounts;
     private List<TransactionDTO> transactionsOfCard;
     private CreditCardAccountDTO myCard;
@@ -88,15 +96,24 @@ else
 
     protected override void OnInitialized()
     {
-        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
-        showSpendings = false;
+        ResetValues();
     }
 
     private void ShowSpendings()
     {
-        myCard = GenericController.FindCreditAccount(creditCardId, UserConnected.UserId);
-        transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
-        showSpendings = true;
+        try
+        {
+            myCard = ReportController.FindCreditAccount(creditCardId, UserConnected.UserId);
+            transactionsOfCard = ReportController.ReportOfSpendingsPerCard(myCard);
+            showSpendings = true;
+            ResetValues();
+        }
+        catch (Exception Exception)
+        {
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+        }
+      
     }
 
     private void OnChangeEvent(ChangeEventArgs elementSelected)
@@ -109,6 +126,17 @@ else
         return date.ToString("dd/MM/yyyy");
     }
 
+    private void ResetValues()
+    {
+        creditAccounts = ReportController.GetAllCreditAccounts(UserConnected.UserId);
+        showSpendings = false;
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
+    }
 
 }
 

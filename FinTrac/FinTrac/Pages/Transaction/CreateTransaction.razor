@@ -148,7 +148,7 @@
             transactionToAdd = new TransactionDTO(title,creationDate,amount, accountSelected.Currency, transactionType, 
                 categoryToAdd,accountId);
             
-            TransactionController.CreateTransaction(transactionToAdd);
+            TransactionController.CreateTransaction(transactionToAdd,userConnected.UserId);
             SuccesAlert.ShowSucessAlert();
             await Task.Delay(1500);
             ResetValues();

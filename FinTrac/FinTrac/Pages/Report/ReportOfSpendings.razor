@@ -3,86 +3,82 @@
 @inject IReportController ReportController;
 
 <h3>General Spendings</h3>
-<br />
-<br />
-@if (showAlert)
+<br/>
+<br/>
+@if (ErrorAlert.isError)
 {
-    initialSelectedDate = DateTime.MinValue;
-    finalSelectedDate = DateTime.MaxValue;
-    rangeDates = new RangeOfDatesDTO(initialSelectedDate, finalSelectedDate);
-    ApplyAllFilters();
-    <ErrorAlert errorTxt="@Text" />
+    <ErrorAlert errorTxt="@errorTxt"/>
 }
-
-<br />
+<br/>
 <td>
     @*  <button class="btn btn-success btn-sm" onclick="@(() => NavigationManager.NavigateTo($"/Reports"))"> Go Back</button> *@
 </td>
 
 <table class="table">
     <thead>
-        <tr>
-            <th><input type="search" class="form-control" id="search" value="@search" @oninput=@(e=> OnSearch(e.Value.ToString())) placeholder="Search by category" /></th>
-            <th>
-                <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
+    <tr>
+        <th>
+            <input type="search" class="form-control" id="search" value="@search" @oninput=@(e => OnSearch(e.Value.ToString())) placeholder="Search by category"/>
+        </th>
+        <th>
+            <select class="form-select" aria-label="select example" @onchange="OnChangeAccount">
 
-                    @foreach (MonetaryAccountDTO monetaryAccountToReport in monetaryAccounts)
-                    {
-                        <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
-                        
-                    }
-                    @foreach (CreditCardAccountDTO creditAccountToReport in creditAccounts)
-                    {
-                        <option value="@creditAccountToReport.AccountId">@creditAccountToReport.Name</option>
+                <option disabled selected="value"> Select an account </option>
+                @foreach (MonetaryAccountDTO monetaryAccountToReport in monetaryAccounts)
+                {
+                    <option value="@monetaryAccountToReport.AccountId">@monetaryAccountToReport.Name</option>
+                }
+                @foreach (CreditCardAccountDTO creditAccountToReport in creditAccounts)
+                {
+                    <option value="@creditAccountToReport.AccountId">@creditAccountToReport.Name</option>
+                }
 
-                    }
+            </select>
+        </th>
+        <th>
+            <div>
+                <input type="date" class="form-control" id="initDate" @onchange="OnSearchInitDate"/>
+            </div>
+        </th>
+        <th>
+            <div>
 
-                </select>
-            </th>
-            <th>
-                <div>
-                    <input type="date" class="form-control" id="initDate" @onchange="OnSearchInitDate" />
-                </div>
-            </th>
-            <th>
-                <div>
-
-                    <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate" />
-                </div>
-            </th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <th>Creation Date</th>
-            <th>Amount</th>
-            <th>Currency</th>
-            <th>Type</th>
-            <th>Category</th>
-        </tr>
+                <input type="date" class="form-control" id="finalDate" @onchange="OnSearchFinalDate"/>
+            </div>
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <th>Creation Date</th>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>Type</th>
+        <th>Category</th>
+    </tr>
     </thead>
     <tbody>
 
-        @foreach (TransactionDTO transaction in filteredListOfSpending)
-        {
-            <tr>
-                <td>@transaction.Title</td>
-                <td>@GetFormattedDate(@transaction.CreationDate)</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.Currency</td>
-                <td>@transaction.Type</td>
-                <td>@transaction.TransactionCategory.Name</td>
-            </tr>
-
-        }
+    @foreach (TransactionDTO transaction in filteredListOfSpending)
+    {
+        <tr>
+            <td>@transaction.Title</td>
+            <td>@GetFormattedDate(@transaction.CreationDate)</td>
+            <td>@transaction.Amount</td>
+            <td>@transaction.Currency</td>
+            <td>@transaction.Type</td>
+            <td>@transaction.TransactionCategory.Name</td>
+        </tr>
+    }
     </tbody>
 </table>
-
 
 @code
 {
     [CascadingParameter]
     public UserDTO UserConnected { get; set; }
+
+    public string errorTxt { get; set; }
 
     public List<MonetaryAccountDTO> monetaryAccounts;
     public List<CreditCardAccountDTO> creditAccounts;
@@ -105,7 +101,7 @@
 
     protected override void OnInitialized()
     {
-        listOfSpendingsInitial = ReportController.GiveAllOutcomeTransactions(UserConnected);
+        listOfSpendingsInitial = new List<TransactionDTO>();
 
         filteredListOfSpending = listOfSpendingsInitial;
 
@@ -120,8 +116,7 @@
         {
             accountSelected = monetaryAccounts[0].AccountId.ToString();
         }
-
-        ApplyAllFilters();
+        
     }
 
     private void OnSearchInitDate(ChangeEventArgs elementSelected)
@@ -137,7 +132,6 @@
         rangeDates.InitialDate = myDate;
 
         ApplyAllFilters();
-
     }
 
     private void OnSearchFinalDate(ChangeEventArgs elementSelected)
@@ -168,25 +162,26 @@
 
         accountSelected = elementSelected.Value.ToString();
         ApplyAllFilters();
-
     }
 
-    public void ApplyAllFilters()
+    public async Task ApplyAllFilters()
     {
         AccountDTO accoutSelectedDTO = GenericController.FindAccountById(int.Parse(accountSelected), UserConnected.UserId);
 
         try
         {
+            listOfSpendingsInitial = ReportController.GiveAllOutcomeTransactions(UserConnected);
             List<TransactionDTO> filteredData = ReportController.FilterByAccountAndTypeOutcome(accoutSelectedDTO);
             filteredData = ReportController.FilterListByRangeOfDate(filteredData, rangeDates);
             filteredData = ReportController.FilterListByNameOfCategory(filteredData, stringSelected);
-
             filteredListOfSpending = filteredData;
+            ResetValues();
         }
-        catch (Exception e)
+        catch (Exception Exception)
         {
-            Text = e.Message;
-            showAlert = true;
+            errorTxt = Exception.Message;
+            ErrorAlert.ShowErrorAlert();
+            OnInitialized();
         }
     }
 
@@ -198,15 +193,21 @@
 
     private string search
     {
-        get
-        {
-            return _search;
-        }
+        get { return _search; }
         set
         {
             _search = value;
             OnSearch(value);
         }
+    }
+    private void ResetValues()
+    {
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
 
@@ -214,4 +215,3 @@
 
 
 }
-
