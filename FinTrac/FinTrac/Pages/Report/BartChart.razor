@@ -1,7 +1,6 @@
 ﻿@page "/pie/{monthSelected:int}"
 
-@inject IReportController ReportController;
-
+@inject IReportController ReportController
 @inject IJSRuntime JSRuntime
 
 <main>
@@ -16,13 +15,12 @@
     </div>
 
     <div class="chart-container">
-        <canvas id="myChart"></canvas>
+        <canvas id="myChartMonthlySpent"></canvas>
     </div>
 
 
     </html>
 </main>
-
 
 @code {
 
@@ -37,11 +35,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-    // Asynchronous method to get the data before renderingz
         try
         {
             reportsOfEachCategory = ReportController.GiveAllSpendingsPerCategoryDetailed(UserConnected, monthSelected);
-    // Inform Blazor that the state has changed
             StateHasChanged();
         }
         catch (Exception e)
@@ -50,72 +46,88 @@
         }
     }
 
-    // Method to invoke JavaScript code after rendering
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender && reportsOfEachCategory != null)
         {
-            await JSRuntime.InvokeAsync<object>("initializeChart", reportsOfEachCategory);
+            await JSRuntime.InvokeAsync<object>("initializeMonthlySpentChart", reportsOfEachCategory);
         }
     }
 
 }
-
 <script suppress-error="BL9992">
 
-    function initializeChart(reportsOfEachCategory) {
-        var ctx = document.getElementById("myChart");
+    class MonthlySpentChart {
+        constructor(reportsOfEachCategory) {
+            this.reportsOfEachCategory = reportsOfEachCategory;
+            this.chart = null;
+        }
 
-        var totalSpentData = reportsOfEachCategory.map(function (item) {
-            return item.totalSpentInCategory;
-        });
+        initializeChart() {
+            var ctx = document.getElementById("myChartMonthlySpent");
 
-        var labels = reportsOfEachCategory.map(function (item) {
-            return item.categoryRelated.name + " " + Math.round(item.percentajeOfTotal).toString() + "%";
-        });
+            if (this.chart) {
+                this.chart.destroy();
+            }
 
-        myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: "Spent on each category per month",
-                        data: totalSpentData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+            var totalSpentData = this.reportsOfEachCategory.map(function (item) {
+                return item.totalSpentInCategory;
+            });
+
+            var labels = this.reportsOfEachCategory.map(function (item) {
+                return item.categoryRelated.name + " " + Math.round(item.percentajeOfTotal).toString() + "%";
+            });
+
+            this.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Spent on each category per month",
+                            data: totalSpentData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
+                        }
                     }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'REPORT OF MONTHLY SPENDINGS ON CATEGORIES'
-                    }
-                }
-            },
-        });
+                },
+            });
+        }
+    }
+
+    var monthlySpentChart;
+
+    function initializeMonthlySpentChart(reportsOfEachCategory) {
+        monthlySpentChart = new MonthlySpentChart(reportsOfEachCategory);
+        monthlySpentChart.initializeChart();
     }
 
 </script>
