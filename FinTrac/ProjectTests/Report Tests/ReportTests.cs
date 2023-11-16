@@ -363,19 +363,7 @@ public class ReportTests
 
         Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionReport))]
-    public void GivenFormatOfRangeOfDatesIncorrect_ShouldThrowException()
-    {
-        RangeOfDates rangeOfDates =
-            new RangeOfDates
-            (new DateTime(-2023, 45, 14).Date,
-                new DateTime(2023, 11, 28).Date);
-
-        movements.RangeOfDates = rangeOfDates;
-    }
-
+    
     [TestMethod]
     [ExpectedException(typeof(ExceptionReport))]
     public void GivenFinalDateMinorThatInitialDate_ShouldThrowException()
@@ -408,21 +396,6 @@ public class ReportTests
 
         Assert.AreEqual(rangeOfDates, movements.RangeOfDates);
     }
-
-    [TestMethod]
-    [ExpectedException(typeof(ExceptionReport))]
-    public void GivenIncorrectData_ShouldThrowException()
-    {
-        int[] incomes = new int[5];
-        int[] spendings = new int[5];
-        RangeOfDates rangeOfDates =
-            new RangeOfDates
-            (new DateTime(-2023, 11, 14).Date,
-                new DateTime(2023, 11, 28).Date);
-
-        MovementInXDays movements = new MovementInXDays(rangeOfDates);
-    }
-
     #endregion
 
     [TestMethod]

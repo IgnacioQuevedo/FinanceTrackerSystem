@@ -84,8 +84,8 @@
 
             SuccesAlert.ShowSucessAlert();
 
-            await Task.Delay(2000);
-            ResetValues();
+            await Task.Delay(1300);
+            NavigationManager.NavigateTo("/Category");
         }
         catch (Exception ExceptionCategory)
         {

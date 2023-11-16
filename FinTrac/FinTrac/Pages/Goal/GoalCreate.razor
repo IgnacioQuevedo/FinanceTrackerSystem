@@ -1,8 +1,6 @@
 ﻿@page "/Goal/GoalCreation"
-
-@using Controller.IControllers
-@inject ICategoryController CategoryController;
 @inject IGoalController GoalController;
+
 <h3>Goal Creation</h3>
 
 @if (ErrorAlert.isError)
@@ -103,7 +101,7 @@
 
         foreach (var stringId in stringValue)
         {
-            var categorySelected = CategoryController.FindCategory(int.Parse(stringId), userConnected.UserId);
+            var categorySelected = GoalController.FindCategory(int.Parse(stringId), userConnected.UserId);
             categoriesSelected.Add(categorySelected);
         }
         categoriesAssignedToGoal = categoriesSelected;
@@ -113,7 +111,7 @@
     {
         title = "";
         maxAmount = 0;
-        allCategoriesCreated = CategoryController.GetAllCategories(userConnected.UserId);
+        allCategoriesCreated = GoalController.GetAllCategories(userConnected.UserId);
         categoriesAssignedToGoal = new List<CategoryDTO>();
         ErrorAlert.isError = false;
         SuccesAlert.IsSucess = false;

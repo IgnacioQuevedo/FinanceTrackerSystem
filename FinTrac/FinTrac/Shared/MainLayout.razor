@@ -14,14 +14,13 @@
             <NavMenu/>
         </div>
     }
-
-
     <main>
-        <div class="d-flex align-items-end justify-content-end pb-4">
-            <button type="button" class="btn btn-outline-danger" onclick="@(() => NavigationManager.NavigateTo("/"))">Log Out</button>
-
-        </div>
-
+        @if (userDTO != null)
+        {
+            <div class="d-flex align-items-end justify-content-end pb-4">
+                <button type="button" class="btn btn-outline-dark" onclick="@(() => NavigationManager.NavigateTo("/"))"> Log Out </button>
+            </div>
+        }
         <article class="content px-4">
 
             <CascadingValue Value="event_userConnected">
@@ -29,11 +28,7 @@
                     @Body
                 </CascadingValue>
             </CascadingValue>
-
-
         </article>
-
-
     </main>
 </div>
 
@@ -46,8 +41,8 @@
     private void NotifyLayoutWithUser(UserDTO userDTOGiven)
     {
         userDTO = userDTOGiven;
-        
-        if (userDTOGiven != null)
+
+        if (userDTOGiven != null && userDTOGiven.Email == "")
         {
             menuFlag = userDTO.flag == 1 ? true : false;
         }

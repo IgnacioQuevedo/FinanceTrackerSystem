@@ -1,7 +1,6 @@
 ﻿@page "/Goals";
-
 @inject IGoalController GoalController;
-@using BusinessLogic.Goal_Components;
+
 
 <PageTitle>My Goals</PageTitle>
 <br />
@@ -11,7 +10,7 @@
 <br />
 
 <div>
-    <a class="btn btn-success btn btn-primary fa-lg gradient-custom-2 mb-3" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/Goal/GoalCreation"))">Create + </a>
+    <a class="btn btn-success btn btn-primary fa-lg gradient-custom-4 mb-3" style="float: right;margin-right: 40px;" onclick="@(() => NavigationManager.NavigateTo("/Goal/GoalCreation"))">Create + </a>
 </div>
 
 <br />

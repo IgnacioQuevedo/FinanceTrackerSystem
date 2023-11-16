@@ -150,7 +150,18 @@ namespace ControllerTests
         public void GivenUserToUpdateButWithoutAnyChanges_ShouldThrowException()
         {
             UserDTO newDtoWithoutChanges = new UserDTO("Jhon", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
-            ;
+            
+            newDtoWithoutChanges.UserId = _userConnected.UserId;
+
+            _controller.UpdateUser(newDtoWithoutChanges);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void GivenUserToUpdateButWithBadData_ShouldThrowException()
+        {
+            UserDTO newDtoWithoutChanges = new UserDTO("", "Sans", "jhonnie@gmail.com", "Jhoooniee123!", "");
+            
             newDtoWithoutChanges.UserId = _userConnected.UserId;
 
             _controller.UpdateUser(newDtoWithoutChanges);
@@ -183,10 +194,7 @@ namespace ControllerTests
         [TestMethod]
         public void GivenUserDTO_ShouldSetUserConnected()
         {
-            UserDTO userToConnect = new UserDTO("Ignacio", "Quevedo",
-                "nachitoquevedo@gmail.com", "Nacho200304!", "");
-
-            _controller.SetUserConnected(userToConnect.UserId);
+            _controller.SetUserConnected(_userConnected.UserId);
         }
 
         #endregion

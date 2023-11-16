@@ -21,7 +21,7 @@ namespace Controller
     public class GenericController : IUserController, ICategoryController, IGoalController, IExchangeHistoryController,
         IMonetaryAccount, ICreditAccount, ITransactionController, IReportController
     {
-        #region Atributes 
+        #region Atributes
 
         private UserRepositorySql _userRepo;
         private User _userConnected { get; set; }
@@ -41,7 +41,7 @@ namespace Controller
 
         public void SetUserConnected(int? userIdToConnect)
         {
-            if (_userConnected == null)
+            if (_userConnected == null || _userConnected.UserId != userIdToConnect)
             {
                 _userConnected = _userRepo.FindUserInDb(userIdToConnect);
                 _userRepo.InstanceLists(_userConnected);
@@ -108,9 +108,14 @@ namespace Controller
             SetUserConnected(userConnectedId);
             try
             {
+                User userPreUpdates = new User(_userConnected.FirstName, _userConnected.LastName, _userConnected.Email,
+                    _userConnected.Password, _userConnected.Address);
+
                 User userWithUpdates = MapperUser.ToUser(userDtoUpdated);
 
-                if (Helper.AreTheSameObject(userWithUpdates, _userConnected))
+                userPreUpdates.UserId = userWithUpdates.UserId;
+
+                if (Helper.AreTheSameObject(userPreUpdates, userWithUpdates))
                 {
                     throw new Exception("You need to change at least one value.");
                 }
@@ -535,9 +540,12 @@ namespace Controller
                 _userConnected.DeleteAccount(monetaryAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, monetaryAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 
@@ -626,9 +634,12 @@ namespace Controller
                 _userConnected.DeleteAccount(creditAccountToDelete);
                 _userRepo.UpdateDbWhenDeleting(_userConnected, creditAccountToDelete);
             }
-            catch (ExceptionCategoryManagement Exception)
+            catch (Exception ExceptionType) when (
+                ExceptionType is Exception ||
+                ExceptionType is ExceptionAccountManagement
+            )
             {
-                throw new Exception(Exception.Message);
+                throw new Exception(ExceptionType.Message);
             }
         }
 
@@ -661,6 +672,7 @@ namespace Controller
                 SetUserConnected(transactionAccount.UserId);
 
                 Transaction transactionToCreate = MapperTransaction.ToTransaction(dtoToAdd);
+                Transaction.CheckExistenceOfExchange(transactionToCreate,_userConnected.MyExchangesHistory);
                 transactionToCreate.TransactionId = 0;
                 transactionToCreate.TransactionCategory = categoryOfTransaction;
 
@@ -754,8 +766,8 @@ namespace Controller
 
         #region Report Section
 
-
         #region Monthly Report Per Goal
+
         public List<ResumeOfGoalReportDTO> GiveMonthlyReportPerGoal(UserDTO userLoggedDTO)
         {
             SetUserConnected(userLoggedDTO.UserId);
@@ -779,7 +791,8 @@ namespace Controller
 
             List<Transaction> spendingsPerCategory = Report.GiveAllOutcomeTransactions(userInDb);
 
-            List<TransactionDTO> spendingsPerCategoryDTO = MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
+            List<TransactionDTO> spendingsPerCategoryDTO =
+                MapperTransaction.ToListOfTransactionsDTO(spendingsPerCategory);
 
             return spendingsPerCategoryDTO;
         }
@@ -788,15 +801,18 @@ namespace Controller
 
         #region Spendings Report Per Category Detailed
 
-        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO, MonthsEnumDTO monthGiven)
+        public List<ResumeOfCategoryReportDTO> GiveAllSpendingsPerCategoryDetailed(UserDTO userLoggedDTO,
+            MonthsEnumDTO monthGiven)
         {
             SetUserConnected(userLoggedDTO.UserId);
 
             User userInDb = _userRepo.FindUserInDb(userLoggedDTO.UserId);
 
-            List<ResumeOfCategoryReport> resumeDTOList = Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
+            List<ResumeOfCategoryReport> resumeDTOList =
+                Report.GiveAllSpendingsPerCategoryDetailed(userInDb, (MonthsEnum)monthGiven);
 
-            List<ResumeOfCategoryReportDTO> resumeList = MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
+            List<ResumeOfCategoryReportDTO> resumeList =
+                MapperResumeOfCategoryReport.ToListResumeOfCategoryReportDTO(resumeDTOList);
 
             return resumeList;
         }
@@ -816,10 +832,12 @@ namespace Controller
             return spendingsPerCardDTO;
         }
 
-        #endregion 
+        #endregion
 
         #region Filtering Lists
-        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO, RangeOfDatesDTO rangeOfDates)
+
+        public List<TransactionDTO> FilterListByRangeOfDate(List<TransactionDTO> listOfSpendingsDTO,
+            RangeOfDatesDTO rangeOfDates)
         {
             try
             {
@@ -880,7 +898,8 @@ namespace Controller
 
         #endregion
 
-        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO, MonthsEnumDTO monthSelected)
+        public MovementInXDaysDTO GetMovementsOfTransactionsInXDays(int userId, RangeOfDatesDTO rangeOfDatesDTO,
+            MonthsEnumDTO monthSelected)
         {
             try
             {
@@ -900,7 +919,6 @@ namespace Controller
             {
                 throw new Exception(Exception.Message);
             }
-
         }
     }
 }

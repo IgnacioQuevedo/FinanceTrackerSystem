@@ -1,7 +1,5 @@
 ﻿@page "/Modify"
 @layout MainLayout
-
-@using BusinessLogic.Dtos_Components;
 @inject IUserController UserController
 
 @if (userToModifyDTO != null)
@@ -13,8 +11,10 @@
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-3">
+                    <br/>
+                    <br/>
                     <div class="text-center">
-                        <img src="https://avatarfiles.alphacoders.com/813/81325.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar"/>
+                        <img src="https://img.freepik.com/premium-photo/pug-dog-wearing-red-glasses-with-word-pug-it_902338-14071.jpg" class="rounded-circle" style="width: 250px; height: 300px" alt="Avatar"/>
                     </div>
                 </div>
 
@@ -53,6 +53,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm Password:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" @bind-value="passwordRepeated"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-lg-3 control-label">Address:</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" @bind-value="address"/>
@@ -64,7 +71,7 @@
                             <div class="col-md-8">
                                 <input type="button" class="btn btn-primary" id="miboton" value="Save Changes" @onclick="ModifyUser"/>
                                 <span></span>
-                                <input type="button" class="btn btn-default" id="miboton" value="Cancel" @onclick="presetValues"/>
+                                <input type="button" class="btn btn-danger" id="miboton" value="Clear Modifications" @onclick="presetValues"/>
                             </div>
 
                             <br/>
@@ -74,8 +81,6 @@
                                 <SuccesAlert errorTxt="User modified successfully"/>
                             }
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -89,6 +94,7 @@
     private string firstName;
     private string lastName;
     private string password;
+    private string passwordRepeated;
     private string address;
 
     [CascadingParameter]
@@ -104,25 +110,32 @@
         firstName = userToModifyDTO.FirstName;
         lastName = userToModifyDTO.LastName;
         password = userToModifyDTO.Password;
+        passwordRepeated = userToModifyDTO.Password;
         address = userToModifyDTO.Address;
     }
 
     protected override void OnInitialized()
     {
         presetValues();
-        ErrorAlert.isError = false;
-        SuccesAlert.IsSucess = false;
+        InvokeAsync(() =>
+        {
+            SuccesAlert.IsSucess = false;
+            ErrorAlert.isError = false;
+            StateHasChanged();
+        });
     }
 
-    private void ModifyUser()
+    private async Task ModifyUser()
     {
         try
         {
+            UserController.PasswordMatch(password, passwordRepeated);
             userToModifyDTO = new UserDTO(firstName, lastName, userToModifyDTO.Email, password, address);
             UserController.UpdateUser(userToModifyDTO);
-            SendDataToLayout();
 
             SuccesAlert.ShowSucessAlert();
+            await Task.Delay(2000);
+            SendDataToLayout();
         }
         catch (Exception ExceptionUser)
         {
@@ -136,6 +149,7 @@
         userToModifyDTO = UserController.FindUser(userToModifyDTO.UserId);
         userToModifyDTO.flag = 1;
         NotifyChangeToMain.InvokeAsync(userToModifyDTO);
+        OnInitialized();
     }
 
 }

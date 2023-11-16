@@ -62,7 +62,6 @@ public class UserRepositorySql
         _database.SaveChanges();
         
     }
-
     public User FindUserInDb(int? userId)
     {
         return _database.Users.FirstOrDefault(u => u.UserId == userId);
