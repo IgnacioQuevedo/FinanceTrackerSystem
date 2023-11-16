@@ -92,7 +92,7 @@ namespace ControllerTests
             _monetToCreateDTO1 = new MonetaryAccountDTO("", 1000, CurrencyEnumDTO.UY, DateTime.Now.Date,
                 _userConnected.UserId);
 
-            _controller.CreateMonetaryAccount(_monetToCreateDTO2);
+            _controller.CreateMonetaryAccount(_monetToCreateDTO1);
             
         }
 

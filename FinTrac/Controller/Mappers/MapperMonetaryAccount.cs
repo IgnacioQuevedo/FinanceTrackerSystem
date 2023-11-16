@@ -16,20 +16,17 @@ public abstract class MapperMonetaryAccount
     {
         try
         {
+            MonetaryAccountDTO monetaryAccountDTO =
+                new MonetaryAccountDTO(myMonetaryAccount.Name, myMonetaryAccount.Amount, (CurrencyEnumDTO)myMonetaryAccount.Currency, myMonetaryAccount.CreationDate, myMonetaryAccount.UserId);
 
+            monetaryAccountDTO.AccountId = myMonetaryAccount.AccountId;
+            monetaryAccountDTO.UserId = myMonetaryAccount.UserId;
+            return monetaryAccountDTO;
         }
-        catch (Exception e)
+        catch (ExceptionMapper Exception)
         {
-            Console.WriteLine(e);
-            throw;
+            throw new Exception(Exception.Message);
         }
-        MonetaryAccountDTO monetaryAccountDTO =
-            new MonetaryAccountDTO(myMonetaryAccount.Name, myMonetaryAccount.Amount, (CurrencyEnumDTO)myMonetaryAccount.Currency, myMonetaryAccount.CreationDate, myMonetaryAccount.UserId);
-
-        monetaryAccountDTO.AccountId = myMonetaryAccount.AccountId;
-        monetaryAccountDTO.UserId = myMonetaryAccount.UserId;
-
-        return monetaryAccountDTO;
     }
 
     #endregion
