@@ -4,11 +4,11 @@ Fintrac is a finance page designed so that all users can manage their banking tr
 It is emphasized on every aspect needed when bank movements come to ours minds, starting from a nice and friendly menu into complex report systems.
 As a matter of fact, you do not need to worry about loosing all the sacred information, we implemented a database that will mantain all your information secure at everywhere and at any time, so you can relax when it comes to be.
 Here we can see a quick sneak peek of our database.
-![Database](Images/Database.png)
+![Database](Documentation/Images/Database.png)
 
 Our page works with a register/login indumentary,so to start with, you must create an account and then login!
-![Registration](Images/Register.jpg)
-![Login](Images/Login.png)
+![Registration](Documentation/Images/Register.jpg)
+![Login](Documentation/Images/Login.png)
 
 
 After you login you will jump into your personal space where you can catch up on your bank movements as:
@@ -24,28 +24,27 @@ After you login you will jump into your personal space where you can catch up on
 Below here you can see a short peak of every section mentioned above.
 
 The Hub:
-![Hub](Images/HUB.jpg)
+![Hub](Documentation/Images/HUB.jpg)
 
 Your Profile:
-![Profile](<Images/My profile.jpg>)
-
+![Profile](<Documentation/Images/My profile.jpg>)
 Your Categories:
-![Category List](Images/CategoryList.jpg)
+![Category List](Documentation/Images/CategoryList.jpg)
 
 Your Bank Accounts:
-![Bank Accounts](Images/AccountList.jpg)
+![Bank Accounts](Documentation/Images/AccountList.jpg)
 
 Your Transactions:
-![Transaction List](Images/TransactionList.jpg)
+![Transaction List](Documentation/Images/TransactionList.jpg)
 
 Your Exchange Histories:
-![Exchange Histories List](Images/ExchangeList.png)
+![Exchange Histories List](Documentation/Images/ExchangeList.png)
 
 Your Goals:
-![Goal List](Images/GoalList.jpg)
+![Goal List](Documentation/Images/GoalList.jpg)
 
 Your Reports:
-![Report List](Images/ReportList.png)
+![Report List](Documentation/Images/ReportList.png)
 
 
 
@@ -54,13 +53,13 @@ Every section has it own space for letting you create,modify and delete the resp
 For example here we can see it via the category section.
 
 Creation:
-![Category Creation](Images/CategoryCreation.jpg)
+![Category Creation](Documentation/Images/CategoryCreation.jpg)
 
 Edition:
-![Category Edition](Images/CategoryEdition.jpg)
+![Category Edition](Documentation/Images/CategoryEdition.jpg)
 
 List:
-![Category List](Images/CategoryList.jpg)
+![Category List](Documentation/Images/CategoryList.jpg)
 
 
 
@@ -68,7 +67,7 @@ Something that must be shown is that every aspect that you will produce on your 
 But, if something can not be done, it will unfold an error alert, telling you where the error is, aiming that with that information you will be able to fix the problem.
 
 Here we can see an example:
-![Alert](Images/Alert.jpg)
+![Alert](Documentation/Images/Alert.jpg)
 
 
 
@@ -76,27 +75,27 @@ Last but not least, below this we can see the different report functionalities.
 
 1) Report For Look Up Spendings Of A Category In One Month Selected.
 
-![SpentMonthly_OnCategory](Images/MonthlySpentOnCategory.png)
+![SpentMonthly_OnCategory](Documentation/Images/MonthlySpentOnCategory.png)
 
 And also has a graph too look it better
-![CategorySpendingsGraph](Images/CategorySpendingsGraph.png)
+![CategorySpendingsGraph](Documentation/Images/CategorySpendingsGraph.png)
 
 2) Monetary Balance.
 
-![Monetary Balance](<Images/Monetary Balance.png>)
+![Monetary Balance](<Documentation/Images/Monetary Balance.png>)
 
 3) Report for Look Up Spendings Made By A Credit Card, For Each Category.	
 
-![SpendingsOfCreditCard](Images/MonthlySpents.png)
+![SpendingsOfCreditCard](Documentation/Images/MonthlySpents.png)
 
 4) Report To Look Up Monthly Report Per Goals
-![SpendingsMonthlyPerMonth](<Images/Monthly Report Goal.jpg>)
+![SpendingsMonthlyPerMonth](<Documentation/Images/Monthly Report Goal.jpg>)
 
 5) Report To Look Up All Spendings.
-![All Spendings](Images/ReportAllSpendings.png)
+![All Spendings](Documentation/Images/ReportAllSpendings.png)
 
 6) Report For Look Up Movements Between Two Dates For Each Account
-![MovementsBetweenTwoDates](Images/MonthlySpentOnCategory.png)
+![MovementsBetweenTwoDates](Documentation/Images/MonthlySpentOnCategory.png)
 
 And it also has a graph!
-![GraphOfMovementsBetweenTwoDates](Images/MonthlyGraph.png)
+![GraphOfMovementsBetweenTwoDates](Documentation/Images/MonthlyGraph.png)
